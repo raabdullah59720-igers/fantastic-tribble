@@ -1,0 +1,9 @@
+UPLOAD GUIDE
+
+Upload the folder named earth-command-center into your existing IGERS repository root.
+Do not upload this ZIP itself as the only repo file; extract it first.
+
+After GitHub Pages has deployed, open:
+https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/earth-command-center/
+
+The old root homepage is left unchanged. The module uses live public data when providers are reachable and marks offline/demo states visibly.

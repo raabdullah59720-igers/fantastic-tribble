@@ -1,0 +1,11 @@
+{
+  "name": "IGERS EarthCommand",
+  "short_name": "EarthCommand",
+  "description": "Public Earth data monitor, disaster scenario planning and IGERS energy recovery simulator.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050a11",
+  "theme_color": "#071019",
+  "icons": [{"src":"./assets/icons/earthcommand.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
