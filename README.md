@@ -1,79 +1,63 @@
-# TERRAVEX APEX — Earth Systems & Safety Upgrade
+# TERRAVEX APEX · Bangladesh Satellite & Science Upgrade
 
-**Repository:** `terravex-apex`  
-**Hosting:** GitHub Pages (static root)  
-**Package:** complete app, with additive seismic, satellite-imagery, and alert-center panels  
-**License:** Apache-2.0 project license; review attribution and third-party asset terms before redistribution.
+**Static deployment:** GitHub Pages, repository root  
+**Deliverable file count:** 22 (including docs, license, `.nojekyll`, and four compressed visual assets)  
+**Intent:** additive dashboard update based on the previously supplied TERRAVEX APEX Earth-science package and two lightning research PDFs.
 
-## Quick deployment
+## Install
+1. Back up your current repository.
+2. Download and extract `TERRAVEX-APEX-BANGLADESH-OBSERVATORY.zip`.
+3. Upload the **contents** of the extracted folder (not only the ZIP and not a nested folder) into the root of `terravex-apex`.
+4. Keep all CSS/JS files next to `index.html`; preserve the `assets/` directory for the earlier thunderstorm demonstrator assets.
+5. Configure **Settings → Pages → Deploy from a branch → main → /(root)**.
+6. Open the Pages URL and test the new **Bangladesh Observatory** and **Lightning Nowcast Lab** pages. Internet is required for remote map/image/feed services.
 
-1. Download `TERRAVEX-APEX-EARTH-SCIENCE-UPGRADE.zip` and extract it.
-2. Open the extracted folder. Upload the **contents** of that folder to the root of your `terravex-apex` GitHub repository. Do not upload only the ZIP, and do not create an extra nested project folder.
-3. Keep `index.html`, `app.js`, `styles.css`, `earth-systems-upgrade.js`, `earth-systems-upgrade.css`, the Thunderstorm Energy Lab files, and the `assets/` folder together.
-4. In GitHub, open **Settings → Pages**. Select **Deploy from a branch**, choose `main` and `/(root)`, then save.
-5. Open the Pages URL and test the panels and data indicators below. Allow external requests in the browser.
+## New: Bangladesh Satellite & Tectonic Observatory
+- Leaflet interactive map centered on Bangladesh and the Bay of Bengal.
+- NASA GIBS near-real-time daily corrected-reflectance true-colour imagery through WMS; the date/layer are visible and editable. A daily composite is not live video and the latest day may be incomplete.
+- PB2002 plate-boundary reference layer pulled from a publicly published GeoJSON conversion by `fraxen/tectonicplates`; map remains useful if that third-party source fails.
+- USGS-reported earthquake markers reused from the app's shared USGS adapter, with event time, depth, coordinates and source record link.
+- Published relative-motion reference vector: Panda et al. (2020) reports approximately 37 mm/year along N11°E near 24°N, 90°E for its India–Sunda model. This is a geodetic research result, not live GNSS telemetry.
+- Cross-section visual is expressly schematic and uses exaggerated animation to show relative plate geometry. It is not a 3-D seismic tomography product.
+- Plate displacement and reference strain calculator, snapshot JSON export, and links to BMD / NASA / GPlates resources.
+- Bangabandhu Satellite-1 is correctly described as communications/broadcasting infrastructure; no public verified Earth-imaging feed is claimed.
 
-Back up your existing repository before replacing files. This ZIP is a complete build of the supplied TERRAVEX APEX starter plus the earlier Thunderstorm Energy Lab, not a patch for arbitrary unknown repository versions.
+## New: Lightning Nowcast Research & Validation Lab
+Based on the attached *Thunderstorm Interception & Lightning Energy Engineering Analysis* and *Lightning / Thunderstorm Satellite Sensing, 30-second Nowcasting and the Physics of Energy Capture* PDFs:
+- Multi-sensor data/source panel with explicit unavailable-sensor and model-validation status.
+- User-entered end-to-end latency budget calculator. A latency budget within 30 seconds does not establish prediction skill.
+- Illustrative logistic sigmoid with no trained coefficients claimed.
+- Performance metrics: POD/recall, false-alarm ratio, CSI, accuracy and Brier score.
+- JSON export of assumptions and sample validation data.
+- Operational 30-second lightning-risk scoring remains withheld because no verified low-latency Bangladesh lightning network or locally trained and independently validated model has been configured.
 
-## New modules
+## Attached research sources reviewed
+- `Thunderstorm_Interception_and_Lightning_Energy_Engineering_Analysis.pdf` (provided with the request; safety architecture, energy accounting and low-voltage demonstrator limits).
+- `Lightning_Thirty_Second_Satellite_Sensing_and_Energy_Harvesting_Research.pdf` (provided with the request; source latency, lightning nowcasting validation, sensor coverage and Bangladesh-specific deployment constraints).
 
-### Seismic & Plate Motion Command
+These PDFs are references used during implementation; they are not bundled in the app ZIP.
 
-- Fetches the USGS `all_day.geojson` earthquake summary, with timeout/error handling and a dated fetch status.
-- Plots source-reported earthquake coordinates on a regional/global schematic canvas.
-- Provides an animated, stylized cross-section of the India–Eurasia–Burma/Sunda interaction zone.
-- Includes editable convergence-rate, duration, reference-length, moment-magnitude, stress, area and slip calculators.
-- The geology motion is an explicitly exaggerated time-lapse model. It is **not a live GNSS displacement sensor**, authoritative plate-boundary GIS, earthquake prediction, or a measurement of recoverable energy.
+## Sources
+- NASA GIBS access/API documentation: https://nasa-gibs.github.io/gibs-api-docs/access-basics/
+- NASA Earth Observation: Bangladesh: https://science.nasa.gov/earth/earth-observatory/bangladesh-77364/
+- Bangladesh Meteorological Department satellite products: https://live6.bmd.gov.bd/satelite
+- USGS earthquake real-time feeds: https://earthquake.usgs.gov/earthquakes/feed/v1.0/
+- PB2002 plate-boundary GeoJSON conversion: https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_boundaries.json
+- Bird (2003), PB2002 plate model: https://doi.org/10.1029/2001GC000252
+- Panda et al. (2020), India-Sunda plate motion: https://doi.org/10.1029/2019TC006034
+- Mallick et al. (2019), continuous GNSS across India-Burma-Sunda: https://doi.org/10.1029/2018JB016480
+- GPlates EarthByte model catalogue: https://gwsdoc.gplates.org/models/
+- BSCL Satellite-1 service/mission information: https://bscl.gov.bd/index.php/about/
+- NOAA GOES-R GLM instrument: https://goes-r.noaa.gov/spacesegment/glm.html
+- Open-Meteo documentation: https://open-meteo.com/en/docs
 
-### NASA Earth Observation
-
-- Requests date-stamped imagery from NASA GIBS WMS (`MODIS Terra/Aqua` and `VIIRS` true-color products when available).
-- Offers date, layer and geographic-extent controls, an image failure state, and a link to NASA Worldview.
-- NASA GIBS imagery is product-dependent and date-based. It is not continuous satellite video. A source may return a blank/incomplete map when acquisition or processing is still pending.
-- Bangladesh Satellite-1 (BS-1) is represented accurately as a communications/broadcasting service. No public, verified BS-1 Earth-imaging feed is included in this app.
-
-### Unified Earth Alert Center
-
-- Polls the USGS 24-hour earthquake catalog and alerts on newly appearing records that meet the user-set magnitude and region threshold. The first good fetch creates a baseline rather than replaying old earthquakes.
-- Polls Open-Meteo forecast/model fields for a Bangladesh location. A thunderstorm probability is used only when the endpoint returns that field. Lightning Potential Index remains a J/kg environmental index and is never mislabeled as percent probability.
-- Keeps a local alert log, source/quality state, JSON export, a simulated-alert test button, and optional browser notifications (requires the user's explicit click and browser permission).
-- Watchers default on within the open page. Earthquake polling uses a 2-minute interval; weather-model polling uses 15 minutes. Polling pauses while the tab is hidden.
-- No SMS/email dispatch, government-warning integration, lightning-event detector, or physical device control is implemented.
-
-## Data source references
-
-- **USGS Earthquake Hazards Program — real-time GeoJSON feeds:** https://earthquake.usgs.gov/earthquakes/feed/v1.0/
-- **USGS event catalog/API documentation:** https://earthquake.usgs.gov/fdsnws/event/1/
-- **NASA GIBS API documentation:** https://nasa-gibs.github.io/gibs-api-docs/
-- **NASA Worldview:** https://worldview.earthdata.nasa.gov/
-- **Open-Meteo API documentation:** https://open-meteo.com/en/docs
-- **GPlates Web Service plate-model catalogue:** https://gwsdoc.gplates.org/models/
-- **Bangladesh Satellite Company Limited (BSCL):** https://bscl.gov.bd/index.php/about/
-- **ISRO MOSDAC:** https://mosdac.gov.in/
-- **NOAA GOES-R GLM instrument overview:** https://goes-r.noaa.gov/spacesegment/glm.html. Its lightning mapper coverage does not provide a Bangladesh-specific feed for this package.
-
-The implementation was informed by the user-supplied *Thunderstorm Interception & Lightning Energy Engineering Analysis* and *Lightning / Thunderstorm Satellite Sensing, 30-second Nowcasting and the Physics of Energy Capture* PDFs. Their main engineering constraints are retained: distinguish satellite context from occurred lightning; do not promise a precise 30-second strike prediction; separate a professionally designed lightning-protection path from a low-voltage energy demonstrator; and do not present simulated energy transfer as measured atmospheric capture.
-
-## Scientific definitions
-
-- Instantaneous electrical power: `P(t) = V(t) I(t)`.
-- Transferred electrical energy: `E = integral V(t) I(t) dt`.
-- Ideal capacitor energy: `E_C = 0.5 C V^2`.
-- Simple plate-motion scenario displacement: `delta_x = velocity * elapsed_time`.
-- Reference strain: `epsilon = delta_x / reference_length`.
-- Rough empirical radiated earthquake-energy scale: `log10(E[J]) ≈ 1.5 M + 4.8`; this is an order estimate from magnitude, not recoverable energy.
-- User-defined fault-work scale: `W ≈ stress * area * slip`; it is a toy scenario and not a validated fault-energy model.
-
-All scenario outputs should be interpreted within their displayed assumptions. The app does not predict when/where an earthquake or lightning strike will occur.
-
-## Safety policy
-
-If thunder is audible or official guidance indicates that a thunderstorm is threatening, move to a substantial enclosed building or hard-topped vehicle. Do not wait for a model score. Never connect experimental energy-storage circuitry to a real lightning protection conductor, down-conductor, grounding electrode, utility line or outdoor mast. Any installed lightning protection or sensor hardware requires appropriately qualified engineering and compliant design.
-
-## Browser support and offline behavior
-
-The app is dependency-light and static-hosted. The core UI opens without live internet sources. USGS/Open-Meteo/NASA requests require browser network access and may fail due to provider availability, product latency, or local network restrictions. No API secrets are bundled. The canvas views are original schematic visualizations, not certified GIS or scientific 3D reconstruction engines.
+## Scientific guardrails
+- Satellite lightning imagers observe optical flashes already underway; satellite cloud context alone does not guarantee an exact strike prediction 30 seconds ahead.
+- The PDFs require timestamps, source region, data age, latency, uncertainty and source health to be visible. Stale or missing data must be flagged, not relabeled as live.
+- A cited plate-motion value is a model/reference estimate from a study and epoch, not a live coordinate displacement measurement.
+- Earthquake event feeds report detected/reviewed events. They do not predict future earthquakes.
+- Lightning-protection down-conductors must remain separate from experimental capacitors, rectifiers, converters and storage circuits. Lightning is a hazard, not an energy source to approach during a storm.
+- The default performance-metric numbers and Brier pairs in the validation tool are synthetic examples. Replace with true labelled, time-aligned held-out results.
 
 ## QA
-
-See `QA_REPORT.md` for automated syntax, structure, file-reference, archive and calculation checks. A successful local ZIP check does not prove that all remote APIs or GitHub Pages will work in every deployment; run the acceptance checklist in that report after upload.
+See `QA_REPORT.md`. Static syntax/structure/calculator checks were run locally. Remote NASA tiles, third-party GeoJSON, browser interaction and GitHub Pages deployment depend on external services and were not represented as successful unless verified.

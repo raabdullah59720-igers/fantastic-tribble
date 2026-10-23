@@ -1,0 +1,12 @@
+TERRAVEX APEX - BANGLADESH OBSERVATORY INSTALL
+
+1. Back up your GitHub repository first.
+2. Download TERRAVEX-APEX-BANGLADESH-OBSERVATORY.zip and extract it.
+3. Select every file and the assets folder inside the extracted folder.
+4. Upload all of those contents to the ROOT of the terravex-apex repository.
+5. Confirm index.html is directly in repository root and not inside a nested project folder.
+6. GitHub: Settings > Pages > Deploy from a branch > main > /(root) > Save.
+7. Open the published Pages URL and click Bangladesh Observatory and Lightning Nowcast Lab.
+8. The core interface runs on static hosting; NASA imagery, map tiles, tectonic boundary data, USGS events and model weather require internet access.
+
+Keep the source timestamp and status labels visible. NASA imagery is date-based, Earthquake events are historical/observed reports, plate arrows are literature references, and simulated graphics are not measurements. This is not an official warning service.
