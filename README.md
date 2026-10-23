@@ -1,70 +1,79 @@
-# TERRAVEX APEX
+# TERRAVEX APEX — Earth Systems & Safety Upgrade
 
-**Earth Intelligence · Environmental Monitoring · Disaster Operations · IGERS Energy Systems**
+**Repository:** `terravex-apex`  
+**Hosting:** GitHub Pages (static root)  
+**Package:** complete app, with additive seismic, satellite-imagery, and alert-center panels  
+**License:** Apache-2.0 project license; review attribution and third-party asset terms before redistribution.
 
-A static-hosted prototype combining a canvas-based conceptual Earth view, public environmental data integrations, scientific calculators, and a local disaster-preparedness board.
+## Quick deployment
 
-## Quick start
+1. Download `TERRAVEX-APEX-EARTH-SCIENCE-UPGRADE.zip` and extract it.
+2. Open the extracted folder. Upload the **contents** of that folder to the root of your `terravex-apex` GitHub repository. Do not upload only the ZIP, and do not create an extra nested project folder.
+3. Keep `index.html`, `app.js`, `styles.css`, `earth-systems-upgrade.js`, `earth-systems-upgrade.css`, the Thunderstorm Energy Lab files, and the `assets/` folder together.
+4. In GitHub, open **Settings → Pages**. Select **Deploy from a branch**, choose `main` and `/(root)`, then save.
+5. Open the Pages URL and test the panels and data indicators below. Allow external requests in the browser.
 
-1. Extract this ZIP. The files are at the ZIP root; there is no nested project folder.
-2. Keep `index.html`, `styles.css`, and `app.js` together in the same folder.
-3. Open `index.html` in a modern browser. For best results, use a local static server or GitHub Pages so browser security policies are predictable.
-4. Internet access is required for USGS and Open-Meteo feeds. The application itself does not require a backend.
+Back up your existing repository before replacing files. This ZIP is a complete build of the supplied TERRAVEX APEX starter plus the earlier Thunderstorm Energy Lab, not a patch for arbitrary unknown repository versions.
 
-## GitHub Pages deployment
+## New modules
 
-1. Create a repository named `terravex-apex`.
-2. Upload the contents of this folder to the repository root. Keep `index.html` at the root.
-3. In **Settings → Pages**, choose **Deploy from a branch**, select `main` and `/ (root)`, then save.
-5. Wait for the deployment workflow to finish and open the Pages URL shown by GitHub.
-6. If a feed fails, use Refresh and inspect the connection state. Third-party availability is not guaranteed.
+### Seismic & Plate Motion Command
 
-## Implemented modules
+- Fetches the USGS `all_day.geojson` earthquake summary, with timeout/error handling and a dated fetch status.
+- Plots source-reported earthquake coordinates on a regional/global schematic canvas.
+- Provides an animated, stylized cross-section of the India–Eurasia–Burma/Sunda interaction zone.
+- Includes editable convergence-rate, duration, reference-length, moment-magnitude, stress, area and slip calculators.
+- The geology motion is an explicitly exaggerated time-lapse model. It is **not a live GNSS displacement sensor**, authoritative plate-boundary GIS, earthquake prediction, or a measurement of recoverable energy.
 
-- Command Overview with current feed summaries and a stylized rotating canvas globe.
-- Earthquake monitor consuming the USGS `all_day.geojson` summary feed, with event filters and source links.
-- Weather panel consuming Open-Meteo current model values and an hourly temperature series for selected Bangladesh locations.
-- Lightning impulse visualizer using explicitly synthetic low-voltage values.
-- Water-load and strain scenario calculators.
-- IGERS kinetic-energy difference, hydraulic power, and capacitor-energy calculators.
-- Local disaster planning board, preparedness checklist, and JSON report export.
-- NASA Worldview external imagery browser (embedding may be blocked; direct link is provided).
+### NASA Earth Observation
 
-## Scientific and operational limits
+- Requests date-stamped imagery from NASA GIBS WMS (`MODIS Terra/Aqua` and `VIIRS` true-color products when available).
+- Offers date, layer and geographic-extent controls, an image failure state, and a link to NASA Worldview.
+- NASA GIBS imagery is product-dependent and date-based. It is not continuous satellite video. A source may return a blank/incomplete map when acquisition or processing is still pending.
+- Bangladesh Satellite-1 (BS-1) is represented accurately as a communications/broadcasting service. No public, verified BS-1 Earth-imaging feed is included in this app.
 
-- The globe is a custom canvas illustration with event markers, not a full Three.js terrain globe or certified GIS/navigation map.
-- Open-Meteo values are model/forecast output, not ground-sensor observations.
-- USGS feed events can be revised and feed caching can introduce delay.
-- NASA Worldview/GIBS imagery has product-dependent latency and availability.
-- NOAA GOES-R lightning feed ingestion is **not** implemented. Lightning waveform values are synthetic and do not forecast strikes.
-- No official emergency alerts, SMS/email distribution, dispatch, authentication, persistent database, or physical device control is implemented.
-- Energy outputs are simplified estimates and are not validated IGERS field-performance measurements. Net recoverable energy may be lower due to system losses and energy penalties.
+### Unified Earth Alert Center
 
-## Data sources and references
+- Polls the USGS 24-hour earthquake catalog and alerts on newly appearing records that meet the user-set magnitude and region threshold. The first good fetch creates a baseline rather than replaying old earthquakes.
+- Polls Open-Meteo forecast/model fields for a Bangladesh location. A thunderstorm probability is used only when the endpoint returns that field. Lightning Potential Index remains a J/kg environmental index and is never mislabeled as percent probability.
+- Keeps a local alert log, source/quality state, JSON export, a simulated-alert test button, and optional browser notifications (requires the user's explicit click and browser permission).
+- Watchers default on within the open page. Earthquake polling uses a 2-minute interval; weather-model polling uses 15 minutes. Polling pauses while the tab is hidden.
+- No SMS/email dispatch, government-warning integration, lightning-event detector, or physical device control is implemented.
 
-- USGS Earthquake GeoJSON feeds: https://earthquake.usgs.gov/earthquakes/feed/v1.0/
-- USGS earthquake software and catalog guidance: https://earthquake.usgs.gov/data/software/
-- Open-Meteo Forecast API documentation: https://open-meteo.com/en/docs
-- NASA GIBS documentation: https://nasa-gibs.github.io/gibs-api-docs/
-- NASA Worldview: https://worldview.earthdata.nasa.gov/
-- NOAA GOES-R GLM instrument overview (reference only): https://goes-r.noaa.gov/spacesegment/glm.html
+## Data source references
 
-Open-Meteo data is provided under its published terms/attribution guidance. Check each upstream provider's current terms before commercial redistribution. NASA GIBS attribution should be included when its imagery is used, as described in its official documentation. No third-party imagery or font assets are bundled.
+- **USGS Earthquake Hazards Program — real-time GeoJSON feeds:** https://earthquake.usgs.gov/earthquakes/feed/v1.0/
+- **USGS event catalog/API documentation:** https://earthquake.usgs.gov/fdsnws/event/1/
+- **NASA GIBS API documentation:** https://nasa-gibs.github.io/gibs-api-docs/
+- **NASA Worldview:** https://worldview.earthdata.nasa.gov/
+- **Open-Meteo API documentation:** https://open-meteo.com/en/docs
+- **GPlates Web Service plate-model catalogue:** https://gwsdoc.gplates.org/models/
+- **Bangladesh Satellite Company Limited (BSCL):** https://bscl.gov.bd/index.php/about/
+- **ISRO MOSDAC:** https://mosdac.gov.in/
+- **NOAA GOES-R GLM instrument overview:** https://goes-r.noaa.gov/spacesegment/glm.html. Its lightning mapper coverage does not provide a Bangladesh-specific feed for this package.
 
-## License
+The implementation was informed by the user-supplied *Thunderstorm Interception & Lightning Energy Engineering Analysis* and *Lightning / Thunderstorm Satellite Sensing, 30-second Nowcasting and the Physics of Energy Capture* PDFs. Their main engineering constraints are retained: distinguish satellite context from occurred lightning; do not promise a precise 30-second strike prediction; separate a professionally designed lightning-protection path from a low-voltage energy demonstrator; and do not present simulated energy transfer as measured atmospheric capture.
 
-Apache License 2.0. See `LICENSE`.
+## Scientific definitions
 
+- Instantaneous electrical power: `P(t) = V(t) I(t)`.
+- Transferred electrical energy: `E = integral V(t) I(t) dt`.
+- Ideal capacitor energy: `E_C = 0.5 C V^2`.
+- Simple plate-motion scenario displacement: `delta_x = velocity * elapsed_time`.
+- Reference strain: `epsilon = delta_x / reference_length`.
+- Rough empirical radiated earthquake-energy scale: `log10(E[J]) ≈ 1.5 M + 4.8`; this is an order estimate from magnitude, not recoverable energy.
+- User-defined fault-work scale: `W ≈ stress * area * slip`; it is a toy scenario and not a validated fault-energy model.
 
-## Thunderstorm Energy Lab Add-on (October 2026)
+All scenario outputs should be interpreted within their displayed assumptions. The app does not predict when/where an earthquake or lightning strike will occur.
 
-This release adds an integrated **Thunderstorm Energy Recovery** navigation panel. It is implemented as a separate page (`thunderstorm-energy-lab.html`) displayed inside the main app, with its own CSS and JavaScript. All previous app modules remain in the package. The add-on includes low-voltage pulse energy accounting, configurable induction/rectifier/DC-DC efficiency, capacitor energy storage, simulated load draw, animated synthetic waveform, model weather context for selected Bangladesh locations, local UI alerts, and JSON/CSV export.
+## Safety policy
 
-- `thunderstorm-energy-lab.html` — panel markup
-- `thunderstorm-energy-lab.css` — responsive visual system
-- `thunderstorm-energy-lab.js` — calculation, local alerts, synthetic simulation and weather API client
-- `assets/` — three concept visuals and the supplied reference image
+If thunder is audible or official guidance indicates that a thunderstorm is threatening, move to a substantial enclosed building or hard-topped vehicle. Do not wait for a model score. Never connect experimental energy-storage circuitry to a real lightning protection conductor, down-conductor, grounding electrode, utility line or outdoor mast. Any installed lightning protection or sensor hardware requires appropriately qualified engineering and compliant design.
 
-The animation and circuit values are simulation inputs, not measurements from a lightning strike or a validated physical prototype. Open-Meteo fields are forecast/model output, not lightning detection. No direct NOAA GLM ingestion is implemented; GLM coverage is centered on the Americas and adjacent oceans. The lab does not trigger lightning, operate high-voltage equipment, send official alerts or control hardware.
+## Browser support and offline behavior
 
-Official references: [Open-Meteo documentation](https://open-meteo.com/en/docs), [NOAA GOES-R GLM](https://goes-r.noaa.gov/spacesegment/glm.html), [NOAA lightning safety](https://www.weather.gov/safety/lightning-safety-overview).
+The app is dependency-light and static-hosted. The core UI opens without live internet sources. USGS/Open-Meteo/NASA requests require browser network access and may fail due to provider availability, product latency, or local network restrictions. No API secrets are bundled. The canvas views are original schematic visualizations, not certified GIS or scientific 3D reconstruction engines.
+
+## QA
+
+See `QA_REPORT.md` for automated syntax, structure, file-reference, archive and calculation checks. A successful local ZIP check does not prove that all remote APIs or GitHub Pages will work in every deployment; run the acceptance checklist in that report after upload.

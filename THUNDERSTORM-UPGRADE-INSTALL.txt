@@ -1,24 +1,22 @@
-TERRAVEX APEX — THUNDERSTORM ENERGY LAB UPGRADE
+TERRAVEX APEX — FULL EARTH SCIENCE UPGRADE / QUICK INSTALL
 
-CONTENTS
-- Updated full application root: index.html, styles.css, app.js and original support files
-- thunderstorm-energy-lab.html / .css / .js: separate new panel
-- assets/: three original generated visual assets + the user-supplied reference image
-- QA_REPORT.md: checks performed and remaining limitations
+1) Download the FULL ZIP and extract it.
+2) In the extracted folder, select every file plus the assets folder.
+3) Upload the contents to the ROOT of your GitHub repository (repository name: terravex-apex). Do not upload only the ZIP; do not add another nested folder.
+4) Keep the local CSS/JS files beside index.html and keep all images inside assets/.
+5) GitHub -> Settings -> Pages -> Deploy from a branch -> main -> /(root) -> Save.
+6) Open your GitHub Pages URL. Test Earthquake Monitor, Seismic & Plate Motion, Earth Observation, Thunderstorm Energy Recovery, and Alert Center.
 
-EASIEST METHOD (recommended)
-1. Download and extract this ZIP locally.
-2. Back up the current GitHub repository/branch first.
-3. Open the extracted project folder. Select ALL FILES and upload them to the root of your existing terravex-apex repository. Keep the assets folder with its four image files.
-4. Ensure index.html, app.js, styles.css, thunderstorm-energy-lab.html, thunderstorm-energy-lab.css, thunderstorm-energy-lab.js and assets/ are all at their shown locations.
-5. Commit changes. GitHub Pages should continue using Settings > Pages > Deploy from a branch > main > /(root).
-6. Open the site and click LABORATORIES > Thunderstorm Energy Recovery.
+IMPORTANT:
+- Back up the old repository before replacing files.
+- USGS feed = reported earthquakes, not earthquake predictions. First good fetch is the baseline.
+- NASA GIBS imagery is date-based and may be delayed/incomplete. It is not video-live.
+- Bangladesh Satellite-1 (BS-1) is a communications/broadcasting satellite in the public BSCL service description; this package does not pretend to read an Earth-imaging feed from it.
+- Weather-model storm risk is not a lightning detector or official warning. Browser notifications require a user click and permission.
+- Tectonic motion animation is an exaggerated time-lapse. Its scenario rates are not live GNSS measurements.
+- Never connect any experimental energy-storage circuit to a lightning protection conductor or real lightning path.
 
-COPY-PASTE / FILE-BY-FILE METHOD
-Upload/copy the included updated index.html, app.js and styles.css to the repository root (these integrate the panel). Then upload the three thunderstorm-energy-lab.* files to that same root, and copy the entire assets folder with its four images. Keep the original README.md, LICENSE and .nojekyll. QA_REPORT.md is replaced by this package's combined report.
-
-FILE LIMIT
-The full package is counted by actual file entries (excluding the ZIP directory entry); use the reported inventory in QA_REPORT.md. It stays under 98 files. Do not upload the ZIP itself as the website root expecting GitHub Pages to extract it. Extract first.
-
-DATA HONESTY / SAFETY
-The device image and moving pulse simulation are illustrative. The pulse generator uses editable low-voltage parameters (0–48 V, 0–5 A, up to 1000 ms) and deterministic equations. It does not detect, capture, trigger, or connect to real lightning. Open-Meteo values are forecast/model values, not a direct lightning sensor. No physical equipment is controlled, no SMS or official emergency warning is sent. Never connect this demo to a real lightning conductor or real lightning path.
+New source files:
+  earth-systems-upgrade.js
+  earth-systems-upgrade.css
+The full ZIP already includes them and the required changes to index.html/app.js.
