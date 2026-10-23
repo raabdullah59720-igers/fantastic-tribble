@@ -1,38 +1,48 @@
-# TERRAVEX APEX — QA Report
+# TERRAVEX APEX Thunderstorm Upgrade — QA Report
 
-## Scope
-Standalone build from the supplied master prompt. No prior application archive or research PDF was present in the supplied files, so no baseline-preservation test was possible.
+## Package inventory
+- Actual deliverable file count: **15 files** (folder entries excluded; ZIP itself excluded).
+- Uncompressed payload size: **9,942,000 bytes (9.942 decimal MB)** at time of this report.
+- Maximum requested limit: 98 files. **PASS**.
+- Package is self-contained for static hosting: HTML, CSS, JavaScript and local image assets; no npm build or private API secret required.
 
-## Static and package checks
-- [x] Root entry point `index.html` created; CSS and JavaScript are separate root files (`styles.css`, `app.js`).
-- [x] ZIP is flat: upload the extracted contents directly to the repository root, with no nested project directory.
-- [x] JSON export cleanup adjusted to avoid revoking the download URL immediately.
-- [x] JavaScript syntax check passed with Node.js `--check`.
-- [x] HTML parser smoke check passed.
-- [x] Formula benchmark checks passed for kinetic energy, hydraulic output and water-load pressure.
-- [x] ZIP integrity test passed; 7 deliverable files, well under the 98-file limit.
-- [x] README, Apache 2.0 license and QA report included.
-- [x] No build step or server-side runtime required.
-- [x] No API secrets or credentials included.
-- [x] Public feeds use request timeout handling and visible failure states.
-- [x] Calculation inputs validate non-negative values and efficiency ranges where applicable.
-- [x] JSON export is implemented for the local disaster planning board.
-- [ ] Full browser matrix / accessibility audit: not performed in this environment. A headless Chromium smoke attempt timed out because the page runs continuous animation; this is not counted as a pass.
-- [ ] GitHub Pages deployment: not performed; requires upload to the user's repository.
-- [ ] Live endpoint availability in the user's browser: not guaranteed and must be checked after deployment.
+## Automated checks performed
+- index.html: 121 IDs, no duplicate IDs, all local references and direct JS ID references resolved.
+- thunderstorm-energy-lab.html: 67 IDs, no duplicate IDs, all local references and direct JS ID references resolved.
+- styles.css: parsed 109 top-level rules; no syntax parse errors found.
+- thunderstorm-energy-lab.css: parsed 165 top-level rules; no syntax parse errors found.
+- `node --check app.js`: PASS.
+- `node --check thunderstorm-energy-lab.js`: PASS.
+- Relative links and local image/file references: PASS.
+- Formula tests: PASS. Base test: Pin=3.472000 W; Ein=0.1736000 J; eta_total=60.7200%; captured=0.10540992 J/pulse; Ecap_max=1.2500 J; initial storage=0.2500 J; ideal runtime=0.227273 s.
+- Image assets: four files present (three new concept visuals and the user-supplied demonstrator reference).
+- The completed ZIP is CRC/integrity tested after creation.
 
-## Functional checks to run after upload
-1. Open the Pages URL and check the command overview renders.
-2. Confirm USGS feed shows `CONNECTED` or an honest `OFFLINE` state.
-3. Change weather location and verify the model timestamp and values update.
-4. Test kinetic energy with mass 1500 kg, 50 km/h to 20 km/h: ideal kinetic difference should be about 121.5 kJ before efficiency.
-5. Test hydraulic output with ρ=1000 kg/m³, Q=0.05 m³/s, H=2 m, η=60%: about 588.4 W.
-6. Test water load with ρ=1000 kg/m³, g=9.80665 m/s², Δh=0.5 m: about 4.903 kPa.
-7. Add a planning item and export JSON; verify the downloaded file parses.
-8. Test on mobile width and verify navigation drawer, cards, and calculators remain usable.
+## What is implemented
+- A new **Thunderstorm Energy Recovery** navigation item and embedded panel, while retaining the previous application modules.
+- Separate `thunderstorm-energy-lab.html`, `thunderstorm-energy-lab.css`, and `thunderstorm-energy-lab.js` so the feature is easy to copy, edit, or update.
+- Four large graphics for the hero, device visual, magnetic-coil illustration and supplied prototype reference.
+- A synthetic low-voltage pulse process chain with animated stage states and waveform.
+- Editable induction coupling, rectifier and DC–DC efficiencies; capacitor storage, storage headroom/saturation and simulated load draw.
+- Mathematical outputs using P=VI, E=VIΔt, η_total=η_ind×η_rect×η_DC, E_cap=½CV², and idealized runtime E_stored/P_load.
+- Bangladesh location selector and Open-Meteo forecast/model request with timeout, basic-field fallback, model/stale/offline status labels.
+- LPI shown in J/kg when returned; only the distinct `thunderstorm_probability` value is treated as a percentage. Missing values remain “Not returned”.
+- Local UI alerts, event log, and JSON/CSV export. No SMS, emergency dispatch, physical control or official alert is sent.
 
-- [x] Literal JavaScript element-ID references checked against the HTML: 84 referenced IDs, none missing.
-- [x] Flat ZIP layout checked: `index.html`, `styles.css`, and `app.js` are all at the archive root.
+## Checks not completed
+- A headless Chromium screenshot/browser session was attempted, but Chromium did not exit in this environment even on a minimal test page and hit the execution timeout. Therefore interactive browser testing, responsive screenshot review and browser-console verification are **NOT VERIFIED**.
+- GitHub Pages deployment was not performed.
+- Live external API success was not asserted or used as a test gate. Open-Meteo can fail due to network/API availability or model-specific fields; basic-field fallback and OFFLINE/STALE states are implemented but should be checked after deployment.
+- No direct NOAA GLM feed is ingested, and no lightning strike is detected. NOAA GOES-R GLM coverage is centered on the Americas and adjacent oceans, not Bangladesh.
+- The visual device and induction-field graphic are concept art; waveforms/pulses are synthetic. This is not a Three.js/finite-element electromagnetic model or field-validated hardware prototype.
 
-## Known limitations
-The Earth scene is a custom 2D canvas-based globe illustration with rotation and perspective effects, not a full Three.js 3D terrain engine. NASA Worldview is an external iframe and may refuse embedding. NOAA GLM lightning ingestion is not implemented. Lightning pulses are synthetic. Incident planning is local to the page session and is not persistent or transmitted. No official alerting, authentication, emergency dispatch, or hardware control is provided.
+## Scientific assumptions and safety limits
+The pulse input is a low-voltage what-if scenario bounded by the UI to 48 V, 5 A and 1000 ms. It is not atmospheric lightning energy. User-configured efficiencies are assumptions rather than verified component performance. The capacitor energy formula assumes ideal capacitance; the runtime estimate ignores ESR, leakage, voltage cutoff, conversion overhead, temperature, transient response and other real-world losses, so treat it as an ideal upper bound. Storage acceptance is capped at available modeled capacitor headroom.
+
+Never use this interface to trigger lightning or connect a real lightning conductor/path to the model. There is no physical equipment connection. Follow official lightning safety guidance and qualified electrical-engineering standards.
+
+## Source links
+- Open-Meteo API documentation: https://open-meteo.com/en/docs
+- Open-Meteo DWD ICON API (LPI variable documentation): https://open-meteo.com/en/docs/dwd-api
+- NOAA GOES-R GLM instrument: https://goes-r.noaa.gov/spacesegment/glm.html
+- NOAA lightning safety: https://www.weather.gov/safety/lightning-safety-overview

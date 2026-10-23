@@ -1,6 +1,6 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id);const state={quakes:[],quakeUpdated:null,weather:null,weatherUpdated:null,incidents:[],rotation:true,angle:0,zoom:1,drag:null,selected:null};
-const pageNames={overview:'Integrated Command Overview',earth:'Earth Intelligence',quake:'Earthquake Monitor',weather:'Weather & Storms',lightning:'Lightning Research Laboratory',tectonic:'Earth System Analysis',imagery:'Earth Observation',igers:'IGERS Energy Recovery Lab',disaster:'Disaster Operations Center',sources:'Data Sources & Methodology'};
+const pageNames={overview:'Integrated Command Overview',earth:'Earth Intelligence',quake:'Earthquake Monitor',weather:'Weather & Storms',lightning:'Lightning Research Laboratory',stormenergy:'Thunderstorm Energy Recovery',tectonic:'Earth System Analysis',imagery:'Earth Observation',igers:'IGERS Energy Recovery Lab',disaster:'Disaster Operations Center',sources:'Data Sources & Methodology'};
 function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),3200)}
 function fmt(n,d=1){return Number.isFinite(n)?n.toLocaleString(undefined,{maximumFractionDigits:d,minimumFractionDigits:0}):'—'}
 function safeNum(id){const v=Number($(id).value);return Number.isFinite(v)?v:NaN}function validNonnegative(v){return Number.isFinite(v)&&v>=0}function stamp(d){return new Date(d).toLocaleString()}
