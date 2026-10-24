@@ -1,0 +1,16 @@
+{
+  "name": "https-health-endpoint",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HTTPS health endpoint starter for a GitHub Pages PWA with a separate Render backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

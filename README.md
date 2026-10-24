@@ -1,82 +1,70 @@
-# TERRAVEX APEX
+# HTTPS-only Health Endpoint Starter
 
-Static GitHub Pages/PWA application for Earth intelligence, Bangladesh satellite observation, disaster monitoring, research calculators, IGERS energy engineering, desktop installation, and opt-in local VPN control.
+This starter uses:
+- GitHub Pages for the static PWA frontend
+- Render Web Service for the live `/health` API
+- Render-managed HTTPS at the public edge
+- `/health` as the Render deployment health-check path
 
-## Fastest Windows start
+## 1. Deploy the API
 
-1. Extract the complete ZIP to a normal Windows folder.
-2. For a browser-based local run, double-click `START-TERRAVEX-WEB-APP.bat`. It serves only on `127.0.0.1:8000` and opens the local app in your browser.
-3. For a desktop shortcut, double-click `INSTALL-TERRAVEX-DESKTOP.bat` once, then use the **TERRAVEX APEX** shortcut.
-4. For a browser-registered PWA, publish all files and `assets/` to the root of GitHub Pages, open the resulting HTTPS URL in Chrome/Edge, then look for the browser's native **Install** icon beside the address bar. This build deliberately leaves the `beforeinstallprompt` event unprevented, so it does not suppress Chrome's install icon. Use the in-app **Install App** button or browser menu if the icon is absent.
+1. Create a new GitHub repository, for example `new-app-health-api`.
+2. Upload `package.json`, `server.js`, `render.yaml`, and `.gitignore` to the repository root.
+3. Sign in to Render and choose **New + → Web Service**.
+4. Connect the repository and deploy it. If prompted, use:
+   - Build command: `npm install`
+   - Start command: `npm start`
+   - Health check path: `/health`
+5. Render will assign a service URL similar to `https://your-service-name.onrender.com`.
+6. In Render → Environment, set `APP_ORIGIN` to the exact GitHub Pages origin (for example `https://YOUR-USERNAME.github.io`; do not add a repository path).  
+7. Open `https://your-service-name.onrender.com/health`. A successful response should contain `"status":"ok"` and `"https":true`.
 
-## One-use local VPN pairing
+Render terminates TLS at its public edge and redirects incoming public HTTP traffic to HTTPS. The Node process listens on the internal `PORT`; do not create a separate TLS certificate or commit private keys for this standard Render setup.
 
-- Install and configure an actual VPN client on your own computer first. The bridge supports Tailscale CLI or an already-installed WireGuard for Windows tunnel.
-- Start `Start-VPN-Bridge-Windows.bat`. On that run the helper generates a random pairing token and prints it to the console. The token expires after 10 minutes and can be exchanged once.
-- In **VPN Control & Desktop Install**, paste the token and click **Connect local bridge**. A separate random session token is returned for up to 4 hours and kept only in that browser tab's `sessionStorage`. The startup pairing token is not stored in the app.
-- Restarting the helper invalidates all sessions and prints a new pairing token. Closing/clearing the app tab may require restarting the helper to pair again.
-- Only fixed `status`, `on`, and `off` operations are exposed. The helper binds to `127.0.0.1`, validates exact Origins and Host headers, and never executes arbitrary shell commands.
+## 2. Connect the GitHub Pages app
 
-**No provider/Russian satellite token is created by this project.** The local token only pairs this app to the local bridge. Actual satellite communications require an authorized provider, supported terminal, subscription/service profile, and relevant regulatory approval.
+1. Copy `public/health-check.js` into your frontend repository.
+2. Replace `https://REPLACE-WITH-YOUR-SERVICE.onrender.com/health` with the real HTTPS URL from Render.
+3. Include the script in your HTML:
+   `<script src="./health-check.js"></script>`
+4. In Render, set `APP_ORIGIN` to the exact origin of your GitHub Pages site, then redeploy if needed.
+5. Call `checkHealth()` from your app and show its result in the UI. The starter allows CORS only for that configured origin. Do not use wildcard CORS for private or authenticated endpoints.
 
-## Emergency Connectivity Link Budget Lab
+## 3. Enforce HTTPS for GitHub Pages
 
-The new **Emergency Link Budget Lab** uses an SVG RF-path visual and calculates idealized free-space path loss, EIRP, received power and link margin from entered values. It is an engineering estimate, not a live link measurement or a claim of connection to any satellite. It excludes detailed availability engineering such as coded modem sensitivity, rain fade profile, antenna pointing, interference, receiver noise temperature, bandwidth and carrier authorization unless these are represented in the user-entered total losses/sensitivity.
+In the GitHub repository:
+**Settings → Pages → Enforce HTTPS**.
 
-## App lock / privacy
+GitHub Pages `github.io` sites support HTTPS. Check that all scripts, images, stylesheets, and API URLs use `https://`, not `http://`.
 
-The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier is stored in browser storage; plaintext password is not stored. It does not protect static public files or replace server-side authentication. GitHub Pages remains a static hosting platform; use a real identity gateway/server for restricted access. Do not commit local bridge config, credentials, VPN keys, pairing tokens, coordinates or private records.
+## 4. Test
 
-## PWA architecture
+### Browser
+Open the deployed `https://...onrender.com/health` URL. Expect HTTP 200 and JSON containing:
+- `status: "ok"`
+- `https: true`
+- an ISO timestamp
 
-- `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v12`; caches local shell assets only and never substitutes cached external feeds as live.
-- `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
-- `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
-- `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
+### PowerShell
+```powershell
+curl.exe -i https://YOUR-SERVICE.onrender.com/health
+curl.exe -I http://YOUR-SERVICE.onrender.com/health
+```
+The HTTPS request should return `200`. The public HTTP request should redirect to HTTPS at Render's edge (commonly a `301` or `308`); verify the `Location` header starts with `https://`.
 
-## GitHub Pages
+### macOS/Linux
+```bash
+curl -i https://YOUR-SERVICE.onrender.com/health
+curl -I http://YOUR-SERVICE.onrender.com/health
+```
 
-Upload all package contents and `assets/` to the repository root. In **Settings → Pages**, select **Deploy from a branch**, branch `main`, folder `/(root)`. Open the HTTPS Pages URL. Do not upload the ZIP inside the repo expecting it to run.
+### Render deployment health check
+In the Render service settings, set **Health Check Path** to `/health`. Render considers `2xx`/`3xx` responses healthy and uses this endpoint during deployment and runtime checks.
 
-See `PWA-INSTALL-NOW.md`, `DESKTOP-INSTALL-AND-VPN-GUIDE.md`, `SECURITY-DEPLOYMENT.md`, `LINK-BUDGET-LAB.md`, and `QA_REPORT.md`.
+## Important limitations
 
-
-## RF Spectrum & Interference Intelligence
-
-The new RF panel is receive-only and non-transmitting. It provides a virtual interference scenario, calculated SNR/idealized Shannon capacity, and local CSV import for authorized receiver/SDR exports (`frequency_mhz,power_dbm`). It does not transmit or jam radio signals, modify an RF device, or confirm a live spectrum without an imported/connected measurement source.
-
-The scenario controls are simulation-only. For suspected harmful interference, preserve receiver logs and contact the radio/service operator or regulator. ITU Radio Regulations prohibit harmful interference and protect safety-of-life services. See https://www.itu.int/en/mediacentre/backgrounders/Pages/radio-interference.aspx and https://btrc.gov.bd/.
-
-
-See [RF Spectrum & Interference Intelligence](RF-INTERFERENCE-INTELLIGENCE.md) for formula definitions, CSV format, limitations, and the receive-only safety boundary. A dependency-free focused test can be run using `node tests/test-rf-interference-intelligence.cjs`.
-
-
-## Chrome address-bar installation
-
-The PWA script deliberately leaves `beforeinstallprompt` unprevented so Chromium can show its native Install icon beside the address bar when its installability and browser policy conditions are met. The website cannot force browser chrome to show an icon. If absent, check HTTPS/127.0.0.1 origin, manifest and icon requests, service-worker activation, browser profile installation state and browser policy. Use the top-bar Install App button or browser menu for guidance.
-
-## Space & Atmosphere Observatory (v12)
-
-Three new panels are included:
-
-- **Ozone & Atmosphere Observatory**: animated explanatory atmosphere/ozone visual, altitude-layer reference, a Dobson Unit to compressed-thickness calculator, and links to the official NASA Ozone Watch maps. The canvas is a schematic, not a current measured ozone map.
-- **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
-- **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
-
-The service-worker app-shell cache is `terravex-apex-shell-v12`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
-
-### Scientific references
-
-- NASA Ozone Watch: https://ozonewatch.gsfc.nasa.gov/
-- NASA explanation of Dobson Units: https://ozonewatch.gsfc.nasa.gov/facts/dobson_SH.html
-- NASA atmospheric layers: https://www.nasa.gov/image-article/earths-atmospheric-layers-3/
-- NASA CCMC DONKI: https://ccmc.gsfc.nasa.gov/tools/DONKI/
-- NASA Open APIs / NeoWs documentation: https://api.nasa.gov/
-- CelesTrak public orbital elements: https://celestrak.org/NORAD/elements/
-
-Run local validation with `python run-space-env-tests.py`; on Windows, `VERIFY-TERRAVEX-SPACE-ENVIRONMENT.ps1` calls the same checks if Python and Node.js are installed.
-
-### VPN bridge QA (optional)
-
-The isolated VPN bridge test suite uses a fake Tailscale CLI and does not turn on/off a real tunnel. Run `python test_vpn_bridge.py` only when `127.0.0.1:8765` is not occupied. The suite covers one-use pairing, expiry, origin allow-list and ON/OFF-only actions.
+- This endpoint checks that the API process responds. It does not check a database because this starter has no database.
+- A GitHub Pages site cannot run a Node server by itself; the API must be deployed separately.
+- The service URL does not exist until you deploy it. Replace the placeholder URL only after Render provides the actual URL.
+- Render's free service may spin down when idle, so the first request may be delayed.
+- Do not put passwords, API secrets, private keys, or tokens in the public GitHub repository.
