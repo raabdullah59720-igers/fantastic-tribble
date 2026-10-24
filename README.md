@@ -1,70 +1,29 @@
-# HTTPS-only Health Endpoint Starter
+# TERRAVEX Signalling + Encrypted Voice-Mail Service
 
-This starter uses:
-- GitHub Pages for the static PWA frontend
-- Render Web Service for the live `/health` API
-- Render-managed HTTPS at the public edge
-- `/health` as the Render deployment health-check path
+Node.js 18+ service using built-in modules only. No external npm dependency or `npm install` is required to run it locally. It provides:
 
-## 1. Deploy the API
+- WebSocket signaling for a two-browser WebRTC audio/data session; signaling messages include only offer/answer/ICE metadata.
+- A separate HTTPS/HTTP JSON API for asynchronous voice mail. Voice and message details are AES-GCM encrypted in the sender's browser before upload; this service only sees ciphertext.
+- A 24-hour maximum in-memory message TTL, 8 MiB per audio message, 8 messages per mailbox, 64 MiB total ciphertext capacity, exact-origin CORS allow-list and request rate cap.
 
-1. Create a new GitHub repository, for example `new-app-health-api`.
-2. Upload `package.json`, `server.js`, `render.yaml`, and `.gitignore` to the repository root.
-3. Sign in to Render and choose **New + → Web Service**.
-4. Connect the repository and deploy it. If prompted, use:
-   - Build command: `npm install`
-   - Start command: `npm start`
-   - Health check path: `/health`
-5. Render will assign a service URL similar to `https://your-service-name.onrender.com`.
-6. In Render → Environment, set `APP_ORIGIN` to the exact GitHub Pages origin (for example `https://YOUR-USERNAME.github.io`; do not add a repository path).  
-7. Open `https://your-service-name.onrender.com/health`. A successful response should contain `"status":"ok"` and `"https":true`.
+## Local start
 
-Render terminates TLS at its public edge and redirects incoming public HTTP traffic to HTTPS. The Node process listens on the internal `PORT`; do not create a separate TLS certificate or commit private keys for this standard Render setup.
-
-## 2. Connect the GitHub Pages app
-
-1. Copy `public/health-check.js` into your frontend repository.
-2. Replace `https://REPLACE-WITH-YOUR-SERVICE.onrender.com/health` with the real HTTPS URL from Render.
-3. Include the script in your HTML:
-   `<script src="./health-check.js"></script>`
-4. In Render, set `APP_ORIGIN` to the exact origin of your GitHub Pages site, then redeploy if needed.
-5. Call `checkHealth()` from your app and show its result in the UI. The starter allows CORS only for that configured origin. Do not use wildcard CORS for private or authenticated endpoints.
-
-## 3. Enforce HTTPS for GitHub Pages
-
-In the GitHub repository:
-**Settings → Pages → Enforce HTTPS**.
-
-GitHub Pages `github.io` sites support HTTPS. Check that all scripts, images, stylesheets, and API URLs use `https://`, not `http://`.
-
-## 4. Test
-
-### Browser
-Open the deployed `https://...onrender.com/health` URL. Expect HTTP 200 and JSON containing:
-- `status: "ok"`
-- `https: true`
-- an ISO timestamp
-
-### PowerShell
-```powershell
-curl.exe -i https://YOUR-SERVICE.onrender.com/health
-curl.exe -I http://YOUR-SERVICE.onrender.com/health
-```
-The HTTPS request should return `200`. The public HTTP request should redirect to HTTPS at Render's edge (commonly a `301` or `308`); verify the `Location` header starts with `https://`.
-
-### macOS/Linux
 ```bash
-curl -i https://YOUR-SERVICE.onrender.com/health
-curl -I http://YOUR-SERVICE.onrender.com/health
+HOST=127.0.0.1 PORT=8787 ALLOWED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000 node server.js
 ```
 
-### Render deployment health check
-In the Render service settings, set **Health Check Path** to `/health`. Render considers `2xx`/`3xx` responses healthy and uses this endpoint during deployment and runtime checks.
+Health: `http://127.0.0.1:8787/healthz`
 
-## Important limitations
+On Windows, `START-TERRAVEX-COMMS-ONE-RUN.bat` starts the local service and app in separate windows. Node.js 18+ is required for this connection layer; the static application and local recording/playback can still open without it.
 
-- This endpoint checks that the API process responds. It does not check a database because this starter has no database.
-- A GitHub Pages site cannot run a Node server by itself; the API must be deployed separately.
-- The service URL does not exist until you deploy it. Replace the placeholder URL only after Render provides the actual URL.
-- Render's free service may spin down when idle, so the first request may be delayed.
-- Do not put passwords, API secrets, private keys, or tokens in the public GitHub repository.
+## Hosted deployment
+
+Use the root `render.yaml` Blueprint or create a Node service with root directory `relay-server`, build command `node --check server.js`, start command `npm start`, health path `/healthz`. Set `ALLOWED_ORIGINS` to the exact web-app origin, e.g. `https://account.github.io` (no path or trailing slash). Once deployed, use the service's `wss://` URL in TERRAVEX; the mailbox API is then called over `https://` on the same host. Check `/healthz` before using it.
+
+## Limits and privacy
+
+- This is temporary, in-memory storage. A process restart, deployment or instance replacement can lose messages before the 24-hour expiry. There is no database/backup/guaranteed delivery.
+- The mailbox address is a random 128-bit identifier and the secret is a random 256-bit AES key. A complete inbox key is a capability: only share it with the intended participant, because they can decrypt messages in that mailbox.
+- The server stores only encrypted audio/metadata, not plaintext content. It does see mailbox address, message size and timestamps.
+- Signaling rooms accept two peers, use exact Origin allow-lists, bounded frames, short join windows, rate limits and idle expiry. This service does not relay WebRTC audio and does not provide TURN; restrictive NAT/firewall combinations require a TURN service you control.
+- This service does not connect to a Russian satellite, ISS, astronaut, emergency agency or spacecraft. Satellite service requires an operator, compatible terminal, subscription and regulatory authorisation. Do not rely on this prototype for emergency dispatch.

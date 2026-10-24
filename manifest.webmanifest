@@ -141,6 +141,30 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Space Communications & Voice Relay",
+      "short_name": "Space Relay",
+      "url": "./?page=spacecomms",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Space Voice Mail Relay",
+      "short_name": "Voice Mail",
+      "url": "./?page=spacecomms",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

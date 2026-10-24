@@ -1,9 +1,15 @@
 services:
   - type: web
-    name: new-app-health-api
+    name: terravex-voice-signaling-relay
     runtime: node
-    plan: free
-    buildCommand: npm install
-    startCommand: npm start
-    healthCheckPath: /health
-    autoDeploy: true
+    rootDir: relay-server
+    buildCommand: node --check server.js
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: ROOM_TTL_SECONDS
+        value: "900"

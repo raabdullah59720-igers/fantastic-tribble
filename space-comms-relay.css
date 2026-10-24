@@ -1,0 +1,46 @@
+/* TERRAVEX APEX Space Communications & Emergency Voice Relay */
+.scr-wrap{display:grid;gap:16px}.scr-hero{position:relative;overflow:hidden;min-height:260px;border:1px solid #1c526d;border-radius:18px;background:radial-gradient(ellipse at 68% 10%,#164c6c 0,transparent 38%),linear-gradient(135deg,#07172a,#06101d 60%,#111735);padding:22px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:18px;align-items:center}.scr-hero:after{content:"";position:absolute;width:360px;height:360px;right:-125px;bottom:-230px;border-radius:50%;border:1px solid #3a8bb8;box-shadow:0 0 0 18px #2e82a511,0 0 0 54px #2e82a511,0 0 0 95px #2e82a508;pointer-events:none}.scr-hero h2{font-size:25px;margin:7px 0 9px;line-height:1.15}.scr-hero p{max-width:650px;color:#a6bfd2;margin:0}.scr-kickers{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.scr-kicker{border:1px solid #28506b;background:#0b2134;color:#99dff0;border-radius:999px;padding:5px 9px;font-size:10px;letter-spacing:.4px}.scr-scene{position:relative;z-index:1;min-width:0}.scr-scene canvas{display:block;width:100%;height:205px;border:1px solid #193f5c;border-radius:12px;background:radial-gradient(ellipse at 50% 90%,#163b55,#071322 64%)}.scr-top-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.scr-stat{padding:15px;border:1px solid #1a3850;background:linear-gradient(135deg,#0c1d30,#081320);border-radius:13px;min-width:0}.scr-stat small{display:block;color:#7199b6;font-size:10px;letter-spacing:1px}.scr-stat strong{display:block;font-size:20px;color:#80e8f7;margin-top:4px;overflow-wrap:anywhere}.scr-stat span{display:block;color:#799ab3;font-size:10px;margin-top:3px}.scr-section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.scr-section-title h3{margin:0;font-size:13px;letter-spacing:.5px}.scr-chip{font-size:10px;color:#93c9df;border:1px solid #24445b;border-radius:999px;padding:4px 7px;white-space:nowrap}.scr-status{border:1px solid #24435b;background:#071623;border-radius:9px;padding:9px 11px;color:#a4c3d8;font-size:11px;overflow-wrap:anywhere}.scr-status.live{border-color:#246b59;color:#79f0c1;background:#08251f}.scr-status.warn{border-color:#72572b;color:#ffd280;background:#2c2110}.scr-status.bad{border-color:#71394b;color:#ff9aad;background:#2d131e}.scr-link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.scr-link-card{display:flex;flex-direction:column;gap:7px;padding:13px;border:1px solid #1b3b54;border-radius:11px;background:#081624;text-decoration:none;color:#e5f7ff;min-height:100px}.scr-link-card:hover{border-color:#41bcd1;background:#0b2233}.scr-link-card b{font-size:12px}.scr-link-card small{font-size:10px;color:#86a5be}.scr-link-card .scr-link-arrow{margin-top:auto;color:#65d7ef;font-size:11px}.scr-rtc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}.scr-field{display:grid;gap:6px;margin:10px 0}.scr-field label{font-size:11px;color:#9ab7ca}.scr-field textarea,.scr-field input,.scr-field select{width:100%;background:#06111d;border:1px solid #28485f;border-radius:8px;color:#e2f5ff;padding:10px;min-width:0}.scr-field textarea{resize:vertical;min-height:120px;font:11px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}.scr-btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.scr-btn-row .btn{min-width:0}.scr-audio{width:100%;margin:10px 0;border-radius:9px}.scr-log{height:165px;overflow:auto;display:flex;flex-direction:column;gap:7px;border:1px solid #19344a;background:#05101a;padding:10px;border-radius:10px}.scr-chat-line{max-width:94%;border:1px solid #21455f;border-radius:10px;padding:8px 10px;background:#0c2334;font-size:12px;overflow-wrap:anywhere}.scr-chat-line.self{align-self:flex-end;background:#0b2c35;border-color:#246b78}.scr-chat-line small{display:block;color:#7da6bf;font-size:9px;margin-bottom:2px}.scr-observations{display:grid;gap:8px}.scr-observation{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid #19364e;background:#081725;border-radius:9px}.scr-observation b{display:block;font-size:12px;overflow-wrap:anywhere}.scr-observation small{display:block;color:#7e9eb8;font-size:10px;overflow-wrap:anywhere}.scr-warning{padding:12px 14px;border:1px solid #65502b;border-radius:11px;background:#241c10;color:#d9c18e;font-size:11px;line-height:1.55}.scr-good{padding:12px 14px;border:1px solid #245a4d;border-radius:11px;background:#09251f;color:#a0dfce;font-size:11px;line-height:1.55}.scr-formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#9ed8e9;background:#06111b;padding:9px 11px;border-radius:8px;border:1px solid #17374b;font-size:11px;overflow-wrap:anywhere}.scr-mini-label{font-size:10px;color:#7396ae;letter-spacing:1px;font-weight:750}.scr-activity{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.scr-activity .dot{flex:0 0 7px}.scr-feed-stamp{font-size:10px;color:#7b9db6;margin-top:8px}.scr-privacy{display:flex;gap:9px;padding:10px 12px;background:#081623;border-radius:9px;border:1px solid #1c364a;color:#89a8bd;font-size:10px}
+@media(max-width:1000px){.scr-hero{grid-template-columns:1fr}.scr-top-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.scr-link-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.scr-hero{padding:16px}.scr-hero h2{font-size:21px}.scr-rtc-grid,.scr-top-grid,.scr-link-grid{grid-template-columns:1fr}.scr-observation{grid-template-columns:1fr}.scr-scene canvas{height:170px}.scr-btn-row button{flex:1 1 auto}}
+
+/* v16: end-to-end encrypted internet voice mail, voice-mail inbox, and automatic room relay */
+.scr-enhanced-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr);gap:15px;margin:15px 0}
+.scr-voice-mail-panel,.scr-auto-relay-panel{position:relative;overflow:hidden}
+.scr-voice-mail-panel:before,.scr-auto-relay-panel:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#33d7f0,#7770ff,#2af0b8);opacity:.9}
+.scr-vm-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scr-vm-full{grid-column:1/-1}
+.scr-vm-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.scr-vm-meter{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid rgba(103,232,249,.18);background:rgba(4,18,34,.65);border-radius:10px;padding:10px 12px;color:#91b9d1;font:600 11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em}
+.scr-vm-meter span:first-child{font-size:18px;color:#a9f3ff}
+.scr-vm-meter span:last-child{color:#70f5c2}
+.scr-vm-playback{width:100%;margin:12px 0;min-height:40px}
+.scr-vm-received-wrap{border-top:1px solid rgba(109,172,219,.18);margin-top:17px;padding-top:14px}
+.scr-vm-received{display:grid;gap:10px}
+.scr-vm-received-note{display:grid;gap:8px;padding:12px;border:1px solid rgba(87,190,222,.22);border-radius:12px;background:linear-gradient(135deg,rgba(8,34,56,.84),rgba(13,18,40,.85));overflow:hidden}
+.scr-vm-received-note strong{font-size:13px;color:#dffaff;overflow-wrap:anywhere}
+.scr-vm-received-note small,.scr-hint{font-size:11px;color:#8eb1c9;line-height:1.5;overflow-wrap:anywhere}
+.scr-vm-received-note audio{width:100%;min-width:0}
+.scr-vm-received-note p{font-size:12px;color:#b9d0e2;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.scr-hint{display:block;margin-top:5px}
+.scr-auto-relay-panel .scr-field{margin:10px 0}
+.scr-auto-relay-panel input,.scr-auto-relay-panel textarea{width:100%;box-sizing:border-box}
+.scr-authorised-routes{margin-top:15px}
+.scr-authorised-routes .scr-link-card{min-height:95px}
+.scr-status.live{border-color:rgba(54,239,177,.36)}
+.scr-status.warn{border-color:rgba(255,192,87,.32)}
+.scr-status.bad{border-color:rgba(255,100,125,.38)}
+@media(max-width:1080px){.scr-enhanced-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.scr-vm-fields{grid-template-columns:1fr}.scr-vm-full{grid-column:auto}.scr-vm-actions .btn{flex:1 1 145px}.scr-vm-meter{justify-content:flex-start}}
+
+/* v16: asynchronous internet voice mailbox */
+.scr-vm-mailbox{margin-top:17px;padding:15px;border:1px solid rgba(65,209,239,.24);border-radius:14px;background:linear-gradient(135deg,rgba(10,38,61,.86),rgba(6,16,31,.9));}
+.scr-vm-mailbox .scr-section-title{align-items:flex-start;gap:10px;flex-wrap:wrap}
+.scr-vm-mailbox .scr-vm-actions{margin-top:10px}
+.scr-vm-mailbox .scr-vm-actions button{min-height:38px}
+.scr-vm-mailbox .scr-vm-received{display:grid;gap:9px;margin-top:12px}
+.scr-vm-cloud-note{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px;border:1px solid rgba(105,179,209,.19);border-radius:10px;background:rgba(7,19,33,.72)}
+.scr-vm-cloud-note strong{display:block;color:#e1f6ff;overflow-wrap:anywhere}
+.scr-vm-cloud-note small{display:block;color:#9db7c9;margin-top:5px;line-height:1.5}
+.scr-vm-cloud-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.scr-vm-cloud-player{grid-column:1/-1;width:100%;margin-top:6px}
+@media(max-width:760px){.scr-vm-cloud-note{grid-template-columns:1fr}.scr-vm-cloud-actions{justify-content:flex-start}}

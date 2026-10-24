@@ -1,5 +1,5 @@
 /* TERRAVEX APEX service worker. Critical shell assets are required; artwork and docs are optional. */
-const CACHE_NAME = 'terravex-apex-shell-v12';
+const CACHE_NAME = 'terravex-apex-shell-v16';
 const SCOPE_URL = self.registration.scope;
 const REQUIRED_SHELL = [
   "./index.html",
@@ -32,6 +32,8 @@ const REQUIRED_SHELL = [
   "./rf-interference-intelligence.js",
   "./space-environment.css",
   "./space-environment.js",
+  "./space-comms-relay.css",
+  "./space-comms-relay.js",
   "./manifest.webmanifest",
   "./pwa-install.js",
   "./password-lock.js",
