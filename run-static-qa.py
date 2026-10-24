@@ -34,7 +34,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v11': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v12': errors.append('Unexpected service-worker cache version '+cache)
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
 # Runtime diagnostics must inspect the same service-worker version.
 adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')
@@ -65,10 +65,10 @@ if css_errors: errors.extend(css_errors)
 report.append(f'CSS parser: {len(css_files)} stylesheets; parse errors={len(css_errors)}')
 # Python syntax
 import ast
-for n in ('vpn-bridge.py','test_vpn_bridge.py','run-static-qa.py'):
+for n in ('vpn-bridge.py','test_vpn_bridge.py','run-static-qa.py','run-space-env-tests.py'):
  try: ast.parse((root/n).read_text())
  except Exception as e: errors.append(f'Python syntax {n}: {e}')
-report.append('Python syntax: 3 files checked')
+report.append('Python syntax: 4 files checked')
 # password gate safety checks
 pl=(root/'password-lock.js').read_text()
 for phrase in ('PBKDF2','SHA-256','localStorage.setItem','iterations: ITERATIONS'):

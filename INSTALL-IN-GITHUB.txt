@@ -61,9 +61,11 @@ For RF panel scope, formulas, and a CSV example, see RF-INTERFERENCE-INTELLIGENC
 CHROME ADDRESS-BAR INSTALL (FIXED)
 - pwa-install.js intentionally does not call preventDefault() for beforeinstallprompt, so Chrome/Edge native address-bar Install UI remains eligible to appear.
 - Open the deployed HTTPS GitHub Pages URL, not the ZIP preview or file:// URL. If the icon is absent, click the app top-bar Install App button for guidance and use the browser menu fallback. A website cannot force Chrome UI to show the icon.
-- Service worker cache version: terravex-apex-shell-v11.
+- Service worker cache version: terravex-apex-shell-v12.
 
-Address-bar install fix (v11)
+Address-bar install fix (v12)
 - Previous bug: pwa-install.js cancelled beforeinstallprompt with event.preventDefault(), suppressing the browser-native install affordance. This has been removed from that listener.
 - Upload every extracted file and assets/ folder to the repository root, then visit the real HTTPS Pages URL. The browser decides whether/when to show its Install icon.
-- If the icon is absent, inspect DevTools > Application > Manifest and Service Workers, check browser policy/already-installed state, refresh the v11 app shell, and try the browser menu fallback.
+- If the icon is absent, inspect DevTools > Application > Manifest and Service Workers, check browser policy/already-installed state, refresh the v12 app shell, and try the browser menu fallback.
+
+New v12 pages: Ozone & Atmosphere Observatory, Solar Activity & Magnetosphere Monitor, Near-Earth Object Watch. Full app-shell cache uses terravex-apex-shell-v12.

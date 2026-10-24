@@ -6,7 +6,7 @@
 
 1. Publish every file in this folder, including `assets/`, to the root of your GitHub Pages repository.
 2. Open the resulting **HTTPS** Pages URL in Chrome or Edge. Do not use the ChatGPT sandbox download URL and do not double-click `index.html`.
-3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v11`.
+3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v12`.
 4. Look for Chrome’s **Install** icon at the right side of the address bar. The app no longer suppresses the browser-native install UI. If the icon is absent, click the top-bar **Install App** button for diagnostics, then use Chrome’s menu: **⋮ → Cast, save and share → Install page as app**. In Edge use **⋯ → Apps → Install this site as an app**. Browser wording varies by version and policy.
 5. If the install command is missing, open DevTools → **Application** → **Manifest** and **Service Workers**. Check the manifest and any console/network errors. Also check if the app is already installed in the same browser profile or if browser policy disables installation.
 
@@ -42,3 +42,8 @@ The local bridge now prints a random **one-use pairing token** on each startup. 
 ## Why the address-bar icon may be absent
 
 Chrome owns this icon and does not let a website force it to appear. The app must be on HTTPS or `http://127.0.0.1`, have a valid manifest with `name`/`short_name`, 192px and 512px icons, `start_url`, `scope`, and standalone display mode, and must have no browser policy block. If already installed in this Chrome profile, the install control may be replaced by an app-open control or hidden. Keep the site open and interact with it, reload once after the service worker activates, and inspect DevTools → Application → Manifest / Service Workers if needed.
+
+
+## New Space & Atmosphere pages (v12)
+
+The installed app also includes Ozone & Atmosphere, Solar Activity & Magnetosphere, and Near-Earth Object Watch. The service worker caches `space-environment.css` and `space-environment.js`; hard reload after upload and use Source Health → Refresh cached app shell if the old app shell remains. Data feeds still require internet.

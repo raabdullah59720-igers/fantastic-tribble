@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v11`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v12`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -55,3 +55,28 @@ See [RF Spectrum & Interference Intelligence](RF-INTERFERENCE-INTELLIGENCE.md) f
 ## Chrome address-bar installation
 
 The PWA script deliberately leaves `beforeinstallprompt` unprevented so Chromium can show its native Install icon beside the address bar when its installability and browser policy conditions are met. The website cannot force browser chrome to show an icon. If absent, check HTTPS/127.0.0.1 origin, manifest and icon requests, service-worker activation, browser profile installation state and browser policy. Use the top-bar Install App button or browser menu for guidance.
+
+## Space & Atmosphere Observatory (v12)
+
+Three new panels are included:
+
+- **Ozone & Atmosphere Observatory**: animated explanatory atmosphere/ozone visual, altitude-layer reference, a Dobson Unit to compressed-thickness calculator, and links to the official NASA Ozone Watch maps. The canvas is a schematic, not a current measured ozone map.
+- **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
+- **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
+
+The service-worker app-shell cache is `terravex-apex-shell-v12`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+
+### Scientific references
+
+- NASA Ozone Watch: https://ozonewatch.gsfc.nasa.gov/
+- NASA explanation of Dobson Units: https://ozonewatch.gsfc.nasa.gov/facts/dobson_SH.html
+- NASA atmospheric layers: https://www.nasa.gov/image-article/earths-atmospheric-layers-3/
+- NASA CCMC DONKI: https://ccmc.gsfc.nasa.gov/tools/DONKI/
+- NASA Open APIs / NeoWs documentation: https://api.nasa.gov/
+- CelesTrak public orbital elements: https://celestrak.org/NORAD/elements/
+
+Run local validation with `python run-space-env-tests.py`; on Windows, `VERIFY-TERRAVEX-SPACE-ENVIRONMENT.ps1` calls the same checks if Python and Node.js are installed.
+
+### VPN bridge QA (optional)
+
+The isolated VPN bridge test suite uses a fake Tailscale CLI and does not turn on/off a real tunnel. Run `python test_vpn_bridge.py` only when `127.0.0.1:8765` is not occupied. The suite covers one-use pairing, expiry, origin allow-list and ON/OFF-only actions.

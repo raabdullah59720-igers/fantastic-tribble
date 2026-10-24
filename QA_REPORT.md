@@ -1,38 +1,63 @@
-# TERRAVEX APEX QA Report — Chrome Address-Bar Install Fix
+# TERRAVEX APEX — Space & Atmosphere Upgrade QA Report
 
-Build: `TERRAVEX-APEX-OMNIBOX-INSTALL-FIX` · PWA shell cache `terravex-apex-shell-v11`
+Build: **Space Environment Upgrade v12**  
+Test date: **24 October 2026**  
+Scope: previous application package plus three additive panels: Ozone & Atmosphere Observatory, Solar Activity & Magnetosphere Monitor, and Near-Earth Object Watch.
 
-## Main bug fixed
+## Package and static validation
 
-The previous `pwa-install.js` called `event.preventDefault()` inside the `beforeinstallprompt` listener. That suppresses Chrome/Edge's default browser install UI, including its native address-bar Install affordance, unless the site manually invokes the retained prompt. The install UX is now intentionally non-intercepting: the handler records that installation is available but does not cancel the browser event. The in-app Install buttons now guide users to the browser's native address-bar icon or menu. The website cannot force the browser chrome icon to appear; browser eligibility, profile state, and policy still decide visibility.
+- HTML parsed successfully: **634 element IDs**, **0 duplicate IDs**.
+- Navigation and page sections: **32 navigation buttons / 32 page sections**.
+- Local HTML resource references: **0 missing**.
+- PWA manifest: valid JSON, `standalone` display, 192×192 and 512×512 icons declared, **8 shortcuts**, **0 invalid shortcut targets**.
+- Service worker: `terravex-apex-shell-v12`; **37 required app-shell resources**, **0 missing**.
+- Runtime PWA diagnostics and service-worker cache version: **PASS**.
+- JavaScript syntax: **18 root JavaScript files**, **0 syntax errors**.
+- CSS parser: **15 stylesheets**, **0 parser errors**.
+- Python syntax: **4 files** checked.
+- ZIP CRC/integrity: **PASS**.
 
-## Static and focused checks
+## Package inventory
 
-- `python run-static-qa.py`: **0 errors**.
-- HTML parsed: **600 IDs, 0 duplicate IDs**; all local script/style/image references exist.
-- Manifest: valid JSON; stable relative `id`, `start_url`, and `scope`; `display=standalone`; 192×192 and 512×512 PNG icons declared.
-- Service worker: `terravex-apex-shell-v11`; **35 required app-shell assets**, missing **0**; runtime diagnostics expect v11.
-- Manifest shortcuts: **5 checked**, all target existing page IDs.
-- JavaScript syntax: **17 root JS files**, 0 errors.
-- CSS parse: **14 stylesheets**, 0 errors.
-- Python syntax: bridge, bridge test and static QA script parse.
-- PWA omnibox regression test: `node tests/test-pwa-omnibox.cjs`, **9/9 PASS**. Confirms `beforeinstallprompt` listener exists, the listener itself does not call `preventDefault`, manifest and icons are present, and service-worker cache version matches diagnostics.
-- RF panel focused functional tests: `node tests/test-rf-interference-intelligence.cjs`, **5/5 PASS**.
-- Local VPN bridge tests: `python test_vpn_bridge.py`, **11/11 PASS**, using a fake VPN CLI.
-- ZIP archive integrity: checked with `ZipFile.testzip`; no corrupt entry reported.
+- Deliverable files after excluding Python bytecode/cache: **73 files** (under the 98-file constraint).
+- Entry page `index.html`, manifest, service worker and all three new panel assets are at the package root or referenced local asset paths.
 
-## Not tested / limits
+## Functional tests
 
-- Browser automation/native Chrome address-bar icon was not executed in this environment. The hosted/installed result must be verified in the user's Chrome profile.
-- GitHub Pages deployment and production external APIs were not tested.
-- No actual Tailscale/WireGuard tunnel, SDR or satellite link was operated. VPN tests use a fake CLI; RF module is receive-only and virtual.
-- A PWA must open from HTTPS or `http://localhost` / `http://127.0.0.1`, not from a sandbox download URL or `file://`. After uploading this build, hard reload the site and allow the v11 service worker to activate.
+- Space science math/feed normalizer: **11 assertions PASS** (Dobson Unit conversion, invalid input, NEO data normalization/sorting, and NASA hazardous flag preservation).
+- PWA install regression checks: **9/9 PASS**.
+- RF interference simulation tests retained: **5/5 PASS**.
+- VPN local-bridge isolated tests: **11/11 PASS** (fake VPN CLI; does not control a real VPN during tests).
+- Browser mock integration with Chromium: **8 assertions PASS**, **0 page errors**. The test provided mock NASA DONKI and NeoWs JSON responses and verified FLR/CME/GST counts, source event rows, NEO count, catalog hazardous flag, normalized list and closest-pass distance. No public network response was used in this test.
+- Visual smoke checks: all three new panel canvases rendered in a self-contained Chromium preview with no JavaScript page errors.
 
-## Browser install troubleshooting
+## New-panel data integrity
 
-1. Upload every file and `assets/` to the repository root; do not upload the ZIP itself as the website.
-2. Open the actual HTTPS GitHub Pages URL in Chrome, not the sandbox download link.
-3. Check DevTools → Application → Manifest and Service Workers; confirm the manifest and icons load with HTTP 200 and the v11 service worker activates.
-4. If an older copy was cached, use Source Health & PWA → Refresh cached app shell, reload, or clear only this origin's site data and reopen it.
-5. Check whether the app is already installed in that Chrome profile and whether browser/organization policy disables installs.
-6. If the address-bar icon still does not appear, use Chrome's **⋮ → Cast, save and share → Install page as app** menu when available. A webpage cannot force Chrome's own UI to display an icon.
+- **Ozone:** animated atmosphere/ozone-shell and altitude-profile graphics are explicitly labeled schematic. The 300 DU default is only an illustrative user input, converting to 3 mm compressed equivalent ozone at 0 °C / 1 atm; it is not presented as a live Bangladesh observation. NASA Ozone Watch is linked and can optionally be opened in an embedded frame where browser policy permits.
+- **Space weather:** attempts to fetch NASA CCMC DONKI FLR, CME and GST records. The panel preserves source timestamps/links and reports partial/offline states; it does not infer that a CME is Earth-directed or turn research records into an official warning.
+- **Near-Earth objects:** requests one UTC date via NASA NeoWs using `DEMO_KEY`, shows only received feed values and reports an unavailable/throttled state on failure. The orbit canvas is illustrative geometry; it is not an orbital ephemeris. NASA's Demo key has low request limits, so avoid repeated manual refreshes.
+- **Existing satellite/orbit monitor:** retained; public CelesTrak orbital data still require online browser access. The new panels do not access classified or private tracking data.
+
+## Not verified in this environment
+
+- Live NASA DONKI, NeoWs and Ozone Watch network delivery from the final public GitHub Pages origin.
+- Real deployment on GitHub Pages or a Windows machine.
+- Whether NASA Ozone Watch permits embedding in each browser; direct official-source links remain available.
+- Live space-weather forecasting skill, real ozone measurements over Bangladesh, or impact prediction. This application is an engineering/observability prototype, not a certified warning service.
+- The PowerShell verification script was authored, but Windows PowerShell execution could not be performed in this Linux test environment.
+
+## Reproduce checks
+
+On a machine with Python 3, Node.js, and the project directory extracted:
+
+```bash
+python run-space-env-tests.py
+```
+
+On Windows PowerShell:
+
+```powershell
+.\VERIFY-TERRAVEX-SPACE-ENVIRONMENT.ps1
+```
+
+Passing local tests does not prove external APIs are available or that an online deployment succeeded. Always inspect the feed-status label and its fetch time.

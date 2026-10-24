@@ -1,6 +1,6 @@
 {
   "id": "./",
-  "name": "TERRAVEX APEX · Earth Intelligence",
+  "name": "TERRAVEX APEX \u00b7 Earth Intelligence",
   "short_name": "TERRAVEX",
   "description": "Installable TERRAVEX APEX Earth intelligence and engineering workbench, with live-source monitoring and scientific simulations.",
   "start_url": "./",
@@ -98,6 +98,42 @@
       "name": "RF Spectrum & Interference",
       "short_name": "RF Monitor",
       "url": "./?page=rfintel",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Ozone Observatory",
+      "short_name": "Ozone",
+      "url": "./?page=ozone",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Solar Activity Monitor",
+      "short_name": "Space Weather",
+      "url": "./?page=spaceweather",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Near-Earth Objects",
+      "short_name": "NEO Watch",
+      "url": "./?page=spaceobjects",
       "icons": [
         {
           "src": "icon-192.png",
