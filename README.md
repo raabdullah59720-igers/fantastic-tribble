@@ -1,12 +1,12 @@
-# TERRAVEX APEX · Bangladesh Satellite & Science Upgrade
+# TERRAVEX APEX · PWA INSTALL-READY DESKTOP BUILD
 
 **Static deployment:** GitHub Pages, repository root  
-**Deliverable file count:** 29 (including PWA app-shell files, advanced workbench modules, docs, licence, and compressed visual assets) (including docs, license, `.nojekyll`, two live-location files, and four compressed visual assets)  
+**Deliverable file count:** 50 files, within the 98-file limit. Install-ready PWA plus optional local Windows launcher.  
 **Intent:** additive dashboard update based on the previously supplied TERRAVEX APEX Earth-science package and two lightning research PDFs.
 
 ## Install
 1. Back up your current repository.
-2. Download and extract `TERRAVEX-APEX-FUTURE-WORKBENCH-UPGRADE.zip`.
+2. Download and extract `TERRAVEX-APEX-INSTALL-READY.zip`.
 3. Upload the **contents** of the extracted folder (not only the ZIP and not a nested folder) into the root of `terravex-apex`.
 4. Keep all CSS/JS files next to `index.html`; preserve the `assets/` directory for the earlier thunderstorm demonstrator assets.
 5. Configure **Settings → Pages → Deploy from a branch → main → /(root)**.
@@ -158,3 +158,20 @@ GitHub Pages is static and published websites are public even when the source re
 - Install as a desktop PWA using the **Source Health & Offline System → Install app** button or the Chrome/Edge browser menu. Serve via GitHub Pages HTTPS. Chromium-sized PNG icons (192 and 512 px) and service-worker shell caching are included.
 - A PWA cannot itself control OS-level VPN software. Real control requires the separate helper and a preconfigured client; no satellite service, VPN account/server, private key, or subscription is provided.
 - Read `DESKTOP-INSTALL-AND-VPN-GUIDE.md` before running the bridge. `.gitignore` excludes the actual local config file from Git.
+
+## Immediate Windows desktop PWA install (no GitHub upload required)
+
+1. Download and extract the **complete ZIP** to a normal writable folder (not inside the ZIP preview).
+2. No Python installation is needed for the PWA launcher. Double-click `START-TERRAVEX-WEB-APP.bat`. It starts a small PowerShell/.NET HTTP server bound only to `127.0.0.1:8000` and opens the app. Keep its console window open while using the local copy.
+3. In TERRAVEX, click **Install App**. If the browser does not offer an in-app prompt, use Microsoft Edge `… → More tools → Apps → Install this site as an app`, or Chrome's available `Install page as app` menu item.
+4. The local PWA's origin is `http://127.0.0.1:8000`. This local install is separate from the GitHub Pages install. To update the local app, replace the files and refresh the service worker; to share it, publish the files on HTTPS.
+
+Do not double-click `index.html` directly: `file://` is not an installable PWA origin. The local server uses loopback only and blocks access to helper scripts, batch files, JSON config secrets and archive files.
+
+
+## Install-ready PWA troubleshooting
+
+- The topbar **Install App** button is available on every panel. It uses the browser's install prompt when the browser emits `beforeinstallprompt`; if it does not, it opens the browser-specific install directions. That browser event is not supported by every browser and is never guaranteed.
+- For immediate installation without first uploading to GitHub, run `START-TERRAVEX-WEB-APP.bat` on Windows, then click the app button at `http://127.0.0.1:8000/`. The included `serve_terravex.ps1` uses a loopback-only TCP server; it does not listen on the LAN. The local server only exposes app resources and denies direct retrieval of scripts, JSON configuration, archives, PDFs and hidden files.
+- The local copy needs the server window running to retrieve live assets from the local origin. The service worker can display the cached app shell if the server stops, but external data, satellite imagery, maps, notifications and VPN bridge operations may be unavailable.
+- `file://` pages and ChatGPT sandbox download URLs cannot be installed as the actual web app origin. Use the local launcher or the deployed HTTPS GitHub Pages URL. See `PWA-INSTALL-NOW.md`.

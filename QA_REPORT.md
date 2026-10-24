@@ -1,35 +1,59 @@
-# TERRAVEX APEX Desktop PWA + VPN Control Upgrade — QA Report
+# TERRAVEX APEX · PWA Install-Ready Build QA
 
 ## Package inventory
-- Deliverable: `TERRAVEX-APEX-DESKTOP-VPN-PWA-UPGRADE.zip`
-- Source: previous TERRAVEX APEX Secure Satellite & VPN app bundle, with the previous feature set retained.
-- Files before ZIP: 46 (maximum allowed: 98).
-- JavaScript syntax checks: all root `.js` files.
-- CSS parsing: all 11 root stylesheets.
-- Entry point: `index.html` at archive root.
 
-## Checks performed
-- `node --check` on all root JavaScript files: PASS.
-- Python syntax compilation for `vpn-bridge.py` and `test_vpn_bridge.py`: PASS.
-- Local bridge automated tests: 6/6 PASS. Tests use a fake Tailscale CLI; they do not operate a real VPN.
-- Bridge security tests: bearer token required, exact Origin allow-list, invalid origin rejected, arbitrary actions rejected, fixed ON/OFF actions verified against fake CLI.
-- HTML structure: PASS; 27 page sections match 27 navigation entries, 525 IDs with no duplicates, no missing local file references.
-- CSS parsing: PASS; 11 stylesheets, no parser errors found.
-- PWA manifest: PASS; `display=standalone`, relative start URL, icon-192.png (192×192), icon-512.png (512×512), SVG icon present.
-- Service-worker shell: PASS; cache version v6, 38 precache paths checked and none missing.
-- Secrets/config: no actual `vpn-bridge-config.json`, VPN profile, private key or pairing token is included; `.gitignore` excludes a locally generated config.
-- Final ZIP integrity and exact file count checked after packaging.
+- Deliverable files: **50** (including one `assets/` directory with four WebP visuals).
+- Entry point: `index.html` at ZIP root.
+- Manifest: `manifest.webmanifest`.
+- Service worker: `sw.js`, cache version `terravex-apex-shell-v7`.
+- Early install UI/event handler: `pwa-install.js`.
+- Windows local installer launcher: `START-TERRAVEX-WEB-APP.bat`.
+- Loopback-only static server: `serve_terravex.ps1`.
 
-## Checks not completed
-- No real Tailscale client or Windows WireGuard tunnel was available in this environment; native VPN switching was verified only with a fake CLI. The helper has not been run on the user's Windows computer.
-- Automated browser navigation was blocked by this execution environment (`ERR_BLOCKED_BY_ADMINISTRATOR` for localhost and file navigation), so a full end-to-end browser UI test could not be completed here.
-- The user's GitHub Pages deployment and Chrome/Edge install prompt were not run against the user's repository.
-- No satellite service, VPN server, account, subscription or satellite terminal connection is supplied.
+## Checks actually performed
 
-## Implementation & safety notes
-- The PWA is designed to install on supported desktop browsers over HTTPS and caches the local app shell, not remote live feeds.
-- VPN ON/OFF controls become available only after the user starts the companion desktop helper and pairs with the per-run token printed in its console.
-- The helper binds only to `127.0.0.1:8765`, uses an exact Origin allow-list and Host validation, requires a random bearer token for status/control, caps request body size, and accepts only fixed `on` / `off` operations. It has no arbitrary command endpoint and accepts no tunnel name supplied by the browser.
-- Tailscale control uses its CLI. WireGuard control supports one already-installed WireGuard for Windows tunnel service configured locally. Windows service permissions may require intentional manual elevation.
-- Current Chromium versions may show a Local Network Access / loopback permission prompt for a public HTTPS app connecting to localhost. Grant it only to the trusted app.
-- A native client state of CONNECTED is not proof of the remote route, satellite carrier, encryption configuration, or emergency-service reachability. Use the VPN client's official diagnostics and a separate authorized endpoint for end-to-end checks.
+| Check | Result | Detail |
+|---|---|---|
+| JavaScript syntax | PASS | Node `--check` completed for all 13 `.js` files. |
+| CSS parse | PASS | `tinycss2` parsed 11 stylesheets with no parser errors. |
+| HTML structure | PASS | Parsed the main page; 27 page sections and 27 navigation controls found. |
+| Duplicate HTML IDs | PASS | No duplicate IDs found. |
+| Local HTML references | PASS | No missing local script, stylesheet, icon or image `src`/`href` reference found. |
+| Web app manifest | PASS | JSON parses; name, `start_url`, `scope`, standalone display and install metadata exist. |
+| Install icons | PASS | `icon-192.png` is 192×192; `icon-512.png` is 512×512. |
+| Service worker shell list | PASS | All 29 required local shell assets exist in the package. Optional assets are cached best-effort and cannot block installation. |
+| PWA install flow | Static PASS | A separate early-loaded `beforeinstallprompt` listener captures the prompt; the global and health-panel buttons share one install handler. Browser-menu fallback is provided. |
+| Shortcut routes | Static PASS | `?page=quake`, `?page=location` and `?page=stormwatch` are routed to their navigation pages. |
+| VPN bridge regression | PASS | `python test_vpn_bridge.py`: 6 tests passed (fake VPN CLI only). |
+| ZIP integrity | PASS (checked during final packaging) | The final archive is reopened and `ZipFile.testzip()` returns `None`. |
+
+## Why installation may previously have failed
+
+PWA installation does not work from a ZIP preview or directly opened `file://.../index.html`. A browser needs an installable origin: normally HTTPS, or a development loopback origin such as `http://127.0.0.1`. The package now contains a Windows launcher that serves the app on `127.0.0.1:8000` and opens it in the browser. The app displays the browser-specific install-menu steps if no `beforeinstallprompt` event is offered.
+
+The `beforeinstallprompt` event is browser-specific and not guaranteed. The supported fallback is to use the browser's own “Install app / Install this site as an app” menu.
+
+## Local Windows launcher security notes
+
+- `serve_terravex.ps1` binds to `127.0.0.1` only; it does not listen on the LAN.
+- Directory listing is disabled.
+- Direct requests for `.py`, `.bat`, `.ps1`, `.json`, `.zip`, `.pdf`, private-key-like files and hidden paths are blocked.
+- The local server is intended only for local app installation/testing, not public hosting.
+- Python is not required to install the PWA; it remains required only if the user chooses to run the optional VPN bridge.
+
+## Checks not performed / limitations
+
+- A real browser installation run could not be completed in this build environment: Chromium navigation to both localhost and local file URLs returned `ERR_BLOCKED_BY_ADMINISTRATOR`. This is an environment restriction, not a successful PWA install test.
+- The Windows PowerShell/TCP launcher was statically reviewed but could not be executed in this Linux build environment.
+- The `beforeinstallprompt` event, Chrome/Edge install UI, and final desktop shortcut creation require testing on the user's Windows Chrome/Edge installation.
+- GitHub Pages publishing and public network API availability were not tested here.
+- The local PWA and the GitHub Pages PWA have different origins and are installed as separate browser apps.
+
+## Repeatable user-side verification
+
+1. Extract the entire ZIP to a writable folder.
+2. Double-click `START-TERRAVEX-WEB-APP.bat`; keep the terminal window open.
+3. Confirm the browser URL is `http://127.0.0.1:8000/`, not `file://`.
+4. Open **Source Health & Offline System** and confirm `PWA READY` plus `ACTIVE` shell-cache status.
+5. Click **Install App**. If the in-app prompt is not available, use Edge `… → More tools → Apps → Install this site as an app` or Chrome's available “Install page as app” menu option.
+6. After installation, close/reopen the app from the desktop shortcut. Test live feeds while online; offline mode only guarantees best-effort local shell caching.
