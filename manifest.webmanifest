@@ -81,6 +81,30 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Emergency Link Budget Lab",
+      "short_name": "Link Lab",
+      "url": "./?page=connectivitylab",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "RF Spectrum & Interference",
+      "short_name": "RF Monitor",
+      "url": "./?page=rfintel",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

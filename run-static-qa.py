@@ -34,8 +34,21 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v8': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v10': errors.append('Unexpected service-worker cache version '+cache)
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
+# Runtime diagnostics must inspect the same service-worker version.
+adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')
+if cache not in adv: errors.append('PWA runtime diagnostics cache version does not match service worker.')
+report.append('PWA diagnostics cache-version parity: ' + ('PASS' if cache in adv else 'FAIL'))
+# Manifest app shortcuts must target existing navigation pages.
+page_keys={b.get('data-page') for b in soup.select('button[data-page]')}
+invalid_shortcuts=[]
+for shortcut in manifest.get('shortcuts', []):
+ try: target=json.loads(json.dumps(shortcut)).get('url','').split('page=',1)[1].split('&',1)[0]
+ except Exception: target=''
+ if not target or target not in page_keys: invalid_shortcuts.append(shortcut.get('name','unnamed'))
+if invalid_shortcuts: errors.append('Manifest shortcuts target missing pages: '+', '.join(invalid_shortcuts))
+report.append('Manifest shortcuts: ' + str(len(manifest.get('shortcuts', []))) + ' checked; invalid=' + str(len(invalid_shortcuts)))
 # JS syntax via node
 js_files=sorted(root.glob('*.js'))
 for f in js_files:

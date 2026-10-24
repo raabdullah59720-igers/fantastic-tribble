@@ -1,39 +1,46 @@
-# TERRAVEX APEX Install + Password Lock QA Report
+# TERRAVEX APEX QA Report — One-use Pairing + Emergency RF Link Budget Lab
 
-Build: Install-ready PWA and local desktop launcher upgrade (cache v8)
+Build: `TERRAVEX-APEX-PAIRING-LINK-LAB` · PWA shell cache `terravex-apex-shell-v9`
 
-## Static checks performed in this environment
+## Checks performed
 
-- ZIP source extracted and checked with `zipfile.testzip()` before editing; final ZIP is rebuilt and integrity-checked before delivery.
-- Node.js `--check` run against all 14 local `.js` files: no syntax errors.
-- `tinycss2` parsed all 12 local `.css` files: no parser errors.
-- HTML parsed with BeautifulSoup: 539 IDs, 0 duplicate IDs.
-- All local `script`, `link`, and image references in `index.html` resolve to files in the package.
-- Manifest JSON parses; `name`, `short_name`, `start_url`, `scope`, `standalone`, and 192x192 / 512x512 icon declarations are present.
-- Service worker uses cache `terravex-apex-shell-v8`; 31 required shell assets are present in the package.
-- Python syntax parsed for the VPN bridge/test and QA helper.
-- Existing VPN bridge unit tests using a fake VPN CLI: 6/6 pass.
-- Desktop shortcut installer and local launcher file references are present.
+- Static QA script completed with **0 errors**.
+- Main HTML parsed: **568 IDs, 0 duplicate IDs**; all local script/style/image links exist.
+- Manifest JSON passes; standalone display, start URL/scope, 192×192 and 512×512 icon declarations are present. **4 manifest shortcuts** point to existing app pages.
+- Service worker uses `terravex-apex-shell-v9`. All **33 required shell assets** exist, and PWA diagnostics in `advanced-workbench.js` expect the same v9 cache.
+- JavaScript syntax: **16 files**, 0 syntax errors.
+- CSS parser: **13 stylesheets**, 0 parse errors.
+- Python syntax: bridge, unit tests, and static-QA script parse successfully.
+- Local HTTP smoke test: `/`, `/manifest.webmanifest`, `/sw.js`, and `/connectivity-lab.js` returned HTTP 200 from a loopback test server.
+- Local fake-client VPN bridge tests: **11/11 pass**. Tests include fixed ON/OFF/status commands, refusal of arbitrary actions, exact-origin allow-list, one-use token exchange, token expiry, invalid-token retry, session-only authorization, expired-session rejection and pair schema.
+- RF link-budget calculator fake-DOM smoke test: **6 assertions pass**. Reference values: FSPL `206.97 dB`, EIRP `52.00 dBW`, receive power `-92.97 dBm`, margin `+17.03 dB`; invalid zero-frequency input rejected.
+- Final ZIP includes **62 file entries** (no folders listed as entries, no `.pyc`/`__pycache__`, and no generated `vpn-bridge-config.json`). `ZipFile.testzip` returned no error.
 
-## Install and app-lock changes
+## Not tested / capability boundaries
 
-- `pwa-install.js` loaded early to capture `beforeinstallprompt` when Chromium emits it; native install still depends on browser policy and installability.
-- `Refresh cached app shell` control now runs service-worker update/cache verification from `advanced-workbench.js`.
-- PWA diagnostics check cache v8 and verify the password lock files are cached.
-- Startup screen blocks the visible app until device password creation/unlock.
-- Password minimum 10 characters; confirmation required at setup; show/hide toggle; manual lock button; 5 failed attempts cause a short UI throttle.
-- Password record uses a random 16-byte salt and PBKDF2-HMAC-SHA-256 with 310,000 iterations; only salt/hash/metadata are stored in localStorage. Plaintext password is not written to storage.
-- Password is per browser storage and origin. Localhost and GitHub Pages have separate local locks.
-- Added Windows shortcut creation and a launcher that serves only on `127.0.0.1:8000` and opens Chrome/Edge in app-style mode where found.
-- Static server now uses `no-cache` for HTML, JS, CSS and manifest so local update troubleshooting is not held back by a one-hour browser cache.
+- No actual Tailscale/WireGuard tunnel was switched on this runtime; tests use an isolated fake CLI.
+- No Russian satellite provider token, terminal, carrier session, private VPN credentials, subscription, or physical satellite link is supplied or generated. The one-run token is generated locally by the bridge process at startup, valid for 10 minutes, and consumed once; it cannot be prepared in advance for the user's computer.
+- Native Chrome/Edge installation prompt and Windows shortcut scripts were not executed on a Windows desktop in this build environment. PWA manifest, icons, local resource references, loopback HTTP server smoke test, and service-worker cache were checked. A PWA must open from HTTPS or localhost/loopback; `file://` from a ZIP is not a registered PWA origin. Chrome may suppress `beforeinstallprompt`; use the browser menu if needed.
+- A public HTTPS website contacting `127.0.0.1` can trigger Chrome's Local Network Access / loopback permission. Allow it only for a trusted app you operate.
+- External satellite-carrier availability, public API availability and GitHub Pages deployment were not verified.
+- The session token remains in the current tab's `sessionStorage` until expiry/clear/tab end; a compromised same-origin script could expose it. This is not a replacement for server-side authentication.
 
-## Environment blockers / unverified checks
+## Link budget warning
 
-- Attempted Playwright/Chromium navigation to `http://127.0.0.1:8000/`; this environment returns `ERR_BLOCKED_BY_ADMINISTRATOR`, so DOM interaction and browser-native installation prompt could not be executed here.
-- Windows PowerShell/COM desktop shortcut creation cannot be executed in this Linux runtime. The `.ps1`/`.bat` assets are included, but final validation on Windows remains necessary.
-- A PWA install prompt cannot be forced by website JavaScript. If `beforeinstallprompt` is not supplied, the app provides Chrome/Edge menu steps and a Windows desktop shortcut fallback. This is not falsely reported as a successful native PWA install.
-- GitHub Pages deployment and live external APIs were not tested during this build.
+The Emergency Link Budget Lab is an illustrative RF calculator. A positive margin is not proof of an actual carrier connection. Real link engineering must include authorized frequencies, terminal/provider parameters, noise, fade, pointing, polarization, bandwidth, coding/modulation, regulatory compliance and field measurements.
 
-## Security limit
 
-The device password is a client-side UI lock, not server-side authorization. A public static GitHub Pages site still exposes its static source/assets; a determined visitor can bypass a client-only gate. Use server-side authentication or an identity access gateway for genuine website-wide restriction. No secrets should be placed in the repository.
+## RF Spectrum & Interference Intelligence module
+
+- Added `page-rfintel` as a separate Operations panel and mapped it to the command palette/nav registry.
+- Added `rf-interference-intelligence.js` and `.css` to the service-worker required shell; cache version advanced to v10 and diagnostics/QA parity updated.
+- Added an install shortcut for the RF Monitor panel.
+- Static validation: no inline radio transmit/JAM command in the new module; expected UI IDs are present; source references are present.
+- CSV import is local/read-only, capped at 2 MiB and 5,000 data samples, and requires `frequency_mhz,power_dbm`. It does not upload the file.
+- Scenarios, peak detection and quality score are illustrative heuristics, not proof of an intentional jammer or certified RF measurements.
+- No real RF hardware, SDR, satellite transponder, or public network is contacted by the module.
+
+
+## Focused RF panel test results
+
+Executed `node tests/test-rf-interference-intelligence.cjs`: 5/5 pass. The tests cover the expected clean-channel SNR, modeled SNR degradation as simulated interference increases, pause/reset controls, local CSV import plus one candidate peak, and invalid bandwidth rejection. This harness uses a mocked DOM/canvas and a local mock CSV; it does not represent a real receiver, transmitter, satellite link, or browser installation test.

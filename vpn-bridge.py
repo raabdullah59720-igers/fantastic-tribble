@@ -22,7 +22,9 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from typing import Any
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
+PAIRING_TOKEN_TTL_SECONDS = 600
+SESSION_TOKEN_TTL_SECONDS = 4 * 60 * 60
 HOST = "127.0.0.1"
 PORT = 8765
 MAX_BODY = 2048
@@ -182,10 +184,43 @@ def load_config(path: Path) -> dict[str, Any]:
 class BridgeServer(ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = True
-    def __init__(self, server_address, handler, cfg, token):
-        self.cfg, self.token = cfg, token
+    def __init__(self, server_address, handler, cfg, pairing_token):
+        self.cfg = cfg
+        self.pairing_token = pairing_token
+        self.pairing_deadline = time.monotonic() + PAIRING_TOKEN_TTL_SECONDS
+        self.pairing_used = False
+        self.sessions: dict[str, float] = {}
+        self.session_lock = threading.Lock()
         self.vpn = VPNBackend(cfg)
         super().__init__(server_address, handler)
+
+    def consume_pairing_token(self, supplied: str) -> tuple[str, int]:
+        """Exchange the run-scoped pairing token once for a short-lived session token."""
+        with self.session_lock:
+            now = time.monotonic()
+            if self.pairing_used or self.pairing_token is None:
+                raise BridgeError("This one-run pairing token was already used. Restart the local VPN bridge to generate a new token.")
+            if now > self.pairing_deadline:
+                self.pairing_token = None
+                raise BridgeError("The pairing token expired after 10 minutes. Restart the local VPN bridge to generate a new token.")
+            if not secrets.compare_digest(str(supplied), str(self.pairing_token)):
+                raise BridgeError("Pairing token is invalid. Copy the current token from the local bridge console.")
+            self.pairing_used = True
+            self.pairing_token = None
+            session = secrets.token_urlsafe(32)
+            self.sessions[session] = now + SESSION_TOKEN_TTL_SECONDS
+            return session, SESSION_TOKEN_TTL_SECONDS
+
+    def session_valid(self, supplied: str) -> bool:
+        if not supplied:
+            return False
+        with self.session_lock:
+            now = time.monotonic()
+            expired = [token for token, expiry in self.sessions.items() if expiry <= now]
+            for token in expired:
+                self.sessions.pop(token, None)
+            expiry = self.sessions.get(supplied)
+            return expiry is not None and expiry > now
 
 class Handler(BaseHTTPRequestHandler):
     server_version = "TERRAVEXVPNBridge/" + VERSION
@@ -212,6 +247,9 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
             self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
             self.send_header("Access-Control-Max-Age", "300")
+            # Retain harmless compatibility for browsers that still send the older PNA header.
+            if self.headers.get("Access-Control-Request-Private-Network", "").lower() == "true":
+                self.send_header("Access-Control-Allow-Private-Network", "true")
 
     def _json(self, code: int, body: dict[str, Any], cors=True):
         payload = json.dumps(body, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
@@ -225,10 +263,36 @@ class Handler(BaseHTTPRequestHandler):
     def _host_ok(self) -> bool:
         return self.headers.get("Host", "").lower() in {f"127.0.0.1:{PORT}", f"localhost:{PORT}"}
 
-    def _authorized(self) -> bool:
+    def _bearer(self) -> str:
         auth = self.headers.get("Authorization", "")
-        expected = "Bearer " + self.server.token
-        return secrets.compare_digest(auth, expected)
+        if not auth.startswith("Bearer "):
+            return ""
+        return auth[7:].strip()
+
+    def _authorized(self) -> bool:
+        # The startup pairing token is never accepted by normal status/action routes.
+        return self.server.session_valid(self._bearer())
+
+    def _read_json_body(self) -> dict[str, Any] | None:
+        if self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower() != "application/json":
+            self._json(415, {"ok": False, "error": "Use application/json."})
+            return None
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            length = MAX_BODY + 1
+        if length < 1 or length > MAX_BODY:
+            self._json(413, {"ok": False, "error": "Invalid request size."})
+            return None
+        try:
+            body = json.loads(self.rfile.read(length).decode("utf-8"))
+        except Exception:
+            self._json(400, {"ok": False, "error": "Invalid JSON body."})
+            return None
+        if not isinstance(body, dict):
+            self._json(400, {"ok": False, "error": "JSON body must be an object."})
+            return None
+        return body
 
     def _gate(self) -> bool:
         if not self._host_ok():
@@ -238,7 +302,7 @@ class Handler(BaseHTTPRequestHandler):
             self._json(403, {"ok": False, "error": "This web origin is not allowed by local bridge configuration."}, False)
             return False
         if not self._authorized():
-            self._json(401, {"ok": False, "error": "Pairing token missing or invalid. Copy the token from the local bridge console."})
+            self._json(401, {"ok": False, "error": "Session missing or expired. Pair with the current one-run token from the local bridge console."})
             return False
         return True
 
@@ -256,7 +320,8 @@ class Handler(BaseHTTPRequestHandler):
             if not self._host_ok() or not self._origin_allowed():
                 self._json(403, {"ok": False, "error": "Origin or Host not allowed."}, False)
                 return
-            self._json(200, {"service": "TERRAVEX APEX Local VPN Bridge", "version": VERSION, "status": "READY_FOR_AUTHENTICATED_PAIRING", "bind": "127.0.0.1", "auth_required": True})
+            pairing_left = max(0, int(self.server.pairing_deadline - time.monotonic())) if not self.server.pairing_used else 0
+            self._json(200, {"service": "TERRAVEX APEX Local VPN Bridge", "version": VERSION, "status": "READY_FOR_PAIRING" if pairing_left else "PAIRING_UNAVAILABLE", "bind": "127.0.0.1", "auth_required": True, "pairing_available": bool(pairing_left and not self.server.pairing_used), "pairing_expires_in": pairing_left})
             return
         if self.path != "/api/status":
             self._json(404, {"ok": False, "error": "Not found."})
@@ -269,27 +334,38 @@ class Handler(BaseHTTPRequestHandler):
         self._json(200, {"ok": True, **result})
 
     def do_POST(self):
+        if self.path == "/api/pair":
+            if not self._host_ok():
+                self._json(421, {"ok": False, "error": "Invalid local Host header."}, False)
+                return
+            if not self._origin_allowed():
+                self._json(403, {"ok": False, "error": "This web origin is not allowed by local bridge configuration."}, False)
+                return
+            body = self._read_json_body()
+            if body is None:
+                return
+            if body != {"mode": "pair"}:
+                self._json(400, {"ok": False, "error": "Pair request must be exactly {mode: pair}."})
+                return
+            bearer = self._bearer()
+            try:
+                session_token, ttl = self.server.consume_pairing_token(bearer)
+            except BridgeError as exc:
+                message = str(exc)
+                code = 410 if "expired" in message.lower() else 409 if "already used" in message.lower() else 401
+                self._json(code, {"ok": False, "error": message})
+                return
+            self._json(200, {"ok": True, "token_type": "Bearer", "session_token": session_token, "expires_in": ttl, "pairing_token_consumed": True})
+            return
         if self.path != "/api/vpn":
             self._json(404, {"ok": False, "error": "Not found."})
             return
         if not self._gate():
             return
-        if self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower() != "application/json":
-            self._json(415, {"ok": False, "error": "Use application/json."})
+        body = self._read_json_body()
+        if body is None:
             return
-        try:
-            length = int(self.headers.get("Content-Length", "0"))
-        except ValueError:
-            length = MAX_BODY + 1
-        if length < 1 or length > MAX_BODY:
-            self._json(413, {"ok": False, "error": "Invalid request size."})
-            return
-        try:
-            body = json.loads(self.rfile.read(length).decode("utf-8"))
-        except Exception:
-            self._json(400, {"ok": False, "error": "Invalid JSON body."})
-            return
-        if not isinstance(body, dict) or set(body.keys()) != {"action"}:
+        if set(body.keys()) != {"action"}:
             self._json(400, {"ok": False, "error": "Only {action:on|off} is accepted. Arbitrary commands and profile paths are disabled."})
             return
         action = body.get("action")
@@ -314,8 +390,10 @@ def main():
     print("Binding: http://127.0.0.1:8765 (loopback only; not accessible from other LAN devices)")
     print("Allowed origins: " + ", ".join(cfg["allowed_origins"]))
     print("Configured VPN backend: " + str(cfg.get("backend", "tailscale")))
-    print("PAIRING TOKEN (paste into the app's VPN Control panel; do not share it):\n" + token)
-    print("Press Ctrl+C to stop the bridge. Browser access is protected by exact origin allow-list + token.")
+    print(f"ONE-RUN PAIRING TOKEN (valid for {PAIRING_TOKEN_TTL_SECONDS // 60} minutes; succeeds once):\n" + token)
+    print(f"After pairing, a short-lived session token is issued for {SESSION_TOKEN_TTL_SECONDS // 3600} hours. Restarting this bridge invalidates all sessions.")
+    print("Paste this token only into your own TERRAVEX app. Do not send it to anyone or commit it to GitHub.")
+    print("Press Ctrl+C to stop the bridge. Loopback-only + exact origin allow-list + one-use token exchange.")
     try:
         server.serve_forever(poll_interval=0.3)
     except KeyboardInterrupt:

@@ -2,7 +2,7 @@
 
 ## Important distinction
 
-The website is a PWA; Chrome/Edge can install it as a desktop app when served from HTTPS (for example, GitHub Pages). A PWA alone cannot operate the Windows VPN client. This package therefore includes a separate **local VPN bridge**. The bridge binds only to `127.0.0.1:8765`, requires a freshly generated bearer token, allows only configured exact web origins, and exposes only `status`, `on`, and `off` actions for one preconfigured backend.
+The website is a PWA; Chrome/Edge can install it as a desktop app when served from HTTPS (for example, GitHub Pages). A PWA alone cannot operate the Windows VPN client. This package therefore includes a separate **local VPN bridge**. The bridge binds only to `127.0.0.1:8765`, accepts a freshly generated one-use pairing token for 10 minutes, exchanges it once for a random 4-hour session token, allows only configured exact web origins, and exposes only `status`, `on`, and `off` actions for one preconfigured backend.
 
 The bridge controls the VPN app already installed/configured on your own computer. It does not provide satellite internet service, a VPN subscription/server, or Russian satellite access.
 
@@ -23,11 +23,11 @@ PWA install requires HTTPS or localhost and suitable manifest/icon support. The 
 3. Confirm `allowed_origins` contains the exact origin of your installed app, such as `https://YOUR-USERNAME.github.io`. An origin contains scheme + hostname only, not the repository path. Do not use `*`.
 4. For Tailscale, leave `backend` as `tailscale`. The helper detects the CLI on PATH or common Windows install paths. Authenticate the client before use.
 5. For WireGuard, set `backend` to `wireguard` and `wireguard_tunnel_name` to the existing installed tunnel's service name, without `.conf`. The tunnel must already be installed using the official WireGuard app. No tunnel config/private key is included or uploaded by this app.
-6. Double-click `Start-VPN-Bridge-Windows.bat`. A console will display a new one-run pairing token. Keep this window open while using the app. The token changes each time the helper restarts.
+6. Double-click `Start-VPN-Bridge-Windows.bat`. A console will display a new one-run pairing token. It expires after 10 minutes and can be exchanged only once. The app receives a separate random 4-hour session token stored in the current tab's `sessionStorage`; it is not written to `localStorage` or cookies. Keep the bridge window open while using the app. Restarting the helper invalidates sessions and prints a fresh pairing token.
 7. If Windows refuses WireGuard service control, close the helper. Only if you trust this local project and want to grant it elevated VPN control, start the batch file with **Run as administrator**. Never run an unknown helper elevated.
 8. In the installed TERRAVEX app, open **VPN Control & Desktop Install**, enter `http://127.0.0.1:8765` and paste the pairing token from the helper console. Click **Connect local bridge**, then **Refresh status**.
 9. Use **VPN ON** or **VPN OFF**. Each action requires a confirmation dialog. After the action the app queries the native client/service again. Current Chromium versions may show a Local Network Access / loopback permission prompt because the HTTPS app talks to a helper on your own computer. Allow it only for your own trusted app; the helper does not rely on deprecated Private Network Access preflight behavior.
-10. To disconnect the bridge, close its console or press `Ctrl+C`. To clear the browser token, press **Clear token** or close/reload the app.
+10. To disconnect the bridge, close its console or press `Ctrl+C`. To clear the session, press **Clear token**. The session persists across reloads in the same tab until expiry; a new browser tab may require a new pairing. Restart the helper to generate a fresh token after the pairing token has been consumed.
 
 ## Backend behavior
 
@@ -39,8 +39,8 @@ PWA install requires HTTPS or localhost and suitable manifest/icon support. The 
 ## Security model and limits
 
 - Localhost bind only: `127.0.0.1`; not exposed on Wi-Fi/LAN.
-- Exact Origin allow-list, Host validation, per-run random token, constant-time token comparison, bounded JSON body, rateable fixed operations, no shell expansion, no arbitrary command endpoint.
-- Token is not stored by the web app; paste it per browser session.
+- Exact Origin allow-list, Host validation, per-run one-use pairing token (10-minute window), constant-time pairing comparison, random 4-hour session token, exact Origin/Host validation, bounded JSON body, fixed operations, no shell expansion, no arbitrary command endpoint.
+- The one-use pairing token is not stored by the web app. A separate short-lived bearer session is stored in `sessionStorage` for this tab only so refreshes remain paired until expiry; clear it from the UI or close the tab to remove the browser-side copy. If the app is compromised by same-origin script injection, any active tab session could still be exposed, so keep the deployment and dependencies trusted.
 - Do not commit `vpn-bridge-config.json` if you customize it, and never include VPN profiles, passwords, keys, or tokens in GitHub.
 - A public PWA site isn't private just because its source repository is private. Use actual server-side identity access control for restricted pages/data.
 - The local bridge is source code, not a signed binary. Review it before running. Python 3.10+ is recommended.
@@ -54,3 +54,7 @@ PWA install requires HTTPS or localhost and suitable manifest/icon support. The 
 - `WireGuard service not found`: configure the exact existing installed tunnel name, not a config filename path; make sure it was installed through WireGuard for Windows.
 - `Access denied`: Windows may require an elevated helper for service control. Only elevate the trusted local script when you intend to grant this capability.
 - If native status is `UNVERIFIED`, do not treat the tunnel as connected. Use the VPN client itself to inspect diagnostics.
+
+## New Emergency Link Budget Lab
+
+Open **Emergency Link Budget Lab** to calculate FSPL, EIRP, estimated receive power and link margin with animated RF path graphics. The default values are examples, not an actual satellite connection. See `LINK-BUDGET-LAB.md` for equations and engineering limitations. No Russian satellite or provider credential is issued by this app.

@@ -4,7 +4,7 @@
 
 1. Publish every file in this folder, including `assets/`, to the root of your GitHub Pages repository.
 2. Open the resulting **HTTPS** Pages URL in Chrome or Edge. Do not use the ChatGPT sandbox download URL and do not double-click `index.html`.
-3. Keep the app open online long enough for the service worker to install and the app shell to cache.
+3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v9`.
 4. Click the top-bar **Install App** button. If the browser does not provide a native prompt, use Chrome's menu: **⋮ → Cast, save and share → Install page as app**. In Edge use **⋯ → Apps → Install this site as an app**. Browser wording varies by version and policy.
 5. If the install command is missing, open DevTools → **Application** → **Manifest** and **Service Workers**. Check the manifest and any console/network errors. Also check if the app is already installed in the same browser profile or if browser policy disables installation.
 
@@ -31,3 +31,7 @@ If you forget it, the local verifier cannot be recovered. Clear this app's site 
 - **App is blank/old:** reload once online, open **Source Health & PWA**, click **Refresh cached app shell**, then reload again. If needed clear this origin's site data/service worker and revisit the current deployment.
 - **VPN button disabled:** the native VPN client and local bridge must be configured and running separately. The PWA alone cannot switch Windows VPNs.
 - **Offline:** cached UI may open after first successful load; satellite tiles, weather feeds, earthquake feeds, public APIs, and VPN connectivity still require their services/network.
+
+## Local VPN pairing update
+
+The local bridge now prints a random **one-use pairing token** on each startup. It expires after 10 minutes and works only once to obtain a separate 4-hour browser-tab session token. Paste the startup token into **VPN Control & Desktop Install**. If it was consumed already, restart `Start-VPN-Bridge-Windows.bat` for a new one. This token is local to your computer; it is not a Russian satellite provider token.

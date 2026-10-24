@@ -53,3 +53,7 @@ DESKTOP INSTALL + LOCAL VPN CONTROL (NEW)
 - Read DESKTOP-INSTALL-AND-VPN-GUIDE.md. Run Start-VPN-Bridge-Windows.bat; review vpn-bridge-config.example.json (launcher creates local vpn-bridge-config.json); configure your exact app origin and already-installed Tailscale or WireGuard client.
 - Paste the per-run token shown in the helper console into VPN Control & Desktop Install. Chrome/Edge may also ask for Local Network Access / loopback permission; allow only if you trust the app. Use ON/OFF only after reading the confirmation. Keep the helper console open while operating the panel.
 - Never upload vpn-bridge-config.json, VPN private keys, passwords or tokens to GitHub. The bridge listens only on 127.0.0.1 and has no arbitrary command endpoint. Native status does not guarantee satellite route or emergency-service availability.
+
+New panel: Operations → RF Spectrum & Interference. The virtual spectrum display is SIMULATED only. To inspect a real authorized receiver capture, import a CSV with frequency_mhz,power_dbm columns. This module is receive-only and has no transmitter/jammer controls.
+
+For RF panel scope, formulas, and a CSV example, see RF-INTERFERENCE-INTELLIGENCE.md. It is a receive-only monitor/simulator and does not transmit or jam signals.
