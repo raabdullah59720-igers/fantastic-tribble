@@ -1,11 +1,20 @@
 {
-  "name": "IGERS EarthCommand",
-  "short_name": "EarthCommand",
-  "description": "Public Earth data monitor, disaster scenario planning and IGERS energy recovery simulator.",
-  "start_url": "./index.html",
+  "id": "./",
+  "name": "TERRAVEX APEX \u00b7 Earth Intelligence",
+  "short_name": "TERRAVEX",
+  "description": "Earth observation, geoscience, environmental monitoring and IGERS engineering models.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#050a11",
-  "theme_color": "#071019",
-  "icons": [{"src":"./assets/icons/earthcommand.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "orientation": "any",
+  "background_color": "#050b14",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }

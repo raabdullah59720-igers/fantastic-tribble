@@ -1,7 +1,7 @@
-TERRAVEX APEX - BANGLADESH OBSERVATORY INSTALL
+TERRAVEX APEX - STORM / SEISMIC / OCEAN ALERT UPGRADE INSTALL
 
 1. Back up your GitHub repository first.
-2. Download TERRAVEX-APEX-BANGLADESH-OBSERVATORY.zip and extract it.
+2. Download TERRAVEX-APEX-STORM-SEISMIC-OCEAN-ALERT-UPGRADE.zip and extract it.
 3. Select every file and the assets folder inside the extracted folder.
 4. Upload all of those contents to the ROOT of the terravex-apex repository.
 5. Confirm index.html is directly in repository root and not inside a nested project folder.
@@ -10,3 +10,32 @@ TERRAVEX APEX - BANGLADESH OBSERVATORY INSTALL
 8. The core interface runs on static hosting; NASA imagery, map tiles, tectonic boundary data, USGS events and model weather require internet access.
 
 Keep the source timestamp and status labels visible. NASA imagery is date-based, Earthquake events are historical/observed reports, plate arrows are literature references, and simulated graphics are not measurements. This is not an official warning service.
+
+Live Location panel: after upload, open “Live Location” in the Command navigation. Use HTTPS (GitHub Pages) and press “Locate once” or “Start live tracking”; accept the browser prompt. Stop tracking when finished.
+
+
+ADVANCED WORKBENCH UPGRADE
+- Upload all extracted root files and the assets/ folder together. The ZIP has no nested project folder.
+- New panels: Air Quality Intelligence, NASA Natural Events, GNSS Geodesy Workbench, Hybrid Energy Planner, and Source Health & Offline System.
+- Press Ctrl+K (or Command+K on macOS) to open the command palette.
+- For install/offline app-shell support, use GitHub Pages HTTPS. Open once while online and allow the service worker to install; then optionally use the browser's Install/Add to Home Screen command.
+- The source health panel only probes endpoints on demand. It does not provide scientific validation or guarantee uptime.
+
+
+NEW HAZARD PANELS
+After deploying, select “Storm & Lightning Watch” for the opt-in forecast model watcher + dated NASA satellite imagery context; “Earthquake Rapid Alerts” then Start alert watcher and enable browser notification permission if needed; or “Bay of Bengal Ocean & Tsunami” for modeled sea level/waves, GEBCO bathymetry and conservative event screening. Open-Meteo and public imagery feeds need internet. Browser notifications require HTTPS permission. The model screeners are not official warnings; follow Bangladesh DDM/BMD or relevant regional warning authorities.
+
+
+STORM / EARTHQUAKE / OCEAN PANELS (Hazard Intelligence update)
+- Storm & Lightning Watch: set a Bangladesh location, press Refresh weather model, then optionally enable browser alerts and check the threshold watcher. It uses Open-Meteo model fields; it is not a measured electric-field sensor or live lightning detection system.
+- Earthquake Rapid Alerts: press Fetch current feed, choose the magnitude / region, press Enable notifications, then Start alert watcher. Only newly appearing public USGS catalog records are notified after the initial baseline. The feed may be delayed and is not an earthquake early-warning service.
+- Bay of Bengal Ocean & Tsunami Observatory: choose a coastal or offshore point, refresh the marine model, and toggle GEBCO bathymetry. The animated sea surface is model-driven; GEBCO is static gridded seabed context. “Tsunami source screening” is not a tsunami forecast or official warning.
+- To receive browser notifications, serve the app over HTTPS (GitHub Pages qualifies), grant permission, keep the web app open, and leave the relevant watcher enabled. This package does not provide a server-side push notification service and cannot guarantee alerts if the tab is closed or the browser is suspended.
+- For real tsunami warnings use official bulletins (INCOIS / Bangladesh DDM). Model wave height and sea-level values must not be used for maritime navigation or evacuation decisions. Follow official emergency instructions.
+
+
+SATELLITE PASS & RUSSIAN ORBITAL WATCH
+- Upload every file and the assets/ folder to the repository root. This package adds satellite-pass-tracker.js and satellite-pass-tracker.css; the service worker cache was bumped to v4.
+- Open “Satellite Pass & Russian Orbital Watch”. Click “Use device location” to request a device fix (optional) and “Load / update public orbit data” to load CelesTrak groups.
+- The satellite.js 6.0.2 library loads from jsDelivr. If the CDN is unreachable, orbit propagation will say unavailable rather than display fabricated positions.
+- Satellite data are public orbital elements, not satellite communications/imagery access. Group data are cached for two hours.

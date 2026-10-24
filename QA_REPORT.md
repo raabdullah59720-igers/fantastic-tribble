@@ -1,47 +1,53 @@
-# TERRAVEX APEX Bangladesh Observatory — QA Report
+# TERRAVEX APEX - Independent Package Verification
 
-## Result summary
+Date: 2026-10-24
+Base archive: `TERRAVEX-APEX-STORM-SEISMIC-OCEAN-ALERT-UPGRADE.zip`
+New module: `Satellite Pass & Russian Orbital Watch`
 
-- JavaScript syntax checks: 5/5 passed.
-- HTML sections: 15; duplicate IDs: 0; missing local references: 0.
-- CSS files parsed: 5; CSS syntax-error files: 0.
-- Chromium inline-DOM test: all recorded checks passed, with zero uncaught page errors and zero console errors. External resources were omitted from this test harness.
-- File count: 22 (limit: 98).
+## Checks
+- Storm & Lightning Watch: `page-stormwatch`, navigation, and `initStorm()` are present. Static source checks found the Open-Meteo forecast endpoint, NASA GIBS WMS imagery request, explicit model advisory threshold, and enabled/disabled watcher timer.
+- Earthquake Rapid Alerts: `page-quakeearly`, navigation, and `initRapidQuakes()` are present. Static source checks found the USGS `all_hour.geojson` feed, magnitude/region filtering, event deduplication, watcher start/stop, and shared alert dispatcher.
+- Bay of Bengal Ocean & Tsunami: `page-ocean`, navigation, and `initOcean()` are present. Static source checks found the Open-Meteo Marine endpoint, GEBCO bathymetry layer, wave visualization, USGS all-day earthquake source screening, and explicit wording that a screening match is not a tsunami prediction or official warning.
+- These are source-integrity/integration checks, not a claim that the external live endpoints responded during this build.
+- Satellite navigation present: PASS
+- Satellite page present: PASS
+- Satellite page loaded by script: PASS
+- Pinned SGP4 dependency present: PASS
+- Space stations source present: PASS
+- GLONASS source present: PASS
+- Weather group source present: PASS
+- Device geolocation permission request present: PASS
+- Horizon pass propagation present: PASS
+- Two-hour public data cache present: PASS
+- Offline shell includes new JS: PASS
+- Cache version bumped: PASS
+- Russian satellite data-access limitation disclosed: PASS
+- Local CSS/JS/image ref styles.css: exists
+- Local CSS/JS/image ref bangladesh-observatory.css: exists
+- Local CSS/JS/image ref geolocation-live.css: exists
+- Local CSS/JS/image ref lightning-nowcast-lab.css: exists
+- Local CSS/JS/image ref earth-systems-upgrade.css: exists
+- Local CSS/JS/image ref advanced-workbench.css: exists
+- Local CSS/JS/image ref hazard-intelligence.css: exists
+- Local CSS/JS/image ref manifest.webmanifest: exists
+- Local CSS/JS/image ref icon.svg: exists
+- Local CSS/JS/image ref satellite-pass-tracker.css: exists
+- HTML duplicate IDs: 0
+- Files in deliverable package: 33
+- JavaScript syntax: checked with Node.js --check for every local .js file.
+- HTML parse: stdlib HTMLParser completed; this is a structural parse, not an HTML conformance validator.
+- CSS syntax: checked with tinycss2 where available.
+- Browser/GitHub deployment: not verified in this build environment. Public CelesTrak endpoint and jsDelivr availability/CORS require checking after deploy.
+- Original hazard modules: present in the base ZIP; static checks confirm all three page sections and initializers exist. Full live external API behavior is not certified by these static checks.
+- Satellite geometry calculations: the pass-time interpolation helper passed a deterministic test (`-10°` to `+10°` across 60 seconds at a `0°` elevation threshold gives a 30-second crossing). Source is wired to Satellite.js v6.0.2; full SGP4 propagation against current CelesTrak OMM records was not executed here because this build environment has no outbound network access.
 
-## Numerical spot checks
+## Source and provenance
+- CelesTrak GP data format/API: https://celestrak.org/NORAD/documentation/gp-data-formats.php
+- CelesTrak usage policy (group data are cached for two hours): https://celestrak.org/usage-policy.php
+- Satellite.js SGP4/SDP4 implementation (MIT): https://github.com/shashwatak/satellite-js
+- NASA ISS tracking context: https://www.nasa.gov/spot-the-station/
 
-| Check | Expected/result |
-|---|---:|
-| 37 mm/year × 10 years | 0.37 m |
-| Reference strain over 100 km | 3.7 µε |
-| Latency 900 + 5 + 1 + 2 seconds | 908 s, state DEGRADED because observation age exceeds the configured maximum |
-| POD (16 hits, 4 misses) | 80.0% |
-| FAR (6 false alarms, 16 hits) | 27.3% |
-| CSI (16 hits, 4 misses, 6 false alarms) | 61.5% |
-| Accuracy (16 hits, 74 correct negatives, 4 misses, 6 false alarms) | 90.0% |
-| Brier score for (0.7,1), (0.2,0), (0.4,1) | 0.1633 |
+## User-facing meaning
+This panel computes sky geometry and predicted orbital passes from public orbital elements; it is not a direct satellite radio/telemetry session and does not guarantee access to satellite imagery or communications. Device location requires explicit user action and permission. If the satellite.js CDN, CelesTrak, or browser network access fails, the user should see a degraded state, not synthetic live positions.
 
-## What passed
-
-- Five project JavaScript files parse under Node.js.
-- HTML parser check found no duplicate IDs or missing local file references.
-- Stylesheets parse without `tinycss2` syntax errors.
-- Inline-DOM tests confirm panel navigation, calculator results, stale-feed/latency guard, validation metrics, and earthquake list updates using an explicitly synthetic QA fixture.
-- ZIP package is validated separately with `zipfile.testzip()` and `unzip -t`.
-
-## Limitations and unverified items
-
-- NASA imagery, Leaflet CDN, PB2002 GeoJSON and the live USGS feed require the user browser to reach external services. Their live responses were not validated in this environment.
-- Normal browser URL navigation was blocked by environment policy; the functional test used an inline Chromium DOM harness with external resources omitted. The map therefore displayed its expected offline fallback during QA; this is not evidence that NASA tile requests succeeded.
-- GitHub Pages deployment and mobile devices were not tested.
-- Plate arrows/section are schematic. Relative plate motion values are cited literature estimates, not live GNSS readings.
-- No operational Bangladesh 30-second lightning forecast is enabled. It is an analysis/validation workspace with synthetic demonstration values only.
-
-## Data provenance and scientific handling
-
-- NASA GIBS: date-stamped near-real-time MODIS/VIIRS true-colour imagery, subject to product availability and latency.
-- USGS GeoJSON: occurred/reported earthquakes, subject to feed caching and revision.
-- PB2002: static third-party GeoJSON boundary dataset with attribution links in README.
-- Research: the two user-provided PDF reports cited in README.
-
-No sensor telemetry, earthquake prediction, satellite lightning strike prediction, field capture energy, or GitHub deployment is represented as verified.
+- CSS parser detail: tinycss2 parse: PASS for all CSS files.

@@ -1,12 +1,12 @@
 # TERRAVEX APEX · Bangladesh Satellite & Science Upgrade
 
 **Static deployment:** GitHub Pages, repository root  
-**Deliverable file count:** 22 (including docs, license, `.nojekyll`, and four compressed visual assets)  
+**Deliverable file count:** 29 (including PWA app-shell files, advanced workbench modules, docs, licence, and compressed visual assets) (including docs, license, `.nojekyll`, two live-location files, and four compressed visual assets)  
 **Intent:** additive dashboard update based on the previously supplied TERRAVEX APEX Earth-science package and two lightning research PDFs.
 
 ## Install
 1. Back up your current repository.
-2. Download and extract `TERRAVEX-APEX-BANGLADESH-OBSERVATORY.zip`.
+2. Download and extract `TERRAVEX-APEX-FUTURE-WORKBENCH-UPGRADE.zip`.
 3. Upload the **contents** of the extracted folder (not only the ZIP and not a nested folder) into the root of `terravex-apex`.
 4. Keep all CSS/JS files next to `index.html`; preserve the `assets/` directory for the earlier thunderstorm demonstrator assets.
 5. Configure **Settings → Pages → Deploy from a branch → main → /(root)**.
@@ -61,3 +61,75 @@ These PDFs are references used during implementation; they are not bundled in th
 
 ## QA
 See `QA_REPORT.md`. Static syntax/structure/calculator checks were run locally. Remote NASA tiles, third-party GeoJSON, browser interaction and GitHub Pages deployment depend on external services and were not represented as successful unless verified.
+
+## Live location panel
+
+The **Live Location & Position Monitor** uses the browser Geolocation API only after the user selects **Locate once** or **Start live tracking** and grants permission. It displays latitude, longitude, horizontal accuracy, timestamp, and optional altitude/speed/heading. Position is held in page memory, not sent to this app's server, and not persisted. The optional “Also overlay my position in the Observatory map” control shares the fix only inside this page. “Use for weather model” sends coordinates to Open-Meteo on an explicit button press. OpenStreetMap tiles load the map viewport and are subject to the provider's tile policy and privacy terms.
+
+Geolocation requires a secure context (HTTPS or localhost) and browser permission. Live tracking stops when the user presses Stop; browsers may throttle updates when a tab is backgrounded. Reference: [MDN Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API). The map uses [OpenStreetMap standard tiles](https://operations.osmfoundation.org/policies/tiles/) with attribution; availability is best effort and provider policy applies.
+
+
+## Advanced workbench upgrade (2026-10-23)
+This update is additive: previous modules remain in the package and five advanced pages have been added.
+
+- **Air Quality Intelligence:** retrieves Open-Meteo/CAMS model PM2.5, PM10, US AQI, European AQI, ozone and NO₂ for a Bangladesh reference location; optional browser-location lookup requests permission only after clicking and then sends the coordinates to Open-Meteo. Values are model outputs, not local regulatory monitors.
+- **NASA Natural Events:** fetches open curated events through NASA EONET v3; draws a schematic equirectangular event plot. It is not an official local emergency-warning feed.
+- **GNSS Geodesy Workbench:** great-circle displacement, azimuth, velocity and propagated per-epoch coordinate uncertainty calculator. Values are computed from entered coordinates, not a live GNSS station network.
+- **Hybrid Energy Planner:** editable PV, wind, hydraulic, battery, load, cost and emissions assumptions; calculates daily energy, load coverage, storage autonomy, annual useful energy, indicative capex and simple payback. It is a first-order scenario tool, not a bankable PVWatts/SAM or site feasibility report.
+- **Source Health & Offline System:** on-demand endpoint reachability/latency probes, app-install prompt and same-origin offline application-shell service worker.
+- **Command Palette:** `Ctrl+K` / `⌘K` to find and jump to any panel.
+
+### PWA / offline behaviour
+Open the site through HTTPS (GitHub Pages qualifies), load it once online, then use the browser's Install/Add to Home Screen menu if supported. The service worker caches the local application shell and visual assets only; remote model APIs, NASA imagery, public maps and alert feeds remain network-dependent. It does not cache exact location or live hazard data intentionally. Update `sw.js` cache name when deliberately changing cache policy.
+
+### New sources
+- Open-Meteo Air Quality API: https://open-meteo.com/en/docs/air-quality-api (CAMS model forecast; coarse global model grid, not a point monitor).
+- NASA EONET v3: https://eonet.gsfc.nasa.gov/docs/v3 (open curated natural-event catalogue; not authoritative emergency dispatch).
+- NREL PVWatts model reference: https://developer.nlr.gov/docs/solar/pvwatts/ (reference for a more detailed PV production model; this project uses its own transparent first-order formula and does not call the NREL API).
+- USGS earthquake feeds: https://earthquake.usgs.gov/earthquakes/feed/v1.0/
+
+### New limitations
+The on-demand source probe confirms reachability only, not scientific accuracy or completeness. Cross-origin requests may fail because of network restrictions or CORS even when a source is otherwise operational. The EONET event plot uses simplified schematic continent shapes. Geodesy outputs require externally processed GNSS epoch data and suitable reference-frame/uncertainty handling for scientific interpretation. Energy price and emissions values are editable scenario assumptions, not official Bangladesh tariffs or verified project costs.
+
+
+### Advanced alert integration
+- The Air Quality page has an optional, default-off model AQI threshold rule that can append an advisory to the existing Alert Center. Its values are Open-Meteo/CAMS model outputs, not station alerts. Browser notification delivery is used only if the existing browser-notification permission has already been granted.
+- The NASA EONET panel can optionally log *newly appearing global catalogue records* after a baseline fetch. It does not replay the initial catalogue and never labels global EONET records as local Bangladesh warnings.
+
+
+## Hazard Intelligence Extension (Oct 2026)
+
+New panels: **Storm & Lightning Watch**, **Earthquake Rapid Alerts**, and **Bay of Bengal Ocean & Tsunami Observatory**. The storm panel combines a date-stamped NASA GIBS MODIS imagery layer with Open-Meteo forecast fields (relative humidity, dew point, cloud cover, CAPE, thunderstorm probability where returned, lightning potential where returned, integrated water vapour, gusts). The forecast alert watcher is user-opt-in and checks the model every 15 minutes while the app is open. It is not satellite-detected lightning or a calibrated local short-horizon predictor. NOAA GOES-R GLM's operational view covers the Americas and adjacent oceans, not Bangladesh.
+
+The earthquake panel polls the USGS all-hour GeoJSON feed every 60 seconds only after the user starts the watcher. Alert delivery occurs after a record appears in that provider feed; international catalog reporting can be delayed (USGS reports an average around 20 minutes for earthquakes outside the U.S. in sparse networks), so this is **not** an earthquake early-warning service. The P/S-wave widget is a theoretical teaching model, not the JMA system. JMA's operational EEW depends on dense Japanese seismic infrastructure and cannot be presented as a Bangladesh service.
+
+The ocean panel queries Open-Meteo Marine for modeled wave height/period/direction, sea-level height including tides relative to global mean sea level, sea-surface temperature, and modeled current data when available. The 3D-style water surface is a live animation scaled by those model values, not 3D sonar or bathymetry telemetry. GEBCO WMS provides static gridded bathymetry/elevation context. A broad USGS earthquake filter only flags events for official tsunami-bulletin review; it does not predict tsunami generation or arrival and cannot declare a coast safe. Official references: [INCOIS Tsunami Early Warning System](https://tsunami.incois.gov.in/TEWS/searlywarnings.jsp), [Bangladesh DDM AWARE](https://rapid.ddm.gov.bd/home/weather/), and [JMA EEW method](https://www.jma.go.jp/jma/en/Activities/eew2.html).
+
+### Hazard extension files
+- `hazard-intelligence.js` - storm model advisory, NASA GIBS/Leaflet overlay, USGS rapid catalog watcher, P/S arrival separation demonstration, marine-model request, GEBCO WMS and tsunami source-event screening.
+- `hazard-intelligence.css` - responsive styling.
+
+All three new panels use the shared local alert center through the `terravex:advanced-alert` event. Notifications require explicit browser permission. Pollers operate only after users enable them, and only while the page is open/visible. A degraded or missing source is shown as unknown, never as all-clear.
+
+
+## Storm, Seismic & Bay of Bengal Intelligence (2026-10-24)
+This extension adds three separate operational-awareness panels while retaining the existing workbench, Bangladesh observatory, live-location, energy and research modules.
+
+- **Storm & Lightning Watch:** Open-Meteo forecast/model fields for relative humidity, dew-point depression, cloud, CAPE, thunderstorm probability (if returned), lightning potential and integrated water vapour. The alert watcher is opt-in and refreshes every 15 minutes while the page is open and visible. NASA GIBS MODIS True Color is dated satellite imagery context, not a live lightning detection feed. `lightning_potential` is displayed in its model unit (J/kg), not as a probability. NOAA GOES-R GLM coverage does not include Bangladesh.
+- **Earthquake Rapid Alerts:** USGS `all_hour.geojson` published-event watcher, optional browser notifications, regional/magnitude filters and a teaching-only P/S arrival interval. Browser alerts arrive only after the public feed has updated. They are not JMA-style operational EEW; Japan's EEW is based on dense seismic instrumentation, and even it may not arrive before shaking close to the source.
+- **Bay of Bengal Ocean & Tsunami Observatory:** Open-Meteo Marine current/hourly outputs for significant wave height, period, direction, model sea-level height (including tide effects), sea-surface temperature and ocean currents; animated water surface is a visualisation scaled by model output. GEBCO WMS is static gridded seafloor/bathymetry context, not live sonar. A USGS earthquake filter identifies events for a human to review official tsunami bulletins; it does not predict tsunami generation/arrival and never displays a “safe” verdict.
+
+### Important data and warning limits
+Open-Meteo Marine says coastal sea-level accuracy is limited and the data are not suitable for coastal navigation: https://open-meteo.com/en/docs/marine-weather-api. USGS earthquake GeoJSON feeds cache short-period products and report delays vary: https://www.usgs.gov/faqs/how-quickly-earthquake-information-posted-usgs-website-and-sent-out-earthquake-notification. Japanese EEW timing/limitations: https://www.jma.go.jp/jma/en/Activities/eew3.html. For tsunami bulletins, check the [INCOIS Tsunami Early Warning System](https://tsunami.incois.gov.in/TEWS/searlywarnings.jsp) and [Bangladesh DDM AWARE](https://rapid.ddm.gov.bd/home/weather/). The browser's alerts are optional, require permission, and run only while the app is open; they are not a background push service.
+
+The three alerting pathways are source-specific: weather-model threshold advisory, newly published earthquake record, and a conservative earthquake-source screen that tells the user to inspect official tsunami bulletins. Do not combine these into a claim of guaranteed pre-storm or tsunami prediction.
+
+
+### Satellite Pass & Russian Orbital Watch (2026-10-24)
+- Uses public CelesTrak GP OMM JSON groups: `stations`, `glonass-ops`, and `weather` (weather group entries are filtered to Russian-labelled mission names such as METEOR/RESURS/KANOPUS/ELEKTRO-L/ARKTIKA-M).
+- Uses pinned Satellite.js 6.0.2 from jsDelivr for SGP4/SDP4 orbit propagation. If the CDN is unavailable, this panel reports the dependency as unavailable and does not fabricate satellite positions.
+- Uses browser geolocation only after the user clicks “Use device location” and grants permission. Coordinates stay in page memory and are not posted by this panel. It can also consume the current page's user-authorized `terravex:live-location` event.
+- Calculates azimuth/elevation/range, sub-satellite coordinates, and approximate passes over a 3/6/12/24-hour horizon. Pass crossing estimates use 60-second steps with interpolation; results are only as current/accurate as orbital element epochs and omit local obstructions, cloud, sunlight and visual visibility.
+- CelesTrak GP data is cached for two hours per group to respect its usage policy.
+- This is orbital tracking only. It does not connect to satellite radio, obtain restricted telemetry, access a payload, or guarantee imagery/data access from a Russian satellite or station. GLONASS is a Russian navigation constellation; weather-group “Russian-labelled” classification is a name filter and not independent operator verification.
+- Satellite.js is MIT-licensed and loaded from a pinned CDN URL. Internet access is needed for the dependency and current public orbital elements.

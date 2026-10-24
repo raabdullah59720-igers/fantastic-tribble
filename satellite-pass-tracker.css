@@ -1,0 +1,25 @@
+/* TERRAVEX APEX Satellite Pass & Russian Orbital Watch */
+.sp-head-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.sp-safety-banner{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;margin:0 0 15px;border:1px solid rgba(255,190,80,.36);background:rgba(255,170,60,.065);border-radius:12px;color:#dceaf5;font-size:12px;line-height:1.55}
+.sp-safety-banner b{color:#ffc66b;white-space:nowrap;letter-spacing:.06em}
+.sp-top-grid,.sp-visual-grid{align-items:stretch;margin-bottom:14px}
+.sp-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.sp-form-grid .field{min-width:0}
+.sp-form-grid input,.sp-inline-controls select{width:100%;box-sizing:border-box;background:#071421;color:#d9f1ff;border:1px solid #244056;border-radius:8px;padding:9px 10px;min-height:39px}
+.sp-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 8px}
+.sp-source-list{display:grid;gap:8px;margin-top:10px}
+.sp-source-list>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;padding:10px 11px;border:1px solid #203b50;background:rgba(8,24,39,.7);border-radius:9px}
+.sp-source-list b{font-size:12px;color:#dff5ff}.sp-source-list small{grid-column:1/-1;font-size:10px;color:#7f9cb3}
+.sp-source-state{font-size:10px;letter-spacing:.04em;color:#8ba9bd;text-align:right}.sp-source-state.good{color:#57e3bd}.sp-source-state.bad{color:#ff9b9b}.sp-source-state.warn{color:#ffc66b}
+.sp-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.sp-stats>div{padding:11px 9px;border:1px solid #1b394e;border-radius:9px;background:rgba(8,24,39,.65);min-width:0}
+.sp-stats small{display:block;font-size:9px;letter-spacing:.08em;color:#8caec2;margin-bottom:6px}.sp-stats b{display:block;font-size:17px;line-height:1.2;color:#45dff0;overflow-wrap:anywhere}
+.sp-sky-canvas{display:block;width:100%;height:auto;min-height:260px;background:radial-gradient(ellipse at center,#0b263b 0%,#06131f 72%);border:1px solid #19394f;border-radius:10px}
+.sp-legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:10px 0;color:#a6c5d8;font-size:10px}.sp-legend span{display:flex;align-items:center;gap:5px}.sp-legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block}.sp-legend-dot.station{background:#55e8cb}.sp-legend-dot.glonass{background:#ffc66b}.sp-legend-dot.russian{background:#bd9bff}
+.sp-inline-controls{display:grid;grid-template-columns:auto minmax(110px,1fr);align-items:center;gap:7px 10px;font-size:11px;color:#aac5d6;margin:7px 0 12px}.sp-current-list,.sp-pass-list{display:grid;gap:8px;max-height:550px;overflow:auto;padding-right:2px}
+.sp-sat-row,.sp-pass-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 10px;padding:11px;border-radius:10px;border:1px solid #203c51;background:rgba(5,18,30,.72)}
+.sp-sat-row strong,.sp-pass-row strong{font-size:12px;color:#e3f6ff}.sp-sat-row small,.sp-pass-row small{display:block;font-size:10px;line-height:1.45;color:#8daec3;margin-top:4px}.sp-sat-meta{font-size:10px;color:#48ddec;white-space:nowrap;text-align:right}.sp-sat-pills{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}.sp-sat-pill{border:1px solid #294a60;border-radius:999px;padding:3px 7px;font-size:9px;color:#a9d7e8}.sp-sat-pill.up{border-color:#1f7a73;color:#61e8c8}.sp-sat-pill.glonass{border-color:#8a652e;color:#ffd28a}.sp-sat-pill.ru{border-color:#60478e;color:#d2bdff}
+.sp-pass-row{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto}.sp-pass-time{font-size:11px;white-space:nowrap;color:#c9e8f7}.sp-pass-cardinal{font-size:11px;color:#58e0ed;white-space:nowrap}.sp-empty{padding:18px;text-align:center;color:#8faabd;border:1px dashed #284457;border-radius:10px;font-size:12px}
+#page-satellites .adv-source-footer{display:flex;gap:13px;align-items:center;flex-wrap:wrap;margin-top:14px}
+@media(max-width:900px){.sp-head-actions{justify-content:flex-start}.sp-pass-row{grid-template-columns:1fr auto}.sp-pass-row .sp-pass-time{grid-column:1/-1}}
+@media(max-width:560px){.sp-safety-banner{display:block}.sp-safety-banner b{display:block;margin-bottom:5px}.sp-form-grid{grid-template-columns:1fr 1fr}.sp-stats{grid-template-columns:1fr}.sp-stats>div{display:flex;align-items:center;justify-content:space-between}.sp-stats small{margin:0}.sp-stats b{font-size:15px}.sp-pass-row{grid-template-columns:minmax(0,1fr) auto}.sp-head-actions .btn{width:100%}}
