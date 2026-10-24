@@ -2,10 +2,12 @@
 
 ## Recommended: actual Chrome/Edge PWA
 
+**This release fixes the address-bar issue:** the `beforeinstallprompt` handler no longer calls `preventDefault()`, which previously suppressed the browser-native Install UI. Chrome/Edge can now show its own Install icon when the site meets its criteria.
+
 1. Publish every file in this folder, including `assets/`, to the root of your GitHub Pages repository.
 2. Open the resulting **HTTPS** Pages URL in Chrome or Edge. Do not use the ChatGPT sandbox download URL and do not double-click `index.html`.
-3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v9`.
-4. Click the top-bar **Install App** button. If the browser does not provide a native prompt, use Chrome's menu: **⋮ → Cast, save and share → Install page as app**. In Edge use **⋯ → Apps → Install this site as an app**. Browser wording varies by version and policy.
+3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v11`.
+4. Look for Chrome’s **Install** icon at the right side of the address bar. The app no longer suppresses the browser-native install UI. If the icon is absent, click the top-bar **Install App** button for diagnostics, then use Chrome’s menu: **⋮ → Cast, save and share → Install page as app**. In Edge use **⋯ → Apps → Install this site as an app**. Browser wording varies by version and policy.
 5. If the install command is missing, open DevTools → **Application** → **Manifest** and **Service Workers**. Check the manifest and any console/network errors. Also check if the app is already installed in the same browser profile or if browser policy disables installation.
 
 ## Local app-style window fallback
@@ -35,3 +37,8 @@ If you forget it, the local verifier cannot be recovered. Clear this app's site 
 ## Local VPN pairing update
 
 The local bridge now prints a random **one-use pairing token** on each startup. It expires after 10 minutes and works only once to obtain a separate 4-hour browser-tab session token. Paste the startup token into **VPN Control & Desktop Install**. If it was consumed already, restart `Start-VPN-Bridge-Windows.bat` for a new one. This token is local to your computer; it is not a Russian satellite provider token.
+
+
+## Why the address-bar icon may be absent
+
+Chrome owns this icon and does not let a website force it to appear. The app must be on HTTPS or `http://127.0.0.1`, have a valid manifest with `name`/`short_name`, 192px and 512px icons, `start_url`, `scope`, and standalone display mode, and must have no browser policy block. If already installed in this Chrome profile, the install control may be replaced by an app-open control or hidden. Keep the site open and interact with it, reload once after the service worker activates, and inspect DevTools → Application → Manifest / Service Workers if needed.

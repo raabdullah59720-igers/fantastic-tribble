@@ -1,46 +1,38 @@
-# TERRAVEX APEX QA Report — One-use Pairing + Emergency RF Link Budget Lab
+# TERRAVEX APEX QA Report — Chrome Address-Bar Install Fix
 
-Build: `TERRAVEX-APEX-PAIRING-LINK-LAB` · PWA shell cache `terravex-apex-shell-v9`
+Build: `TERRAVEX-APEX-OMNIBOX-INSTALL-FIX` · PWA shell cache `terravex-apex-shell-v11`
 
-## Checks performed
+## Main bug fixed
 
-- Static QA script completed with **0 errors**.
-- Main HTML parsed: **568 IDs, 0 duplicate IDs**; all local script/style/image links exist.
-- Manifest JSON passes; standalone display, start URL/scope, 192×192 and 512×512 icon declarations are present. **4 manifest shortcuts** point to existing app pages.
-- Service worker uses `terravex-apex-shell-v9`. All **33 required shell assets** exist, and PWA diagnostics in `advanced-workbench.js` expect the same v9 cache.
-- JavaScript syntax: **16 files**, 0 syntax errors.
-- CSS parser: **13 stylesheets**, 0 parse errors.
-- Python syntax: bridge, unit tests, and static-QA script parse successfully.
-- Local HTTP smoke test: `/`, `/manifest.webmanifest`, `/sw.js`, and `/connectivity-lab.js` returned HTTP 200 from a loopback test server.
-- Local fake-client VPN bridge tests: **11/11 pass**. Tests include fixed ON/OFF/status commands, refusal of arbitrary actions, exact-origin allow-list, one-use token exchange, token expiry, invalid-token retry, session-only authorization, expired-session rejection and pair schema.
-- RF link-budget calculator fake-DOM smoke test: **6 assertions pass**. Reference values: FSPL `206.97 dB`, EIRP `52.00 dBW`, receive power `-92.97 dBm`, margin `+17.03 dB`; invalid zero-frequency input rejected.
-- Final ZIP includes **62 file entries** (no folders listed as entries, no `.pyc`/`__pycache__`, and no generated `vpn-bridge-config.json`). `ZipFile.testzip` returned no error.
+The previous `pwa-install.js` called `event.preventDefault()` inside the `beforeinstallprompt` listener. That suppresses Chrome/Edge's default browser install UI, including its native address-bar Install affordance, unless the site manually invokes the retained prompt. The install UX is now intentionally non-intercepting: the handler records that installation is available but does not cancel the browser event. The in-app Install buttons now guide users to the browser's native address-bar icon or menu. The website cannot force the browser chrome icon to appear; browser eligibility, profile state, and policy still decide visibility.
 
-## Not tested / capability boundaries
+## Static and focused checks
 
-- No actual Tailscale/WireGuard tunnel was switched on this runtime; tests use an isolated fake CLI.
-- No Russian satellite provider token, terminal, carrier session, private VPN credentials, subscription, or physical satellite link is supplied or generated. The one-run token is generated locally by the bridge process at startup, valid for 10 minutes, and consumed once; it cannot be prepared in advance for the user's computer.
-- Native Chrome/Edge installation prompt and Windows shortcut scripts were not executed on a Windows desktop in this build environment. PWA manifest, icons, local resource references, loopback HTTP server smoke test, and service-worker cache were checked. A PWA must open from HTTPS or localhost/loopback; `file://` from a ZIP is not a registered PWA origin. Chrome may suppress `beforeinstallprompt`; use the browser menu if needed.
-- A public HTTPS website contacting `127.0.0.1` can trigger Chrome's Local Network Access / loopback permission. Allow it only for a trusted app you operate.
-- External satellite-carrier availability, public API availability and GitHub Pages deployment were not verified.
-- The session token remains in the current tab's `sessionStorage` until expiry/clear/tab end; a compromised same-origin script could expose it. This is not a replacement for server-side authentication.
+- `python run-static-qa.py`: **0 errors**.
+- HTML parsed: **600 IDs, 0 duplicate IDs**; all local script/style/image references exist.
+- Manifest: valid JSON; stable relative `id`, `start_url`, and `scope`; `display=standalone`; 192×192 and 512×512 PNG icons declared.
+- Service worker: `terravex-apex-shell-v11`; **35 required app-shell assets**, missing **0**; runtime diagnostics expect v11.
+- Manifest shortcuts: **5 checked**, all target existing page IDs.
+- JavaScript syntax: **17 root JS files**, 0 errors.
+- CSS parse: **14 stylesheets**, 0 errors.
+- Python syntax: bridge, bridge test and static QA script parse.
+- PWA omnibox regression test: `node tests/test-pwa-omnibox.cjs`, **9/9 PASS**. Confirms `beforeinstallprompt` listener exists, the listener itself does not call `preventDefault`, manifest and icons are present, and service-worker cache version matches diagnostics.
+- RF panel focused functional tests: `node tests/test-rf-interference-intelligence.cjs`, **5/5 PASS**.
+- Local VPN bridge tests: `python test_vpn_bridge.py`, **11/11 PASS**, using a fake VPN CLI.
+- ZIP archive integrity: checked with `ZipFile.testzip`; no corrupt entry reported.
 
-## Link budget warning
+## Not tested / limits
 
-The Emergency Link Budget Lab is an illustrative RF calculator. A positive margin is not proof of an actual carrier connection. Real link engineering must include authorized frequencies, terminal/provider parameters, noise, fade, pointing, polarization, bandwidth, coding/modulation, regulatory compliance and field measurements.
+- Browser automation/native Chrome address-bar icon was not executed in this environment. The hosted/installed result must be verified in the user's Chrome profile.
+- GitHub Pages deployment and production external APIs were not tested.
+- No actual Tailscale/WireGuard tunnel, SDR or satellite link was operated. VPN tests use a fake CLI; RF module is receive-only and virtual.
+- A PWA must open from HTTPS or `http://localhost` / `http://127.0.0.1`, not from a sandbox download URL or `file://`. After uploading this build, hard reload the site and allow the v11 service worker to activate.
 
+## Browser install troubleshooting
 
-## RF Spectrum & Interference Intelligence module
-
-- Added `page-rfintel` as a separate Operations panel and mapped it to the command palette/nav registry.
-- Added `rf-interference-intelligence.js` and `.css` to the service-worker required shell; cache version advanced to v10 and diagnostics/QA parity updated.
-- Added an install shortcut for the RF Monitor panel.
-- Static validation: no inline radio transmit/JAM command in the new module; expected UI IDs are present; source references are present.
-- CSV import is local/read-only, capped at 2 MiB and 5,000 data samples, and requires `frequency_mhz,power_dbm`. It does not upload the file.
-- Scenarios, peak detection and quality score are illustrative heuristics, not proof of an intentional jammer or certified RF measurements.
-- No real RF hardware, SDR, satellite transponder, or public network is contacted by the module.
-
-
-## Focused RF panel test results
-
-Executed `node tests/test-rf-interference-intelligence.cjs`: 5/5 pass. The tests cover the expected clean-channel SNR, modeled SNR degradation as simulated interference increases, pause/reset controls, local CSV import plus one candidate peak, and invalid bandwidth rejection. This harness uses a mocked DOM/canvas and a local mock CSV; it does not represent a real receiver, transmitter, satellite link, or browser installation test.
+1. Upload every file and `assets/` to the repository root; do not upload the ZIP itself as the website.
+2. Open the actual HTTPS GitHub Pages URL in Chrome, not the sandbox download link.
+3. Check DevTools → Application → Manifest and Service Workers; confirm the manifest and icons load with HTTP 200 and the v11 service worker activates.
+4. If an older copy was cached, use Source Health & PWA → Refresh cached app shell, reload, or clear only this origin's site data and reopen it.
+5. Check whether the app is already installed in that Chrome profile and whether browser/organization policy disables installs.
+6. If the address-bar icon still does not appear, use Chrome's **⋮ → Cast, save and share → Install page as app** menu when available. A webpage cannot force Chrome's own UI to display an icon.

@@ -1,5 +1,5 @@
 /* TERRAVEX APEX service worker. Critical shell assets are required; artwork and docs are optional. */
-const CACHE_NAME = 'terravex-apex-shell-v10';
+const CACHE_NAME = 'terravex-apex-shell-v11';
 const SCOPE_URL = self.registration.scope;
 const REQUIRED_SHELL = [
   "./index.html",

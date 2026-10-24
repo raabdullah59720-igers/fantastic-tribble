@@ -7,7 +7,7 @@ Static GitHub Pages/PWA application for Earth intelligence, Bangladesh satellite
 1. Extract the complete ZIP to a normal Windows folder.
 2. For a browser-based local run, double-click `START-TERRAVEX-WEB-APP.bat`. It serves only on `127.0.0.1:8000` and opens the local app in your browser.
 3. For a desktop shortcut, double-click `INSTALL-TERRAVEX-DESKTOP.bat` once, then use the **TERRAVEX APEX** shortcut.
-4. For a browser-registered PWA, publish all files and `assets/` to the root of GitHub Pages, open the resulting HTTPS URL in Chrome/Edge, and use **Install App** or the browser's install menu. A website cannot force Chrome to display a native installation prompt.
+4. For a browser-registered PWA, publish all files and `assets/` to the root of GitHub Pages, open the resulting HTTPS URL in Chrome/Edge, then look for the browser's native **Install** icon beside the address bar. This build deliberately leaves the `beforeinstallprompt` event unprevented, so it does not suppress Chrome's install icon. Use the in-app **Install App** button or browser menu if the icon is absent.
 
 ## One-use local VPN pairing
 
@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v9`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v11`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -50,3 +50,8 @@ The scenario controls are simulation-only. For suspected harmful interference, p
 
 
 See [RF Spectrum & Interference Intelligence](RF-INTERFERENCE-INTELLIGENCE.md) for formula definitions, CSV format, limitations, and the receive-only safety boundary. A dependency-free focused test can be run using `node tests/test-rf-interference-intelligence.cjs`.
+
+
+## Chrome address-bar installation
+
+The PWA script deliberately leaves `beforeinstallprompt` unprevented so Chromium can show its native Install icon beside the address bar when its installability and browser policy conditions are met. The website cannot force browser chrome to show an icon. If absent, check HTTPS/127.0.0.1 origin, manifest and icon requests, service-worker activation, browser profile installation state and browser policy. Use the top-bar Install App button or browser menu for guidance.

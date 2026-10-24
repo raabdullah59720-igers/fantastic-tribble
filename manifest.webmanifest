@@ -2,7 +2,7 @@
   "id": "./",
   "name": "TERRAVEX APEX · Earth Intelligence",
   "short_name": "TERRAVEX",
-  "description": "Earth observation, geoscience, environmental monitoring, disaster operations and IGERS engineering models.",
+  "description": "Installable TERRAVEX APEX Earth intelligence and engineering workbench, with live-source monitoring and scientific simulations.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
