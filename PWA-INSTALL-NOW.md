@@ -1,29 +1,33 @@
-# Install TERRAVEX APEX as a desktop web app
+# TERRAVEX APEX: install on Windows desktop
 
-## Fastest route on Windows
+## Recommended: actual Chrome/Edge PWA
 
-1. Download `TERRAVEX-APEX-INSTALL-READY.zip` and extract all files to a normal folder.
-2. No Python installation is required for PWA installation. Double-click `START-TERRAVEX-WEB-APP.bat`. A PowerShell/.NET local server opens the app at `http://127.0.0.1:8000/`. Keep the terminal window open.
-3. In the app, click **Install App**. If the browser does not show an in-page prompt, use the browser's app-install menu.
-4. In Microsoft Edge: `… → More tools → Apps → Install this site as an app`; Edge lets you create desktop/taskbar shortcuts. In Chrome, use its `Install page as app` menu option where available.
+1. Publish every file in this folder, including `assets/`, to the root of your GitHub Pages repository.
+2. Open the resulting **HTTPS** Pages URL in Chrome or Edge. Do not use the ChatGPT sandbox download URL and do not double-click `index.html`.
+3. Keep the app open online long enough for the service worker to install and the app shell to cache.
+4. Click the top-bar **Install App** button. If the browser does not provide a native prompt, use Chrome's menu: **⋮ → Cast, save and share → Install page as app**. In Edge use **⋯ → Apps → Install this site as an app**. Browser wording varies by version and policy.
+5. If the install command is missing, open DevTools → **Application** → **Manifest** and **Service Workers**. Check the manifest and any console/network errors. Also check if the app is already installed in the same browser profile or if browser policy disables installation.
 
-## Why this works
+## Local app-style window fallback
 
-PWA installation requires a served origin (HTTPS, localhost or loopback), a valid web app manifest, suitable 192px/512px icons and installable app display settings. Opening `index.html` directly as `file://` does not meet the installation-origin requirement. This package has `manifest.webmanifest`, `sw.js`, `pwa-install.js`, icons, and a service-worker readiness panel.
+1. Extract the complete ZIP to a normal folder on Windows.
+2. Double-click `INSTALL-TERRAVEX-DESKTOP.bat` once to create a desktop shortcut.
+3. Double-click the new **TERRAVEX APEX** desktop shortcut. It starts a local-only server on `127.0.0.1:8000`, then opens an app-style Chrome/Edge window if the browser is installed.
+4. Keep the minimized PowerShell server window open while using the app. Closing it stops the local app server. This shortcut fallback is not the same as a browser-registered PWA; for that, use the HTTPS install steps above.
 
-## If install still does not appear
+The original `START-TERRAVEX-WEB-APP.bat` remains available to open the local site in the default browser.
 
-- Ensure the URL is `http://127.0.0.1:8000/` or your HTTPS GitHub Pages URL.
-- In Source Health & PWA, look for `PWA READY` and `ACTIVE` shell-cache status.
-- Click `Refresh cached app shell`, then reload once.
-- In Chrome/Edge DevTools Application, inspect Manifest and Service Workers; look for 404s in Network.
-- If port 8000 is already in use, close the other local server, then run the launcher again.
-- If the app was previously installed from a different URL, this is a different origin and browser treats it as a separate app.
+## Password lock
 
-## Local server security
+On the first launch for a given origin/browser storage, create a password of at least 10 characters and confirm it. The password itself is not stored; a salted PBKDF2-SHA-256 verifier is saved in browser local storage. On future launches of the **same origin** the app asks for that password again. `http://127.0.0.1:8000` and your GitHub Pages HTTPS URL have different storage, so they use separate passwords.
 
-`serve_terravex.ps1` binds a small .NET TCP server to `127.0.0.1` only, disables directory listing, and denies direct web requests for script files, batch files, JSON config, key, certificate, archive and PDF files. It is intended for local installation/testing, not as a public web server. The PWA can still fetch remote public feeds while internet is available. Python 3 is required only for the separate local VPN bridge, not for PWA installation.
+If you forget it, the local verifier cannot be recovered. Clear this app's site data for that specific origin to start over, then create a new password.
 
-## GitHub Pages route
+**Security limit:** This static app lock is a device-level privacy curtain, not real website access control. GitHub Pages still serves public HTML/JavaScript and a determined visitor can bypass client-side checks. For confidential website-wide access, use server-side authentication or an identity access gateway, and do not publish private API keys, GPS records, VPN keys or emergency contacts in the repository.
 
-Upload the contents of the extracted folder (not the ZIP itself) to the repository root and configure Settings → Pages → Deploy from a branch → `main` → `/(root)`. Open the resulting HTTPS URL, not a source-file preview URL.
+## Troubleshooting
+
+- **No Install button/prompt:** make sure the URL is HTTPS or `http://127.0.0.1`, the manifest and icon files return HTTP 200, the service worker is active, and no browser policy blocks installs. A website cannot make Chrome display its native install dialog by force.
+- **App is blank/old:** reload once online, open **Source Health & PWA**, click **Refresh cached app shell**, then reload again. If needed clear this origin's site data/service worker and revisit the current deployment.
+- **VPN button disabled:** the native VPN client and local bridge must be configured and running separately. The PWA alone cannot switch Windows VPNs.
+- **Offline:** cached UI may open after first successful load; satellite tiles, weather feeds, earthquake feeds, public APIs, and VPN connectivity still require their services/network.

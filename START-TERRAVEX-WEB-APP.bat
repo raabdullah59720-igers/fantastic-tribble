@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title TERRAVEX APEX - Local Web App Installer
+title TERRAVEX APEX - Local Web App
 where powershell.exe >nul 2>nul
 if %errorlevel% neq 0 (
   echo Windows PowerShell was not found. Use GitHub Pages HTTPS instead.

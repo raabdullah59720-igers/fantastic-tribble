@@ -1,4 +1,5 @@
-﻿$ErrorActionPreference = 'Stop'
+﻿param([switch]$NoBrowser)
+$ErrorActionPreference = 'Stop'
 $Root = [System.IO.Path]::GetFullPath($PSScriptRoot)
 $HostAddress = '127.0.0.1'
 $Port = 8000
@@ -52,7 +53,7 @@ function Handle-Client($Client) {
     if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) { Send-TextError $Client 404 'Not Found' 'Requested app resource was not found.' $method; return }
     $content = [System.IO.File]::ReadAllBytes($fullPath)
     $type = $Mime[$extension]; if (-not $type) { $type = 'application/octet-stream' }
-    $cache = if ($name -in @('index.html','manifest.webmanifest','sw.js','pwa-install.js')) { 'no-cache' } else { 'public, max-age=3600' }
+    $cache = if ($extension -in @('.html','.htm','.css','.js','.mjs','.webmanifest') -or $name -in @('sw.js','pwa-install.js','password-lock.js')) { 'no-cache' } else { 'public, max-age=3600' }
     Send-Response $Client 200 'OK' $type $content $method $cache
   } catch {
     try { Send-TextError $Client 500 'Internal Server Error' 'Local file server encountered an error. See the launcher console.' 'GET' } catch { }
@@ -79,7 +80,7 @@ Write-Host "Open: $url" -ForegroundColor Green
 Write-Host 'Bound to 127.0.0.1 only. It is NOT exposed to your local network.'
 Write-Host 'Directory listing is disabled; private config, scripts and archives are not web-served.'
 Write-Host 'Keep this window open. Press Ctrl+C to stop.' -ForegroundColor Yellow
-try { Start-Process $url } catch { Write-Host 'Open the URL above manually in Chrome or Edge.' }
+if (-not $NoBrowser) { try { Start-Process $url } catch { Write-Host 'Open the URL above manually in Chrome or Edge.' } }
 try {
   while ($true) {
     $client = $listener.AcceptTcpClient()

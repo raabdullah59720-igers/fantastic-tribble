@@ -1,59 +1,39 @@
-# TERRAVEX APEX · PWA Install-Ready Build QA
+# TERRAVEX APEX Install + Password Lock QA Report
 
-## Package inventory
+Build: Install-ready PWA and local desktop launcher upgrade (cache v8)
 
-- Deliverable files: **50** (including one `assets/` directory with four WebP visuals).
-- Entry point: `index.html` at ZIP root.
-- Manifest: `manifest.webmanifest`.
-- Service worker: `sw.js`, cache version `terravex-apex-shell-v7`.
-- Early install UI/event handler: `pwa-install.js`.
-- Windows local installer launcher: `START-TERRAVEX-WEB-APP.bat`.
-- Loopback-only static server: `serve_terravex.ps1`.
+## Static checks performed in this environment
 
-## Checks actually performed
+- ZIP source extracted and checked with `zipfile.testzip()` before editing; final ZIP is rebuilt and integrity-checked before delivery.
+- Node.js `--check` run against all 14 local `.js` files: no syntax errors.
+- `tinycss2` parsed all 12 local `.css` files: no parser errors.
+- HTML parsed with BeautifulSoup: 539 IDs, 0 duplicate IDs.
+- All local `script`, `link`, and image references in `index.html` resolve to files in the package.
+- Manifest JSON parses; `name`, `short_name`, `start_url`, `scope`, `standalone`, and 192x192 / 512x512 icon declarations are present.
+- Service worker uses cache `terravex-apex-shell-v8`; 31 required shell assets are present in the package.
+- Python syntax parsed for the VPN bridge/test and QA helper.
+- Existing VPN bridge unit tests using a fake VPN CLI: 6/6 pass.
+- Desktop shortcut installer and local launcher file references are present.
 
-| Check | Result | Detail |
-|---|---|---|
-| JavaScript syntax | PASS | Node `--check` completed for all 13 `.js` files. |
-| CSS parse | PASS | `tinycss2` parsed 11 stylesheets with no parser errors. |
-| HTML structure | PASS | Parsed the main page; 27 page sections and 27 navigation controls found. |
-| Duplicate HTML IDs | PASS | No duplicate IDs found. |
-| Local HTML references | PASS | No missing local script, stylesheet, icon or image `src`/`href` reference found. |
-| Web app manifest | PASS | JSON parses; name, `start_url`, `scope`, standalone display and install metadata exist. |
-| Install icons | PASS | `icon-192.png` is 192×192; `icon-512.png` is 512×512. |
-| Service worker shell list | PASS | All 29 required local shell assets exist in the package. Optional assets are cached best-effort and cannot block installation. |
-| PWA install flow | Static PASS | A separate early-loaded `beforeinstallprompt` listener captures the prompt; the global and health-panel buttons share one install handler. Browser-menu fallback is provided. |
-| Shortcut routes | Static PASS | `?page=quake`, `?page=location` and `?page=stormwatch` are routed to their navigation pages. |
-| VPN bridge regression | PASS | `python test_vpn_bridge.py`: 6 tests passed (fake VPN CLI only). |
-| ZIP integrity | PASS (checked during final packaging) | The final archive is reopened and `ZipFile.testzip()` returns `None`. |
+## Install and app-lock changes
 
-## Why installation may previously have failed
+- `pwa-install.js` loaded early to capture `beforeinstallprompt` when Chromium emits it; native install still depends on browser policy and installability.
+- `Refresh cached app shell` control now runs service-worker update/cache verification from `advanced-workbench.js`.
+- PWA diagnostics check cache v8 and verify the password lock files are cached.
+- Startup screen blocks the visible app until device password creation/unlock.
+- Password minimum 10 characters; confirmation required at setup; show/hide toggle; manual lock button; 5 failed attempts cause a short UI throttle.
+- Password record uses a random 16-byte salt and PBKDF2-HMAC-SHA-256 with 310,000 iterations; only salt/hash/metadata are stored in localStorage. Plaintext password is not written to storage.
+- Password is per browser storage and origin. Localhost and GitHub Pages have separate local locks.
+- Added Windows shortcut creation and a launcher that serves only on `127.0.0.1:8000` and opens Chrome/Edge in app-style mode where found.
+- Static server now uses `no-cache` for HTML, JS, CSS and manifest so local update troubleshooting is not held back by a one-hour browser cache.
 
-PWA installation does not work from a ZIP preview or directly opened `file://.../index.html`. A browser needs an installable origin: normally HTTPS, or a development loopback origin such as `http://127.0.0.1`. The package now contains a Windows launcher that serves the app on `127.0.0.1:8000` and opens it in the browser. The app displays the browser-specific install-menu steps if no `beforeinstallprompt` event is offered.
+## Environment blockers / unverified checks
 
-The `beforeinstallprompt` event is browser-specific and not guaranteed. The supported fallback is to use the browser's own “Install app / Install this site as an app” menu.
+- Attempted Playwright/Chromium navigation to `http://127.0.0.1:8000/`; this environment returns `ERR_BLOCKED_BY_ADMINISTRATOR`, so DOM interaction and browser-native installation prompt could not be executed here.
+- Windows PowerShell/COM desktop shortcut creation cannot be executed in this Linux runtime. The `.ps1`/`.bat` assets are included, but final validation on Windows remains necessary.
+- A PWA install prompt cannot be forced by website JavaScript. If `beforeinstallprompt` is not supplied, the app provides Chrome/Edge menu steps and a Windows desktop shortcut fallback. This is not falsely reported as a successful native PWA install.
+- GitHub Pages deployment and live external APIs were not tested during this build.
 
-## Local Windows launcher security notes
+## Security limit
 
-- `serve_terravex.ps1` binds to `127.0.0.1` only; it does not listen on the LAN.
-- Directory listing is disabled.
-- Direct requests for `.py`, `.bat`, `.ps1`, `.json`, `.zip`, `.pdf`, private-key-like files and hidden paths are blocked.
-- The local server is intended only for local app installation/testing, not public hosting.
-- Python is not required to install the PWA; it remains required only if the user chooses to run the optional VPN bridge.
-
-## Checks not performed / limitations
-
-- A real browser installation run could not be completed in this build environment: Chromium navigation to both localhost and local file URLs returned `ERR_BLOCKED_BY_ADMINISTRATOR`. This is an environment restriction, not a successful PWA install test.
-- The Windows PowerShell/TCP launcher was statically reviewed but could not be executed in this Linux build environment.
-- The `beforeinstallprompt` event, Chrome/Edge install UI, and final desktop shortcut creation require testing on the user's Windows Chrome/Edge installation.
-- GitHub Pages publishing and public network API availability were not tested here.
-- The local PWA and the GitHub Pages PWA have different origins and are installed as separate browser apps.
-
-## Repeatable user-side verification
-
-1. Extract the entire ZIP to a writable folder.
-2. Double-click `START-TERRAVEX-WEB-APP.bat`; keep the terminal window open.
-3. Confirm the browser URL is `http://127.0.0.1:8000/`, not `file://`.
-4. Open **Source Health & Offline System** and confirm `PWA READY` plus `ACTIVE` shell-cache status.
-5. Click **Install App**. If the in-app prompt is not available, use Edge `… → More tools → Apps → Install this site as an app` or Chrome's available “Install page as app” menu option.
-6. After installation, close/reopen the app from the desktop shortcut. Test live feeds while online; offline mode only guarantees best-effort local shell caching.
+The device password is a client-side UI lock, not server-side authorization. A public static GitHub Pages site still exposes its static source/assets; a determined visitor can bypass a client-only gate. Use server-side authentication or an identity access gateway for genuine website-wide restriction. No secrets should be placed in the repository.

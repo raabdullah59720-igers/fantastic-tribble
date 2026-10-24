@@ -1,5 +1,5 @@
 /* TERRAVEX APEX service worker. Critical shell assets are required; artwork and docs are optional. */
-const CACHE_NAME = 'terravex-apex-shell-v7';
+const CACHE_NAME = 'terravex-apex-shell-v8';
 const SCOPE_URL = self.registration.scope;
 const REQUIRED_SHELL = [
   "./index.html",
@@ -28,6 +28,8 @@ const REQUIRED_SHELL = [
   "./vpn-control.js",
   "./manifest.webmanifest",
   "./pwa-install.js",
+  "./password-lock.js",
+  "./password-lock.css",
   "./icon.svg",
   "./icon-192.png",
   "./icon-512.png"
@@ -54,6 +56,10 @@ async function cacheOptionalAsset(cache, relativePath) {
     if (response.ok) await cache.put(url.href, response.clone());
   } catch (_) { /* Optional graphics must not prevent app installation. */ }
 }
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'TVX_SKIP_WAITING') self.skipWaiting();
+});
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
