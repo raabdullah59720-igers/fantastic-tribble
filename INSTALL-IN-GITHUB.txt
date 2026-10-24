@@ -39,3 +39,17 @@ SATELLITE PASS & RUSSIAN ORBITAL WATCH
 - Open “Satellite Pass & Russian Orbital Watch”. Click “Use device location” to request a device fix (optional) and “Load / update public orbit data” to load CelesTrak groups.
 - The satellite.js 6.0.2 library loads from jsDelivr. If the CDN is unreachable, orbit propagation will say unavailable rather than display fabricated positions.
 - Satellite data are public orbital elements, not satellite communications/imagery access. Group data are cached for two hours.
+
+
+SECURE SATELLITE & VPN PANEL
+----------------------------
+The new navigation item is “Secure Satellite & VPN”. All static files in this folder must be uploaded together. The panel cannot activate an actual satellite terminal or OS VPN. It can test the public Open-Meteo route and a user-authorized HTTPS health endpoint.
+
+Never enter private keys, passwords or API tokens in the panel or repository. A GitHub Pages site is public; a client-side PIN is not access control. Read SECURITY-DEPLOYMENT.md before using the app for confidential/emergency operations.
+
+DESKTOP INSTALL + LOCAL VPN CONTROL (NEW)
+- Desktop PWA: publish via HTTPS, then use Chrome/Edge menu > Install app or open Source Health & PWA > Install app. Manifest includes icon-192.png and icon-512.png; service-worker shell version is v6.
+- VPN ON/OFF is controlled by a separate Windows desktop helper, not by static web JavaScript alone.
+- Read DESKTOP-INSTALL-AND-VPN-GUIDE.md. Run Start-VPN-Bridge-Windows.bat; review vpn-bridge-config.example.json (launcher creates local vpn-bridge-config.json); configure your exact app origin and already-installed Tailscale or WireGuard client.
+- Paste the per-run token shown in the helper console into VPN Control & Desktop Install. Chrome/Edge may also ask for Local Network Access / loopback permission; allow only if you trust the app. Use ON/OFF only after reading the confirmation. Keep the helper console open while operating the panel.
+- Never upload vpn-bridge-config.json, VPN private keys, passwords or tokens to GitHub. The bridge listens only on 127.0.0.1 and has no arbitrary command endpoint. Native status does not guarantee satellite route or emergency-service availability.

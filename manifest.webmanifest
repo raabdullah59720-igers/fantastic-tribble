@@ -1,15 +1,32 @@
 {
   "id": "./",
-  "name": "TERRAVEX APEX \u00b7 Earth Intelligence",
+  "name": "TERRAVEX APEX · Earth Intelligence",
   "short_name": "TERRAVEX",
   "description": "Earth observation, geoscience, environmental monitoring and IGERS engineering models.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "background_color": "#050b14",
   "theme_color": "#07111f",
+  "prefer_related_applications": false,
   "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "icon.svg",
       "sizes": "any",

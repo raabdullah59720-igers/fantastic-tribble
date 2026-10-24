@@ -133,3 +133,28 @@ The three alerting pathways are source-specific: weather-model threshold advisor
 - CelesTrak GP data is cached for two hours per group to respect its usage policy.
 - This is orbital tracking only. It does not connect to satellite radio, obtain restricted telemetry, access a payload, or guarantee imagery/data access from a Russian satellite or station. GLONASS is a Russian navigation constellation; weather-group “Russian-labelled” classification is a name filter and not independent operator verification.
 - Satellite.js is MIT-licensed and loaded from a pinned CDN URL. Internet access is needed for the dependency and current public orbital elements.
+
+
+## Secure Satellite Relay & VPN Health panel (Oct 2026)
+
+New navigation panel: **Secure Satellite & VPN** (`page-securelink`), styled by `secure-satellite-vpn.css` and implemented in `secure-satellite-vpn.js`.
+
+- Separates browser network status, satellite-provider status, VPN tunnel status, and health-endpoint reachability. It does not falsely show a satellite/VPN link as active.
+- Includes an explicit public HTTPS baseline probe to Open-Meteo, and an optional user-supplied HTTPS health endpoint (requires user authorization and compatible CORS). Endpoint probes send no cookies or authorization headers, deny redirects, require HTTPS on port 443, reject URL credentials/query/hash and literal IP/local hostnames, use an 8-second timeout, and cap JSON health responses at 8 KiB.
+- Health status is considered verified only when the endpoint returns HTTP success and a JSON `status` value of `ok`, `healthy`, `up`, or `ready`. Any CORS/network/TLS/timeout problem is reported as inconclusive, not automatically as service-down.
+- Optional 60-second endpoint monitoring begins only after the user presses Start; it runs while the page is open, and is stopped when requested or on page unload. Optional browser failure notifications are off by default and only notify after an endpoint that previously returned a healthy response fails a later check. Browser `navigator.onLine` is only a coarse signal. The VPN checkbox is explicitly self-reported and does not verify or control the OS tunnel.
+- Local JSON report export omits the endpoint URL, response body, coordinates and credentials.
+- Provider links point to RSCC's commercial communication services and BTRC guidance. A subscription, compatible approved satellite terminal, service eligibility, local regulatory compliance and actual internet access must be arranged outside this static app. Public orbital elements do not give direct access to a spacecraft's communications payload.
+
+### Critical privacy note
+GitHub Pages is static and published websites are public even when the source repository is private on plans that permit that configuration. Client-side hiding or passwords cannot make this app private. For confidential monitoring, put the whole application behind server-side authentication/identity-aware access or deploy a private application. See `SECURITY-DEPLOYMENT.md` before sharing or publishing sensitive information.
+
+## Desktop PWA + native VPN control (new)
+
+- A dedicated **VPN Control & Desktop Install** page is included. The app can request ON/OFF of a VPN client already configured on the local desktop only when the local bridge is running and paired.
+- Run `Start-VPN-Bridge-Windows.bat` on your Windows desktop. It uses Python 3.10+ and a local `vpn-bridge-config.json`. Review the allowlisted origin and choose `tailscale` or the already-installed WireGuard tunnel backend.
+- The bridge binds to `127.0.0.1:8765`, validates the exact browser Origin and Host, uses a random per-run bearer token, and only accepts fixed `status`, `on`, and `off` operations. It has no arbitrary shell-command endpoint.
+- The pairing token is printed to the local console and is only held in the current app page's memory. It is not saved in localStorage/cookies. Stop the bridge with Ctrl+C.
+- Install as a desktop PWA using the **Source Health & Offline System → Install app** button or the Chrome/Edge browser menu. Serve via GitHub Pages HTTPS. Chromium-sized PNG icons (192 and 512 px) and service-worker shell caching are included.
+- A PWA cannot itself control OS-level VPN software. Real control requires the separate helper and a preconfigured client; no satellite service, VPN account/server, private key, or subscription is provided.
+- Read `DESKTOP-INSTALL-AND-VPN-GUIDE.md` before running the bridge. `.gitignore` excludes the actual local config file from Git.

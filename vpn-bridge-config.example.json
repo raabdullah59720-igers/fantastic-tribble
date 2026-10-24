@@ -1,0 +1,12 @@
+{
+  "allowed_origins": [
+    "https://raabdullah59720-igers.github.io",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000"
+  ],
+  "backend": "tailscale",
+  "tailscale_path": "",
+  "wireguard_path": "",
+  "wireguard_tunnel_name": "",
+  "port": 8765
+}

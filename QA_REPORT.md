@@ -1,53 +1,35 @@
-# TERRAVEX APEX - Independent Package Verification
+# TERRAVEX APEX Desktop PWA + VPN Control Upgrade — QA Report
 
-Date: 2026-10-24
-Base archive: `TERRAVEX-APEX-STORM-SEISMIC-OCEAN-ALERT-UPGRADE.zip`
-New module: `Satellite Pass & Russian Orbital Watch`
+## Package inventory
+- Deliverable: `TERRAVEX-APEX-DESKTOP-VPN-PWA-UPGRADE.zip`
+- Source: previous TERRAVEX APEX Secure Satellite & VPN app bundle, with the previous feature set retained.
+- Files before ZIP: 46 (maximum allowed: 98).
+- JavaScript syntax checks: all root `.js` files.
+- CSS parsing: all 11 root stylesheets.
+- Entry point: `index.html` at archive root.
 
-## Checks
-- Storm & Lightning Watch: `page-stormwatch`, navigation, and `initStorm()` are present. Static source checks found the Open-Meteo forecast endpoint, NASA GIBS WMS imagery request, explicit model advisory threshold, and enabled/disabled watcher timer.
-- Earthquake Rapid Alerts: `page-quakeearly`, navigation, and `initRapidQuakes()` are present. Static source checks found the USGS `all_hour.geojson` feed, magnitude/region filtering, event deduplication, watcher start/stop, and shared alert dispatcher.
-- Bay of Bengal Ocean & Tsunami: `page-ocean`, navigation, and `initOcean()` are present. Static source checks found the Open-Meteo Marine endpoint, GEBCO bathymetry layer, wave visualization, USGS all-day earthquake source screening, and explicit wording that a screening match is not a tsunami prediction or official warning.
-- These are source-integrity/integration checks, not a claim that the external live endpoints responded during this build.
-- Satellite navigation present: PASS
-- Satellite page present: PASS
-- Satellite page loaded by script: PASS
-- Pinned SGP4 dependency present: PASS
-- Space stations source present: PASS
-- GLONASS source present: PASS
-- Weather group source present: PASS
-- Device geolocation permission request present: PASS
-- Horizon pass propagation present: PASS
-- Two-hour public data cache present: PASS
-- Offline shell includes new JS: PASS
-- Cache version bumped: PASS
-- Russian satellite data-access limitation disclosed: PASS
-- Local CSS/JS/image ref styles.css: exists
-- Local CSS/JS/image ref bangladesh-observatory.css: exists
-- Local CSS/JS/image ref geolocation-live.css: exists
-- Local CSS/JS/image ref lightning-nowcast-lab.css: exists
-- Local CSS/JS/image ref earth-systems-upgrade.css: exists
-- Local CSS/JS/image ref advanced-workbench.css: exists
-- Local CSS/JS/image ref hazard-intelligence.css: exists
-- Local CSS/JS/image ref manifest.webmanifest: exists
-- Local CSS/JS/image ref icon.svg: exists
-- Local CSS/JS/image ref satellite-pass-tracker.css: exists
-- HTML duplicate IDs: 0
-- Files in deliverable package: 33
-- JavaScript syntax: checked with Node.js --check for every local .js file.
-- HTML parse: stdlib HTMLParser completed; this is a structural parse, not an HTML conformance validator.
-- CSS syntax: checked with tinycss2 where available.
-- Browser/GitHub deployment: not verified in this build environment. Public CelesTrak endpoint and jsDelivr availability/CORS require checking after deploy.
-- Original hazard modules: present in the base ZIP; static checks confirm all three page sections and initializers exist. Full live external API behavior is not certified by these static checks.
-- Satellite geometry calculations: the pass-time interpolation helper passed a deterministic test (`-10°` to `+10°` across 60 seconds at a `0°` elevation threshold gives a 30-second crossing). Source is wired to Satellite.js v6.0.2; full SGP4 propagation against current CelesTrak OMM records was not executed here because this build environment has no outbound network access.
+## Checks performed
+- `node --check` on all root JavaScript files: PASS.
+- Python syntax compilation for `vpn-bridge.py` and `test_vpn_bridge.py`: PASS.
+- Local bridge automated tests: 6/6 PASS. Tests use a fake Tailscale CLI; they do not operate a real VPN.
+- Bridge security tests: bearer token required, exact Origin allow-list, invalid origin rejected, arbitrary actions rejected, fixed ON/OFF actions verified against fake CLI.
+- HTML structure: PASS; 27 page sections match 27 navigation entries, 525 IDs with no duplicates, no missing local file references.
+- CSS parsing: PASS; 11 stylesheets, no parser errors found.
+- PWA manifest: PASS; `display=standalone`, relative start URL, icon-192.png (192×192), icon-512.png (512×512), SVG icon present.
+- Service-worker shell: PASS; cache version v6, 38 precache paths checked and none missing.
+- Secrets/config: no actual `vpn-bridge-config.json`, VPN profile, private key or pairing token is included; `.gitignore` excludes a locally generated config.
+- Final ZIP integrity and exact file count checked after packaging.
 
-## Source and provenance
-- CelesTrak GP data format/API: https://celestrak.org/NORAD/documentation/gp-data-formats.php
-- CelesTrak usage policy (group data are cached for two hours): https://celestrak.org/usage-policy.php
-- Satellite.js SGP4/SDP4 implementation (MIT): https://github.com/shashwatak/satellite-js
-- NASA ISS tracking context: https://www.nasa.gov/spot-the-station/
+## Checks not completed
+- No real Tailscale client or Windows WireGuard tunnel was available in this environment; native VPN switching was verified only with a fake CLI. The helper has not been run on the user's Windows computer.
+- Automated browser navigation was blocked by this execution environment (`ERR_BLOCKED_BY_ADMINISTRATOR` for localhost and file navigation), so a full end-to-end browser UI test could not be completed here.
+- The user's GitHub Pages deployment and Chrome/Edge install prompt were not run against the user's repository.
+- No satellite service, VPN server, account, subscription or satellite terminal connection is supplied.
 
-## User-facing meaning
-This panel computes sky geometry and predicted orbital passes from public orbital elements; it is not a direct satellite radio/telemetry session and does not guarantee access to satellite imagery or communications. Device location requires explicit user action and permission. If the satellite.js CDN, CelesTrak, or browser network access fails, the user should see a degraded state, not synthetic live positions.
-
-- CSS parser detail: tinycss2 parse: PASS for all CSS files.
+## Implementation & safety notes
+- The PWA is designed to install on supported desktop browsers over HTTPS and caches the local app shell, not remote live feeds.
+- VPN ON/OFF controls become available only after the user starts the companion desktop helper and pairs with the per-run token printed in its console.
+- The helper binds only to `127.0.0.1:8765`, uses an exact Origin allow-list and Host validation, requires a random bearer token for status/control, caps request body size, and accepts only fixed `on` / `off` operations. It has no arbitrary command endpoint and accepts no tunnel name supplied by the browser.
+- Tailscale control uses its CLI. WireGuard control supports one already-installed WireGuard for Windows tunnel service configured locally. Windows service permissions may require intentional manual elevation.
+- Current Chromium versions may show a Local Network Access / loopback permission prompt for a public HTTPS app connecting to localhost. Grant it only to the trusted app.
+- A native client state of CONNECTED is not proof of the remote route, satellite carrier, encryption configuration, or emergency-service reachability. Use the VPN client's official diagnostics and a separate authorized endpoint for end-to-end checks.
