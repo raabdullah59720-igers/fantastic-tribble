@@ -1,6 +1,6 @@
 {
   "id": "./",
-  "name": "TERRAVEX APEX \u00b7 Earth Intelligence",
+  "name": "TERRAVEX APEX · Earth Intelligence",
   "short_name": "TERRAVEX",
   "description": "Installable TERRAVEX APEX Earth intelligence and engineering workbench, with live-source monitoring and scientific simulations.",
   "start_url": "./",
@@ -158,6 +158,18 @@
       "name": "Space Voice Mail Relay",
       "short_name": "Voice Mail",
       "url": "./?page=spacecomms",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Earth Traffic 3D Monitor",
+      "short_name": "Earth Traffic",
+      "url": "./?page=earthtraffic",
       "icons": [
         {
           "src": "icon-192.png",

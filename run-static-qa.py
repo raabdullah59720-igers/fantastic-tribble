@@ -34,7 +34,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v16': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v17': errors.append('Unexpected service-worker cache version '+cache)
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
 # Runtime diagnostics must inspect the same service-worker version.
 adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')
@@ -80,6 +80,15 @@ report.append('Password lock: PBKDF2 verifier, salted storage path, startup mask
 for n in ('START-TERRAVEX-WEB-APP.bat','START-TERRAVEX-DESKTOP-APP.bat','INSTALL-TERRAVEX-DESKTOP.bat','serve_terravex.ps1','launch-terravex-app.ps1','install-desktop-shortcut.ps1'):
  if not (root/n).exists(): errors.append('Missing launcher file '+n)
 report.append('Windows launcher assets: 6 expected files present (Windows runtime not available here)')
+# Run Earth Traffic 3D unit-style DOM/API mock tests as part of the standard QA pass.
+et_test=root/'tests'/'test-earth-traffic-monitor.cjs'
+if not et_test.exists():
+ errors.append('Missing Earth Traffic monitor test script')
+ report.append('Earth Traffic 3D tests: missing')
+else:
+ et_run=subprocess.run(['node',str(et_test)],text=True,capture_output=True)
+ if et_run.returncode: errors.append('Earth Traffic 3D tests failed: '+(et_run.stderr.strip() or et_run.stdout.strip()))
+ report.append('Earth Traffic 3D tests: '+(et_run.stdout.strip().splitlines()[-1] if et_run.returncode==0 and et_run.stdout.strip() else 'FAIL'))
 print('\n'.join(report))
 print('TOTAL ERRORS:',len(errors))
 for e in errors: print('ERROR:',e)

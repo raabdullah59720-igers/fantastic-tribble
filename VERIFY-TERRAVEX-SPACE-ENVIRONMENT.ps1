@@ -8,7 +8,7 @@ $Manifest = Get-Content (Join-Path $Root 'manifest.webmanifest') -Raw | ConvertF
 $Pages = @('ozone','spaceweather','spaceobjects')
 foreach ($Page in $Pages) { if (-not ($Manifest.shortcuts | Where-Object { $_.url -match ('page=' + $Page) })) { Write-Host "Missing PWA shortcut for $Page" -ForegroundColor Yellow } }
 $Sw = Get-Content (Join-Path $Root 'sw.js') -Raw
-if ($Sw -notmatch 'terravex-apex-shell-v16') { Write-Host 'Service-worker cache version mismatch' -ForegroundColor Red; exit 3 }
+if ($Sw -notmatch 'terravex-apex-shell-v17') { Write-Host 'Service-worker cache version mismatch' -ForegroundColor Red; exit 3 }
 Write-Host ('Manifest valid: ' + $Manifest.short_name) -ForegroundColor Green
 Write-Host ('Page shortcuts reviewed: ' + ($Pages -join ', ')) -ForegroundColor Green
 $Python = Get-Command python -ErrorAction SilentlyContinue

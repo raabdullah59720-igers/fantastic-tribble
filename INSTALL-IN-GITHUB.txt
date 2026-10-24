@@ -1,4 +1,4 @@
-TERRAVEX APEX - STORM / SEISMIC / OCEAN ALERT UPGRADE INSTALL
+TERRAVEX APEX - FULL APP INSTALL GUIDE
 
 1. Back up your GitHub repository first.
 2. Download TERRAVEX-APEX-STORM-SEISMIC-OCEAN-ALERT-UPGRADE.zip and extract it.
@@ -61,13 +61,21 @@ For RF panel scope, formulas, and a CSV example, see RF-INTERFERENCE-INTELLIGENC
 CHROME ADDRESS-BAR INSTALL (FIXED)
 - pwa-install.js intentionally does not call preventDefault() for beforeinstallprompt, so Chrome/Edge native address-bar Install UI remains eligible to appear.
 - Open the deployed HTTPS GitHub Pages URL, not the ZIP preview or file:// URL. If the icon is absent, click the app top-bar Install App button for guidance and use the browser menu fallback. A website cannot force Chrome UI to show the icon.
-- Service worker cache version: terravex-apex-shell-v16.
+- Service worker cache version: terravex-apex-shell-v17.
 
-Address-bar install fix (v16)
+Address-bar install fix (historical v16 bug; fixed in current build)
 - Previous bug: pwa-install.js cancelled beforeinstallprompt with event.preventDefault(), suppressing the browser-native install affordance. This has been removed from that listener.
 - Upload every extracted file and assets/ folder to the repository root, then visit the real HTTPS Pages URL. The browser decides whether/when to show its Install icon.
-- If the icon is absent, inspect DevTools > Application > Manifest and Service Workers, check browser policy/already-installed state, refresh the v16 app shell, and try the browser menu fallback.
+- If the icon is absent, inspect DevTools > Application > Manifest and Service Workers, check browser policy/already-installed state, refresh the v17 app shell, and try the browser menu fallback.
 
 Space Communications & Encrypted Voice Mail uses the included dependency-free Node.js relay. The relay is not publicly available until you deploy `relay-server/` to a public Node host. Local mode is same-computer only. The asynchronous mailbox stores AES-GCM ciphertext in process memory for up to 24 hours and is not guaranteed or emergency-grade. It does not send audio to a Russian satellite or an astronaut. See `SPACE-COMMS-REAL-VOICE-MAIL.md`.
 
-App-shell cache uses terravex-apex-shell-v16.
+App-shell cache uses terravex-apex-shell-v17.
+
+
+EARTH TRAFFIC 3D MONITOR (NEW)
+- After deployment, open Space & Atmosphere > Earth Traffic 3D Monitor. Press “Load / update orbital data” for CelesTrak GP/OMM elements; Satellite.js propagates the records into modelled current positions.
+- Select an aircraft region and press “Refresh aircraft feed” to request actual OpenSky state vectors. Use a bounded region. Anonymous/global queries use provider credits and may be rate-limited; global automatic polling is disabled.
+- “Use device location” asks permission only after you press it and creates a bounded aircraft query region.
+- The 3D scene needs external Three.js/texture resources. If WebGL/CDN fails, the page uses a schematic 2D fallback and labels the renderer status.
+- Satellite location is propagated from an orbital-element epoch; aircraft location is a provider snapshot. These are not direct satellite telemetry or an air-traffic-control certified display. Read EARTH-TRAFFIC-3D-MONITOR.md.

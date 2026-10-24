@@ -15,6 +15,6 @@ assert.match(html, /rel="manifest"/);
 assert.equal(manifest.display, 'standalone');
 assert.ok(manifest.icons.some(x => x.sizes === '192x192'));
 assert.ok(manifest.icons.some(x => x.sizes === '512x512'));
-assert.match(sw, /terravex-apex-shell-v16/);
-assert.match(adv, /terravex-apex-shell-v16/);
+assert.match(sw, /terravex-apex-shell-v17/);
+assert.match(adv, /terravex-apex-shell-v17/);
 console.log('PWA omnibox checks: 9/9 PASS');
