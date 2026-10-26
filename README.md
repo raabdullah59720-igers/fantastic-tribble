@@ -1,29 +1,113 @@
-# TERRAVEX Signalling + Encrypted Voice-Mail Service
+# TERRAVEX APEX
 
-Node.js 18+ service using built-in modules only. No external npm dependency or `npm install` is required to run it locally. It provides:
+Static GitHub Pages/PWA application for Earth intelligence, Bangladesh satellite observation, disaster monitoring, research calculators, IGERS energy engineering, desktop installation, and opt-in local VPN control.
 
-- WebSocket signaling for a two-browser WebRTC audio/data session; signaling messages include only offer/answer/ICE metadata.
-- A separate HTTPS/HTTP JSON API for asynchronous voice mail. Voice and message details are AES-GCM encrypted in the sender's browser before upload; this service only sees ciphertext.
-- A 24-hour maximum in-memory message TTL, 8 MiB per audio message, 8 messages per mailbox, 64 MiB total ciphertext capacity, exact-origin CORS allow-list and request rate cap.
+## Fastest Windows start
 
-## Local start
+1. Extract the complete ZIP to a normal Windows folder.
+2. For a browser-based local run, double-click `START-TERRAVEX-WEB-APP.bat`. It serves only on `127.0.0.1:8000` and opens the local app in your browser.
+3. For a desktop shortcut, double-click `INSTALL-TERRAVEX-DESKTOP.bat` once, then use the **TERRAVEX APEX** shortcut.
+4. For a browser-registered PWA, publish all files and `assets/` to the root of GitHub Pages, open the resulting HTTPS URL in Chrome/Edge, then look for the browser's native **Install** icon beside the address bar. This build deliberately leaves the `beforeinstallprompt` event unprevented, so it does not suppress Chrome's install icon. Use the in-app **Install App** button or browser menu if the icon is absent.
 
-```bash
-HOST=127.0.0.1 PORT=8787 ALLOWED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000 node server.js
-```
+## One-use local VPN pairing
 
-Health: `http://127.0.0.1:8787/healthz`
+- Install and configure an actual VPN client on your own computer first. The bridge supports Tailscale CLI or an already-installed WireGuard for Windows tunnel.
+- Start `Start-VPN-Bridge-Windows.bat`. On that run the helper generates a random pairing token and prints it to the console. The token expires after 10 minutes and can be exchanged once.
+- In **VPN Control & Desktop Install**, paste the token and click **Connect local bridge**. A separate random session token is returned for up to 4 hours and kept only in that browser tab's `sessionStorage`. The startup pairing token is not stored in the app.
+- Restarting the helper invalidates all sessions and prints a new pairing token. Closing/clearing the app tab may require restarting the helper to pair again.
+- Only fixed `status`, `on`, and `off` operations are exposed. The helper binds to `127.0.0.1`, validates exact Origins and Host headers, and never executes arbitrary shell commands.
 
-On Windows, `START-TERRAVEX-COMMS-ONE-RUN.bat` starts the local service and app in separate windows. Node.js 18+ is required for this connection layer; the static application and local recording/playback can still open without it.
+**No provider/Russian satellite token is created by this project.** The local token only pairs this app to the local bridge. Actual satellite communications require an authorized provider, supported terminal, subscription/service profile, and relevant regulatory approval.
 
-## Hosted deployment
+## Emergency Connectivity Link Budget Lab
 
-Use the root `render.yaml` Blueprint or create a Node service with root directory `relay-server`, build command `node --check server.js`, start command `npm start`, health path `/healthz`. Set `ALLOWED_ORIGINS` to the exact web-app origin, e.g. `https://account.github.io` (no path or trailing slash). Once deployed, use the service's `wss://` URL in TERRAVEX; the mailbox API is then called over `https://` on the same host. Check `/healthz` before using it.
+The new **Emergency Link Budget Lab** uses an SVG RF-path visual and calculates idealized free-space path loss, EIRP, received power and link margin from entered values. It is an engineering estimate, not a live link measurement or a claim of connection to any satellite. It excludes detailed availability engineering such as coded modem sensitivity, rain fade profile, antenna pointing, interference, receiver noise temperature, bandwidth and carrier authorization unless these are represented in the user-entered total losses/sensitivity.
 
-## Limits and privacy
+## App lock / privacy
 
-- This is temporary, in-memory storage. A process restart, deployment or instance replacement can lose messages before the 24-hour expiry. There is no database/backup/guaranteed delivery.
-- The mailbox address is a random 128-bit identifier and the secret is a random 256-bit AES key. A complete inbox key is a capability: only share it with the intended participant, because they can decrypt messages in that mailbox.
-- The server stores only encrypted audio/metadata, not plaintext content. It does see mailbox address, message size and timestamps.
-- Signaling rooms accept two peers, use exact Origin allow-lists, bounded frames, short join windows, rate limits and idle expiry. This service does not relay WebRTC audio and does not provide TURN; restrictive NAT/firewall combinations require a TURN service you control.
-- This service does not connect to a Russian satellite, ISS, astronaut, emergency agency or spacecraft. Satellite service requires an operator, compatible terminal, subscription and regulatory authorisation. Do not rely on this prototype for emergency dispatch.
+The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier is stored in browser storage; plaintext password is not stored. It does not protect static public files or replace server-side authentication. GitHub Pages remains a static hosting platform; use a real identity gateway/server for restricted access. Do not commit local bridge config, credentials, VPN keys, pairing tokens, coordinates or private records.
+
+## PWA architecture
+
+- `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
+- `sw.js`: cache `terravex-apex-shell-v18`; caches local shell assets only and never substitutes cached external feeds as live.
+- `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
+- `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
+- `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
+
+## GitHub Pages
+
+Upload all package contents and `assets/` to the repository root. In **Settings → Pages**, select **Deploy from a branch**, branch `main`, folder `/(root)`. Open the HTTPS Pages URL. Do not upload the ZIP inside the repo expecting it to run.
+
+See `PWA-INSTALL-NOW.md`, `DESKTOP-INSTALL-AND-VPN-GUIDE.md`, `SECURITY-DEPLOYMENT.md`, `LINK-BUDGET-LAB.md`, and `QA_REPORT.md`.
+
+
+## RF Spectrum & Interference Intelligence
+
+The new RF panel is receive-only and non-transmitting. It provides a virtual interference scenario, calculated SNR/idealized Shannon capacity, and local CSV import for authorized receiver/SDR exports (`frequency_mhz,power_dbm`). It does not transmit or jam radio signals, modify an RF device, or confirm a live spectrum without an imported/connected measurement source.
+
+The scenario controls are simulation-only. For suspected harmful interference, preserve receiver logs and contact the radio/service operator or regulator. ITU Radio Regulations prohibit harmful interference and protect safety-of-life services. See https://www.itu.int/en/mediacentre/backgrounders/Pages/radio-interference.aspx and https://btrc.gov.bd/.
+
+
+See [RF Spectrum & Interference Intelligence](RF-INTERFERENCE-INTELLIGENCE.md) for formula definitions, CSV format, limitations, and the receive-only safety boundary. A dependency-free focused test can be run using `node tests/test-rf-interference-intelligence.cjs`.
+
+
+## Chrome address-bar installation
+
+The PWA script deliberately leaves `beforeinstallprompt` unprevented so Chromium can show its native Install icon beside the address bar when its installability and browser policy conditions are met. The website cannot force browser chrome to show an icon. If absent, check HTTPS/127.0.0.1 origin, manifest and icon requests, service-worker activation, browser profile installation state and browser policy. Use the top-bar Install App button or browser menu for guidance.
+
+## Space & Atmosphere Observatory (retained module)
+
+Three new panels are included:
+
+- **Ozone & Atmosphere Observatory**: animated explanatory atmosphere/ozone visual, altitude-layer reference, a Dobson Unit to compressed-thickness calculator, and links to the official NASA Ozone Watch maps. The canvas is a schematic, not a current measured ozone map.
+- **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
+- **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
+
+The service-worker app-shell cache is `terravex-apex-shell-v18`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+
+### Scientific references
+
+- NASA Ozone Watch: https://ozonewatch.gsfc.nasa.gov/
+- NASA explanation of Dobson Units: https://ozonewatch.gsfc.nasa.gov/facts/dobson_SH.html
+- NASA atmospheric layers: https://www.nasa.gov/image-article/earths-atmospheric-layers-3/
+- NASA CCMC DONKI: https://ccmc.gsfc.nasa.gov/tools/DONKI/
+- NASA Open APIs / NeoWs documentation: https://api.nasa.gov/
+- CelesTrak public orbital elements: https://celestrak.org/NORAD/elements/
+
+Run local validation with `python run-space-env-tests.py`; on Windows, `VERIFY-TERRAVEX-SPACE-ENVIRONMENT.ps1` calls the same checks if Python and Node.js are installed.
+
+### VPN bridge QA (optional)
+
+The isolated VPN bridge test suite uses a fake Tailscale CLI and does not turn on/off a real tunnel. Run `python test_vpn_bridge.py` only when `127.0.0.1:8765` is not occupied. The suite covers one-use pairing, expiry, origin allow-list and ON/OFF-only actions.
+
+
+## Earth Traffic 3D Monitor (new)
+
+The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues and aircraft state vectors on an interactive Three.js Earth. Satellites use CelesTrak GP/OMM JSON, propagated using Satellite.js SGP4/SDP4 to the display time; aircraft are plotted only from returned OpenSky state vectors. Public elements are not direct satellite telemetry, and aircraft positions are not predicted between feed snapshots. The UI reports element epoch/source age, stale/offline states, and partial-feed conditions instead of inserting dummy “live” markers.
+
+- Satellite categories: space stations, weather/Earth observation, GPS operational, GLONASS operational, and bright/visual objects.
+- Aircraft feed: OpenSky `/states/all` on a selected geographic region. Manual refresh is the default; optional regional polling is 20 minutes. Global auto-poll is disabled, and the panel reports estimated API credit cost.
+- WebGL: Three.js Earth, atmosphere, cloud layer, starfield, graticule, markers and propagated ground-track lines. A schematic 2D fallback is used if WebGL/CDN/texture resources fail. Orbit altitude is visually compressed for legibility; numerical details show propagated altitude.
+- Location: only requested after pressing **Use device location**. The coordinates establish a bounded aircraft query region.
+
+Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
+
+See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The PWA shell cache is `terravex-apex-shell-v18`, and the Earth Traffic CSS/JS files are required cached resources.
+
+## Space Communications & Encrypted Voice Mail (retained module)
+
+- `space-comms-relay.js` / `.css` includes read-only public SatNOGS observation data, official RSCC/ARISS contact-route links, local voice recording/playback/export, WebRTC peer calls and asynchronous internet voice mail.
+- **Internet voice mailbox:** generate a private `mailbox-address.encryption-secret` key in the panel. The recipient must save the complete key safely and share it privately with an intended sender. Audio and message metadata are AES-GCM encrypted in the sender's browser before upload and decrypted only in a browser with the matching secret. The service receives the random mailbox address and ciphertext, not the encryption key or plaintext.
+- The bundled Node.js 18+ relay is dependency-free: no `npm install` is needed locally. It provides WebSocket signaling and an HTTP API for encrypted voice-mail storage in process memory for up to 24 hours, maximum 8 MiB audio, 8 messages per inbox, and 64 MiB aggregate ciphertext storage. Service restart/deployment can erase messages; delivery is not persistent or guaranteed. Do not use it for emergency-critical messaging.
+- Local one-run mode binds to `127.0.0.1:8787` and `127.0.0.1:8000`, so it is for the same computer. To reach another person over the internet, deploy `relay-server/` with the included `render.yaml`, set `ALLOWED_ORIGINS` to your exact public app origin, and configure the deployed `wss://` service URL in the panel. A TURN service may still be needed for some live WebRTC calls.
+- Public peer voice call and asynchronous mailbox are real browser-to-browser internet features after the relay is running/deployed. **They are not spacecraft uplink or a Russian-satellite/astronaut inbox.** Direct satellite voice service requires an authorised satellite operator, compatible terminal/subscription, and applicable radio authorisation; ARISS astronaut contacts are arranged through its official contact pathway.
+
+Official routes: [RSCC services](https://eng.rscc.ru/services/), [ARISS contacts](https://www.ariss.org/about-ariss-contacts.html), [BTRC](https://btrc.gov.bd/), and [WebRTC TURN guidance](https://webrtc.org/getting-started/turn-server).
+
+For exact steps, see `SPACE-COMMS-REAL-VOICE-MAIL.md`, `relay-server/README.md`, `PWA-INSTALL-NOW.md`, and `QA_REPORT.md`.
+
+
+## BTCL Satellite Signal Hub (read-only integration adapter)
+
+The new **BTCL Satellite Signal Hub** is an independent panel. Its local 1 Hz processing loop and signal-flow animation are explicitly labelled DEMO until an authorized BTCL/BSCL telemetry endpoint is configured. The app does not transmit RF, assign frequencies, command a spacecraft, or claim a BTCL network connection. It can parse source-provided read-only JSON from an HTTPS endpoint that permits browser CORS. Provider polling is limited to at least 10 seconds; the local display heartbeat runs every second. Do not paste API secrets into the page. For production use, deploy a provider-approved authenticated backend and use only measurements and carrier assignments supplied by the operator.

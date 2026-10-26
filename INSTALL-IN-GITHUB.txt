@@ -61,7 +61,7 @@ For RF panel scope, formulas, and a CSV example, see RF-INTERFERENCE-INTELLIGENC
 CHROME ADDRESS-BAR INSTALL (FIXED)
 - pwa-install.js intentionally does not call preventDefault() for beforeinstallprompt, so Chrome/Edge native address-bar Install UI remains eligible to appear.
 - Open the deployed HTTPS GitHub Pages URL, not the ZIP preview or file:// URL. If the icon is absent, click the app top-bar Install App button for guidance and use the browser menu fallback. A website cannot force Chrome UI to show the icon.
-- Service worker cache version: terravex-apex-shell-v17.
+- Service worker cache version: terravex-apex-shell-v18.
 
 Address-bar install fix (historical v16 bug; fixed in current build)
 - Previous bug: pwa-install.js cancelled beforeinstallprompt with event.preventDefault(), suppressing the browser-native install affordance. This has been removed from that listener.
@@ -70,7 +70,7 @@ Address-bar install fix (historical v16 bug; fixed in current build)
 
 Space Communications & Encrypted Voice Mail uses the included dependency-free Node.js relay. The relay is not publicly available until you deploy `relay-server/` to a public Node host. Local mode is same-computer only. The asynchronous mailbox stores AES-GCM ciphertext in process memory for up to 24 hours and is not guaranteed or emergency-grade. It does not send audio to a Russian satellite or an astronaut. See `SPACE-COMMS-REAL-VOICE-MAIL.md`.
 
-App-shell cache uses terravex-apex-shell-v17.
+App-shell cache uses terravex-apex-shell-v18.
 
 
 EARTH TRAFFIC 3D MONITOR (NEW)

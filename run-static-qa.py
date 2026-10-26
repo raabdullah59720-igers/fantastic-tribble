@@ -34,7 +34,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v17': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v18': errors.append('Unexpected service-worker cache version '+cache)
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
 # Runtime diagnostics must inspect the same service-worker version.
 adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')

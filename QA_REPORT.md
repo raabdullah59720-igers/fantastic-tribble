@@ -1,7 +1,7 @@
 # TERRAVEX APEX — Earth Traffic 3D Monitor Upgrade QA
 
 Build: **Earth Traffic 3D Monitor + previous space communications, hazard, RF, VPN and PWA modules**  
-Service-worker cache: `terravex-apex-shell-v17`  
+Service-worker cache: `terravex-apex-shell-v18`  
 Verification date: **25 October 2026**
 
 ## Deliverable
@@ -24,7 +24,7 @@ Verification date: **25 October 2026**
 - HTML parsed: **736 IDs, 0 duplicates**.
 - Local HTML/asset references: **0 missing**.
 - PWA manifest: valid JSON; `standalone`; 192x192 and 512x512 icons present; **11 shortcut targets, 0 invalid**.
-- Service worker: `terravex-apex-shell-v17`; **41 required local app-shell resources, 0 missing**.
+- Service worker: `terravex-apex-shell-v18`; **41 required local app-shell resources, 0 missing**.
 - PWA diagnostics/cache version parity: **PASS**.
 - JavaScript syntax: **20 root JS files, 0 syntax errors**.
 - CSS parser: **17 stylesheets, 0 parse errors**.
@@ -70,3 +70,15 @@ python run-space-env-tests.py
 ```
 
 Passing checks establish package and simulated integration behaviour only. They do not establish current public API delivery, exact real-world orbital accuracy, an air-traffic-control function, or successful hosting/deployment.
+
+
+## BTCL Satellite Signal Hub add-on QA
+
+- New dedicated navigation route and page: `btclhub`.
+- Switch controls the local 1 Hz engine and stops the authorized-feed polling timer when OFF.
+- Demo data, source feed status, and carrier assignment have separate labels; demo values are not described as measured data.
+- Approved endpoint adapter accepts HTTPS read-only GET only; expects timestamped `links[]` JSON and uses a minimum 10-second remote polling interval while local processing remains 1 Hz.
+- No RF transmitter, radio configuration command, frequency assignment, satellite command, or real BTCL credentials are included.
+- Service-worker cache version bumped and both new assets added to the required shell.
+- Static structural tests are supplied in `tests/test-btcl-signal-hub.cjs`. Real provider connection and end-user browser CORS are not verifiable without an authorized provider endpoint.
+- Browser-level headless visual smoke test did not complete in this runtime; no claim is made that the rendered UI was confirmed in the user's Chrome or on a deployed site.
