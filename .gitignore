@@ -1,3 +1,8 @@
-node_modules/
-.env
-*.log
+vpn-bridge-config.json
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+__pycache__/
+*.py[cod]

@@ -1,7 +1,7 @@
 # TERRAVEX APEX — Earth Traffic 3D Monitor Upgrade QA
 
 Build: **Earth Traffic 3D Monitor + previous space communications, hazard, RF, VPN and PWA modules**  
-Service-worker cache: `terravex-apex-shell-v18`  
+Service-worker cache: `terravex-apex-shell-v19`  
 Verification date: **25 October 2026**
 
 ## Deliverable
@@ -24,7 +24,7 @@ Verification date: **25 October 2026**
 - HTML parsed: **736 IDs, 0 duplicates**.
 - Local HTML/asset references: **0 missing**.
 - PWA manifest: valid JSON; `standalone`; 192x192 and 512x512 icons present; **11 shortcut targets, 0 invalid**.
-- Service worker: `terravex-apex-shell-v18`; **41 required local app-shell resources, 0 missing**.
+- Service worker: `terravex-apex-shell-v19`; **41 required local app-shell resources, 0 missing**.
 - PWA diagnostics/cache version parity: **PASS**.
 - JavaScript syntax: **20 root JS files, 0 syntax errors**.
 - CSS parser: **17 stylesheets, 0 parse errors**.
@@ -82,3 +82,14 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Service-worker cache version bumped and both new assets added to the required shell.
 - Static structural tests are supplied in `tests/test-btcl-signal-hub.cjs`. Real provider connection and end-user browser CORS are not verifiable without an authorized provider endpoint.
 - Browser-level headless visual smoke test did not complete in this runtime; no claim is made that the rendered UI was confirmed in the user's Chrome or on a deployed site.
+
+## Additional upgrade: Bangladesh Mobile Network Signal Monitor (2026-10-26)
+
+- Added a standalone Operations panel (`mobilenet`) without replacing the existing BTCL satellite hub, RF intelligence, Earth Traffic, Space Environment, PWA, or communication modules.
+- Default state is OFF. ON/OFF applies only to the app-local 1 Hz monitoring loop and authorized read-only HTTPS polling. There is no RF transmitter API, frequency-setting command, or tower ON/OFF implementation.
+- BTRC published tower inventory is displayed as an April 2026 snapshot (reported national total 46,286); it is explicitly not a live tower-health feed.
+- Demo RSRP/SINR/latency values are labelled synthetic. A live mode requires operator-authorized `networks[]` JSON and successful HTTPS/CORS access. A failed live feed is never replaced with demo readings.
+- New panel tests: 15/15 PASS; previous BTCL hub: 13/13 PASS; Earth Traffic: 25 assertions PASS; PWA: 9/9 PASS; RF panel: 5/5 PASS; Space Environment: 11 assertions PASS; Space Communications: 16 assertions PASS; relay/mailbox suite: 14 check groups PASS.
+- VPN bridge tests: 11/11 PASS on isolated rerun. One earlier combined-suite run experienced a transient HTTP test timeout; the repeated isolated run passed.
+- Static QA after upgrade: HTML parsed; 0 duplicate IDs; no missing local HTML references; cache v19 has 45 required local assets and 0 missing; 22 JS files syntax-checked; 19 CSS files parsed with 0 parse errors; TOTAL ERRORS: 0.
+- Runtime limitation: no actual BTCL/BSCL or mobile-network operator feed was provided, and this package was not connected to nationwide tower infrastructure or validated in a deployed browser. No RF transmission occurs.
