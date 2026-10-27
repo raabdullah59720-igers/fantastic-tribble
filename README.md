@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v21`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v22`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -64,7 +64,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v21`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v22`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -93,7 +93,7 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The PWA shell cache is `terravex-apex-shell-v21`, and the Earth Traffic CSS/JS files are required cached resources.
+See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The PWA shell cache is `terravex-apex-shell-v22`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
@@ -115,7 +115,7 @@ The new **BTCL Satellite Signal Hub** is an independent panel. Its local 1 Hz pr
 
 ## Bangladesh Mobile Network Signal Monitor (receive-only)
 
-The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v21`.
+The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v22`.
 
 
 ## Earth Orbit Sentinel (added October 2026)
@@ -131,4 +131,46 @@ The separate **Earth Orbit Sentinel** page merges public CelesTrak GP/OMM feeds 
 
 Local UTC/Dhaka clocks update every second. Positions are recalculated locally every 15 seconds while the Monitor switch is ON. CelesTrak GP data is requested no more than every two hours; SATCAT attempts are rate-limited to a 12-hour window. New catalogue entries, unknown-type rows, and provider-listed possible decays create **review alerts**, not threat findings. Desktop notifications require permission and monitoring ON.
 
-The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v21`.
+The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v22`.
+
+
+## Public Welfare Space Data Hub (cache v22)
+
+The `publichub` page is a separate read-only aggregation panel for the public orbital catalogue state, public SatNOGS observation metadata, NASA DONKI space weather, NASA/JPL NeoWs, and the app's current USGS earthquake/Open-Meteo weather state. It uses existing module state bridges where possible, source timestamps, source-aware caching, browser notification opt-in, and a local JSON snapshot export. Its CSS is bundled into `advanced-workbench.css` and its JavaScript is appended to `mobile-network-monitor.js`, preserving the 98-file project package target. See the source cadence and limitations below.
+
+This does **not** directly connect to every spacecraft or expose private telemetry. GP/OMM position predictions are not live spacecraft packets; SatNOGS observations are crowdsourced and coverage-dependent. The hub has no spacecraft command, RF transmit, or operator-network control functions. CelesTrak refreshes remain bounded by its public usage policy. Cache version is `terravex-apex-shell-v22`.
+
+
+### Public Welfare Data Hub: sources, cadence, and operation
+
+## What is connected
+- CelesTrak GP/OMM and SATCAT state through the existing Earth Orbit Sentinel module.
+- Latest public observation metadata from `https://network.satnogs.org/api/observations/?limit=12&ordering=-start` (read-only, cached in the browser for 15 minutes).
+- The existing NASA DONKI and NASA/JPL NeoWs module state and refresh methods, which keep their own in-memory response caches.
+- The existing app's USGS earthquake and Open-Meteo weather model state, with 5-minute / 15-minute minimum refresh checks in the core app.
+
+## Cadence and honest status
+- CelesTrak GP/OMM requests are delegated to Earth Orbit Sentinel, whose source logic applies the two-hour refresh boundary and SATCAT cache. CelesTrak states GP data should be updated no more than once every two hours and SATCAT is manually updated once or twice daily: https://celestrak.org/usage-policy.php
+- SatNOGS observation metadata is cached for 15 minutes before another request.
+- NASA NeoWs is requested through the existing module, which caches for 30 minutes; the API `DEMO_KEY` may be rate-limited.
+- Clock/health display updates every second. This is not the same as receiving a fresh packet every second from a spacecraft.
+
+## Important boundaries
+This is a public-data dashboard, not a universal satellite network gateway. Public catalogues and crowd-sourced observations do not expose private mission payloads or create a direct command/telemetry path to every spacecraft. SATCAT rows do not guarantee current orbit elements; GP/OMM positions are propagated from catalogued elements. SatNOGS records show public observations made by participating stations, which depend on station coverage and availability. The hub emits optional informational browser notifications from public data changes; it is not an official emergency dispatch service and does not autonomously infer hostile activity from ordinary feed data.
+
+## Operation
+Open **Space & Atmosphere → Public Welfare Data Hub**. `Sync permitted feeds` performs a one-time source-aware refresh. `Start welfare sync` enables local hub monitoring and periodic checks. `Stop welfare sync` stops the periodic hub checks; existing source modules retain their own existing refresh behaviours. `Export hub snapshot (JSON)` saves a source-labelled snapshot to the current device.
+
+## Tests
+Run:
+
+```sh
+node tests/test-public-welfare-data-hub.cjs
+node --check mobile-network-monitor.js
+node tests/test-earth-traffic-monitor.cjs  # includes Public Welfare Data Hub helper checks
+node --check app.js
+node --check space-environment.js
+python run-static-qa.py
+```
+
+A source adapter reaching `UNAVAILABLE` or `PARTIAL` is not counted as zero activity; it is shown explicitly. This runtime did not perform a full browser-internet/CORS acceptance test.
