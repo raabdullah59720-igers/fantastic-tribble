@@ -134,43 +134,6 @@ Local UTC/Dhaka clocks update every second. Positions are recalculated locally e
 The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v22`.
 
 
-## Public Welfare Space Data Hub (cache v22)
+## Lightning Interception & Safety Monitor (cache v22)
 
-The `publichub` page is a separate read-only aggregation panel for the public orbital catalogue state, public SatNOGS observation metadata, NASA DONKI space weather, NASA/JPL NeoWs, and the app's current USGS earthquake/Open-Meteo weather state. It uses existing module state bridges where possible, source timestamps, source-aware caching, browser notification opt-in, and a local JSON snapshot export. Its CSS is bundled into `advanced-workbench.css` and its JavaScript is appended to `mobile-network-monitor.js`, preserving the 98-file project package target. See the source cadence and limitations below.
-
-This does **not** directly connect to every spacecraft or expose private telemetry. GP/OMM position predictions are not live spacecraft packets; SatNOGS observations are crowdsourced and coverage-dependent. The hub has no spacecraft command, RF transmit, or operator-network control functions. CelesTrak refreshes remain bounded by its public usage policy. Cache version is `terravex-apex-shell-v22`.
-
-
-### Public Welfare Data Hub: sources, cadence, and operation
-
-## What is connected
-- CelesTrak GP/OMM and SATCAT state through the existing Earth Orbit Sentinel module.
-- Latest public observation metadata from `https://network.satnogs.org/api/observations/?limit=12&ordering=-start` (read-only, cached in the browser for 15 minutes).
-- The existing NASA DONKI and NASA/JPL NeoWs module state and refresh methods, which keep their own in-memory response caches.
-- The existing app's USGS earthquake and Open-Meteo weather model state, with 5-minute / 15-minute minimum refresh checks in the core app.
-
-## Cadence and honest status
-- CelesTrak GP/OMM requests are delegated to Earth Orbit Sentinel, whose source logic applies the two-hour refresh boundary and SATCAT cache. CelesTrak states GP data should be updated no more than once every two hours and SATCAT is manually updated once or twice daily: https://celestrak.org/usage-policy.php
-- SatNOGS observation metadata is cached for 15 minutes before another request.
-- NASA NeoWs is requested through the existing module, which caches for 30 minutes; the API `DEMO_KEY` may be rate-limited.
-- Clock/health display updates every second. This is not the same as receiving a fresh packet every second from a spacecraft.
-
-## Important boundaries
-This is a public-data dashboard, not a universal satellite network gateway. Public catalogues and crowd-sourced observations do not expose private mission payloads or create a direct command/telemetry path to every spacecraft. SATCAT rows do not guarantee current orbit elements; GP/OMM positions are propagated from catalogued elements. SatNOGS records show public observations made by participating stations, which depend on station coverage and availability. The hub emits optional informational browser notifications from public data changes; it is not an official emergency dispatch service and does not autonomously infer hostile activity from ordinary feed data.
-
-## Operation
-Open **Space & Atmosphere → Public Welfare Data Hub**. `Sync permitted feeds` performs a one-time source-aware refresh. `Start welfare sync` enables local hub monitoring and periodic checks. `Stop welfare sync` stops the periodic hub checks; existing source modules retain their own existing refresh behaviours. `Export hub snapshot (JSON)` saves a source-labelled snapshot to the current device.
-
-## Tests
-Run:
-
-```sh
-node tests/test-public-welfare-data-hub.cjs
-node --check mobile-network-monitor.js
-node tests/test-earth-traffic-monitor.cjs  # includes Public Welfare Data Hub helper checks
-node --check app.js
-node --check space-environment.js
-python run-static-qa.py
-```
-
-A source adapter reaching `UNAVAILABLE` or `PARTIAL` is not counted as zero activity; it is shown explicitly. This runtime did not perform a full browser-internet/CORS acceptance test.
+The separate `lightningcontrol` navigation panel adds an animated conceptual protection-system view, a weather-model monitor for Bangladesh locations, source timestamps, opt-in threshold advisories, an event log, and an isolated low-voltage synthetic pulse simulation. Monitoring defaults OFF, polls the weather forecast every 15 minutes while on, and stops its polling loop when turned off. It never controls physical lightning-protection equipment. The image and animated paths are illustrative only. Open-Meteo model values are not lightning detections; public NOAA GOES-R GLM coverage is centred on the Americas and adjacent oceans. Follow official weather advisories and a professionally designed lightning protection system.

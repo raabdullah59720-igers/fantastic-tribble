@@ -8,7 +8,7 @@
 - Public CelesTrak SATCAT CSV inventory for Earth-orbit catalogue rows, including payloads, rocket bodies, debris, unknown types, and other categories. Search by object name, catalogue ID, international designator, operator, or object type; filter by type and page through results.
 - SATCAT record selection opens metadata and reports whether the current GP/OMM set contains a matching element record. When no matching element set exists, no fake orbit or coordinates are drawn.
 - A browser-local baseline comparison flags newly seen SATCAT records, unknown-type records, new GP IDs, and provider-listed possible-decay records for review. Browser desktop notifications require permission and the monitoring switch ON.
-- Service-worker shell generation `terravex-apex-shell-v22`, so an already-installed PWA can fetch the updated panel and code.
+- Service-worker shell generation `terravex-apex-shell-v21`, so an already-installed PWA can fetch the updated panel and code.
 
 ## Data cadence and sources
 
