@@ -47,3 +47,10 @@ The panel combines two different data classes in one interactive globe:
 ## Test
 
 Run `node tests/test-earth-traffic-monitor.cjs` and `python run-static-qa.py`. The tests include coordinate-transform checks, mocked propagation, malformed/null state-vector filtering, stale-data diagnostics, PWA asset integration and local-reference validation. They do not verify current public API reachability, satellite observation truth against independent sensors, or a deployed website.
+
+
+## Earth Orbit Sentinel extension
+
+The separate `Earth Orbit Sentinel` page is integrated within this existing module/file pair to avoid adding files to the package. It fetches public CelesTrak GP/OMM snapshots (Active, Last-30-Days and provider-listed possible decays), merges duplicate object IDs, calculates SGP4/SDP4 geodetic positions, and provides search, object inspection, a procedural orbit globe, a local catalogue-delta alert log and optional browser notifications. The public source records are not spacecraft telemetry.
+
+Upstream GP requests are limited to once per 2-hour window per CelesTrak usage policy. While Monitor is ON, local position propagation updates every 15 seconds, and the panel clock updates every second. Newly seen public catalogue entries and newly provider-flagged potential decays are review alerts only. No public catalogue can prove that all physical objects are tracked or detect an object that does not appear in any connected source.

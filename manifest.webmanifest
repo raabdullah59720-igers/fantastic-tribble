@@ -177,6 +177,18 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Earth Orbit Sentinel",
+      "short_name": "Orbit Sentinel",
+      "description": "Public satellite catalogue and orbit review console",
+      "url": "./?page=orbitsentinel",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

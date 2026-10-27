@@ -6,7 +6,7 @@
 
 1. Publish every file in this folder, including `assets/`, to the root of your GitHub Pages repository.
 2. Open the resulting **HTTPS** Pages URL in Chrome or Edge. Do not use the ChatGPT sandbox download URL and do not double-click `index.html`.
-3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v19`.
+3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v21`.
 4. Look for Chrome’s **Install** icon at the right side of the address bar. The app no longer suppresses the browser-native install UI. If the icon is absent, click the top-bar **Install App** button for diagnostics, then use Chrome’s menu: **⋮ → Cast, save and share → Install page as app**. In Edge use **⋯ → Apps → Install this site as an app**. Browser wording varies by version and policy.
 5. If the install command is missing, open DevTools → **Application** → **Manifest** and **Service Workers**. Check the manifest and any console/network errors. Also check if the app is already installed in the same browser profile or if browser policy disables installation.
 
@@ -46,12 +46,12 @@ Chrome owns this icon and does not let a website force it to appear. The app mus
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
-The installed app retains the Ozone & Atmosphere, Solar Activity & Magnetosphere, and Near-Earth Object panels as well as Space Communications. The app-shell cache is `terravex-apex-shell-v19`.
+The installed app retains the Ozone & Atmosphere, Solar Activity & Magnetosphere, and Near-Earth Object panels as well as Space Communications. The app-shell cache is `terravex-apex-shell-v21`.
 
 For **asynchronous internet voice mail between TERRAVEX users on different devices**, deploy `relay-server/` publicly using `render.yaml`, set `ALLOWED_ORIGINS` to the exact HTTPS app origin, and enter the deployed `wss://` URL in Space Communications. Local launcher mode binds to `127.0.0.1` and is same-computer only. The mailbox encrypts audio/metadata in the sender's browser and stores only ciphertext in relay memory for up to 24 hours; restart can erase messages. It is not emergency-grade and does not deliver to a spacecraft or Russian satellite. See `SPACE-COMMS-REAL-VOICE-MAIL.md` and `relay-server/README.md`.
 
 
-## Earth Traffic 3D Monitor (cache v17)
+## Earth Traffic 3D Monitor (cache v21)
 
 The new **Space & Atmosphere → Earth Traffic 3D Monitor** combines CelesTrak orbital elements propagated by Satellite.js with optional OpenSky aircraft state vectors. Click **Load / update orbital data** for public orbital-element groups, then choose a geographic aircraft region and press **Refresh aircraft feed**. Aircraft auto-refresh is opt-in for bounded regions only; global auto-refresh is disabled to conserve API credits.
 
