@@ -189,19 +189,6 @@
           "sizes": "192x192"
         }
       ]
-    },
-    {
-      "name": "Lightning Interception & Safety Monitor",
-      "short_name": "Lightning Safety",
-      "description": "Weather-model monitoring and isolated low-voltage simulation",
-      "url": "./?page=lightningcontrol",
-      "icons": [
-        {
-          "src": "icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
     }
   ]
 }

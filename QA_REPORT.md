@@ -1,53 +1,14 @@
-# TERRAVEX APEX — Lightning Interception & Safety Monitor Upgrade QA
+# TERRAVEX APEX — Earth Traffic 3D Monitor Upgrade QA
 
-Build: **Earth Orbit Sentinel + Lightning Interception & Safety Monitor + all prior modules preserved**  
-Service-worker cache: `terravex-apex-shell-v22`  
-Verification date: **28 October 2026**
+Build: **Earth Traffic 3D Monitor + previous space communications, hazard, RF, VPN and PWA modules**  
+Service-worker cache: `terravex-apex-shell-v21`  
+Verification date: **25 October 2026**
 
-## Current deliverable snapshot
+## Deliverable
 
-- **98 project files**; no extra project file was introduced for this panel. The ZIP includes the existing complete application and keeps `index.html` at its root.
-- New panel route: `lightningcontrol`; prior command, earth, weather, lightning lab, energy, orbit, BTCL, mobile network, communications, RF, VPN, PWA and disaster-operation pages remain present.
-- New interface is an additive page in `index.html`; new CSS and monitoring logic are added to existing `styles.css` and `app.js` to preserve the 98-file ceiling.
-- The monitor switch defaults OFF, polls only the weather-model API while ON at a 15-minute interval, and has no physical hardware or high-voltage actuation function.
-- Browser-level screenshot/live API checks were attempted but blocked by the environment (`ERR_BLOCKED_BY_ADMINISTRATOR`); live feed delivery and rendered Chrome appearance are not claimed as verified.
-
-## Current static QA (v22)
-
-- HTML parsed: **872 IDs, 0 duplicates**.
-- Local HTML / asset references: **0 missing**.
-- PWA manifest: valid JSON, `standalone`, icons present, **13 shortcuts, 0 invalid**.
-- Service worker: `terravex-apex-shell-v22`; **45 required local shell resources, 0 missing**.
-- PWA diagnostics/cache-version parity: **PASS**.
-- JavaScript syntax: **22 files, 0 errors**.
-- CSS parse: **19 stylesheets, 0 errors**.
-- Python syntax: 4 files checked; password lock and launcher asset checks passed.
-
-## Regression tests after this upgrade
-
-- PWA omnibox: **9/9 PASS**.
-- Earth Traffic / Orbit Sentinel: **25 assertions PASS**.
-- RF Interference: **5/5 PASS**.
-- Space Communications: **16 assertions PASS**.
-- BTCL Signal Hub: **13/13 PASS**.
-- Bangladesh Mobile Network Monitor: **15/15 PASS**.
-- Space Environment: **11 assertions PASS**.
-- Connectivity / link-budget: **6 assertions PASS**.
-- Voice-mail service: **PASS**.
-- Relay integration: **14 test groups PASS**.
-- VPN bridge: **11/11 PASS**.
-- New lightning panel mocked-runtime checks: **12/12 PASS**; structural/cache/source checks and bench energy arithmetic also passed.
-
-## Lightning Interception & Safety Monitor details
-
-- Dedicated `lightningcontrol` page, animated conceptual device view, protected terminal / down-conductor / grounding-route labels, and visibly separate isolated low-voltage simulation branch. Art is a concept render, not a construction drawing, actual sensor view, or tested device.
-- Monitor defaults OFF. ON performs a weather model query and starts a 15-minute polling loop; OFF stops polling and aborts an in-flight request. Time display updates every second.
-- Fields: current model temperature, humidity, wind gust, cloud cover and nearest-hour CAPE / precipitation probability. Missing fields stay blank; failed sources never receive synthetic live fallback values.
-- Alert is opt-in and based on user-configured precipitation probability plus model CAPE context. It is not a direct lightning detector, guaranteed strike forecast or official emergency warning.
-- The safe bench simulator uses a synthetic 12.4 V, 0.28 A, 50 ms pulse for energy-accounting equations. No real lightning energy, real-time sensor readings or hardware outputs are represented.
-- Data references: Open-Meteo forecast documentation, NOAA GOES-R GLM overview, and U.S. National Weather Service lightning protection guidance. For Bangladesh, NOAA GLM is not a local real-time lightning feed.
-
----
+- Project files: **92** after excluding Python bytecode/cache artifacts; below the 98-file project limit.
+- `index.html` is at ZIP root; all prior panels remain in the complete project.
+- New files: `earth-traffic-monitor.js`, `earth-traffic-monitor.css`, `tests/test-earth-traffic-monitor.cjs`, and `EARTH-TRAFFIC-3D-MONITOR.md`.
 
 ## Earth Traffic 3D Monitor
 
@@ -145,19 +106,3 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Final bundle composition: 98 project files after excluding Python bytecode cache and root `.gitignore`; existing feature modules and support files remain in the archive.
 - Current static QA: 837 HTML IDs, no duplicate IDs, no missing local references, 22 JavaScript files syntax-checked, 19 stylesheets parsed, PWA cache version v21, zero errors.
 - Live external-feed fetch and installed-Chrome visual runtime are not verified in this container. A CORS/rate-limit/source failure is intentionally displayed as unavailable or degraded, not as live data.
-
-
-## Lightning Interception & Safety Monitor add-on (2026-10-28)
-
-- Added a dedicated `lightningcontrol` panel inside the existing application; no new project files were added, preserving the 98-file package ceiling. Prior navigation and modules remain in place.
-- Animated device digital twin uses bundled concept art and overlay routing lines for a protected terminal, down-conductor/earth-termination concept, and a visibly separate low-voltage research branch. Visuals are not sensor observations or engineering drawings.
-- Monitoring switch defaults OFF. The clock updates every second. ON performs one Open-Meteo model query and starts a 15-minute polling loop; OFF stops polling and aborts an in-flight request. Manual refresh remains available. This switch does not switch or actuate physical hardware.
-- Weather fields are source-labelled model context: current temperature, humidity, wind gusts, cloud cover and nearest-hour CAPE/precipitation probability. Missing/unavailable fields remain `—`; there is no synthetic live fallback. Alerts are opt-in, threshold-based weather-model advisories only.
-- Added an isolated low-voltage demonstration (12.4 V, 0.28 A, 50 ms) with power/energy/efficiency/capacitor math and synthetic waveform. It cannot model capture from an atmospheric lightning strike; there is no high-voltage control or device I/O.
-- Added CSV-free JSON event-log export, local event log, optional browser notifications, source links, mobile-responsive design and reduced-motion support.
-- Scientific boundary: a lightning protection system does not steer storm clouds or prevent all strikes. NOAA GLM public monitoring coverage is the Americas and adjacent oceans; the Open-Meteo forecast is not a direct lightning detector for Bangladesh.
-- Current package shell cache: `terravex-apex-shell-v22`.
-- Static QA: **0 errors**; 872 HTML IDs / 0 duplicates; local references 0 missing; service worker v22 required shell 45/45; manifest valid with 12 shortcuts; 22 JS syntax checks and 19 CSS parse checks passed.
-- Regression suite re-run after the panel integration: PWA 9/9; Earth Traffic/SATCAT 25 assertions; RF 5/5; space communications 16 assertions; BTCL Signal Hub 13/13; mobile network panel 15/15; voice-mail service checks passed; relay integration 14 check groups; VPN bridge 11/11; Space Environment 11 assertions; connectivity/link-budget 6 assertions. The existing mobile-monitor test label was updated to v22.
-- Additional panel structural/math assertions passed: navigation route, unique IDs, required controls, update cadence, fetch-off-on behavior, source-label/empty-data behavior, low-voltage pulse arithmetic, no physical actuator function, and existing asset/cache references.
-- Runtime limitation: actual public API delivery from the end user's browser was not verified, and the Chromium preview runtime returned `ERR_BLOCKED_BY_ADMINISTRATOR`; no live browser-render pass is claimed.
