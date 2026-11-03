@@ -33,3 +33,11 @@ Micro-hydro: `P = ρ × g × Q × H × η`, where `ρ` is water density, `g` gra
 
 ## Weather environment proxy
 A weighted, bounded score is computed from model-based precipitation probability, cloud cover, gust speed and CAPE when provided. Weighting is heuristic and has not been trained, calibrated or validated against lightning strike records. It must never be described as an actual lightning probability or official alert.
+
+
+## Atmospheric Entry & Exit Watch
+- CelesTrak Recently Decayed Objects: https://celestrak.org/satcat/decayed-with-last.php — a 60-day catalogue list, not a direct radar stream. The displayed decay date and last-element epoch are source catalogue fields.
+- CelesTrak SATCAT format: https://celestrak.org/satcat/satcat-format.php — authoritative field definitions including decay date.
+- NASA/JPL CNEOS fireballs: https://cneos.jpl.nasa.gov/fireballs/ and https://ssd-api.jpl.nasa.gov/doc/fireball.html — government-sensor reports; NASA states the feed is not real-time and not all fireballs are reported. The API terms say not to embed this API in websites; this app provides source links only.
+- NASA Ozone Watch: https://ozonewatch.gsfc.nasa.gov/ — satellite-derived total-column ozone products. Dobson Units are not interchangeable with surface ozone concentration.
+- Monitoring cadence: optional 60-minute browser-side re-check. It requires the browser and app to remain open; it is not a guaranteed real-time alert service.

@@ -189,6 +189,19 @@
           "sizes": "192x192"
         }
       ]
+    },
+    {
+      "name": "Atmospheric Entry & Exit Watch",
+      "short_name": "Atmosphere Watch",
+      "description": "Public catalogue event watch and ozone source links",
+      "url": "./?page=atmoswatch",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

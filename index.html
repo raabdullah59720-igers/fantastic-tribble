@@ -28,11 +28,12 @@
 <link rel="stylesheet" href="earth-traffic-monitor.css">
 <link rel="stylesheet" href="btcl-signal-hub.css">
 <link rel="stylesheet" href="mobile-network-monitor.css">
+<link rel="stylesheet" href="atmospheric-watch.css">
 </head>
 <body><div id="tvxPasswordGate" role="dialog" aria-modal="true" aria-labelledby="tvxGateTitle"><div class="tvx-gate-card"><div class="tvx-gate-brand"><div class="tvx-gate-logo">TVX</div><div><b>TERRAVEX APEX</b><small>EARTH INTELLIGENCE / PRIVATE DEVICE LOCK</small></div></div><div class="tvx-gate-eyebrow">DEVICE ACCESS CONTROL</div><h1 id="tvxGateTitle">Preparing secure app lock…</h1><p id="tvxGateSubtitle">Your password will be stored as a cryptographic verifier on this browser only.</p><form id="tvxGateForm" autocomplete="on"><div class="tvx-gate-field"><label for="tvxGatePassword">App password</label><input id="tvxGatePassword" name="password" type="password" minlength="10" maxlength="128" autocomplete="current-password" required autofocus></div><div class="tvx-gate-field" id="tvxGateConfirmWrap"><label for="tvxGateConfirm">Confirm password</label><input id="tvxGateConfirm" name="confirmPassword" type="password" minlength="10" maxlength="128" autocomplete="new-password"></div><label class="tvx-gate-show"><input id="tvxGateShowPassword" type="checkbox"> Show password</label><p id="tvxGateMessage" role="status" aria-live="polite">Preparing password lock…</p><button class="tvx-gate-submit" id="tvxGateSubmit" type="submit">Continue</button><button class="tvx-gate-secondary" id="tvxGateClearForm" type="button">Clear input fields</button></form><div class="tvx-gate-warning"><b>Important security note</b>This device lock remembers only a salted password hash, not the password itself. Because this is a static GitHub Pages app, it does not protect public source files or data endpoints from a determined visitor. Use server-side authentication / an identity access gateway for true website-wide privacy.</div></div></div><div class="shell">
 <aside class="sidebar" id="sidebar"><div class="brand"><div class="brandmark">◉</div><div><strong>TERRAVEX</strong><small>APEX / EARTH INTELLIGENCE</small></div></div>
 <div><p class="section-label">COMMAND</p><nav class="nav"><button class="active" data-page="overview"><span>◈</span>Command Overview</button><button data-page="earth"><span>◎</span>Earth Intelligence</button><button data-page="quake"><span>⌁</span>Earthquake Monitor</button><button data-page="bangladesh"><span>🇧🇩</span>Bangladesh Observatory</button><button data-page="location"><span>⌖</span>Live Location</button><button data-page="seismic"><span>⌬</span>Seismic & Plate Motion</button><button data-page="weather"><span>☼</span>Weather & Storms</button><button data-page="stormwatch"><span>ϟ◉</span>Storm & Lightning Watch</button><button data-page="airquality"><span>≋</span>Air Quality Intelligence</button><button data-page="nasaevents"><span>◉</span>NASA Natural Events</button></nav></div>
-<div><p class="section-label">SPACE & ATMOSPHERE</p><nav class="nav"><button data-page="ozone"><span>◌</span>Ozone & Atmosphere Observatory</button><button data-page="spaceweather"><span>☀</span>Solar Activity & Magnetosphere</button><button data-page="spaceobjects"><span>✦</span>Near-Earth Object Watch</button><button data-page="earthtraffic"><span>🌐</span>Earth Traffic 3D Monitor</button><button data-page="orbitsentinel"><span>🛰</span>Earth Orbit Sentinel</button><button data-page="spacecomms"><span>◉</span>Space Communications & Voice Relay</button></nav></div>
+<div><p class="section-label">SPACE & ATMOSPHERE</p><nav class="nav"><button data-page="ozone"><span>◌</span>Ozone & Atmosphere Observatory</button><button data-page="atmoswatch"><span>⟲</span>Atmospheric Entry / Exit Watch</button><button data-page="spaceweather"><span>☀</span>Solar Activity & Magnetosphere</button><button data-page="spaceobjects"><span>✦</span>Near-Earth Object Watch</button><button data-page="earthtraffic"><span>🌐</span>Earth Traffic 3D Monitor</button><button data-page="orbitsentinel"><span>🛰</span>Earth Orbit Sentinel</button><button data-page="spacecomms"><span>◉</span>Space Communications & Voice Relay</button></nav></div>
 <div><p class="section-label">LABORATORIES</p><nav class="nav"><button data-page="lightning"><span>ϟ</span>Lightning Research</button><button data-page="nowcast"><span>◉</span>Lightning Nowcast Lab</button><button data-page="stormenergy"><span>ϟ↯</span>Thunderstorm Energy Recovery</button><button data-page="tectonic"><span>⌬</span>Earth System Lab</button><button data-page="imagery"><span>▧</span>Earth Observation</button><button data-page="igers"><span>↯</span>IGERS Energy Lab</button><button data-page="geodesy"><span>⌖</span>GNSS Geodesy Workbench</button><button data-page="energyplanner"><span>⚡</span>Hybrid Energy Planner</button></nav></div>
 <div><p class="section-label">OPERATIONS</p><nav class="nav"><button data-page="disaster"><span>△</span>Disaster Operations</button><button data-page="alerts"><span>⚑</span>Alert Center <i class="esu-nav-count" id="alertNavCount">0</i></button><button data-page="quakeearly"><span>⌁!</span>Earthquake Rapid Alerts</button><button data-page="ocean"><span>≈</span>Bay of Bengal Ocean & Tsunami</button><button data-page="satellites"><span>🛰</span>Satellite Pass & Russian Orbital Watch</button><button data-page="securelink"><span>⛨</span>Secure Satellite & VPN</button><button data-page="vpncontrol"><span>⏻</span>VPN Control & Desktop Install</button><button data-page="connectivitylab"><span>◉</span>Emergency Link Budget Lab</button><button data-page="btclhub"><span>◉</span>BTCL Satellite Signal Hub</button><button data-page="mobilenet"><span>▥</span>Bangladesh Mobile Network Monitor</button><button data-page="rfintel"><span>〰</span>RF Spectrum & Interference</button><button data-page="sources"><span>⌘</span>Data & Methodology</button><button data-page="health"><span>◌</span>Source Health & PWA</button></nav></div>
 <div class="side-bottom"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:11px">SYSTEM STATUS</b><span class="badge live" id="globalStatus">READY</span></div><div class="tiny" style="margin-top:8px">Static-host architecture · no backend required</div><div class="tiny" style="margin-top:5px">External data needs internet access.</div></div></aside>
@@ -531,6 +532,62 @@
   </div>
 </section>
 
+
+<section class="page" id="page-atmoswatch" aria-labelledby="atwTitle">
+  <div class="page-head atw-page-head">
+    <div><div class="eyebrow">ATMOSPHERIC EVENT INTELLIGENCE / CATALOGUE WATCH</div><h2 id="atwTitle">Atmospheric Entry & Exit Watch</h2><p>Track catalogue-listed orbital decays and reported fireball observations, with transparent source age, event confidence and browser notifications. This is a public-data monitor, not a dedicated radar network.</p></div>
+    <div class="atw-head-state"><span class="badge warn" id="atwFeedBadge">FEED NOT LOADED</span><span class="atw-utc">UTC <b id="atwUtcClock">—</b></span></div>
+  </div>
+  <div class="atw-hero-grid">
+    <div class="atw-globe-card card">
+      <div class="atw-visual-top"><div><span class="atw-kicker">EARTH / ATMOSPHERIC INTERFACE</span><h3>BOUNDARY EVENT VISUALIZER</h3></div><span class="atw-visual-tag">SCHEMATIC · NOT SENSOR VIDEO</span></div>
+      <canvas id="atwEarthCanvas" width="1100" height="510" aria-label="Conceptual Earth atmospheric layers and orbital decay track"></canvas>
+      <div class="atw-visual-legend"><span><i class="atw-dot atw-dot-troposphere"></i>Troposphere</span><span><i class="atw-dot atw-dot-stratosphere"></i>Stratosphere / ozone-rich region</span><span><i class="atw-dot atw-dot-meso"></i>Mesosphere</span><span><i class="atw-dot atw-dot-thermo"></i>Thermosphere</span><span><i class="atw-dot atw-dot-orbit"></i>Orbital path concept</span></div>
+      <p class="atw-visual-note">The graphic is an explanatory visualization. Its orbit, object position, atmospheric thickness and glow are not measured or to scale.</p>
+    </div>
+    <div class="atw-kpi-stack">
+      <div class="atw-kpi-card"><span>CATALOGUED DECAYS · SOURCE WINDOW</span><strong id="atwDecayCount">—</strong><small>Records returned by CelesTrak (up to 60 days)</small></div>
+      <div class="atw-kpi-card"><span>NEW EVENTS SINCE BASELINE</span><strong id="atwNewCount">0</strong><small>Detected from catalogue changes during this monitor history</small></div>
+      <div class="atw-kpi-card"><span>LAST SUCCESSFUL FETCH</span><strong class="atw-kpi-time" id="atwFetchedAt">—</strong><small id="atwSourceAge">No source response in this session</small></div>
+      <div class="atw-kpi-card atw-kpi-ozone"><span>STRATOSPHERIC OZONE</span><strong>NASA OZONE WATCH</strong><small>Published satellite products · provider observation date</small><a href="https://ozonewatch.gsfc.nasa.gov/" target="_blank" rel="noopener">Open official total-column ozone data ↗</a></div>
+    </div>
+  </div>
+  <div class="atw-control card">
+    <div class="atw-control-copy"><span class="atw-kicker">MONITOR CONTROL</span><h3>Public catalogue monitoring engine</h3><p>Re-checks the provider's 60-day decay list hourly when enabled. A notification means a new catalogue record appeared; it is not a live radar detection or impact warning.</p></div>
+    <div class="atw-controls"><button class="btn primary" id="atwRefresh" type="button">↻ Refresh catalogue</button><button class="btn" id="atwMonitor" type="button" aria-pressed="false">⏻ Monitor OFF</button><button class="btn" id="atwNotify" type="button">♢ Enable browser alerts</button><button class="btn" id="atwExport" type="button">⇩ Export CSV</button></div>
+    <div class="atw-monitor-foot"><span id="atwMonitorState" role="status" aria-live="polite">Monitor is off. Open this panel to load the current public list.</span><span>Polling interval <b>60 minutes</b> · browser must remain open</span></div>
+  </div>
+  <div class="atw-section-grid">
+    <div class="card atw-event-card">
+      <div class="atw-card-heading"><div><span class="atw-kicker">RE-ENTRY / DECAY CATALOGUE</span><h3>Recently decayed orbital objects</h3><p>Provider catalogue records; decay dates are not necessarily precise observed interface-crossing times.</p></div><span class="badge" id="atwEventCount">0 RECORDS</span></div>
+      <div id="atwEventList" class="atw-event-list"><div class="atw-empty"><b>Waiting for source data</b><span>Press Refresh catalogue. No synthetic events are generated when the source is unavailable.</span></div></div>
+      <div class="atw-list-foot"><span id="atwListFoot">Source: CelesTrak · recently decayed objects</span><a href="https://celestrak.org/satcat/decayed-with-last.php" target="_blank" rel="noopener">Open source catalogue ↗</a></div>
+    </div>
+    <div class="stack atw-side-stack">
+      <div class="card atw-event-state-card">
+        <div class="atw-card-heading"><div><span class="atw-kicker">ENTRY / EXIT STATUS</span><h3>Event verification matrix</h3></div><span class="badge warn">SOURCE-LIMITED</span></div>
+        <div class="atw-matrix-row"><span class="atw-status-dot good"></span><div><b>Catalogued orbital decay</b><small id="atwEntryState">Waiting for CelesTrak catalogue fetch.</small></div><em>AVAILABLE</em></div>
+        <div class="atw-matrix-row"><span class="atw-status-dot info"></span><div><b>Meteor / fireball entry observation</b><small>NASA/JPL publishes reported events after the fact; not a real-time all-sky sensor feed.</small></div><a href="https://cneos.jpl.nasa.gov/fireballs/" target="_blank" rel="noopener">SOURCE ↗</a></div>
+        <div class="atw-matrix-row"><span class="atw-status-dot off"></span><div><b>Atmospheric exit / ascent crossing</b><small>No validated open global real-time feed is connected for the 100 km boundary crossing.</small></div><em>NOT LIVE</em></div>
+        <div class="atw-matrix-row"><span class="atw-status-dot off"></span><div><b>Direct radar / optical detection</b><small>No radar, telescope network or spacecraft telemetry receiver is connected to this browser app.</small></div><em>NOT CONNECTED</em></div>
+      </div>
+      <div class="card atw-ozone-card">
+        <div class="atw-card-heading"><div><span class="atw-kicker">O₃ / STRATOSPHERIC COMPOSITION</span><h3>Ozone observation sources</h3></div><span class="badge">SATELLITE PRODUCTS</span></div>
+        <div class="atw-ozone-spectrum"><div></div><span>NASA Ozone Watch · total-column ozone (Dobson Units)</span></div>
+        <p>NASA's published maps provide satellite-derived total-column ozone. This panel does not invent a current Dobson Unit value or confuse surface ozone with stratospheric ozone.</p>
+        <div class="atw-ozone-links"><a href="https://ozonewatch.gsfc.nasa.gov/" target="_blank" rel="noopener">NASA latest products ↗</a><a href="https://ozonewatch.gsfc.nasa.gov/monthly/" target="_blank" rel="noopener">Monthly archive ↗</a><button type="button" class="btn" data-goto="ozone">Open Ozone Observatory →</button></div>
+      </div>
+      <div class="card atw-alert-card">
+        <div class="atw-card-heading"><div><span class="atw-kicker">ALERT POLICY</span><h3>Notification evidence level</h3></div></div>
+        <div class="atw-confidence"><b>CATALOGUE UPDATE</b><span>High confidence that a provider record was added; physical event timing/location may remain uncertain.</span></div>
+        <div class="atw-confidence"><b>FIREBALL RECORD</b><span>Reported observation with missing fields possible; not every event is reported and the data are not real-time.</span></div>
+        <div class="atw-confidence"><b>EXIT / ASCENT EVENT</b><span>No automatic alert will be issued until a validated, timestamped ascent observation source is integrated.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card atw-method-card"><b>Scientific interpretation & source policy</b><p><strong>Boundary convention:</strong> the Kármán line near 100 km is a commonly used convention, not a sharp physical atmospheric surface. <strong>Decay:</strong> CelesTrak's recent-decay catalogue is an after-the-fact catalogue status; last-element epoch versus decay date can indicate timing uncertainty. <strong>Fireballs:</strong> NASA/JPL states that its fireball records are not real-time and not all events are reported. <strong>Ozone:</strong> total-column Dobson Units are distinct from near-surface ozone concentration. An unavailable source is never shown as “clear air” or “no event”.</p><div class="atw-source-links"><a href="https://celestrak.org/satcat/satcat-format.php" target="_blank" rel="noopener">CelesTrak SATCAT field definitions ↗</a><a href="https://ssd-api.jpl.nasa.gov/doc/fireball.html" target="_blank" rel="noopener">NASA/JPL Fireball API documentation ↗</a><a href="https://ozonewatch.gsfc.nasa.gov/facts/dobson_SH.html" target="_blank" rel="noopener">NASA Dobson Unit reference ↗</a></div></div>
+</section>
+
 <section class="page" id="page-spaceweather">
   <div class="page-head"><div><div class="eyebrow">SUN–EARTH SYSTEM / SPACE WEATHER</div><h2>Solar Activity & Magnetosphere Monitor</h2><p>Track reported solar flares, coronal mass ejections and geomagnetic-storm records. Animated magnetosphere field lines are conceptual; event data and timestamps come from NASA DONKI when the feed is available.</p></div><span class="badge sim" id="swxStatus">WAITING FOR SOURCE</span></div>
   <div class="se-top-grid">
@@ -694,4 +751,5 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
 <script src="earth-traffic-monitor.js" defer></script>
 <script src="btcl-signal-hub.js" defer></script>
-<script src="mobile-network-monitor.js" defer></script></body></html>
+<script src="mobile-network-monitor.js" defer></script>
+<script src="atmospheric-watch.js" defer></script></body></html>
