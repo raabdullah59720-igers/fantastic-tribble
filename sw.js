@@ -1,5 +1,5 @@
-/* TERRAVEX APEX service worker. Critical shell assets are required; artwork and docs are optional. */
-const CACHE_NAME = 'terravex-apex-shell-v24';
+/* TERRAVEX APEX service worker. Core UI and Thunderstorm digital-twin artwork are required for a complete offline panel. */
+const CACHE_NAME = 'terravex-apex-shell-v27';
 const SCOPE_URL = self.registration.scope;
 const REQUIRED_SHELL = [
   "./index.html",
@@ -16,6 +16,10 @@ const REQUIRED_SHELL = [
   "./thunderstorm-energy-lab.html",
   "./thunderstorm-energy-lab.css",
   "./thunderstorm-energy-lab.js",
+  "./reference-demonstrator.webp",
+  "./magnetic-coils.webp",
+  "./device-cutaway.webp",
+  "./thunderstorm-hero.webp",
   "./advanced-workbench.css",
   "./advanced-workbench.js",
   "./hazard-intelligence.css",
@@ -51,10 +55,6 @@ const REQUIRED_SHELL = [
   "./icon-512.png"
 ];
 const OPTIONAL_ASSETS = [
-  "./assets/thunderstorm-hero.webp",
-  "./assets/device-cutaway.webp",
-  "./assets/magnetic-coils.webp",
-  "./assets/reference-demonstrator.webp",
   "./sw.js"
 ];
 

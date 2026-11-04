@@ -1,22 +1,16 @@
-TERRAVEX APEX — FULL EARTH SCIENCE UPGRADE / QUICK INSTALL
+TERRAVEX APEX — THUNDERSTORM DEVICE DIGITAL TWIN UPGRADE
 
-1) Download the FULL ZIP and extract it.
-2) In the extracted folder, select every file plus the assets folder.
-3) Upload the contents to the ROOT of your GitHub repository (repository name: terravex-apex). Do not upload only the ZIP; do not add another nested folder.
-4) Keep the local CSS/JS files beside index.html and keep all images inside assets/.
-5) GitHub -> Settings -> Pages -> Deploy from a branch -> main -> /(root) -> Save.
-6) Open your GitHub Pages URL. Test Earthquake Monitor, Seismic & Plate Motion, Earth Observation, Thunderstorm Energy Recovery, and Alert Center.
+1) Back up your current GitHub repository.
+2) Extract this ZIP. Upload every file and folder contained inside the extracted project folder to the repository ROOT (not the ZIP and not an extra nested folder).
+3) Keep index.html, thunderstorm-energy-lab.html, thunderstorm-energy-lab.css, thunderstorm-energy-lab.js and the four referenced .webp images in their current root-level locations. Do not create an assets/ subfolder.
+4) GitHub Settings → Pages → Deploy from a branch → choose your publishing branch and /(root) → Save.
+5) Wait until GitHub Pages deployment reports success. Open the HTTPS site and hard reload with Ctrl+Shift+R.
+6) If the app is installed as a PWA, open Source Health & Offline System → Refresh cached app shell. The current shell cache is terravex-apex-shell-v27.
+7) Open Thunderstorm Energy Recovery — Device Digital Twin. Drag the device canvas to rotate it; enable the local simulation interlock before using model-pulse controls.
 
-IMPORTANT:
-- Back up the old repository before replacing files.
-- USGS feed = reported earthquakes, not earthquake predictions. First good fetch is the baseline.
-- NASA GIBS imagery is date-based and may be delayed/incomplete. It is not video-live.
-- Bangladesh Satellite-1 (BS-1) is a communications/broadcasting satellite in the public BSCL service description; this package does not pretend to read an Earth-imaging feed from it.
-- Weather-model storm risk is not a lightning detector or official warning. Browser notifications require a user click and permission.
-- Tectonic motion animation is an exaggerated time-lapse. Its scenario rates are not live GNSS measurements.
-- Never connect any experimental energy-storage circuit to a lightning protection conductor or real lightning path.
-
-New source files:
-  earth-systems-upgrade.js
-  earth-systems-upgrade.css
-The full ZIP already includes them and the required changes to index.html/app.js.
+DATA AND CONTROL LIMITS
+- Three.js is loaded from a pinned public CDN. If it is blocked or WebGL is unavailable, a local isometric canvas fallback is shown. Internet access is required for the Three.js high-detail renderer and public data feeds.
+- The JMA Himawari-9 panel opens the official South Asia public real-time imagery viewer. It is a web feed, not a physical satellite receiver or spacecraft command link. A direct JMA viewer link and image-index link remain available if the embedded view is blocked by browser policy.
+- Open-Meteo provides forecast/model fields. Precipitation probability is not thunderstorm probability; CAPE is an atmospheric instability metric, not lightning detection. No direct lightning-strike sensor feed is connected.
+- Device controls operate only the browser-side mathematical digital twin. There is no physical hardware I/O, high-voltage, lightning conductor, storage unit or satellite command channel.
+- Never connect experimental energy-storage electronics to a lightning protection system or actual lightning path.

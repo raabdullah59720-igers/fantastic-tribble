@@ -5,9 +5,9 @@ import subprocess, sys
 ROOT = Path(__file__).resolve().parent
 commands = [
     [sys.executable, str(ROOT / 'run-static-qa.py')],
-    ['node', str(ROOT / 'tests' / 'test-space-environment.cjs')],
-    ['node', str(ROOT / 'tests' / 'test-pwa-omnibox.cjs')],
-    ['node', str(ROOT / 'tests' / 'test-rf-interference-intelligence.cjs')],
+    ['node', str(ROOT / 'test-space-environment.cjs')],
+    ['node', str(ROOT / 'test-pwa-omnibox.cjs')],
+    ['node', str(ROOT / 'test-rf-interference-intelligence.cjs')],
 ]
 for command in commands:
     print('\n>', ' '.join(command), flush=True)

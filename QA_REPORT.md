@@ -129,7 +129,7 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Added a separate interactive Three.js Earth scene with source-derived aircraft markers and a selected-zone outline; the basemap texture is explicitly described as visual reference artwork, not live satellite imagery. A labelled fallback renderer is used when WebGL is unavailable.
 - Entry/exit events require two recent, ordered position-bearing observations on opposite sides of the selected zone boundary and a gap no greater than 30 minutes. First-seen objects and stale/missing positions do not produce crossing alerts. Each event records ICAO24, callsign/country as returned, last observed coordinates, reported altitude where available, UTC observation interval, source and `AUTHORISATION UNKNOWN` review status.
 - Added local-only event persistence, browser permission-based notifications, 15-minute broad-region request cooldown, zone filters and CSV export. Ship AIS, global drone/non-cooperative target feeds and ground object tracking are shown as not connected; no synthetic tracks are inserted.
-- PWA app-shell cache incremented to `terravex-apex-shell-v24`; PWA runtime diagnostics and tests were updated. No new files were needed; the new route and view are modular additions inside the existing Earth Traffic module files.
+- PWA app-shell cache incremented to `terravex-apex-shell-v26`; PWA runtime diagnostics and tests were updated. No new files were needed; the new route and view are modular additions inside the existing Earth Traffic module files.
 - Package count: **99 files** (the project remains within the requested one-upload limit).
 - Latest static QA: HTML parsed, 882 IDs and 0 duplicate IDs; no missing local references; 47 required service-worker assets and 0 missing; service-worker/PWA diagnostics parity v24; 24 JS files syntax-checked; 20 CSS files parsed with 0 errors; 13 manifest shortcuts with 0 invalid targets; aggregate 0 errors.
 - Regression tests: Earth Traffic + Asia Activity Watch **45 assertions PASS**, PWA **9/9**, relay/signalling **14 check groups**, RF **5/5**, Space Communications **16 assertions**, Space Environment **11 assertions**, connectivity **6 assertions**, voice-mail static tests PASS, VPN bridge **11 tests**, and npm server syntax check PASS.
@@ -145,3 +145,25 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Bumped the PWA shell cache to v24 and updated PWA diagnostics and installation guidance so old cached files are replaced.
 - Verification: `node --check` passed; all 7 bundled CJS suites passed (45 Earth/Asia assertions, 9 PWA checks, 14 relay groups, 5 RF checks, 16 space-communications assertions, 11 space-environment assertions, voice/mailbox suite); `python run-static-qa.py` reported 0 errors.
 - Limitation: Chromium headless visual capture was attempted but could not complete in this container because the browser's GPU/WebGL runtime failed to initialize. The application visual must still be confirmed on the user's target Chrome/device after deployment. The reference picture in chat is not itself embedded as an image; the globe is rendered locally by the panel code.
+
+
+## Thunderstorm Device Digital Twin upgrade (2026-11-04)
+
+- Fixed the root-level optimized WebP paths; the standalone iframe no longer expects a nonexistent `assets/` directory.
+- Added a dedicated digital-twin control plane with an interlock, start/pause, low-voltage model pulse, model pulse cycle, safe stop/disarm, local event log and opt-in browser notifications. These controls do not operate hardware.
+- Added a rotating Three.js device assembly with pointer-drag rotation and a local isometric canvas fallback.
+- Embedded the official JMA South Asia public real-time viewer; direct viewer and image-index links remain available if the remote page refuses iframe embedding.
+- Corrected the weather-field semantics: the module now requests documented hourly `precipitation_probability` and `cape`, not an assumed `thunderstorm_probability` or regional `lightning_potential` field. The interface explicitly states lightning-strike detection is not connected.
+- Added a small live data/status integration card to the existing Storm Watch panel; the full device remains a separate page.
+- PWA cache incremented to v26. Browser visual capture was attempted in the build container but Chromium headless did not complete; visual verification on the deployed Chrome installation remains outstanding.
+
+
+## Thunderstorm Digital Twin final package verification (2026-11-04)
+
+- Bumped the current PWA shell from **v26 to v27** so installed users of the previous Asia Activity Watch build receive a new cache namespace and replace stale panel files. Updated cache diagnostics, tests and install guidance to v27.
+- Final archive composition: **99 files total**. Removed four unreferenced high-resolution PNG duplicates because equivalent optimized WebP artwork is referenced by the panel, plus one unreferenced short relay guide. Runtime assets, primary launcher/install instructions, app modules and tests remain.
+- Promoted the four local Thunderstorm WebP artworks from optional to **required offline shell assets**. The PWA v27 diagnostics now verify the dedicated panel HTML/CSS/JS and all four artworks are cached; this prevents an installed/offline panel from silently missing its device artwork.
+- Safety/control refinement: turning the local simulation interlock OFF now stops an active model pulse cycle and clears pending simulated pulse visuals. Safe Stop also disarms local controls. The physical hardware I/O indicator remains **NOT CONNECTED**; no remote device actuation or satellite command channel is represented.
+- Final static QA: 885 main-app HTML IDs, 0 duplicates; standalone Thunderstorm panel 88 IDs, 0 duplicates; no missing local resource references; 51 required PWA resources, 0 missing; PWA cache diagnostics parity PASS; 13 manifest shortcuts, 0 invalid; 24 JavaScript files syntax-checked, 0 errors; 20 stylesheets parsed, 0 errors; Python syntax checks PASS; aggregate **0 static QA errors**.
+- Regression suites: Earth Traffic/Activity Watch 25 assertions PASS; Space Environment 11 assertions PASS; PWA 9/9 PASS; RF Intelligence 5/5 PASS; Space Communications 16 assertions PASS; relay/mailbox 14 integration check groups PASS; local VPN bridge 11 tests PASS. The VPN bridge test was rerun after stopping a leftover local preview server that had occupied its fixed test port; the clean rerun passed.
+- Browser runtime limitation: Chromium headless visual capture did not complete successfully in this container, so final deployed Chrome/WebGL appearance, JMA iframe embedding, API CORS and external feed availability are **not claimed as verified**. The page supplies a local canvas fallback when Three.js/WebGL is unavailable, and direct JMA viewer links remain available if the provider refuses iframe embedding.

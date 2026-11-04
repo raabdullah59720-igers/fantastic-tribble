@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-const source = fs.readFileSync(require('node:path').join(__dirname, '..', 'space-environment.js'), 'utf8');
+const source = fs.readFileSync(require('node:path').join(__dirname, 'space-environment.js'), 'utf8');
 const fakeWindow = {};
 const fakeDocument = { readyState: 'loading', addEventListener() {}, getElementById() { return null; } };
 vm.runInNewContext(source, { window: fakeWindow, document: fakeDocument, console, Date, Math, Number, String, Object, Array, Promise, Set, Map, URL, Intl, performance: { now: () => 0 }, setTimeout, clearTimeout, requestAnimationFrame() { return 1; }, fetch() { throw new Error('Network should not run in unit test'); } }, { filename: 'space-environment.js' });

@@ -43,8 +43,8 @@ async function connectWs(port, origin='http://127.0.0.1:8000') {
 }
 async function main(){
   const port=await getFreePort();
-  const root=path.join(__dirname,'..');
-  const proc=spawn(process.execPath,[path.join(root,'relay-server','server.js')],{cwd:root,env:{...process.env,HOST:'127.0.0.1',PORT:String(port),ALLOWED_ORIGINS:'http://127.0.0.1:8000',ROOM_TTL_SECONDS:'60'},stdio:['ignore','pipe','pipe']});
+  const root=path.resolve(__dirname);
+  const proc=spawn(process.execPath,[path.join(root,'server.js')],{cwd:root,env:{...process.env,HOST:'127.0.0.1',PORT:String(port),ALLOWED_ORIGINS:'http://127.0.0.1:8000',ROOM_TTL_SECONDS:'60'},stdio:['ignore','pipe','pipe']});
   let output='';proc.stdout.on('data',b=>output+=b);proc.stderr.on('data',b=>output+=b);
   const waitHealth=async()=>{for(let i=0;i<40;i++){try{const r=await fetch(`http://127.0.0.1:${port}/healthz`);if(r.ok)return await r.json();}catch{}await new Promise(r=>setTimeout(r,100));}throw new Error('Relay health endpoint did not start: '+output);};
   let host,guest,checks=0;

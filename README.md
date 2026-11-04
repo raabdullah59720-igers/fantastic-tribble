@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v24`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v27`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -64,7 +64,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v24`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v27`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -93,7 +93,7 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The PWA shell cache is `terravex-apex-shell-v24`, and the Earth Traffic CSS/JS files are required cached resources.
+See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v27`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
@@ -115,7 +115,7 @@ The new **BTCL Satellite Signal Hub** is an independent panel. Its local 1 Hz pr
 
 ## Bangladesh Mobile Network Signal Monitor (receive-only)
 
-The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v24`.
+The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v27`.
 
 
 ## Earth Orbit Sentinel (added October 2026)
@@ -131,13 +131,18 @@ The separate **Earth Orbit Sentinel** page merges public CelesTrak GP/OMM feeds 
 
 Local UTC/Dhaka clocks update every second. Positions are recalculated locally every 15 seconds while the Monitor switch is ON. CelesTrak GP data is requested no more than every two hours; SATCAT attempts are rate-limited to a 12-hour window. New catalogue entries, unknown-type rows, and provider-listed possible decays create **review alerts**, not threat findings. Desktop notifications require permission and monitoring ON.
 
-The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v24`.
+The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v27`.
 
 
-## Atmospheric Entry & Exit Watch (cache v24)
+## Atmospheric Entry & Exit Watch (introduced in cache v26)
 
 The separate `atmoswatch` panel reads CelesTrak's public recently-decayed-object catalogue (`decayed-with-last.php`) when the panel is opened or manually refreshed. Optional monitoring rechecks hourly and can issue browser notifications for newly added catalogue records after the initial baseline. This is a catalogue-change notification, not a real-time radar detection. The source list covers objects with catalogue decay dates; it does not provide a reliable global ground track or exact atmospheric interface-crossing instant.
 
 NASA/JPL fireball records are linked as an independent observation catalogue. NASA states that the records are not real-time and that not all fireballs are reported; its API documentation also says not to embed the API in websites, so this panel links to the official source instead of proxying it. No automatic atmospheric-exit/ascent alerts are claimed because a validated open global real-time crossing feed is not connected.
 
 Stratospheric total-column ozone is linked to NASA Ozone Watch. No made-up Dobson Unit value is displayed; satellite observation dates must be read from the published source. The animation is explicitly schematic. New files `atmospheric-watch.css` and `atmospheric-watch.js` are required service-worker shell assets.
+
+
+## Thunderstorm Energy Device Digital Twin (2026-11-04, cache v27)
+
+The `stormenergy` page is a standalone iframe-based engineering panel with a Three.js 3D assembly (drag to rotate), local canvas fallback, low-voltage mathematical pulse/conversion/storage model, interlocked local controls, event log, and optional browser notifications for model threshold crossings. The JMA Himawari-9 South Asia public real-time viewer is embedded with direct viewer/index links as fallback. Open-Meteo provides current model context plus hourly precipitation probability and CAPE; these are model values, not lightning detection. Direct lightning-strike sensor, physical device I/O, high-voltage control and spacecraft command interfaces are not connected. See `DATA_SOURCES.md` and `THUNDERSTORM-UPGRADE-INSTALL.txt`.

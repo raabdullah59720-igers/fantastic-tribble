@@ -21,6 +21,35 @@ for tag,attr in [('script','src'),('link','href'),('img','src')]:
   if clean and not (root/clean).exists(): missing.append(f'{tag}:{url}')
 if missing: errors.append('Missing local references: '+', '.join(missing))
 report.append(f'HTML local references: {"PASS" if not missing else "FAIL"}; missing={len(missing)}')
+# Inspect the standalone Thunderstorm Energy Lab document as well as the SPA shell.
+storm_path=root/'thunderstorm-energy-lab.html'
+storm_html=storm_path.read_text(encoding='utf-8')
+storm=BeautifulSoup(storm_html,'html.parser')
+storm_ids=[e.get('id') for e in storm.select('[id]')]
+storm_dups=sorted({x for x in storm_ids if storm_ids.count(x)>1})
+storm_missing=[]
+for tag,attr in [('script','src'),('link','href'),('img','src')]:
+ for el in storm.find_all(tag):
+  url=el.get(attr)
+  if not url or url.startswith(('http://','https://','data:','#','mailto:','tel:','javascript:','blob:')): continue
+  clean=url.split('?')[0].split('#')[0]
+  if clean and not (root/clean).exists(): storm_missing.append(f'{tag}:{url}')
+if storm_dups: errors.append('Thunderstorm page duplicate IDs: '+', '.join(storm_dups))
+if storm_missing: errors.append('Thunderstorm page missing local references: '+', '.join(storm_missing))
+if 'assets/' in storm_html: errors.append('Thunderstorm page still contains obsolete assets/ relative paths')
+for token in ('device3dCanvas','deviceModelInterlock','deviceRunModelPulse','deviceSafeStop','himawariFrame','TERRAVEX_DEVICE_3D'):
+ if token not in storm_html and token not in (root/'thunderstorm-energy-lab.js').read_text(encoding='utf-8'):
+  errors.append('Thunderstorm module missing expected component: '+token)
+storm_js=(root/'thunderstorm-energy-lab.js').read_text(encoding='utf-8')
+for token in ('precipitation_probability','cape','TERRAVEX_THUNDERSTORM_LAB','terravex:storm-model-update','terravex:thunderstorm-pulse','setPointerCapture','fallbackDraw'):
+ if token not in storm_js: errors.append('Thunderstorm JS missing expected behaviour: '+token)
+for forbidden in ('thunderstorm_probability','lightning_potential','thunderstormProbability'):
+ if forbidden in storm_js: errors.append('Thunderstorm module uses unsupported or misleading forecast field: '+forbidden)
+if 'sat_img.php?area=se4' not in storm_html or 'list_se4.html' not in storm_html:
+ errors.append('Thunderstorm panel missing official JMA South Asia viewer/index links')
+if 'NOT CONNECTED' not in storm_html or 'READ-ONLY' not in storm_html:
+ errors.append('Thunderstorm panel must clearly disclose absent hardware/satellite command links')
+report.append(f'Thunderstorm standalone panel: {len(storm_ids)} IDs; duplicate IDs={len(storm_dups)}; local resource misses={len(storm_missing)}; 3D/fallback/feed/control checks included')
 # Manifest
 manifest=json.loads((root/'manifest.webmanifest').read_text())
 assert manifest.get('name') and manifest.get('short_name') and manifest.get('start_url') and manifest.get('scope') and manifest.get('display') in ('standalone','minimal-ui','fullscreen')
@@ -34,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v24': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v27': errors.append('Unexpected service-worker cache version '+cache)
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
 # Runtime diagnostics must inspect the same service-worker version.
 adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')
@@ -81,7 +110,7 @@ for n in ('START-TERRAVEX-WEB-APP.bat','START-TERRAVEX-DESKTOP-APP.bat','INSTALL
  if not (root/n).exists(): errors.append('Missing launcher file '+n)
 report.append('Windows launcher assets: 6 expected files present (Windows runtime not available here)')
 # Run Earth Traffic 3D unit-style DOM/API mock tests as part of the standard QA pass.
-et_test=root/'tests'/'test-earth-traffic-monitor.cjs'
+et_test=root/'test-earth-traffic-monitor.cjs'
 if not et_test.exists():
  errors.append('Missing Earth Traffic monitor test script')
  report.append('Earth Traffic 3D tests: missing')
