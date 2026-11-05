@@ -63,7 +63,15 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v28': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v29': errors.append('Unexpected service-worker cache version '+cache)
+# Live 3D Earth command panel must have a visible entry point from all app layouts.
+nav_ok = bool(re.search(r'data-page="earthcommand"', html))
+quick_ok = bool(re.search(r'id="openEarthCommandTop"[^>]*data-goto="earthcommand"', html))
+overview_ok = bool(re.search(r'id="openEarthCommandOverview"[^>]*data-goto="earthcommand"', html))
+page_ok = bool(re.search(r'id="page-earthcommand"', html))
+if not all([nav_ok, quick_ok, overview_ok, page_ok]):
+    errors.append('Live 3D Earth panel visibility / launch-entry regression')
+
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
 # Runtime diagnostics must inspect the same service-worker version.
 adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')

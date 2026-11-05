@@ -184,3 +184,13 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Final integration refinement: added an explicit one-time GPS location share over the existing WebRTC data channel, a validated receive handler, and a visible shortcut to the existing SOS panel. No background location broadcast is enabled.
 - Final static QA after this refinement: 943 main-app HTML IDs, 0 duplicates; 0 missing local references; 51 required service-worker shell assets present; 24 JavaScript files syntax-checked; 20 stylesheets parsed; PWA cache parity v28; Earth Traffic 25 assertions; Space Communications 16 assertions; PWA 9/9; aggregate 0 static QA errors.
 - Existing test suites passed in this environment: Earth Traffic, PWA, RF Intelligence, Space Communications, Space Environment, relay/signalling integration, voice-mail static checks, connectivity lab, VPN bridge (11 tests), and space environment aggregate runner. The headless Chromium visual runtime attempt timed out, so browser rendering and third-party live feed connections remain unverified; verify on HTTPS GitHub Pages after upload.
+
+
+## v29 visibility hotfix (2026-11-05)
+- Added a permanent top-bar 3D Earth shortcut, a prominent Command Overview launch card and highlighted sidebar navigation item. All three routes target the existing `earthcommand` page; no existing page or feature was removed.
+- Added direct route instructions (`?page=earthcommand`) and explicit GitHub Pages root-upload instructions to address nested-folder / ZIP-upload mistakes.
+- Updated service-worker cache from v28 to v29 and now requests a service-worker update check on app visits.
+- Static verification: `page-earthcommand` still exists exactly once; all three launch controls target `earthcommand`; nav item remains registered; service-worker and documentation cache versions agree at v29.
+- Browser/runtime integration with third-party Cesium imagery, GPS, satellite feeds and peer relay still requires the deployed HTTPS origin and browser permissions.
+- v29 test rerun after visibility hotfix: static QA 0 errors; Earth Traffic 25 assertions; PWA 9/9; relay/signalling + encrypted mailbox 14 groups; RF 5/5; Space Communications 21 assertions; Space Environment 11 assertions; voice-mail static checks passed; VPN bridge 11/11; connectivity 6/6; Node relay server syntax check passed.
+- Package hygiene: removed the obsolete `UPLOAD-THIS-FOLDER.txt` stub, whose old earth-command-center subfolder instructions contradicted this root-deployable project. The v29 delivery archive is exactly 99 files at ZIP root.

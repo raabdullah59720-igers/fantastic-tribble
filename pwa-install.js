@@ -64,7 +64,10 @@
     navigator.serviceWorker.register(new URL('./sw.js', document.baseURI), {
       scope: base.pathname,
       updateViaCache: 'none'
-    }).then(() => {
+    }).then(registration => {
+      // Ask the browser to check the deployed worker on each app visit. This helps
+      // GitHub Pages users move off an older cached shell after uploading an update.
+      registration.update().catch(() => {});
       window.dispatchEvent(new CustomEvent('terravex:pwa-sw-registration-requested'));
     }).catch(error => {
       console.warn('TERRAVEX PWA service worker registration failed:', error);

@@ -16,3 +16,19 @@
 @media(max-width:1120px){.tve-main-grid{grid-template-columns:1fr}.tve-side-stack{grid-template-columns:repeat(2,minmax(0,1fr))}.tve-globe-stage{height:62vh}}
 @media(max-width:700px){.tve-side-stack{grid-template-columns:1fr}.tve-globe-stage{height:56vh;min-height:390px}.tve-cesium-view,.tve-cesium-view .cesium-viewer,.tve-cesium-view .cesium-widget{min-height:390px}.tve-command-grid,.tve-status-grid,.tve-module-links{grid-template-columns:1fr 1fr}.tve-compose-grid{grid-template-columns:1fr}.tve-map-controls{gap:9px}.tve-toolbar-actions{width:100%}.tve-head-status{justify-content:flex-start}}
 @media(max-width:430px){.tve-command-grid,.tve-status-grid,.tve-module-links{grid-template-columns:1fr}.tve-toolbar-title{width:100%}.tve-live-overlay{font-size:9px}}
+
+
+/* v29 visibility fix: always-visible entry points for Live 3D Earth & Command. */
+.tve-top-launch{white-space:nowrap;display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;box-shadow:0 0 18px rgba(31,190,213,.16)}
+.tve-entry-banner{display:flex;align-items:center;gap:14px;margin:0 0 16px;padding:16px 18px;border:1px solid #21617a;border-radius:14px;background:linear-gradient(105deg,rgba(10,72,94,.78),rgba(9,25,43,.96) 58%,rgba(24,40,74,.8));box-shadow:0 12px 34px rgba(0,0,0,.18)}
+.tve-entry-mark{width:48px;height:48px;display:grid;place-items:center;flex:0 0 48px;border-radius:12px;background:#103a52;border:1px solid #28708d;font-size:24px}
+.tve-entry-copy{display:grid;gap:4px;min-width:0;flex:1}.tve-entry-copy b{font-size:12px;letter-spacing:.1em;color:#a6f1f5}.tve-entry-copy span{font-size:11px;color:#b5cbdc;line-height:1.5}
+.tve-entry-banner .btn{flex:0 0 auto;white-space:nowrap}
+.nav button.tve-nav-launch{min-height:54px;display:grid;grid-template-columns:20px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;row-gap:1px;border-color:#27617a;background:linear-gradient(100deg,#102f44,#0b1d30);color:#e4fbff;box-shadow:inset 3px 0 #36c9dd}
+.nav button.tve-nav-launch span{grid-row:1 / span 2;align-self:center}
+.nav button.tve-nav-launch b{font-size:11px;font-weight:750;line-height:1.25}
+.nav button.tve-nav-launch small{font-size:8px;letter-spacing:.12em;color:#68b8cb;line-height:1.2}
+.nav button.tve-nav-launch:hover,.nav button.tve-nav-launch.active{border-color:#43b6cc;background:linear-gradient(100deg,#16435a,#102a42)}
+@media(max-width:1100px){.tve-entry-banner{align-items:flex-start;flex-wrap:wrap}.tve-entry-banner .btn{margin-left:62px}}
+@media(max-width:720px){.top-actions{gap:6px}.tve-top-launch{font-size:10px;padding:8px 9px}.tve-top-launch span{display:inline}.tve-entry-banner{gap:10px;padding:13px}.tve-entry-mark{width:40px;height:40px;flex-basis:40px;font-size:20px}.tve-entry-copy{flex-basis:calc(100% - 55px)}.tve-entry-banner .btn{margin-left:50px;font-size:10px;padding:8px 10px}}
+@media(max-width:430px){.topbar{gap:7px}.topbar h1{font-size:13px}.tve-top-launch{padding:7px 8px}.tve-top-launch span{font-size:9px}.tve-entry-banner .btn{margin-left:0;width:100%;justify-content:center}}

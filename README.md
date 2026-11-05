@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v28`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v29`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -64,7 +64,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v28`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v29`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -93,7 +93,7 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v28`, and the Earth Traffic CSS/JS files are required cached resources.
+See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v29`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
@@ -115,7 +115,7 @@ The new **BTCL Satellite Signal Hub** is an independent panel. Its local 1 Hz pr
 
 ## Bangladesh Mobile Network Signal Monitor (receive-only)
 
-The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v28`.
+The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v29`.
 
 
 ## Earth Orbit Sentinel (added October 2026)
@@ -131,7 +131,7 @@ The separate **Earth Orbit Sentinel** page merges public CelesTrak GP/OMM feeds 
 
 Local UTC/Dhaka clocks update every second. Positions are recalculated locally every 15 seconds while the Monitor switch is ON. CelesTrak GP data is requested no more than every two hours; SATCAT attempts are rate-limited to a 12-hour window. New catalogue entries, unknown-type rows, and provider-listed possible decays create **review alerts**, not threat findings. Desktop notifications require permission and monitoring ON.
 
-The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v28`.
+The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v29`.
 
 
 ## Atmospheric Entry & Exit Watch (introduced in cache v26)
@@ -148,7 +148,7 @@ Stratospheric total-column ozone is linked to NASA Ozone Watch. No made-up Dobso
 The `stormenergy` page is a standalone iframe-based engineering panel with a Three.js 3D assembly (drag to rotate), local canvas fallback, low-voltage mathematical pulse/conversion/storage model, interlocked local controls, event log, and optional browser notifications for model threshold crossings. The JMA Himawari-9 South Asia public real-time viewer is embedded with direct viewer/index links as fallback. Open-Meteo provides current model context plus hourly precipitation probability and CAPE; these are model values, not lightning detection. Direct lightning-strike sensor, physical device I/O, high-voltage control and spacecraft command interfaces are not connected. See `DATA_SOURCES.md` and `THUNDERSTORM-UPGRADE-INSTALL.txt`.
 
 
-## Live 3D Earth & Integrated Command (2026-11-05, cache v28)
+## Live 3D Earth & Integrated Command (2026-11-05, cache v29)
 
 - A separate `earthcommand` page uses CesiumJS 1.147 and does not replace the existing conceptual Earth globe, Earth Traffic 3D, orbit tracking, hazard, RF, or communications pages.
 - Global camera and Bangladesh focus; World Imagery mosaic and optional NASA GIBS VIIRS daily true-colour imagery; optional Cesium ion World Terrain token held in page memory only; optional authorized OGC 3D Tileset URL.
@@ -161,3 +161,11 @@ The `stormenergy` page is a standalone iframe-based engineering panel with a Thr
 - Command controls affect the Terravex browser app and read-only data adapters only. There are no spacecraft command uplinks, satellite payload controls, radio transmitters, telecom tower switches, or emergency-service dispatch functions.
 - Browser GPS watch is best effort; the device/browser controls update cadence and reported accuracy. Location sharing to other existing Terravex panels is opt-in.
 - CesiumJS / imagery need internet. GitHub Pages remains a static front end; voice/video signaling and store-and-forward service need the separately deployed WSS/HTTPS relay already described in this README.
+
+
+## Live 3D Earth & Command visibility (v29)
+
+- Open the panel from the always-visible **3D Earth** button in the top bar, the highlighted **Live 3D Earth & Command** sidebar item, or the large quick-launch card on the Command Overview page.
+- Direct route: append `?page=earthcommand` to the published GitHub Pages URL. Example: `https://OWNER.github.io/REPOSITORY/?page=earthcommand`.
+- Deploy the extracted project files directly into the repository root. Do not upload the ZIP as a ZIP file and do not leave the project nested inside `fantastic-tribble-main/`; GitHub Pages must find `index.html` at the published root.
+- The service-worker shell is now v29 and asks the browser to check for a worker update on each app visit. After deployment, open the Pages site, then hard-refresh once (Ctrl+Shift+R). If an installed PWA still shows the old interface, close the installed app and reopen the HTTPS Pages URL in Chrome first so the service worker can update.
