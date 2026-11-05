@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v29`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v31`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -64,7 +64,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v29`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v31`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -93,7 +93,7 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v29`, and the Earth Traffic CSS/JS files are required cached resources.
+See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v31`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
@@ -115,7 +115,7 @@ The new **BTCL Satellite Signal Hub** is an independent panel. Its local 1 Hz pr
 
 ## Bangladesh Mobile Network Signal Monitor (receive-only)
 
-The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v29`.
+The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v31`.
 
 
 ## Earth Orbit Sentinel (added October 2026)
@@ -131,7 +131,7 @@ The separate **Earth Orbit Sentinel** page merges public CelesTrak GP/OMM feeds 
 
 Local UTC/Dhaka clocks update every second. Positions are recalculated locally every 15 seconds while the Monitor switch is ON. CelesTrak GP data is requested no more than every two hours; SATCAT attempts are rate-limited to a 12-hour window. New catalogue entries, unknown-type rows, and provider-listed possible decays create **review alerts**, not threat findings. Desktop notifications require permission and monitoring ON.
 
-The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v29`.
+The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v31`.
 
 
 ## Atmospheric Entry & Exit Watch (introduced in cache v26)
@@ -169,3 +169,24 @@ The `stormenergy` page is a standalone iframe-based engineering panel with a Thr
 - Direct route: append `?page=earthcommand` to the published GitHub Pages URL. Example: `https://OWNER.github.io/REPOSITORY/?page=earthcommand`.
 - Deploy the extracted project files directly into the repository root. Do not upload the ZIP as a ZIP file and do not leave the project nested inside `fantastic-tribble-main/`; GitHub Pages must find `index.html` at the published root.
 - The service-worker shell is now v29 and asks the browser to check for a worker update on each app visit. After deployment, open the Pages site, then hard-refresh once (Ctrl+Shift+R). If an installed PWA still shows the old interface, close the installed app and reopen the HTTPS Pages URL in Chrome first so the service worker can update.
+
+
+## Bangladesh Satellite 3D & Imagery Monitor (2026-11-05, cache v30)
+
+- New separate `bangladeshsats` page, registered in navigation and the app command palette. It uses CesiumJS 1.147 with an Esri World Imagery base layer, an approximate Bangladesh monitoring envelope, current satellite markers, and selected-satellite predicted ground track.
+- Public CelesTrak GP/OMM groups: Earth-resources, weather, GPS operational, GLONASS operational, Galileo, BeiDou, and space stations. Records are deduplicated by catalogue ID. Satellite.js SGP4/SDP4 propagates the current subpoint locally every second from the last retrieved element set. The data download is not a one-second spacecraft telemetry connection. Orbit catalogue fetches are cached for two hours.
+- The register distinguishes ground-track subpoints inside an approximate Bangladesh bounding envelope from satellites geometrically above the Dhaka horizon. The envelope is not a legally exact border polygon. The 24-hour pass forecast samples the predicted ground track in two-minute intervals and refines boundary crossings; output is an estimate dependent on source element epoch and orbit model.
+- A dated NASA GIBS image snapshot panel and optional dated image overlay are included. These are processed MODIS/VIIRS image products, not continuous video and not Russian imagery. Download is attempted through browser CORS; the official image source link is the fallback.
+- Russian EO candidates are identified by catalogue-name matching across the selected public groups. The panel links to the Roscosmos Geoportal and NTs OMZ. The public Roscosmos portal describes published scenes from Resurs-P, Kanopus-V and Meteor-M, but Bangladesh coverage is not guaranteed. The public portal says new acquisition/order tools are currently limited to federal executive authorities. No direct Russian camera feed, operator API credentials, satellite tasking or spacecraft control are bundled.
+- The service-worker cache is `terravex-apex-shell-v31`; the new JS module is a required shell asset.
+
+
+## Russian Satellite · Bangladesh 3D Command (2026-11-05, cache v31)
+
+- Added a distinct `russiansatbd` page with its own sidebar item, top-bar shortcut and Command Overview launch card. Existing `bangladeshsats` and all other page routes remain.
+- Reuses the existing public CelesTrak GP/OMM records and Satellite.js SGP4/SDP4 propagation. The 3D scene marks Russian-labelled Earth-observation candidates and GLONASS navigation records above a Bangladesh-focused World Imagery globe. The map recomputes positions locally once per second; the source orbit elements are not one-second spacecraft telemetry.
+- Adds a Russian EO register, a user-triggered next-24-hour Bangladesh ground-track window scan, a selected satellite predicted 45-minute orbit path, and an exportable JSON report. No camera pointing, tasking, acquisition or downlink status is inferred from orbital position.
+- Adds a dated NASA GIBS MODIS/VIIRS image preview as an **independent reference image**, explicitly not a Russian satellite scene or live video. The official Roscosmos Geoportal and NTs OMZ operator pages are linked for public scene discovery.
+- Russian direct imagery is **NOT CONNECTED**. Roscosmos describes public viewing of published imagery routes and restrictions on certain new-tasking/archive-order tools; NTs OMZ describes contracted EO data services. A real in-app Russian scene requires an authorized provider API/contract, credentials, delivery schema and private server-side integration.
+- PWA cache changed to `terravex-apex-shell-v31`. The panel reuses the existing satellite module file, keeping the deliverable at the 99-file limit.
+- Validation includes JS syntax, static HTML/navigation/PWA checks, orbit-helper unit tests and existing regression suites. Deployed browser rendering, third-party imagery availability, provider authentication and any real Russian operator delivery feed remain unverified until tested against the user's GitHub Pages origin and authorized account.

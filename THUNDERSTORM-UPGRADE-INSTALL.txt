@@ -5,7 +5,7 @@ TERRAVEX APEX — THUNDERSTORM DEVICE DIGITAL TWIN UPGRADE
 3) Keep index.html, thunderstorm-energy-lab.html, thunderstorm-energy-lab.css, thunderstorm-energy-lab.js and the four referenced .webp images in their current root-level locations. Do not create an assets/ subfolder.
 4) GitHub Settings → Pages → Deploy from a branch → choose your publishing branch and /(root) → Save.
 5) Wait until GitHub Pages deployment reports success. Open the HTTPS site and hard reload with Ctrl+Shift+R.
-6) If the app is installed as a PWA, open Source Health & Offline System → Refresh cached app shell. The current shell cache is terravex-apex-shell-v29.
+6) If the app is installed as a PWA, open Source Health & Offline System → Refresh cached app shell. The current shell cache is terravex-apex-shell-v31.
 7) Open Thunderstorm Energy Recovery — Device Digital Twin. Drag the device canvas to rotate it; enable the local simulation interlock before using model-pulse controls.
 
 DATA AND CONTROL LIMITS

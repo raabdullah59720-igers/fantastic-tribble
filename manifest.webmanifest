@@ -60,6 +60,32 @@
       ]
     },
     {
+      "name": "Bangladesh Satellite 3D Monitor",
+      "short_name": "BD Satellite",
+      "description": "Bangladesh region satellite orbits and dated image products",
+      "url": "./?page=bangladeshsats",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Russian Satellite · Bangladesh Command",
+      "short_name": "BD Russian Sat",
+      "description": "Dedicated 3D view of Russian-labelled satellites and dated Bangladesh imagery",
+      "url": "./?page=russiansatbd",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
       "name": "Earthquake Monitor",
       "short_name": "Earthquakes",
       "url": "./?page=quake",

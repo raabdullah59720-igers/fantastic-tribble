@@ -194,3 +194,17 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Browser/runtime integration with third-party Cesium imagery, GPS, satellite feeds and peer relay still requires the deployed HTTPS origin and browser permissions.
 - v29 test rerun after visibility hotfix: static QA 0 errors; Earth Traffic 25 assertions; PWA 9/9; relay/signalling + encrypted mailbox 14 groups; RF 5/5; Space Communications 21 assertions; Space Environment 11 assertions; voice-mail static checks passed; VPN bridge 11/11; connectivity 6/6; Node relay server syntax check passed.
 - Package hygiene: removed the obsolete `UPLOAD-THIS-FOLDER.txt` stub, whose old earth-command-center subfolder instructions contradicted this root-deployable project. The v29 delivery archive is exactly 99 files at ZIP root.
+
+
+## Russian Satellite · Bangladesh 3D Command v31 (2026-11-05)
+
+- Separate `russiansatbd` route added with sidebar, top-bar and Overview entry points. Existing Bangladesh Satellite 3D panel retained.
+- Shared existing CelesTrak GP/OMM + Satellite.js module exposes read-only Russian-labelled EO / GLONASS catalogue records and propagation for this new panel. No second orbital feed or new source file added.
+- 3D viewer, local 1 Hz SGP4 refresh, satellite register, selected 45-minute path, and user-triggered 24-hour regional ground-track forecast added. One-second update is local calculation, not spacecraft telemetry.
+- NASA GIBS imagery is labelled independent/date-stamped. Russian Geoportal and NTs OMZ are linked as official scene archive/operator sources. Direct Russian camera/API is explicitly NOT CONNECTED.
+- PWA cache bumped v30 → v31; new route added to manifest shortcut. Package remains capped at 99 files after excluding generated Python bytecode cache.
+- External source terms: Roscosmos Geoportal publishes up to 50 daily routes from Resurs-P, Kanopus-V and Meteor-M; its public page says published scene viewing is available to all, while some ordering/new-acquisition functions are restricted. NTs OMZ provides contracted Russian EO data services.
+- Browser/WebGL imagery, GIBS image response, real Russian imagery delivery and operator credential integration are not claimed as verified in this container.
+
+- Final v31 regression run: Earth Traffic 25 assertions; PWA 9 baseline checks + 9 Russian BD navigation/integration checks; Relay/mailbox 14 groups; RF 5/5; Space Communications 21 assertions; Space Environment 11 assertions; voice-mail checks passed; Connectivity 6 assertions; VPN bridge 11 tests; aggregate static QA 0 errors.
+- New panel direct route: `?page=russiansatbd`. GitHub Pages install remains root-folder replacement; upload the extracted 99-file package contents, not the ZIP as a single repository file.

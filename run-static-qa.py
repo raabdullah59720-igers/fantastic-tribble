@@ -63,7 +63,8 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v29': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v31': errors.append('Unexpected service-worker cache version '+cache)
+if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
 quick_ok = bool(re.search(r'id="openEarthCommandTop"[^>]*data-goto="earthcommand"', html))
@@ -71,6 +72,36 @@ overview_ok = bool(re.search(r'id="openEarthCommandOverview"[^>]*data-goto="eart
 page_ok = bool(re.search(r'id="page-earthcommand"', html))
 if not all([nav_ok, quick_ok, overview_ok, page_ok]):
     errors.append('Live 3D Earth panel visibility / launch-entry regression')
+
+# Bangladesh Satellite 3D panel must be registered, reachable and backed by the cached module.
+bd_nav = bool(re.search(r'data-page="bangladeshsats"', html))
+bd_page = bool(re.search(r'id="page-bangladeshsats"', html))
+bd_script = bool(re.search(r'<script[^>]+src="bangladesh-satellite-intel.js"', html))
+bd_route = 'bangladeshsats:' in (root/'app.js').read_text(encoding='utf-8')
+bd_module = (root/'bangladesh-satellite-intel.js').read_text(encoding='utf-8') if (root/'bangladesh-satellite-intel.js').exists() else ''
+bd_context = bd_module + html
+for token in ('CelesTrak', 'json2satrec', 'propagate', 'NASA GIBS', 'NO DIRECT FEED', 'currentlyOverBangladesh'):
+    if token not in bd_context:
+        errors.append('Bangladesh Satellite module missing required semantic marker: '+token)
+if not all([bd_nav,bd_page,bd_script,bd_route]): errors.append('Bangladesh Satellite 3D page navigation / module registration regression')
+report.append('Bangladesh Satellite 3D panel: nav/page/route/script registration + orbital/image disclosure checks')
+# Dedicated Russian-labelled satellite / Bangladesh command panel.
+rbd_nav = bool(re.search(r'data-page="russiansatbd"', html))
+rbd_page = bool(re.search(r'id="page-russiansatbd"', html))
+rbd_route = "russiansatbd:'Russian Satellite" in (root/'app.js').read_text(encoding='utf-8')
+rbd_module = bd_module
+for token in ('TERRAVEX_RU_BD_MONITOR', 'getRussianRecords', 'propagate', 'ROSCOSMOS GEOPORTAL', 'not a Russian satellite image', 'NASA GIBS'):
+    if token not in rbd_module + html:
+        errors.append('Russian Satellite BD panel missing expected marker: '+token)
+if not all([rbd_nav, rbd_page, rbd_route]):
+    errors.append('Russian Satellite Bangladesh panel nav/page/route registration regression')
+if not re.search(r'id="openRussianSatTop"[^>]*data-goto="russiansatbd"', html):
+    errors.append('Russian Satellite Bangladesh top-bar shortcut missing')
+if not re.search(r'id="openRussianSatOverview"[^>]*data-goto="russiansatbd"', html):
+    errors.append('Russian Satellite Bangladesh overview shortcut missing')
+if './bangladesh-satellite-intel.js' not in paths:
+    errors.append('Shared Bangladesh/Russian satellite module missing from required PWA shell')
+report.append('Russian Satellite Bangladesh panel: separate nav/page/route + 3D/orbit/imagery provenance checks')
 
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
 # Runtime diagnostics must inspect the same service-worker version.
