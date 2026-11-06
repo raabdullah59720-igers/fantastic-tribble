@@ -18,8 +18,8 @@ assert.match(html, /rel="manifest"/);
 assert.equal(manifest.display, 'standalone');
 assert.ok(manifest.icons.some(x => x.sizes === '192x192'));
 assert.ok(manifest.icons.some(x => x.sizes === '512x512'));
-assert.match(sw, /terravex-apex-shell-v34/);
-assert.match(adv, /terravex-apex-shell-v34/);
+assert.match(sw, /terravex-apex-shell-v36/);
+assert.match(adv, /terravex-apex-shell-v36/);
 console.log('PWA omnibox checks: 9/9 PASS');
 
 assert.match(html, /id=\"openEarthCommandTop\"[^>]*data-goto=\"earthcommand\"/);
@@ -156,7 +156,7 @@ assert.match(geoJs, /pagehide/);
 console.log('Device location precision/privacy checks: 19 assertions passed');
 
 
-// v34: Location map visibility recovery + public environmental satellite imagery wiring
+// v35: 3D engine launch recovery + official Russian public meteorological imagery viewer
 assert.match(html, /id="locMapLayerSelect"/);
 assert.match(html, /id="locSatelliteDate"/);
 assert.match(html, /id="locJmaFeed"/);
@@ -172,5 +172,35 @@ assert.match(hazard, /NASA MODIS TILES RECEIVED/);
 assert.match(hazard, /rscFetchDistricts/);
 assert.match(hazard, /rscStartJma/);
 assert.match(app, /TERRAVEX_LOCATION\?\.enter/);
-assert.match(sw, /terravex-apex-shell-v34/);
-console.log('v34 map + public satellite imagery integration checks: 15 assertions passed.');
+assert.match(sw, /terravex-apex-shell-v36/);
+console.log('v36 3D launch + Russian public weather imagery integration checks: 15 assertions passed.');
+
+// v35 regression guards: visible launch controls, independent Cesium startup, CDN fallback, and public Russian weather imagery.
+assert.match(html, /id="rscLaunchExperience"/);
+assert.match(html, /id="rscLaunch3d"/);
+assert.match(html, /id="rscRetryGlobe"/);
+assert.match(html, /id="openRsc3DOverview"/);
+assert.match(html, /id="rscLaunchRussianFeed"/);
+assert.match(html, /id="rscRussianFeedFrame"/);
+assert.match(html, /https:\/\/electro\.ntsomz\.ru\/en\//);
+assert.match(html, /https:\/\/electro\.ntsomz\.ru\/en\//);
+assert.match(hazard, /function rscEnsureCesium\(/);
+assert.match(hazard, /cdn\.jsdelivr\.net\/npm\/cesium@1\.146\.0/);
+assert.match(hazard, /function rscFallbackGlobeImagery\(/);
+assert.match(hazard, /function rscProbeGlobeTile\(/);
+assert.match(hazard, /globeImageryReady=true/);
+assert.match(hazard, /globeInitPromise/);
+assert.match(hazard, /async function rscCreateGlobe\(/);
+assert.match(hazard, /async function rscInitGlobe\(/);
+assert.match(hazard, /function rscLaunchExperience\(/);
+assert.match(hazard, /rscInitGlobe\(\);rscStartJma\(\)/);
+assert.match(hazard, /rscStartRussianFeed/);
+assert.match(hazard, /rscAttachGeoJSONToGlobe/);
+assert.match(hazard, /IFRAME PAGE LOAD EVENT · VERIFY IMAGE/);
+assert.match(html + hazard, /not a direct spacecraft command link/i);
+const safetyPanel = html.slice(html.indexOf('id="page-radiologicalsafety"'), html.indexOf('id="page-radiologicalsafety"') + 30000);
+assert.doesNotMatch(safetyPanel, /gptl\.ru|Roscosmos Geoportal/i, 'civilian safety panel exposes public weather imagery only');
+assert.match(hazard, /rscEnter\(\)\{RSC\.entered=true;rscInit\(\);rscInitMap\(\);rscInitGlobe\(\);/);
+assert.match(sw, /terravex-apex-shell-v36/);
+console.log('v36 launch + Cesium decoupling + imagery tile verification + Russian public weather checks: 25 assertions passed.');
+

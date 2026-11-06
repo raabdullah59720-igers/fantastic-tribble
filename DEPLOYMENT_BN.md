@@ -36,3 +36,17 @@ Weather feed numerical model; সরাসরি weather-station measurement ন
 - The JMA Himawari Southeast Asia frame is a public RGB weather imagery page. If its embedded view does not show the image and observation timestamp, open the official JMA viewer link beside it.
 - On Radiological Safety, click `Load NASA true-colour`; district boundaries and raster imagery are separate layers. `GIS SOURCE UNAVAILABLE`, `TILE ERROR`, or `EMBED NOT CONFIRMED` are real degraded states, not successful connection indicators.
 - Browser/device and deployed GitHub Pages checks are still required; external feeds are not included in the offline app shell.
+
+
+## v35 update — 3D launch and Russian public weather imagery
+- Added visible 3D launch controls in the overview and Bangladesh Radiological Safety panel. Direct route: `?page=radiologicalsafety`.
+- CesiumJS globe now starts independently of DGHS district GIS success. If the primary Cesium CDN is unavailable, the panel attempts a pinned jsDelivr CesiumJS fallback; imagery tiles try Esri first and OpenStreetMap second.
+- Added a user-launched public weather imagery view of the official Russian Elektro-L meteorological portal (`https://electro.ntsomz.ru/en/`) with a direct-open fallback. Its page is titled “Earth in the last twenty-four hours”; the page snapshot inspected on 6 November 2026 displayed entries dated 25–26 October 2026, so freshness is not guaranteed. Verify the newest capture timestamp. This safety panel omits high-resolution EO scene ordering, tasking, target imaging and spacecraft control.
+- This is public weather/Earth-observation imagery access, not a direct satellite command/uplink, not a continuous video stream, and not target or person surveillance. Cross-origin iframe load does not prove image pixels or capture time; verify inside the official viewer.
+- Service-worker cache: `terravex-apex-shell-v35`.
+
+
+## v36 deployment note
+- Upload all 99 root files, replacing the previous version, and commit. `sw.js` now uses `terravex-apex-shell-v36`; refresh the HTTPS GitHub Pages app with `Ctrl+Shift+R`, then use Source Health & Offline System → Refresh cached app shell if needed.
+- The Safety Centre direct route is `?page=radiologicalsafety`. Use the visible **Launch 3D + Russian Weather View** button. A successful basemap tile probe is shown separately from the 3D engine state.
+- Russian weather imagery opens the public Elektro-L provider page. Cross-origin page load does not confirm image pixels or a current capture; check the provider's displayed timestamp.

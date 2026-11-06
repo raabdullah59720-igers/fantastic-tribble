@@ -6,7 +6,7 @@
 
 1. Publish every file in this folder, including `assets/`, to the root of your GitHub Pages repository.
 2. Open the resulting **HTTPS** Pages URL in Chrome or Edge. Do not use the ChatGPT sandbox download URL and do not double-click `index.html`.
-3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v34`.
+3. Keep the app open online long enough for the service worker to install and the app shell to cache. The current service-worker shell cache is `terravex-apex-shell-v36`.
 4. Look for Chrome’s **Install** icon at the right side of the address bar. The app no longer suppresses the browser-native install UI. If the icon is absent, click the top-bar **Install App** button for diagnostics, then use Chrome’s menu: **⋮ → Cast, save and share → Install page as app**. In Edge use **⋯ → Apps → Install this site as an app**. Browser wording varies by version and policy.
 5. If the install command is missing, open DevTools → **Application** → **Manifest** and **Service Workers**. Check the manifest and any console/network errors. Also check if the app is already installed in the same browser profile or if browser policy disables installation.
 
@@ -46,7 +46,7 @@ Chrome owns this icon and does not let a website force it to appear. The app mus
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
-The installed app retains the Ozone & Atmosphere, Solar Activity & Magnetosphere, and Near-Earth Object panels as well as Space Communications. The app-shell cache is `terravex-apex-shell-v34`.
+The installed app retains the Ozone & Atmosphere, Solar Activity & Magnetosphere, and Near-Earth Object panels as well as Space Communications. The app-shell cache is `terravex-apex-shell-v36`.
 
 For **asynchronous internet voice mail between TERRAVEX users on different devices**, deploy `relay-server/` publicly using `render.yaml`, set `ALLOWED_ORIGINS` to the exact HTTPS app origin, and enter the deployed `wss://` URL in Space Communications. Local launcher mode binds to `127.0.0.1` and is same-computer only. The mailbox encrypts audio/metadata in the sender's browser and stores only ciphertext in relay memory for up to 24 hours; restart can erase messages. It is not emergency-grade and does not deliver to a spacecraft or Russian satellite. See `SPACE-COMMS-REAL-VOICE-MAIL.md` and `relay-server/README.md`.
 
@@ -56,3 +56,17 @@ For **asynchronous internet voice mail between TERRAVEX users on different devic
 The new **Space & Atmosphere → Earth Traffic 3D Monitor** combines CelesTrak orbital elements propagated by Satellite.js with optional OpenSky aircraft state vectors. Click **Load / update orbital data** for public orbital-element groups, then choose a geographic aircraft region and press **Refresh aircraft feed**. Aircraft auto-refresh is opt-in for bounded regions only; global auto-refresh is disabled to conserve API credits.
 
 The Three.js WebGL scene may require internet for the CDN and Earth textures. If unavailable, the panel falls back to a schematic 2D canvas and reports degraded renderer/data status. Satellite positions are model-propagated from the displayed element epoch; aircraft positions are provider snapshots, not extrapolated predictions. See `EARTH-TRAFFIC-3D-MONITOR.md` for methodology and limitations.
+
+
+## v35 update — 3D launch and Russian public weather imagery
+- Added visible 3D launch controls in the overview and Bangladesh Radiological Safety panel. Direct route: `?page=radiologicalsafety`.
+- CesiumJS globe now starts independently of DGHS district GIS success. If the primary Cesium CDN is unavailable, the panel attempts a pinned jsDelivr CesiumJS fallback; imagery tiles try Esri first and OpenStreetMap second.
+- Added a user-launched public weather imagery view of the official Russian Elektro-L meteorological portal (`https://electro.ntsomz.ru/en/`) with a direct-open fallback. Its page is titled “Earth in the last twenty-four hours”; the page snapshot inspected on 6 November 2026 displayed entries dated 25–26 October 2026, so freshness is not guaranteed. Verify the newest capture timestamp. This safety panel omits high-resolution EO scene ordering, tasking, target imaging and spacecraft control.
+- This is public weather/Earth-observation imagery access, not a direct satellite command/uplink, not a continuous video stream, and not target or person surveillance. Cross-origin iframe load does not prove image pixels or capture time; verify inside the official viewer.
+- Service-worker cache: `terravex-apex-shell-v36`.
+
+
+## v36 cache refresh
+- Latest shell cache: `terravex-apex-shell-v36`. After upload, open the HTTPS GitHub Pages URL, perform `Ctrl+Shift+R`, then refresh the cached shell from Source Health & Offline System if the PWA is installed.
+- Launch the Bangladesh Radiological Safety Centre using `?page=radiologicalsafety`; press **Launch 3D + Russian Weather View**.
+- A 3D engine running does not itself mean satellite imagery loaded. Look for `ESRI TILE RECEIVED` or `OSM TILE RECEIVED`; otherwise the panel displays a degraded tile state.

@@ -101,3 +101,19 @@ A weighted, bounded score is computed from model-based precipitation probability
 - **Map handling:** Leaflet is initialized only after the page is visible and then resized with `invalidateSize`; a jsDelivr CDN fallback is attempted if the primary Leaflet script did not load. Each tile layer has request/load/error indicators. A status is only changed to tile-received after an actual tileload event. External imagery and GIS endpoints are never cached in the PWA shell as if they were live.
 - **District polygons:** DGHS All_Districts FeatureServer query returns public administrative geometry and fields such as `division` and `district`; this is geographic reference data only. The browser retries it when the map is re-entered/refreshed and preserves a base-map-only degraded state if the GIS request fails: https://gis.dghs.gov.bd/server/rest/services/Hosted/All_Districts/FeatureServer/0 .
 - **Limitations:** This package cannot inspect a cross-origin iframe's image pixels or provider acquisition timestamp. A frame load event is shown as an iframe navigation event only. User must visually verify the official provider page's timestamp. No operator satellite uplink, sensor feed, user tracking, targeting or camera control is included.
+
+
+## v35 update — 3D launch and Russian public weather imagery
+- Added visible 3D launch controls in the overview and Bangladesh Radiological Safety panel. Direct route: `?page=radiologicalsafety`.
+- CesiumJS globe now starts independently of DGHS district GIS success. If the primary Cesium CDN is unavailable, the panel attempts a pinned jsDelivr CesiumJS fallback; imagery tiles try Esri first and OpenStreetMap second.
+- Added a user-launched public weather imagery view of the official Russian Elektro-L meteorological portal (`https://electro.ntsomz.ru/en/`) with a direct-open fallback. Its page is titled “Earth in the last twenty-four hours”; the page snapshot inspected on 6 November 2026 displayed entries dated 25–26 October 2026, so freshness is not guaranteed. Verify the newest capture timestamp. This safety panel omits high-resolution EO scene ordering, tasking, target imaging and spacecraft control.
+- This is public weather/Earth-observation imagery access, not a direct satellite command/uplink, not a continuous video stream, and not target or person surveillance. Cross-origin iframe load does not prove image pixels or capture time; verify inside the official viewer.
+- Service-worker cache: `terravex-apex-shell-v35`.
+
+
+## v36: explicit launch controls, independent 3D startup and Russian weather imagery
+- The Bangladesh Radiological Safety Centre has Launch 3D Globe buttons in the Overview banner, panel header and globe card. Direct route: `?page=radiologicalsafety`.
+- Cesium loading no longer depends on DGHS district GIS success. Startup is serialized to avoid duplicate Viewer instances. A pinned Cesium CDN fallback is attempted if the primary bundle is unavailable.
+- Esri imagery tile delivery is probed with a real tile request before the UI reports a tile received; OpenStreetMap is tried as fallback. Engine availability and imagery availability remain separate states.
+- Russian source is limited in this safety panel to the public Elektro-L meteorological imagery portal: https://electro.ntsomz.ru/en/ . The provider page title says “Earth in the last twenty-four hours”, but the page inspected 6 Nov 2026 displayed entries dated 25–26 Oct 2026; live freshness is not established. Confirm provider timestamp. Cross-origin iframe load means page navigation only, not image-pixel verification.
+- This panel has no Russian EO scene ordering, camera tasking, spacecraft control, individual tracking or targeting features. PWA cache: `terravex-apex-shell-v36`.

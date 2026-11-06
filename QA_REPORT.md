@@ -262,3 +262,28 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Environment limitation: Python VPN bridge HTTP tests could not bind their test port because it was already in use (8 HTTP test setup errors); the earlier 3 non-network bridge tests passed. This is an environment/port collision, not a result of the map changes.
 - Runtime limitation: outbound DNS/network and browser screenshot are not available in this container. Therefore tile delivery and iframe rendering cannot be verified here or claimed as connected on the user's GitHub Pages deployment. User must test the deployed HTTPS app while online; provider failures will remain visible as degraded/unconfirmed rather than fabricated as live.
 - Safety scope: this update adds only public weather/environmental imagery and civilian geographic reference. No satellite command uplink, satellite camera tasking, individual tracking or targeting functionality is provided.
+
+
+## v35 update — 3D launch and Russian public weather imagery
+- Added visible 3D launch controls in the overview and Bangladesh Radiological Safety panel. Direct route: `?page=radiologicalsafety`.
+- CesiumJS globe now starts independently of DGHS district GIS success. If the primary Cesium CDN is unavailable, the panel attempts a pinned jsDelivr CesiumJS fallback; imagery tiles try Esri first and OpenStreetMap second.
+- Added a user-launched public weather imagery view of the official Russian Elektro-L meteorological portal (`https://electro.ntsomz.ru/en/`) with a direct-open fallback. Its page is titled “Earth in the last twenty-four hours”; the page snapshot inspected on 6 November 2026 displayed entries dated 25–26 October 2026, so freshness is not guaranteed. Verify the newest capture timestamp. This safety panel omits high-resolution EO scene ordering, tasking, target imaging and spacecraft control.
+- This is public weather/Earth-observation imagery access, not a direct satellite command/uplink, not a continuous video stream, and not target or person surveillance. Cross-origin iframe load does not prove image pixels or capture time; verify inside the official viewer.
+- Service-worker cache: `terravex-apex-shell-v35`.
+
+
+### v35.1 follow-up verification: visible 3D launch and imagery tile probe
+- Explicit 3D launch controls are present in the Overview quick-launch banner, Radiological Safety header and 3D globe card.
+- Cesium initialization is serialized to prevent duplicate Viewer instances if page entry and a button click occur together. The Retry action resets imagery fallback state.
+- Public basemap connection is reported only after a real sample tile image loads; Esri is tried first, then OpenStreetMap. If both fail, the 3D engine remains separately identified from imagery availability.
+- Russian integration in this safety panel is limited to the public Elektro-L weather imagery portal. A cross-origin iframe load is labelled as a page-load event, not proof of image delivery. The page snapshot inspected 6 Nov 2026 showed entries dated 25–26 Oct 2026, so current imagery freshness is not guaranteed.
+- The safety panel does not expose Roscosmos high-resolution scene search/order links, camera tasking, or spacecraft control.
+
+
+## v36 final verification
+- Launch buttons verified in Overview, Safety Centre header and globe card; direct page route and event handlers checked.
+- Cesium initialization no longer depends on district GIS; concurrent initialization is serialized; Retry resets fallback/probe state.
+- The map reports imagery receipt only after an actual sample tile loads. Esri is probed first and OSM is fallback.
+- Russian source is the public Elektro-L meteorological viewer only. Iframe load is not interpreted as confirmed image delivery; capture freshness must be read from the provider. No high-resolution EO scene ordering, camera tasking or spacecraft command is included in this Safety Centre panel.
+- Runtime browser/WebGL and external provider delivery on the user's deployed GitHub Pages still require online browser verification.
+- Service-worker cache: `terravex-apex-shell-v36`.

@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v34`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v36`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -64,7 +64,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v34`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v36`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -93,7 +93,7 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v34`, and the Earth Traffic CSS/JS files are required cached resources.
+See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v36`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
@@ -115,7 +115,7 @@ The new **BTCL Satellite Signal Hub** is an independent panel. Its local 1 Hz pr
 
 ## Bangladesh Mobile Network Signal Monitor (receive-only)
 
-The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v34`.
+The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v36`.
 
 
 ## Earth Orbit Sentinel (added October 2026)
@@ -216,3 +216,20 @@ A separate civilian public-safety workspace is available through `?page=radiolog
 - Fixed Radiological Safety map startup/refresh and report-layer duplication, added district GIS request retry and NASA GIBS dated imagery overlay with tile health indicators.
 - App route now calls the Location panel's visible-entry initializer. PWA cache bumped to `terravex-apex-shell-v34`; external imagery/GIS feeds are not cached as live data.
 - No new project files added; package remains exactly 99 project files.
+
+
+## v35 update — 3D launch and Russian public weather imagery
+- Added visible 3D launch controls in the overview and Bangladesh Radiological Safety panel. Direct route: `?page=radiologicalsafety`.
+- CesiumJS globe now starts independently of DGHS district GIS success. If the primary Cesium CDN is unavailable, the panel attempts a pinned jsDelivr CesiumJS fallback; imagery tiles try Esri first and OpenStreetMap second.
+- Added a user-launched public weather imagery view of the official Russian Elektro-L meteorological portal (`https://electro.ntsomz.ru/en/`) with a direct-open fallback. Its page is titled “Earth in the last twenty-four hours”; the page snapshot inspected on 6 November 2026 displayed entries dated 25–26 October 2026, so freshness is not guaranteed. Verify the newest capture timestamp. This safety panel omits high-resolution EO scene ordering, tasking, target imaging and spacecraft control.
+- This is public weather/Earth-observation imagery access, not a direct satellite command/uplink, not a continuous video stream, and not target or person surveillance. Cross-origin iframe load does not prove image pixels or capture time; verify inside the official viewer.
+- Service-worker cache: `terravex-apex-shell-v35`.
+
+
+## v35: explicit 3D launch and public Russian weather imagery
+
+The radiological safety map now exposes visible Launch 3D controls in Overview, the panel header and the globe card. Cesium startup is independent from district-GIS success and is serialized to prevent duplicate Viewer instances. A pinned CDN fallback is attempted if the primary bundle fails. A real Esri imagery tile is probed before the UI reports tile receipt; OpenStreetMap is the fallback. The Russian imagery section opens only the public Elektro-L meteorological imagery portal. Its page heading is not proof of current imagery: the snapshot inspected 6 November 2026 displayed entries dated 25–26 October 2026, so verify the provider timestamp yourself. Cross-origin page load is not proof that image pixels rendered. This is weather imagery, not a spacecraft command link, personal tracking service, guaranteed live video, high-resolution tasking or targeting function. Current service-worker shell cache: `terravex-apex-shell-v35`.
+
+
+## v36: map launch & public Russian weather view
+The Bangladesh Radiological Safety Centre has visible Launch 3D controls in Overview and the panel, an independent Cesium startup path, a pinned CDN fallback, duplicate-start protection, retry-state reset, and sample-tile verification (Esri then OSM). The Russian panel opens only the public Elektro-L meteorological imagery viewer. The page may show older capture times despite its “last twenty-four hours” heading; check the source timestamp. An iframe load is not proof that image pixels rendered. This is public weather imagery, not a spacecraft command link, high-resolution EO tasking, individual tracking or targeting system. Current service-worker shell cache: `terravex-apex-shell-v36`.
