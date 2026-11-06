@@ -18,8 +18,8 @@ assert.match(html, /rel="manifest"/);
 assert.equal(manifest.display, 'standalone');
 assert.ok(manifest.icons.some(x => x.sizes === '192x192'));
 assert.ok(manifest.icons.some(x => x.sizes === '512x512'));
-assert.match(sw, /terravex-apex-shell-v33/);
-assert.match(adv, /terravex-apex-shell-v33/);
+assert.match(sw, /terravex-apex-shell-v34/);
+assert.match(adv, /terravex-apex-shell-v34/);
 console.log('PWA omnibox checks: 9/9 PASS');
 
 assert.match(html, /id=\"openEarthCommandTop\"[^>]*data-goto=\"earthcommand\"/);
@@ -56,6 +56,7 @@ const hazardCss = fs.readFileSync('hazard-intelligence.css', 'utf8');
 assert.match(html, /data-page="radiologicalsafety"/);
 assert.match(html, /id="page-radiologicalsafety"/);
 assert.match(html, /id="rscDistrictMap"/);
+assert.match(html, /id="rscBaseMapConnection"/);
 assert.match(html, /id="rscGlobe"/);
 assert.match(html, /NO VERIFIED SENSOR FEED/);
 assert.match(app, /radiologicalsafety:'Bangladesh Radiological Safety/);
@@ -153,3 +154,23 @@ assert.match(locationDocument.getElementById('locStatusMessage').textContent, /s
 assert.match(html, /The web Geolocation API does not reveal/);
 assert.match(geoJs, /pagehide/);
 console.log('Device location precision/privacy checks: 19 assertions passed');
+
+
+// v34: Location map visibility recovery + public environmental satellite imagery wiring
+assert.match(html, /id="locMapLayerSelect"/);
+assert.match(html, /id="locSatelliteDate"/);
+assert.match(html, /id="locJmaFeed"/);
+assert.match(html, /data-src="https:\/\/ds\.data\.jma\.go\.jp\/mscweb\/data\/himawari\/sat_img\.php\?area=se1"/);
+assert.match(geoJs, /function ensureLeaflet\(/);
+assert.match(geoJs, /function enter\(/);
+assert.match(geoJs, /TERRAVEX_LOCATION/);
+assert.match(geoJs, /MODIS_Terra_CorrectedReflectance_TrueColor/);
+assert.match(geoJs, /esriLayer\.addTo\(map\)/);
+assert.match(geoJs, /TERRAVEX_MAP_SUPPORT/);
+assert.match(hazard, /rscMapNasa/);
+assert.match(hazard, /NASA MODIS TILES RECEIVED/);
+assert.match(hazard, /rscFetchDistricts/);
+assert.match(hazard, /rscStartJma/);
+assert.match(app, /TERRAVEX_LOCATION\?\.enter/);
+assert.match(sw, /terravex-apex-shell-v34/);
+console.log('v34 map + public satellite imagery integration checks: 15 assertions passed.');

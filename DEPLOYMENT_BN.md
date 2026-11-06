@@ -28,3 +28,11 @@ Weather feed numerical model; সরাসরি weather-station measurement ন
 - `Stop tracking` যেকোনো সময় watch বন্ধ করে। অন্য প্যানেলে গেলে, page reload/close হলে watch স্বয়ংক্রিয়ভাবে বন্ধ হয়।
 - Browser API GNSS satellite-এর নাম, satellite count বা receiver lock status জানায় না। ফোনের GNSS, Wi-Fi/cellular assistance ও browser scheduler অনুযায়ী fix এবং update cadence বদলাবে। প্রতি সেকেন্ডে satellite থেকে নতুন signal/telemetry পাওয়া হচ্ছে এমন দাবি নয়।
 - নিজের অবস্থান Observatory map-এ দেখাতে checkbox opt-in করুন। এটি একই পৃষ্ঠার local event; backend-এ upload নয়। আবহাওয়ার জন্য location পাঠানো আলাদা button action এবং তাতে external weather provider coordinates পায়।
+
+
+### v34 map / satellite imagery check
+- Confirm the `location` and `radiologicalsafety` panels open after navigation; their maps initialize only after the panel becomes visible.
+- In Location, choose `NASA MODIS true-colour` and select a UTC date. Wait for `TILES RECEIVED`; `TILE ERROR` means that provider did not return tiles in the current browser/network.
+- The JMA Himawari Southeast Asia frame is a public RGB weather imagery page. If its embedded view does not show the image and observation timestamp, open the official JMA viewer link beside it.
+- On Radiological Safety, click `Load NASA true-colour`; district boundaries and raster imagery are separate layers. `GIS SOURCE UNAVAILABLE`, `TILE ERROR`, or `EMBED NOT CONFIRMED` are real degraded states, not successful connection indicators.
+- Browser/device and deployed GitHub Pages checks are still required; external feeds are not included in the offline app shell.
