@@ -208,3 +208,43 @@ Passing checks establish package and simulated integration behaviour only. They 
 
 - Final v31 regression run: Earth Traffic 25 assertions; PWA 9 baseline checks + 9 Russian BD navigation/integration checks; Relay/mailbox 14 groups; RF 5/5; Space Communications 21 assertions; Space Environment 11 assertions; voice-mail checks passed; Connectivity 6 assertions; VPN bridge 11 tests; aggregate static QA 0 errors.
 - New panel direct route: `?page=russiansatbd`. GitHub Pages install remains root-folder replacement; upload the extracted 99-file package contents, not the ZIP as a single repository file.
+
+
+## Bangladesh Radiological Safety & Emergency Centre v32 (2026-11-06)
+
+- Added a separate civilian public-safety page and top-bar/sidebar/overview shortcuts.
+- Includes a Cesium 3D Bangladesh view, Leaflet district map with live public GIS boundary request, explicit-coordinate local report pins, session-only local report log and JSON export.
+- Source links: BAERA, BAEC radiation protection, DDM AWARE warnings/shelters, IAEA IEC/IRMIS context and Bangladesh NSDI. No sensor API, operator satellite link, emergency dispatch or official IAEA/national network integration is claimed.
+- All user-entered reports are marked unverified; no readings are automatically classified as safe/unsafe. No dispersion/plume or weapon-oriented module is present.
+- Package target remains 99 files; PWA cache v32.
+
+
+### v32 verification detail
+
+- `node --check app.js`: PASS.
+- `node --check hazard-intelligence.js`: PASS.
+- `node test-pwa-omnibox.cjs`: base PWA 9 checks, prior Russian Bangladesh 9 checks + 5 bootstrap checks, new Radiological Safety Centre 12 integration assertions: PASS.
+- `node test-earth-traffic-monitor.cjs`: 25 assertions PASS.
+- `node test-rf-interference-intelligence.cjs`: 5/5 PASS.
+- `node test-space-comms-relay.cjs`: 21 assertions PASS.
+- `node test-space-environment.cjs`: 11 assertions PASS.
+- `node test-voice-mail-service-v16.cjs`: PASS.
+- `node test_connectivity_lab.js`: 6 assertions PASS.
+- `python test_vpn_bridge.py`: 11 tests PASS.
+- `python run-static-qa.py`: HTML 1050 IDs, 0 duplicate IDs, no missing local references, PWA cache parity PASS, 25 JavaScript files syntax checked, 20 stylesheets parsed, 0 errors.
+- The runtime container has no outbound DNS/network to `gis.dghs.gov.bd`, so the remote district GeoJSON service could not be exercised here. No browser/WebGL screenshot was captured in this environment. The app explicitly labels this source unavailable when a live browser request fails.
+- Windows launcher and deployed GitHub Pages runtime are not tested in this Linux container.
+
+## User-controlled Location Precision & Fix Integrity v33 (2026-11-06)
+
+- Patched `geolocation-live.js` and the existing Location page in `index.html`; no new project file was added and existing page routes/features were retained.
+- Added device/browser fix age, stale-state display, accuracy quality band, provider disclosure, and GNSS satellite status disclosure. All values are sourced from the browser position object; no simulated satellite reception is inserted.
+- Added strict coordinate/timestamp/accuracy validation. Invalid callback payloads cannot overwrite the last valid fix.
+- Accuracy circle uses the reported accuracy radius when present; repeated watch callbacks no longer force-open the marker popup.
+- Watch lifecycle is user-controlled: explicit start/stop, stop on navigation away from the Location panel, and cleanup on pagehide/beforeunload. Optional Observatory sharing dispatches only a local, consent-tagged last-fix event.
+- `test-pwa-omnibox.cjs`: new device-location runtime mock checks cover high-accuracy request hint, maxAge setting, accuracy display, source/satellite disclosure, fresh age, opt-in local overlay, invalid-fix rejection, manual stop and automatic stop on navigation. 19 assertions passed.
+- Static QA: 1,055 HTML IDs, 0 duplicates; no missing local references; 52 required service-worker assets, 0 missing; PWA cache/diagnostics parity `terravex-apex-shell-v33`; 25 JavaScript files syntax checked, 0 errors; 20 CSS files parsed, 0 errors; Python syntax checks passed; aggregate 0 static QA errors.
+- Regression suites: Earth Traffic 25 assertions; PWA baseline 9/9; Russian Satellite route 9 assertions + 5 bootstrap checks; Radiological Safety 12 assertions; device location 19 assertions; RF 5/5; Space Communications 21 assertions; Space Environment 11 assertions; relay/mailbox 14 integration groups; voice-mail static checks; Connectivity 6 assertions; VPN bridge 11 tests. All passed.
+- Safety/accuracy limit: the browser Geolocation API does not expose the specific GNSS satellites, carrier channels or receiver lock. This update provides opt-in device location only; it does not provide remote satellite tracking, satellite operator connectivity, a guaranteed one-second update rate, targeting accuracy or survey-grade positioning.
+- Runtime limit: browser/device GPS accuracy, background scheduling, Leaflet tiles and deployed PWA behavior still require an HTTPS test on the user's own handset. Hardware and browser results are not certified by static/unit tests.
+- Package maintained at 99 files; service worker cache incremented v32 → v33.

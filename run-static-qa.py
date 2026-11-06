@@ -63,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v31': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v33': errors.append('Unexpected service-worker cache version '+cache)
 if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
@@ -108,6 +108,20 @@ report.append(f'Service worker: {cache}; required local assets={len(paths)}; mis
 adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')
 if cache not in adv: errors.append('PWA runtime diagnostics cache version does not match service worker.')
 report.append('PWA diagnostics cache-version parity: ' + ('PASS' if cache in adv else 'FAIL'))
+# User-controlled device location precision/privacy module checks (not remote satellite tracking).
+loc_js=(root/'geolocation-live.js').read_text(encoding='utf-8')
+loc_ids=('page-location','locPositionAge','locFixQuality','locFixSource','locSatelliteAccess','locTrackingScope','locOverlayBangladesh','startLocationWatchBtn','stopLocationWatchBtn')
+for token in loc_ids:
+    if f'id=\"{token}\"' not in html and token not in ('startLocationWatchBtn','stopLocationWatchBtn'):
+        errors.append('Location panel missing expected element: '+token)
+for token in ('enableHighAccuracy:true','maximumAge:1000','watchPosition','clearWatch','validPosition','locFixQuality','locPositionAge','terravex:live-location','pagehide','does not reveal which GPS/GNSS satellites'):
+    if token not in loc_js and token not in html:
+        errors.append('Location module missing safety/accuracy behaviour: '+token)
+if 'terravex:live-location' not in loc_js or 'userConsented:true' not in loc_js:
+    errors.append('Location overlay must be explicit and consent-tagged')
+if 'satellite tracking guaranteed' in (loc_js+html).lower():
+    errors.append('Location module must not claim guaranteed satellite tracking')
+report.append('Device location module: user-consented watch, accuracy radius, age/stale state, privacy and satellite-provider disclosure checked')
 # Manifest app shortcuts must target existing navigation pages.
 page_keys={b.get('data-page') for b in soup.select('button[data-page]')}
 invalid_shortcuts=[]
