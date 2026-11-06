@@ -320,3 +320,18 @@ v38 corrective change: maritime activity was not visible because v37 only contai
 - New v39 checks: five civil panels registered inside original `page-earthcommand`; GloFAS, OSM coarse aggregates, GBIF region counts, existing Marine model and NASA GIBS/STAC archive use the same Cesium viewer. Limitation disclosures checked.
 - Regression: Earth Traffic 25 assertions; PWA omnibox 9/9; Russian satellite entry/integration 9/9 plus bootstrap 5/5; radiological safety 12; device location privacy 19; inherited 3D launch/imagery 25; aggregate validation 4; marine request 6; relay/mailbox 14 groups; RF 5/5; Space Communications 21; Space Environment 11; Connectivity 6; VPN bridge 11 Python tests. All executed suites passed.
 - Browser rendering against all public third-party endpoints was not available in the build runtime; live API delivery, GitHub Pages browser appearance and source freshness must be checked after deployment. No live provider success is claimed by this QA record.
+
+
+## v40 panel discoverability / navigation fix
+- Root cause: v39 panel cards were present inside `page-earthcommand`, but placed below the long command workspace and had no visible launch/jump shortcuts in the persistent top bar or the page header.
+- Fix: persistent topbar `Civil 3D` button; Overview launch banner; five-button shortcut bar under the Live 3D Earth heading; focus/scroll highlight; deep-link panel keys `all`, `flood`, `humanitarian`, `forest`, `ocean`, `archive`; same Cesium viewer and camera retained.
+- PWA app-shell cache bumped to `terravex-apex-shell-v40`; runtime diagnostics and regression expectations updated.
+- Full static and regression test results are recorded in the v40 package build record.
+
+## v40 regression results (6 November 2026)
+- Root cause verified from v39 source: the five civil cards existed inside `page-earthcommand` but appeared after the long command workspace; there was no persistent top-bar shortcut, no visible panel jump bar and no deep-link parameter for the individual cards.
+- v40 fix: added top-bar `Civil 3D`, Overview `Open Civil 3D Panels`, five direct jump buttons below the Live 3D Earth heading, scroll/focus highlighting, and deep links `?page=earthcommand&panel=all|flood|humanitarian|forest|ocean|archive`. All targets remain inside the original page and reuse the single `tveCesium` viewer/camera.
+- Static QA: 1,156 HTML IDs; duplicate IDs=0; local reference misses=0; 52 required PWA shell resources found; JavaScript 25/25; CSS 20/20; Python 4/4; cache and diagnostics both v40; aggregate static QA errors=0.
+- New visibility/deep-link assertions: 9 PASS. Civil panel semantic/source assertions: 27 PASS.
+- Regression suites: Earth Traffic 25 PASS; PWA/omnibox 9/9; Russian satellite integration 9+5; Radiological Safety 12; Location privacy 19; inherited 3D/imagery 15+25; aggregate payload 4; marine model request 6; RF 5/5; Space Environment 11; Space Communications 21; voice-mail static checks PASS; relay/mailbox 14 groups; Connectivity 6; VPN bridge 11 tests.
+- Archive is kept at exactly 99 root files. External provider/browser rendering was not exercised by these local code tests.

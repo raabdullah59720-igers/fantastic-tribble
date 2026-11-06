@@ -92,3 +92,7 @@ Open `?page=earthcommand`; broad marine wave/current model cells are requested a
 
 ## v39 shell update
 The service worker cache is `terravex-apex-shell-v39`. The five civil environmental panels are embedded in the existing `index.html` and use `app.js`; no additional asset files were introduced. If the old interface remains visible after deployment, reload over HTTPS and use Source Health & Offline → Refresh cached app shell. External public data is not cached as live data.
+
+
+## v40 civil-panel visibility fix
+The five civil panels remain inside the original `page-earthcommand` and share the existing single Cesium globe. They now have a visible launch strip near the top of the page, a persistent top-bar `Civil 3D` button, an Overview launch banner, and five per-panel jump buttons. Direct routes: `?page=earthcommand&panel=all|flood|humanitarian|forest|ocean|archive`. These are in-page jumps; they do not create duplicate globe instances. The app-shell cache is `terravex-apex-shell-v40`. After upload, open the HTTPS Pages root, hard-refresh, then refresh the installed PWA shell if needed.

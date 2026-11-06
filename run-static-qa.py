@@ -63,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v39': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v40': errors.append('Unexpected service-worker cache version '+cache)
 if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
@@ -74,6 +74,18 @@ if not all([nav_ok, quick_ok, overview_ok, page_ok]):
     errors.append('Live 3D Earth panel visibility / launch-entry regression')
 if html.find('id="tvxCivilSystems"') < html.find('id="page-earthcommand"') or html.find('id="tvxCivilSystems"') > html.find('id="page-earth"'):
     errors.append('v39 civil panels must remain inside the original Live 3D Earth page / shared globe shell')
+# v40: the panels must be directly reachable, not only buried far below the command page.
+for panel_key, element_id in [('all','tvxCivilSystems'),('flood','tvxFloodPanel'),('humanitarian','tvxHumanitarianPanel'),('forest','tvxForestPanel'),('ocean','tvxOceanPanel'),('archive','tvxArchivePanel')]:
+    if f"{panel_key}:'{element_id}'" not in (root/'app.js').read_text(encoding='utf-8'):
+        errors.append('v40 missing direct civil panel route mapping: '+panel_key)
+    if f'data-civil-target="{element_id}"' not in html:
+        errors.append('v40 missing visible launch shortcut for '+element_id)
+if not re.search(r'id="openCivilPanelsTop"[^>]*data-civil-target="tvxCivilSystems"',html):
+    errors.append('v40 persistent top-bar Civil 3D shortcut missing')
+if not re.search(r'id="openCivilPanelsOverview"[^>]*data-civil-target="tvxCivilSystems"',html):
+    errors.append('v40 Overview Civil 3D launch card missing')
+if 'function navigate(name,civilTarget=' not in (root/'app.js').read_text(encoding='utf-8'):
+    errors.append('v40 route controller does not support civil-panel navigation')
 
 # Bangladesh Satellite 3D panel must be registered, reachable and backed by the cached module.
 bd_nav = bool(re.search(r'data-page="bangladeshsats"', html))
@@ -133,7 +145,7 @@ for token in ('function renderAirDensity(','function validateAggregateGeoJSON(',
     if token not in app_js: errors.append('Missing aggregate-only mobility validation: '+token)
 if '1-degree' not in (root/'DATA_SOURCES.md').read_text(encoding='utf-8'): errors.append('Air activity aggregation methodology missing')
 if 'Bay of Bengal marine safety' not in (root/'index.html').read_text(encoding='utf-8'): errors.append('Marine safety layer label missing')
-if 'terravex-apex-shell-v39' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v39')
+if 'terravex-apex-shell-v40' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v40')
 report.append('v38 same-globe civil activity layers: air density, aggregate providers and Bay of Bengal marine model remain registered')
 # v39 five environmental/civil panels sharing one Cesium viewer.
 for token in ('tvxCivilSystems','tvxFloodPanel','tvxHumanitarianPanel','tvxForestPanel','tvxOceanPanel','tvxArchivePanel','tvxFloodRefresh','tvxHumanRefresh','tvxForestRefresh','tvxOceanRefresh','tvxArchiveSearch','tvxArchiveShowImage'):
@@ -142,7 +154,7 @@ for token in ('function loadFloodRiverModel(','flood-api.open-meteo.com/v1/flood
     if token not in app_js: errors.append('Missing v39 civil panel behaviour: '+token)
 for token in ('individual site locations are not shown','not animal counts or live sightings','not river-stage height','not live video'):
     if token not in html and token not in app_js: errors.append('Missing v39 data-limitation disclosure: '+token)
-if 'terravex-apex-shell-v39' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v39')
+if 'terravex-apex-shell-v40' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v40')
 report.append('v39 civil panels: GloFAS flood model, DDM/OSM humanitarian aggregates, GBIF regional records, existing marine model and NASA GIBS/STAC archive use the shared Cesium engine; source-limitation disclosures checked')
 
 # Manifest app shortcuts must target existing navigation pages.

@@ -258,3 +258,10 @@ The Live 3D Earth & Integrated Command page now includes five additional cards: 
 Open the page with `?page=earthcommand`. Use each card's refresh/search button. Flood, GBIF and archive catalogue requests are attempted on entry; humanitarian OSM aggregation is user-triggered. The NASA VIIRS true-colour overlay can be added/removed without replacing the base imagery.
 
 The package retains exactly 99 root files. PWA service-worker cache: `terravex-apex-shell-v39`.
+
+
+## v40 — Civil panel visibility and navigation hotfix
+The five v39 civil/environmental panels were present in the Live 3D Earth page but located below the long command workspace, without visible jump controls. v40 adds a persistent top-bar Civil 3D shortcut, an Overview launch banner, a five-button quick-jump bar below the Live 3D Earth heading, focus/scroll highlighting, and direct `?page=earthcommand&panel=` routes (`all`, `flood`, `humanitarian`, `forest`, `ocean`, `archive`). Navigation scrolls to the existing panel IDs and retains the same Cesium viewer/camera. No duplicate 3D globe is created. Service-worker cache: `terravex-apex-shell-v40`.
+
+### v40 direct access to civil panels
+The `Civil 3D` top-bar shortcut and Overview launch card open the existing Live 3D Earth page and jump to the five civil panels. The five-button strip is immediately below the Live 3D Earth heading. Direct URLs: `?page=earthcommand&panel=all`, `?page=earthcommand&panel=flood`, `?page=earthcommand&panel=humanitarian`, `?page=earthcommand&panel=forest`, `?page=earthcommand&panel=ocean`, and `?page=earthcommand&panel=archive`. These are scroll targets within the same page; they do not create another Cesium viewer. See `PWA-INSTALL-NOW.md` and `DEPLOYMENT_BN.md`. The current cache is `terravex-apex-shell-v40`.

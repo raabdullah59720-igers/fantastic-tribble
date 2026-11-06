@@ -80,3 +80,7 @@ The former AIS aggregate field had no configured provider, so the marine card re
 Upload/overwrite all 99 files in the repository root. Do not upload the ZIP as a single file and do not place `index.html` inside an extra folder. Deploy GitHub Pages from the same root. Then open the HTTPS site, hard-refresh (`Ctrl+Shift+R`), open **Source Health & Offline System**, and select **Refresh cached app shell** if an installed PWA still shows the prior version. The current cache is `terravex-apex-shell-v39`.
 
 Use `?page=earthcommand` to open the existing 3D Earth page. The five new cards are beneath the existing globe and reuse the same camera. External endpoints require internet and may need retries. A successful HTTP request is not proof of scientific correctness or official operational status. See `DATA_SOURCES.md` for caveats.
+
+
+## v40: পাঁচটি Civil 3D Panel খোলার নতুন shortcut
+Live 3D Earth পেজের শিরোনামের ঠিক নিচে পাঁচটি quick-jump button আছে। Top bar-এর `Civil 3D` এবং Overview-এর `Open Civil 3D Panels` button দিয়েও খোলা যাবে। Direct URL: `?page=earthcommand&panel=all` অথবা `panel=flood`, `humanitarian`, `forest`, `ocean`, `archive`। এগুলো একই Live 3D Earth পেজের ভিতরে সংশ্লিষ্ট panel-এ scroll করবে; আলাদা globe তৈরি করে না। GitHub upload-এর পরে HTTPS root-এ `Ctrl+Shift+R`, তারপর installed PWA থাকলে Source Health & Offline থেকে cached shell refresh করতে হবে।
