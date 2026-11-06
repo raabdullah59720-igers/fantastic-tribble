@@ -287,3 +287,36 @@ Passing checks establish package and simulated integration behaviour only. They 
 - Russian source is the public Elektro-L meteorological viewer only. Iframe load is not interpreted as confirmed image delivery; capture freshness must be read from the provider. No high-resolution EO scene ordering, camera tasking or spacecraft command is included in this Safety Centre panel.
 - Runtime browser/WebGL and external provider delivery on the user's deployed GitHub Pages still require online browser verification.
 - Service-worker cache: `terravex-apex-shell-v36`.
+
+## v37 — Same-globe civil mobility overlay verification (2026-11-06)
+
+- **Project package:** 99 root files; no new file introduced. The v36 3D Earth card, camera, imagery controls, orbit overlay, existing aircraft snapshot, location and communications controls remain in place. New activity overlays are rendered on the same Cesium viewer and camera.
+- **Layers:** Air Activity Density (OpenSky snapshot binned into 1-degree cells and rendered only at >=10 source observations per cell); Road Congestion, Maritime Activity Density and Authorized Drone Activity (optional provider/backend GeoJSON aggregates, disabled/unconfigured until a real endpoint is supplied).
+- **Aggregate input guard:** HTTPS only, no embedded query credentials, CORS fetch with omitted credentials, 15-second timeout, 2 MB / 300-cell limits, timestamp validation, source metadata, resolution >=20 km, cell count >=10, radius >=10 km, grid/district/region aggregation, road congestion index 0–100. Feature IDs, nested individual identifiers, route/path/track payload keys are rejected. No provider secrets are stored in this static page.
+- **Rendering/accuracy disclosure:** cells are coarse ellipses, not individual trajectories. Source age is shown; stale thresholds differ by source. Existing OpenSky source cadence/rate limits remain provider-controlled. Air snapshot is manual refresh, not continuous telemetry. No dummy or interpolated vehicles are added by the new layers.
+- **Static QA:** HTML parsed: 1,108 IDs, 0 duplicate IDs; local references missing=0; 52 required service-worker shell assets, missing=0; cache/diagnostics parity `terravex-apex-shell-v37`; 25 JavaScript files syntax checked, 0 errors; 20 CSS files parsed, 0 errors; Python syntax checks passed; static QA aggregate 0 errors.
+- **Integration/regression:** PWA baseline 9/9; Russian satellite route 9 assertions; Russian bootstrap 5 assertions; Radiological Safety 12 assertions; device location 19 assertions; inherited 3D/Russian imagery checks 15 + 25 assertions; new civil mobility UI/schema/toggle checks 24 assertions; new aggregate payload runtime checks 4 assertions (valid aggregate accepted; Feature.id, nested identity and raw track rejected); Earth Traffic 25; RF 5; Space Communications 21; Space Environment 11; relay/mailbox 14 integration groups; voice-mail static checks; Connectivity 6; VPN bridge 11. All executed tests passed.
+- **Provider connection status:** OpenSky air density can be populated after the user manually requests its existing Bangladesh snapshot, subject to public API/CORS/credits/rate limits. Road, maritime and drone endpoints were not supplied and therefore correctly remain unconfigured. The container cannot validate live CORS/provider access or the user's deployed GitHub Pages visual rendering. No feed is claimed connected without an actual response.
+- **Safety scope:** new views are coarse civilian activity summaries only. No individual ship/drone identity, raw path/track, target association, camera tasking or weapons function has been added.
+
+
+v38 corrective change: maritime activity was not visible because v37 only contained a blank, user-supplied AIS aggregate endpoint field. That provider was not connected. To avoid implying a feed exists, v38 replaces the empty display with an automatically fetched public Bay of Bengal marine safety model layer (Open-Meteo). The 16 coarse model grid points are drawn on the existing Cesium globe. Individual vessel positions/routes are not enabled.
+
+
+## v38 — Corrective marine model layer (2026-11-06)
+- Root cause: v37 marine display depended on a user-entered AIS aggregate endpoint; no provider endpoint was configured, so there was no marine data to draw.
+- Corrected visible panel: renamed to Bay of Bengal marine safety; fetches broad sea-grid wave height, wave direction, ocean-current speed/direction and SST from Open-Meteo Marine API when the page opens; also has a manual retry.
+- Draws 16 broad model cells on the same Cesium globe. No vessel positions, identities, tracks or routes.
+- Source timestamp and retrieval time shown; fetch failures clear stale overlay and never insert fake data.
+- PWA cache and runtime diagnostics bumped to `terravex-apex-shell-v38`.
+
+- Final v38 verification: JavaScript syntax 25/25; CSS parse 20/20; Python syntax 4/4; HTML IDs 1,108 with 0 duplicates; 52 cached assets, 0 missing; static QA TOTAL ERRORS 0.
+- Regression results: Earth Traffic 25; RF 5; Space Communications 21; relay/mailbox 14 integration groups; PWA/route/source tests 9 + Russian panel 9 + bootstrap 5 + radiological 12 + location 19 + inherited 3D/Russian checks 15 + 25 + aggregate validator 4 + marine query builder 6; Space Environment 11; VPN bridge 11; Connectivity 6. All executed tests passed.
+- External API runtime and GitHub Pages visual rendering were not directly verified in this environment; the UI reports response/error state when opened online.
+
+
+## v39 regression and static QA record (2026-11-06)
+- Static QA: PASS, 0 errors; 1,154 HTML IDs; 0 duplicate IDs; 0 missing local references; 25 JavaScript files pass `node --check`; 20 CSS stylesheets parse; PWA required local assets all present; cache/version parity v39.
+- New v39 checks: five civil panels registered inside original `page-earthcommand`; GloFAS, OSM coarse aggregates, GBIF region counts, existing Marine model and NASA GIBS/STAC archive use the same Cesium viewer. Limitation disclosures checked.
+- Regression: Earth Traffic 25 assertions; PWA omnibox 9/9; Russian satellite entry/integration 9/9 plus bootstrap 5/5; radiological safety 12; device location privacy 19; inherited 3D launch/imagery 25; aggregate validation 4; marine request 6; relay/mailbox 14 groups; RF 5/5; Space Communications 21; Space Environment 11; Connectivity 6; VPN bridge 11 Python tests. All executed suites passed.
+- Browser rendering against all public third-party endpoints was not available in the build runtime; live API delivery, GitHub Pages browser appearance and source freshness must be checked after deployment. No live provider success is claimed by this QA record.

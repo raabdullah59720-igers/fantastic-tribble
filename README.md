@@ -30,7 +30,7 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v36`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v38`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
@@ -64,7 +64,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v36`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v38`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -93,7 +93,7 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v36`, and the Earth Traffic CSS/JS files are required cached resources.
+See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v38`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
@@ -115,7 +115,7 @@ The new **BTCL Satellite Signal Hub** is an independent panel. Its local 1 Hz pr
 
 ## Bangladesh Mobile Network Signal Monitor (receive-only)
 
-The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v36`.
+The `mobilenet` page adds a separate monitor panel for the four mobile network operators and tower-sharing categories published by BTRC. The tower-count snapshot is dated April 2026 and is not a live health feed. Default signal-quality values are explicitly synthetic. An operator-authorized read-only HTTPS endpoint can provide `networks[]` measurements, subject to CORS and access approval. The switch starts/stops the local monitoring loop and provider polling only. This panel has no radio transmitter, carrier-frequency control, RF output, or tower ON/OFF command. The app shell cache is `terravex-apex-shell-v38`.
 
 
 ## Earth Orbit Sentinel (added October 2026)
@@ -232,4 +232,29 @@ The radiological safety map now exposes visible Launch 3D controls in Overview, 
 
 
 ## v36: map launch & public Russian weather view
-The Bangladesh Radiological Safety Centre has visible Launch 3D controls in Overview and the panel, an independent Cesium startup path, a pinned CDN fallback, duplicate-start protection, retry-state reset, and sample-tile verification (Esri then OSM). The Russian panel opens only the public Elektro-L meteorological imagery viewer. The page may show older capture times despite its “last twenty-four hours” heading; check the source timestamp. An iframe load is not proof that image pixels rendered. This is public weather imagery, not a spacecraft command link, high-resolution EO tasking, individual tracking or targeting system. Current service-worker shell cache: `terravex-apex-shell-v36`.
+The Bangladesh Radiological Safety Centre has visible Launch 3D controls in Overview and the panel, an independent Cesium startup path, a pinned CDN fallback, duplicate-start protection, retry-state reset, and sample-tile verification (Esri then OSM). The Russian panel opens only the public Elektro-L meteorological imagery viewer. The page may show older capture times despite its “last twenty-four hours” heading; check the source timestamp. An iframe load is not proof that image pixels rendered. This is public weather imagery, not a spacecraft command link, high-resolution EO tasking, individual tracking or targeting system. Current service-worker shell cache: `terravex-apex-shell-v38`.
+
+
+## v37 — Integrated civil mobility overlays on the existing 3D Earth
+
+The Live 3D Earth & Integrated Command page has four additional optional overlays on the same Cesium globe: Air Activity Density, Road Congestion, Maritime Activity Density and Authorized Drone Activity. The visual design, existing globe, camera controls, satellite imagery, orbit layer, existing aircraft-snapshot panel controls, location and communications functions remain in place. Air density is coarsened to 1-degree cells and requires at least 10 observations per cell. Road/maritime/drone layers use HTTPS aggregate GeoJSON adapters, require 20 km or coarser resolution and at least 10 observations per cell, and reject individual identifiers. These external layers remain NOT CONFIGURED until a real provider gateway is supplied. No mock live traffic is generated.
+
+Open `?page=earthcommand`. See `DATA_SOURCES.md` for provider/API limitations and the aggregate GeoJSON contract. Current service-worker shell cache: `terravex-apex-shell-v38`.
+
+
+### v38 marine layer correction
+The Maritime card no longer silently waits for an unconfigured AIS provider endpoint. It now loads the public Open-Meteo Marine model over the Bay of Bengal when the Live 3D Earth page opens, and plots broad wave/current condition cells on the same Cesium globe. This is marine-safety weather context, not vessel traffic or navigation-grade data. The card reports source time, fetch time, cell count, mean/maximum wave height and mean current speed. Individual ship positions and routes are not plotted.
+
+
+## v38 — Marine display correction
+The v37 maritime card only had an empty user-supplied AIS aggregate URL field and therefore could not draw anything without a provider. v38 replaces that visible card with an automatically loaded Open-Meteo Bay of Bengal marine-safety model layer on the existing Cesium globe. It plots broad wave-height/current cells and reports model-valid/retrieval time. It does not plot ships, ship identities, routes or naval traffic. If the source is unavailable, the UI explicitly reports the error. Current service-worker shell cache: `terravex-apex-shell-v38`.
+
+
+## v39 — Civil environmental 3D panels
+The Live 3D Earth & Integrated Command page now includes five additional cards: Flood & River Intelligence, Humanitarian Response Network, Forest & Biodiversity Monitor, Ocean & Coastal Intelligence, and Earth Observation Archive. They reuse the same Cesium viewer/camera and do not alter the existing globe or earlier features.
+
+**Real data vs model/catalogue:** GloFAS v4 river discharge is model output, OSM humanitarian facilities are incomplete volunteer-mapped tags aggregated to ~20 km cells, GBIF is published occurrence-record counts (not population/live sightings), Open-Meteo Marine is model output, and STAC/NASA GIBS are dated scene catalogues/imagery (not live video). Source timestamps and retrieval time are described separately. Public feeds may be unavailable due to CORS, rate limits or provider outages.
+
+Open the page with `?page=earthcommand`. Use each card's refresh/search button. Flood, GBIF and archive catalogue requests are attempted on entry; humanitarian OSM aggregation is user-triggered. The NASA VIIRS true-colour overlay can be added/removed without replacing the base imagery.
+
+The package retains exactly 99 root files. PWA service-worker cache: `terravex-apex-shell-v39`.

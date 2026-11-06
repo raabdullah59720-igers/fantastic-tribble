@@ -63,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v36': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v39': errors.append('Unexpected service-worker cache version '+cache)
 if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
@@ -72,6 +72,8 @@ overview_ok = bool(re.search(r'id="openEarthCommandOverview"[^>]*data-goto="eart
 page_ok = bool(re.search(r'id="page-earthcommand"', html))
 if not all([nav_ok, quick_ok, overview_ok, page_ok]):
     errors.append('Live 3D Earth panel visibility / launch-entry regression')
+if html.find('id="tvxCivilSystems"') < html.find('id="page-earthcommand"') or html.find('id="tvxCivilSystems"') > html.find('id="page-earth"'):
+    errors.append('v39 civil panels must remain inside the original Live 3D Earth page / shared globe shell')
 
 # Bangladesh Satellite 3D panel must be registered, reachable and backed by the cached module.
 bd_nav = bool(re.search(r'data-page="bangladeshsats"', html))
@@ -122,6 +124,27 @@ if 'terravex:live-location' not in loc_js or 'userConsented:true' not in loc_js:
 if 'satellite tracking guaranteed' in (loc_js+html).lower():
     errors.append('Location module must not claim guaranteed satellite tracking')
 report.append('Device location module: user-consented watch, accuracy radius, age/stale state, privacy and satellite-provider disclosure checked')
+# v37 same-globe aggregate civil mobility overlay checks.
+activity_ids=('tveActivityConsole','tveLayerAirDensity','tveLayerRoadDensity','tveLayerMarineDensity','tveLayerDroneDensity','tveRoadAggregateUrl','tveDroneAggregateUrl','tveLoadAllActivity','tveLoadMarineSafety','tveMarineSummary')
+for token in activity_ids:
+    if f'id="{token}"' not in html: errors.append('Missing v37 activity-layer UI control: '+token)
+app_js=(root/'app.js').read_text(encoding='utf-8')
+for token in ('function renderAirDensity(','function validateAggregateGeoJSON(','spatialResolutionKm','count<10','radius<10','aggregationLevel','Raw object identifiers are not accepted','loadAllConfiguredActivities','function loadMarineConditions(','marine-api.open-meteo.com/v1/marine','function paintMarineSafety(','No synthetic marine data is displayed'):
+    if token not in app_js: errors.append('Missing aggregate-only mobility validation: '+token)
+if '1-degree' not in (root/'DATA_SOURCES.md').read_text(encoding='utf-8'): errors.append('Air activity aggregation methodology missing')
+if 'Bay of Bengal marine safety' not in (root/'index.html').read_text(encoding='utf-8'): errors.append('Marine safety layer label missing')
+if 'terravex-apex-shell-v39' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v39')
+report.append('v38 same-globe civil activity layers: air density, aggregate providers and Bay of Bengal marine model remain registered')
+# v39 five environmental/civil panels sharing one Cesium viewer.
+for token in ('tvxCivilSystems','tvxFloodPanel','tvxHumanitarianPanel','tvxForestPanel','tvxOceanPanel','tvxArchivePanel','tvxFloodRefresh','tvxHumanRefresh','tvxForestRefresh','tvxOceanRefresh','tvxArchiveSearch','tvxArchiveShowImage'):
+    if f'id="{token}"' not in html: errors.append('Missing v39 civil panel UI element: '+token)
+for token in ('function loadFloodRiverModel(','flood-api.open-meteo.com/v1/flood','function loadHumanitarianSummary(','overpass-api.de/api/interpreter','spatialResolution','function loadBiodiversitySummary(','api.gbif.org/v1/occurrence/search','function searchEarthObservationArchive(','earth-search.aws.element84.com/v1/search','function showNasaArchiveImagery(','gibs.earthdata.nasa.gov/wmts/epsg3857/best/','function updateCivilOceanPanel(','getViewer:()=>S.viewer','getCesium:()=>window.Cesium'):
+    if token not in app_js: errors.append('Missing v39 civil panel behaviour: '+token)
+for token in ('individual site locations are not shown','not animal counts or live sightings','not river-stage height','not live video'):
+    if token not in html and token not in app_js: errors.append('Missing v39 data-limitation disclosure: '+token)
+if 'terravex-apex-shell-v39' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v39')
+report.append('v39 civil panels: GloFAS flood model, DDM/OSM humanitarian aggregates, GBIF regional records, existing marine model and NASA GIBS/STAC archive use the shared Cesium engine; source-limitation disclosures checked')
+
 # Manifest app shortcuts must target existing navigation pages.
 page_keys={b.get('data-page') for b in soup.select('button[data-page]')}
 invalid_shortcuts=[]

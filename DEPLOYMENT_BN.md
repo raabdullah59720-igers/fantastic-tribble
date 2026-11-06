@@ -50,3 +50,33 @@ Weather feed numerical model; সরাসরি weather-station measurement ন
 - Upload all 99 root files, replacing the previous version, and commit. `sw.js` now uses `terravex-apex-shell-v36`; refresh the HTTPS GitHub Pages app with `Ctrl+Shift+R`, then use Source Health & Offline System → Refresh cached app shell if needed.
 - The Safety Centre direct route is `?page=radiologicalsafety`. Use the visible **Launch 3D + Russian Weather View** button. A successful basemap tile probe is shown separately from the 3D engine state.
 - Russian weather imagery opens the public Elektro-L provider page. Cross-origin page load does not confirm image pixels or a current capture; check the provider's displayed timestamp.
+
+
+## v37 — Live 3D Earth mobility overlays
+
+- The Live 3D Earth page now includes Air Activity Density, Road Congestion, Maritime Activity Density, and Authorized Drone Activity toggles within the same existing globe and camera.
+- Air density is derived from the existing, manually requested OpenSky Bangladesh snapshot and shown only as 1-degree aggregate cells with at least 10 observations per cell.
+- Road, maritime and drone overlays require an authorized HTTPS/CORS aggregate GeoJSON endpoint. They are intentionally not marked connected until a provider response passes schema, spatial-resolution, minimum-count and timestamp checks.
+- Do not paste provider secrets into the static page. Configure a read-only backend gateway and keep tokens/keys server-side. Global Fishing Watch AIS vessel-presence data may be delayed by up to approximately 96 hours and is non-commercial CC BY-NC 4.0; it is not a live vessel-tracking stream. Google traffic-aware Routes API is route-scoped and billed; it is not blanket nationwide traffic surveillance.
+- Upload the same 99 files to repository root. PWA cache is now `terravex-apex-shell-v38`; hard-refresh the HTTPS GitHub Pages deployment, then refresh the app shell in Source Health & Offline.
+
+## v37 — same-globe mobility layers
+
+1. Extract the ZIP and upload all 99 files to the repository root, overwriting prior versions. Do not upload the ZIP as one file.
+2. Commit and wait for GitHub Pages to publish. Hard-refresh the HTTPS Pages origin (`Ctrl+Shift+R`). For installed PWA, open Source Health & Offline and refresh the app shell; service-worker cache is `terravex-apex-shell-v38`.
+3. Open `?page=earthcommand`. The four activity toggles are inside the existing Live 3D Earth card; camera and globe design are unchanged.
+4. For air density, click **Refresh air density**. It uses the existing Bangladesh OpenSky snapshot and only paints 1-degree cells with at least 10 observations.
+5. Road, maritime and authorized drone data remain disconnected until an approved HTTPS/CORS backend aggregate endpoint is provided. Configure only aggregate GeoJSON endpoints under **Configure read-only aggregate providers**. Do not place API keys in the browser. No endpoint is automatically invented.
+6. Review each source timestamp and stale status. A 1 Hz rendering loop does not imply 1 Hz source data.
+
+The new activity layer is for civilian, regional aggregate awareness only. It does not add individual vessel/drone tracking, raw target tracks or targeting controls. Public API availability and provider terms are not guaranteed by GitHub Pages.
+
+
+## v38 — Marine layer visibility correction
+The former AIS aggregate field had no configured provider, so the marine card remained blank. The current `Bay of Bengal marine safety` card auto-loads Open-Meteo marine model conditions on opening `?page=earthcommand`; use `Load marine safety layer` to retry. It plots broad wave/current model cells on the same globe, not vessels. The shell cache is `terravex-apex-shell-v38`.
+
+
+## v39 deployment note
+Upload/overwrite all 99 files in the repository root. Do not upload the ZIP as a single file and do not place `index.html` inside an extra folder. Deploy GitHub Pages from the same root. Then open the HTTPS site, hard-refresh (`Ctrl+Shift+R`), open **Source Health & Offline System**, and select **Refresh cached app shell** if an installed PWA still shows the prior version. The current cache is `terravex-apex-shell-v39`.
+
+Use `?page=earthcommand` to open the existing 3D Earth page. The five new cards are beneath the existing globe and reuse the same camera. External endpoints require internet and may need retries. A successful HTTP request is not proof of scientific correctness or official operational status. See `DATA_SOURCES.md` for caveats.

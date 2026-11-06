@@ -80,10 +80,28 @@
       <div class="tve-map-controls">
         <div class="tve-control-group"><label for="tveImagerySelect">Imagery</label><select id="tveImagerySelect"><option value="world">World satellite imagery mosaic</option><option value="nasa">NASA VIIRS daily true colour</option></select></div>
         <label class="tve-check"><input id="tveLayerOrbits" type="checkbox" checked> Orbit objects</label>
-        <label class="tve-check"><input id="tveLayerAircraft" type="checkbox" checked> Aircraft snapshot</label>
+        <label class="tve-check"><input id="tveLayerAircraft" type="checkbox" checked> Existing aircraft snapshot</label>
         <label class="tve-check"><input id="tveLayerLocation" type="checkbox" checked> My location</label>
         <label class="tve-check"><input id="tveShareLocation" type="checkbox"> Share location to existing panels</label>
       </div>
+      <section class="tve-activity-console" id="tveActivityConsole" aria-label="Aggregated civil mobility layers">
+        <div class="tve-activity-head"><div><b>LIVE CIVIL MOBILITY / ACTIVITY LAYERS</b><small>One Earth · shared camera · aggregated regional cells only</small></div><span class="badge warn" id="tveActivityOverallState">WAITING FOR SOURCES</span></div>
+        <div class="tve-activity-grid">
+          <div class="tve-activity-card"><label class="tve-activity-toggle"><input id="tveLayerAirDensity" type="checkbox" checked><span><b>Air activity density</b><small>OpenSky snapshot · coarse cells</small></span></label><b class="tve-activity-state" id="tveAirActivityState">WAITING FOR SNAPSHOT</b><small id="tveAirActivityFresh">Refresh the existing Bangladesh aircraft snapshot to aggregate it.</small><button class="btn small-button" id="tveRefreshAirDensity" type="button">↻ Refresh air density</button></div>
+          <div class="tve-activity-card"><label class="tve-activity-toggle"><input id="tveLayerRoadDensity" type="checkbox"><span><b>Road congestion</b><small>Provider-derived · aggregated cells</small></span></label><b class="tve-activity-state" id="tveRoadActivityState">NOT CONFIGURED</b><small id="tveRoadActivityFresh">Needs a read-only road traffic summary endpoint.</small><button class="btn small-button" id="tveLoadRoadActivity" type="button">Load road layer</button></div>
+          <div class="tve-activity-card"><label class="tve-activity-toggle"><input id="tveLayerMarineDensity" type="checkbox" checked><span><b>Bay of Bengal marine safety</b><small>Open-Meteo wave / current model · coarse cells</small></span></label><b class="tve-activity-state warn" id="tveMarineActivityState">LOADING ON PANEL OPEN</b><small id="tveMarineActivityFresh">Marine weather conditions only. No vessel identities, positions or routes are plotted.</small><div id="tveMarineSummary" class="tve-marine-summary">Wave / current model summary will appear after a successful response.</div><a class="tve-marine-source" href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener">Open-Meteo marine model · source & limitations ↗</a><button class="btn small-button" id="tveLoadMarineSafety" type="button">↻ Load marine safety layer</button></div>
+          <div class="tve-activity-card"><label class="tve-activity-toggle"><input id="tveLayerDroneDensity" type="checkbox"><span><b>Authorized drone activity</b><small>Operator aggregate · coarse cells</small></span></label><b class="tve-activity-state" id="tveDroneActivityState">NOT CONFIGURED</b><small id="tveDroneActivityFresh">Requires an authorized fleet statistics feed.</small><button class="btn small-button" id="tveLoadDroneActivity" type="button">Load drone layer</button></div>
+        </div>
+        <details class="tve-activity-config"><summary>Configure read-only aggregate providers</summary>
+          <div class="tve-provider-grid">
+            <div class="field"><label for="tveRoadAggregateUrl">Road traffic aggregate GeoJSON endpoint (HTTPS)</label><input id="tveRoadAggregateUrl" type="url" placeholder="https://your-provider.example/traffic/road-summary.json" autocomplete="off" spellcheck="false"></div>
+            <div class="field tve-disabled-provider"><label>Vessel traffic feed</label><div class="tve-disabled-note">Individual ship positions, routes and naval tracking are not enabled. This panel uses broad marine-weather model cells for public safety.</div></div>
+            <div class="field"><label for="tveDroneAggregateUrl">Authorized drone aggregate GeoJSON endpoint (HTTPS)</label><input id="tveDroneAggregateUrl" type="url" placeholder="https://your-operator.example/fleet/activity-summary.json" autocomplete="off" spellcheck="false"></div>
+          </div>
+          <div class="tve-provider-actions"><button class="btn small-button" id="tveLoadAllActivity" type="button">Load configured road / drone + marine safety layers</button><a href="https://globalfishingwatch.org/" target="_blank" rel="noopener">Global Fishing Watch ↗</a><a href="https://developers.google.com/maps/documentation/routes/traffic_on_polylines" target="_blank" rel="noopener">Google traffic API ↗</a></div>
+          <p class="tve-activity-note">Road and authorized-drone endpoints must return a FeatureCollection of regional aggregate cells only: metadata.dataType="aggregated", metadata.spatialResolutionKm ≥ 20, metadata.generatedAt, metadata.source; each Point feature must have count ≥ 10, aggregationLevel="grid" or "district", and radiusKm ≥ 10. Vehicle/vessel/drone identifiers and raw tracks are rejected. Keep provider secrets on your own backend; this page does not store API keys.</p>
+        </details>
+      </section>
       <div class="tve-data-note"><b>Data interpretation:</b> satellite dots are SGP4-propagated estimates from public orbital elements, recalculated locally once per second. That is not a one-second satellite telemetry feed. Aircraft are provider snapshots, not continuous video. Imagery is a time-stamped mosaic/product, not live camera footage.</div>
     </div>
     <div class="tve-side-stack">
@@ -123,6 +141,72 @@
       </div>
     </div>
   </div>
+  <section class="tvx-civil-systems" id="tvxCivilSystems" aria-label="Civil environmental and humanitarian intelligence panels">
+    <div class="tvx-civil-heading">
+      <div><div class="eyebrow">CIVIL PLANETARY SYSTEMS / SHARED 3D EARTH</div><h3>Environmental, Ecosystem & Humanitarian Intelligence</h3><p>Five independent panels share the existing Cesium globe and camera. Each layer reports its own source, timestamp and limitations.</p></div>
+      <span class="badge sim">ONE GLOBE · FIVE PANELS</span>
+    </div>
+    <div class="tvx-civil-grid">
+      <article class="card tvx-civil-card" id="tvxFloodPanel">
+        <div class="card-head"><h3>🌊 FLOOD & RIVER INTELLIGENCE</h3><span class="badge sim" id="tvxFloodStatus">NOT REQUESTED</span></div>
+        <p class="tvx-civil-desc">Bangladesh river-discharge model cells from GloFAS v4. These are daily model outputs, not water-level gauges or official flood warnings.</p>
+        <div class="tvx-civil-metrics"><div><small>RIVER CELLS</small><b id="tvxFloodCount">—</b></div><div><small>MODEL DATE</small><b id="tvxFloodDate">—</b></div><div><small>SOURCE MODEL</small><b>GloFAS v4</b></div></div>
+        <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxFloodRefresh" type="button">↻ Refresh river model</button><label class="checkrow"><input id="tvxFloodPlot" type="checkbox" checked> Show coarse cells on 3D Earth</label></div>
+        <div class="tvx-civil-message" id="tvxFloodMessage" role="status" aria-live="polite">Model data has not been requested. No synthetic river values are shown.</div>
+        <div class="tvx-civil-list" id="tvxFloodList"><div class="muted">River model results will appear here.</div></div>
+        <p class="note">GloFAS provides daily discharge at approximately 5 km grid resolution. The nearest cell may not represent the named river correctly; no flood-risk threshold is inferred. <a href="https://open-meteo.com/en/docs/flood-api" target="_blank" rel="noopener">API documentation ↗</a></p>
+        <a class="tvx-civil-official" href="https://rapid.ddm.gov.bd/home/weather/" target="_blank" rel="noopener">Open official DDM AWARE warnings ↗</a>
+      </article>
+
+      <article class="card tvx-civil-card" id="tvxHumanitarianPanel">
+        <div class="card-head"><h3>🧭 HUMANITARIAN RESPONSE NETWORK</h3><span class="badge warn" id="tvxHumanStatus">NOT REQUESTED</span></div>
+        <p class="tvx-civil-desc">Publicly mapped hospitals, clinics and shelter-tagged resources aggregated into broad geographic cells. Official shelter status must be checked with DDM. individual site locations are not shown in the 3D layer.</p>
+        <div class="tvx-civil-metrics"><div><small>MAPPED RECORDS</small><b id="tvxHumanCount">—</b></div><div><small>COARSE CELLS</small><b id="tvxHumanCells">—</b></div><div><small>GRID SIZE</small><b>≈20 km</b></div></div>
+        <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxHumanRefresh" type="button">↻ Load public resource summary</button><label class="checkrow"><input id="tvxHumanPlot" type="checkbox" checked> Show aggregate cells on 3D Earth</label></div>
+        <div class="tvx-civil-message" id="tvxHumanMessage" role="status" aria-live="polite">No public-resource query has been made. Individual facility locations and personal contacts are not plotted.</div>
+        <div class="tvx-civil-emergency"><a href="https://rapid.ddm.gov.bd/home/weather/" target="_blank" rel="noopener"><b>DDM AWARE</b><small>Official multi-hazard warnings</small></a><a href="https://rapid.ddm.gov.bd/service/shelter_info" target="_blank" rel="noopener"><b>Shelter Information</b><small>Official DDM shelter map/table</small></a></div>
+        <div class="tvx-civil-hotlines"><a href="tel:999">999 <small>Emergency</small></a><a href="tel:1090">1090 <small>Disaster</small></a><a href="tel:16163">16163 <small>Fire</small></a><a href="tel:16263">16263 <small>Medical</small></a></div>
+        <p class="note">OpenStreetMap is volunteer-mapped and incomplete; this is a planning aid, not a verified operational register or dispatch system. Data are reduced to coarse cells before plotting. <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OSM attribution & licence ↗</a></p>
+      </article>
+
+      <article class="card tvx-civil-card" id="tvxForestPanel">
+        <div class="card-head"><h3>🌳 FOREST & BIODIVERSITY MONITOR</h3><span class="badge sim" id="tvxForestStatus">NOT REQUESTED</span></div>
+        <p class="tvx-civil-desc">Published GBIF biodiversity occurrence records for broad Bangladesh ecosystem regions, with optional dated satellite surface imagery.</p>
+        <div class="tvx-civil-metrics"><div><small>REGIONS RETURNED</small><b id="tvxForestRegions">—</b></div><div><small>OCCURRENCE RECORDS</small><b id="tvxForestCount">—</b></div><div><small>QUERY PERIOD</small><b>2000–2026</b></div></div>
+        <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxForestRefresh" type="button">↻ Refresh GBIF records</button><label class="checkrow"><input id="tvxForestPlot" type="checkbox" checked> Show broad regions on 3D Earth</label></div>
+        <div class="tvx-civil-message" id="tvxForestMessage" role="status" aria-live="polite">No GBIF query has been made. Occurrence records are not animal counts or live sightings.</div>
+        <div class="tvx-civil-list" id="tvxForestList"><div class="muted">Sundarbans, hill forests, Sylhet and Madhupur region summaries will appear here.</div></div>
+        <div class="tvx-civil-actions"><button class="btn small-button" id="tvxForestImagery" type="button">Show dated vegetation-context image</button><a class="tvx-civil-official" href="https://www.globalforestwatch.org/dashboards/country/BGD/" target="_blank" rel="noopener">Global Forest Watch ↗</a></div>
+        <p class="note">GBIF counts depend on published and georeferenced records; they do not estimate population, species abundance or current animal presence. The image button displays true-colour satellite context, not a forest-loss index. <a href="https://techdocs.gbif.org/en/openapi/v1/occurrence" target="_blank" rel="noopener">GBIF API ↗</a></p>
+      </article>
+
+      <article class="card tvx-civil-card" id="tvxOceanPanel">
+        <div class="card-head"><h3>🌐 OCEAN & COASTAL INTELLIGENCE</h3><span class="badge sim" id="tvxOceanStatus">WAITING FOR MODEL</span></div>
+        <p class="tvx-civil-desc">Reuses the existing Bay of Bengal marine model layer on the same 3D Earth; no separate globe or camera is created.</p>
+        <div class="tvx-civil-metrics tvx-civil-metrics-four"><div><small>MODEL CELLS</small><b id="tvxOceanCells">—</b></div><div><small>MEAN WAVE</small><b id="tvxOceanWave">—</b></div><div><small>MEAN CURRENT</small><b id="tvxOceanCurrent">—</b></div><div><small>SEA TEMP.</small><b id="tvxOceanSst">—</b></div></div>
+        <div class="tvx-civil-metrics tvx-civil-metrics-one"><div><small>MODELED SEA LEVEL · RELATIVE TO GLOBAL MEAN</small><b id="tvxOceanSeaLevel">—</b></div></div>
+        <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxOceanRefresh" type="button">↻ Refresh coastal model</button><label class="checkrow"><input id="tvxOceanPlot" type="checkbox" checked> Show on 3D Earth</label></div>
+        <div class="tvx-civil-message" id="tvxOceanMessage" role="status" aria-live="polite">Waiting for the existing Bay of Bengal marine model request.</div>
+        <p class="note">Open-Meteo wave/current/tide values are model output. Coastal sea-level accuracy is limited and is not suitable for navigation or official tide-gauge replacement. <a href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener">Marine API documentation ↗</a></p>
+      </article>
+
+      <article class="card tvx-civil-card tvx-civil-archive" id="tvxArchivePanel">
+        <div class="card-head"><h3>🛰 EARTH OBSERVATION ARCHIVE</h3><span class="badge" id="tvxArchiveStatus">CATALOG NOT SEARCHED</span></div>
+        <p class="tvx-civil-desc">Search public Sentinel-2 or Landsat scene metadata for Bangladesh, then optionally place a dated NASA VIIRS true-colour image over the existing globe.</p>
+        <div class="tvx-archive-controls">
+          <div class="field"><label for="tvxArchiveCollection">Satellite collection</label><select id="tvxArchiveCollection"><option value="sentinel-2-l2a">Sentinel-2 L2A</option><option value="landsat-c2-l2">Landsat Collection 2 L2</option></select></div>
+          <div class="field"><label for="tvxArchiveStart">From</label><input id="tvxArchiveStart" type="date"></div>
+          <div class="field"><label for="tvxArchiveEnd">To</label><input id="tvxArchiveEnd" type="date"></div>
+          <div class="field"><label for="tvxArchiveImageDate">NASA VIIRS image date</label><input id="tvxArchiveImageDate" type="date"></div>
+        </div>
+        <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxArchiveSearch" type="button">⌕ Search satellite archive</button><button class="btn small-button" id="tvxArchiveShowImage" type="button">＋ Show dated image on globe</button><button class="btn small-button" id="tvxArchiveRemoveImage" type="button" disabled>Remove image overlay</button></div>
+        <div class="tvx-civil-message" id="tvxArchiveMessage" role="status" aria-live="polite">No archive request made. Scene metadata and imagery acquisition dates will be shown separately.</div>
+        <div class="tvx-civil-list tvx-archive-results" id="tvxArchiveResults"><div class="muted">Satellite scene metadata will appear here after a search.</div></div>
+        <p class="note">STAC results describe available scenes; they are not necessarily cloud-free or already processed for immediate visual use. NASA GIBS tiles are date-specific imagery products, not live video. <a href="https://element84.com/earth-search/" target="_blank" rel="noopener">Earth Search catalogue ↗</a> · <a href="https://nasa-gibs.github.io/gibs-api-docs/access-basics/" target="_blank" rel="noopener">NASA GIBS docs ↗</a></p>
+      </article>
+    </div>
+    <div class="tvx-civil-footnote">SOURCE INTEGRITY: LIVE/RETRIEVED FEEDS, MODEL FORECASTS, PUBLIC CATALOGUE RECORDS AND IMAGERY ARCHIVES remain separately labelled. No layer invents unavailable observations or silently substitutes simulation data.</div>
+  </section>
   <div class="grid two-col tve-lower-grid">
     <div class="card">
       <div class="card-head"><h3>COMMUNICATION & OFFLINE OUTBOX</h3><span class="badge warn" id="tveCommsBadge">NO PEER</span></div>

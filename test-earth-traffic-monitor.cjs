@@ -18,7 +18,7 @@ assert.match(html, /earth-traffic-monitor\.js/);
 assert.match(html, /three@0\.160\.0/);
 assert.match(app, /earthtraffic:'Earth Traffic 3D Monitor'/);
 assert.ok(manifest.shortcuts.some(x => x.url === './?page=earthtraffic'));
-assert.match(sw, /terravex-apex-shell-v36/);
+assert.match(sw, /terravex-apex-shell-v39/);
 assert.match(sw, /\.\/earth-traffic-monitor\.js/);
 assert.match(sw, /\.\/earth-traffic-monitor\.css/);
 assert.match(js, /Satellite\.js did not load/);
@@ -27,6 +27,19 @@ assert.match(js, /SGP4\/SDP4/);
 assert.match(js, /does not insert dummy aircraft/);
 assert.match(js, /72\*3600000/);
 assert.match(css, /\.et-globe-stage/);
+
+// v38 marine safety correction: a blank AIS endpoint must no longer leave the globe empty.
+const commandHtml = html;
+assert.match(commandHtml, /id="tveLoadMarineSafety"/);
+assert.match(commandHtml, /Bay of Bengal marine safety/);
+assert.match(commandHtml, /Marine weather conditions only/);
+assert.match(app, /function loadMarineConditions\(/);
+assert.match(app, /marine-api\.open-meteo\.com\/v1\/marine/);
+assert.match(app, /function paintMarineSafety\(/);
+assert.match(app, /loadMarineConditions\(\);/);
+assert.match(app, /No synthetic marine data is displayed/);
+assert.doesNotMatch(commandHtml, /id="tveLoadMarineActivity"/);
+assert.match(app, /Individual vessel traffic feeds are not part of this civil-safety build/);
 
 // Evaluate the module without booting the DOM, then exercise pure location/aircraft helpers.
 const listeners = {};

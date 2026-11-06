@@ -70,3 +70,25 @@ The Three.js WebGL scene may require internet for the CDN and Earth textures. If
 - Latest shell cache: `terravex-apex-shell-v36`. After upload, open the HTTPS GitHub Pages URL, perform `Ctrl+Shift+R`, then refresh the cached shell from Source Health & Offline System if the PWA is installed.
 - Launch the Bangladesh Radiological Safety Centre using `?page=radiologicalsafety`; press **Launch 3D + Russian Weather View**.
 - A 3D engine running does not itself mean satellite imagery loaded. Look for `ESRI TILE RECEIVED` or `OSM TILE RECEIVED`; otherwise the panel displays a degraded tile state.
+
+
+## v37 same-globe mobility overlays
+- Current cache: `terravex-apex-shell-v38`. After upload, hard refresh the HTTPS Pages URL and refresh the shell if installed as a PWA.
+- Open `?page=earthcommand`. Air Activity Density uses the existing OpenSky Bangladesh snapshot; request that snapshot first. Road, Maritime and Authorized Drone layers need an authorized HTTPS aggregate GeoJSON endpoint from your own backend.
+- Provider response requirements are listed in `DATA_SOURCES.md`. No raw identifiers or per-object tracks are accepted. Data age and source are shown; unconfigured feeds remain disconnected.
+
+## v37 — Same-globe civilian mobility overlays
+
+The current shell cache is `terravex-apex-shell-v38`. The mobility overlay adds no new files and stays inside the existing Live 3D Earth panel at `?page=earthcommand`. Hard-refresh once after GitHub Pages deploy, then refresh the installed PWA shell if necessary. Air density requires a successful manual OpenSky snapshot. Road/maritime/drone layers require approved aggregate-only HTTPS GeoJSON endpoints and will remain unconfigured until supplied. The globe's 1 Hz render loop is not a 1 Hz data feed.
+
+
+## v38 marine safety layer
+Open Live 3D Earth. The Bay of Bengal marine safety layer requests Open-Meteo marine model data automatically on panel entry. Use “Load marine safety layer” to retry. It draws broad wave/current model cells on the same globe; it does not display ship traffic.
+
+
+## v38 — Bay of Bengal marine safety layer
+Open `?page=earthcommand`; broad marine wave/current model cells are requested automatically on panel entry. Use `Load marine safety layer` to retry. If offline or the provider is unavailable, the card reports the error and does not insert dummy cells. These are weather-model values, not ship traffic or navigation-grade measurements. Current shell: `terravex-apex-shell-v38`.
+
+
+## v39 shell update
+The service worker cache is `terravex-apex-shell-v39`. The five civil environmental panels are embedded in the existing `index.html` and use `app.js`; no additional asset files were introduced. If the old interface remains visible after deployment, reload over HTTPS and use Source Health & Offline → Refresh cached app shell. External public data is not cached as live data.
