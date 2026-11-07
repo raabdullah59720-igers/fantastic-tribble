@@ -119,4 +119,11 @@ Satellite context চাইলে Live 3D Earth-এ project region-এ pan/zoom 
 
 2D preview canvas এবং **Download 2D floor plan DXF** ব্যবহার করুন। DXF AC1015/R2000, metre units ও পৃথক layer-সহ তৈরি; parser verification সম্পন্ন। এটি schematic typical-floor functional zoning, room-by-room construction plan নয়। 3D massing DXF, SVG, CSV finish allowance, JSON এবং printable HTML report-ও রয়েছে।
 
-GitHub Pages-এ সব ৯৯টি ফাইল repository root-এ overwrite করে deploy করুন। Direct route: `?page=engineering`। Installed PWA-তে Source Health & Offline থেকে v44 app-shell refresh করে reload করুন।
+GitHub Pages-এ সব ৯৯টি ফাইল repository root-এ overwrite করে deploy করুন। Direct route: `?page=engineering`। Installed PWA-তে Source Health & Offline থেকে v45 app-shell refresh করে reload করুন।
+
+
+Engineering Studio v45 adds geometry selection (square, rectangle, circle, regular triangle, regular pentagon, regular octagon), duplex/triplex, multinational civilian corporate, eco-friendly and civil-protection campus typologies. Military operational facility design remains excluded. DXF exports use R2000 / AC1015 metre units for AutoCAD 2007 compatibility.
+
+
+### v45 geometry ও typology
+Engineering Studio-তে Square, Rectangle, Circular, Regular Triangle, Pentagon ও Octagon geometry এবং Duplex/Triplex, Multinational Civilian Corporate, Eco-friendly ও Civil Protection Campus typology যোগ হয়েছে। Military base operational design নেই; নিরাপদ বিকল্প হলো civilian emergency logistics campus। DXF export R2000 / AC1015 metre units, AutoCAD 2007+ compatible।

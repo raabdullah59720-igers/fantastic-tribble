@@ -63,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v44': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v45': errors.append('Unexpected service-worker cache version '+cache)
 if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
@@ -161,7 +161,7 @@ for token in ('function renderAirDensity(','function validateAggregateGeoJSON(',
     if token not in app_js: errors.append('Missing aggregate-only mobility validation: '+token)
 if '1-degree' not in (root/'DATA_SOURCES.md').read_text(encoding='utf-8'): errors.append('Air activity aggregation methodology missing')
 if 'Bay of Bengal marine safety' not in (root/'index.html').read_text(encoding='utf-8'): errors.append('Marine safety layer label missing')
-if 'terravex-apex-shell-v44' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v44')
+if 'terravex-apex-shell-v45' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
 report.append('v38 same-globe civil activity layers: air density, aggregate providers and Bay of Bengal marine model remain registered')
 # v39 five environmental/civil panels sharing one Cesium viewer.
 for token in ('tvxCivilSystems','tvxFloodPanel','tvxHumanitarianPanel','tvxForestPanel','tvxOceanPanel','tvxArchivePanel','tvxFloodRefresh','tvxHumanRefresh','tvxForestRefresh','tvxOceanRefresh','tvxArchiveSearch','tvxArchiveShowImage'):
@@ -170,7 +170,7 @@ for token in ('function loadFloodRiverModel(','flood-api.open-meteo.com/v1/flood
     if token not in app_js: errors.append('Missing v39 civil panel behaviour: '+token)
 for token in ('Individual site locations are not shown','not animal counts or live sightings','not river-stage height','not live video'):
     if token not in html and token not in app_js: errors.append('Missing v39 data-limitation disclosure: '+token)
-if 'terravex-apex-shell-v44' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v44')
+if 'terravex-apex-shell-v45' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
 report.append('v39 civil panels: GloFAS flood model, DDM/OSM humanitarian aggregates, GBIF regional records, existing marine model and NASA GIBS/STAC archive use the shared Cesium engine; source-limitation disclosures checked')
 
 # Manifest app shortcuts must target existing navigation pages.
@@ -223,7 +223,7 @@ else:
  if et_run.returncode: errors.append('Earth Traffic 3D tests failed: '+(et_run.stderr.strip() or et_run.stdout.strip()))
  report.append('Earth Traffic 3D tests: '+(et_run.stdout.strip().splitlines()[-1] if et_run.returncode==0 and et_run.stdout.strip() else 'FAIL'))
 
-# v44 Engineering Studio: safe conceptual planner and downloadable CAD massing.
+# Engineering Studio: safe conceptual planner and downloadable CAD massing.
 eng_module=(root/'advanced-workbench.js').read_text(encoding='utf-8')
 eng_app=(root/'app.js').read_text(encoding='utf-8')
 eng_required_html=['data-page="engineering"','id="page-engineering"','id="openEngineeringTop"','id="openEngineeringOverview"','id="engMassCanvas"','id="engFloors"','id="engExportDxf"','id="engExportCsv"','id="engExportJson"','id="engLatitude"','id="engLongitude"','id="engOpenEarth"','id="engClearEarth"','id="engProjectTitle"','id="engReportMonitor"','id="engGenerateReport"','id="engReportKpis"','id="engReportSafety"','id="engReportMaterials"','id="engQuickExportDxf"','id="engQuickExportSvg"','id="engQuickExportHtml"','id="engQuickExportCsv"','id="engQuickExportJson"','BNBC 2020 Gazette','Copernicus DEM','SoilGrids','military installations or naval combat facilities','reinforcement schedules']
@@ -231,24 +231,29 @@ for token in eng_required_html:
     if token not in html: errors.append('Engineering Studio HTML missing: '+token)
 for token in ("engineering:'TERRAVEX Engineering", "if(name==='engineering')window.TERRAVEX_ENGINEERING_STUDIO?.enter?.();", "else window.TERRAVEX_ENGINEERING_STUDIO?.leave?.();"):
     if token not in eng_app: errors.append('Engineering Studio navigation missing: '+token)
-for token in ('function calculateScenario','function buildDxf','function buildSvg','function buildHtmlReport','function reportData','function renderReport','function exportHtml','function exportSvg','function exportCsv','function drawMassing','function updateShapeInputs','function plotMassingOnEarth','function clearEarthMassing','TERRAVEX_EARTH_COMMAND','engFinishRows','TERRAVEX_ENGINEERING_STUDIO={enter,leave,calculate,calculateScenario,buildDxf,buildPlanDxf,buildSvg,buildHtmlReport,reportData,safetyReview,designProgram,makeAutoAssumptions,plotMassingOnEarth,clearEarthMassing'):
+for token in ('function calculateScenario','function buildDxf','function buildSvg','function buildHtmlReport','function reportData','function renderReport','function exportHtml','function exportSvg','function exportCsv','function drawMassing','function updateShapeInputs','function plotMassingOnEarth','function clearEarthMassing','TERRAVEX_EARTH_COMMAND','engFinishRows','TERRAVEX_ENGINEERING_STUDIO={enter,leave,calculate,calculateScenario,buildDxf,buildPlanDxf,buildSvg,buildHtmlReport,reportData,safetyReview,designProgram,makeAutoAssumptions,getPlanLayout,plotMassingOnEarth,clearEarthMassing'):
     if token not in eng_module: errors.append('Engineering Studio runtime missing: '+token)
-if 'terravex-apex-shell-v44' not in (root/'sw.js').read_text(encoding='utf-8'):
-    errors.append('PWA cache not bumped to v44')
-if 'terravex-apex-shell-v44' not in eng_module:
-    errors.append('PWA diagnostics do not expect v44 cache')
+if 'terravex-apex-shell-v45' not in (root/'sw.js').read_text(encoding='utf-8'):
+    errors.append('PWA cache not bumped to v45')
+if 'terravex-apex-shell-v45' not in eng_module:
+    errors.append('PWA diagnostics do not expect v45 cache')
 if not any(x.get('url')=='./?page=engineering' for x in manifest.get('shortcuts', [])):
     errors.append('PWA Engineering Studio shortcut missing')
 if 'function queueCalculation()' not in eng_module or "addEventListener('input',queueCalculation)" not in eng_module:
     errors.append('Engineering Studio live input recalculation missing')
-# v44: the only two visible user inputs drive explicit auto-assumptions; optional satellite context is consent-based.
-for token in ('id="engFloors"','id="engUse"','id="engAutoSummary"','id="engSatelliteContext"','id="engUseEarthContext"','id="engPlanCanvas"','id="engReportProgram"','id="engExportPlanDxf"','class="eng-auto-fields" hidden'):
-    if token not in html: errors.append('v44 Engineering two-input workflow missing: '+token)
+# v45: storey count, civilian typology and selectable plot geometry drive explicit auto-assumptions; optional satellite context is consent-based.
+for token in ('id="engFloors"','id="engUse"','id="engGeometry"','id="engAutoSummary"','id="engSatelliteContext"','id="engUseEarthContext"','id="engPlanCanvas"','id="engReportProgram"','id="engExportPlanDxf"','class="eng-auto-fields" hidden'):
+    if token not in html: errors.append('Engineering input workflow missing: '+token)
 for token in ('function makeAutoAssumptions','function applyAutoAssumptions','function buildPlanDxf','function drawFloorPlan','function engineeringDescriptions','function useEarthViewCentre','function loadSatelliteContext','function exportPlanDxf','No prior calculation is retained'):
-    if token not in eng_module: errors.append('v44 Engineering workflow missing: '+token)
-if 'The user supplied only storey count and civilian building type' not in eng_module:
-    errors.append('v44 report does not disclose the two-input assumption basis')
-report.append('v44 Engineering Studio: visible calculation report monitor, safety review, live input refresh, DXF/SVG/CSV/JSON/HTML report exports, unit conversions, 1–100 storey conceptual massing and shared Cesium overlay')
+    if token not in eng_module: errors.append('Engineering workflow missing: '+token)
+if 'The user supplied storey count, civilian infrastructure typology and plot geometry' not in eng_module:
+    errors.append('v45 report does not disclose typology/geometry assumption basis')
+for token in ('value=\"square\"','value=\"circle\"','value=\"triangle\"','value=\"pentagon\"','value=\"octagon\"','value=\"duplex\"','value=\"triplex\"','value=\"multinational\"','value=\"ecofriendly\"','value=\"civilprotection\"'):
+    if token not in html: errors.append('v45 Engineering option missing: '+token)
+for token in ("geometry==='square'","shape==='pentagon'","shape==='octagon'",'AutoCAD 2007 compatible','Civil protection & emergency logistics campus'):
+    if token not in eng_module+html: errors.append('v45 geometry / safe typology support missing: '+token)
+if 'military base' in html.lower() and 'not supported' not in html.lower(): errors.append('Military-base exclusion must be explicit in the visible safety note')
+report.append('v45 Engineering Studio: square/rectangle/circle/triangle/pentagon/octagon plots; duplex/triplex/multinational/eco-friendly/civil-protection typologies; polygon-aware 2D plans and AutoCAD 2007-compatible R2000 DXF')
 
 print('\n'.join(report))
 print('TOTAL ERRORS:',len(errors))

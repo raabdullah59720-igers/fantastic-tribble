@@ -420,3 +420,19 @@ v38 corrective change: maritime activity was not visible because v37 only contai
 - Final static QA: 1,247 HTML IDs; duplicate IDs 0; missing local resource references 0; JS syntax 25/25; CSS parser 20/20; Python syntax 4/4; zero static errors.
 - Regression suites: PWA 9/9; Earth Traffic 25; RF 5/5; Space Communications 21; Space Environment 11; relay/mailbox 14 integration groups; VPN bridge 11/11; Russian imagery, radiological safety, GPS privacy, same-globe civil panels and five civil environmental panels all passed.
 - External Sentinel-2 STAC requests, actual browser download behavior, GitHub Pages deployment and Cesium/WebGL rendering still require online browser confirmation after upload. Satellite context is optional and user-selected; assumed parcel dimensions are typology heuristics, not satellite-derived measurements.
+
+
+## v45 engineering geometry and typology update
+
+Validation includes area/perimeter/vertex count for square, rectangle, circle, regular triangle, regular pentagon and regular octagon; 1–100 storey range; duplex/triplex minimum floors; multinational civilian campus; eco-friendly profile; civil-protection campus; safe exclusion of military typologies; 2D polygon boundary exports and AC1015 DXF parser compatibility.
+
+
+## v45 geometry / typology and AutoCAD 2007 validation
+- Plot geometries: square, rectangle, circle, regular triangle, regular pentagon, regular octagon.
+- Civilian typologies: residential, duplex, triplex, commercial, multinational corporate, education, healthcare, civic, hotel, mixed-use, eco-friendly, non-hazardous industrial and civil-protection/emergency-logistics campus.
+- Military base/weapon/force-protection design excluded; public civil-protection substitute.
+- 2D floor-plan and 3D massing DXF headers set to AC1015 / R2000 and metre units for opening in AutoCAD 2007.
+- Polygon boundaries preserved in canvas, SVG, 2D DXF and 3D massing exports.
+
+
+Additional deterministic v45 geometry validation: all six plot types produced correct area/perimeter and expected vertices; every generated zoning rectangle corner remained inside its conceptual footprint. Duplex (min. 2 floors), triplex (min. 3 floors), multinational civilian corporate, eco-friendly and civil-protection campus profiles passed; military profile rejected. Twelve 2D/3D DXF files were opened by ezdxf 1.4.4 as AC1015 with the expected layers/entities.

@@ -192,3 +192,6 @@ The calculator uses explicit conceptual arithmetic: plot area from selected idea
 - **Copernicus DEM:** global digital surface/elevation products at 30 m / 90 m where available; broad regional context only. Surface models may include vegetation and structures; not ground-level topographic survey, legal boundary, building setting-out or drainage design.
 - **ISRIC SoilGrids:** regional gridded soil property predictions, not site investigation, laboratory tests, groundwater logs or design bearing parameters.
 - **Engineering calculation boundary:** preliminary area/FAR/height/geometry and non-structural finish surface allowances only. No structural analysis, reinforcement, connection, foundation, fire strategy, MEP design or construction BOQ.
+
+
+Engineering Studio v45: satellite imagery/DEM is optional regional context only. It does not infer legal parcel geometry, topographic survey, soil stratigraphy, groundwater or foundation capacity. Auto-assumed plots and building archetypes are planning heuristics.

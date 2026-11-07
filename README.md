@@ -295,7 +295,7 @@ These outputs are **conceptual planning estimates, not construction drawings, te
 
 Site-context links include the Bangladesh BNBC 2020 Gazette and RAJUK GIS/planning resources, Copernicus DEM, SoilGrids and OpenStreetMap attribution. DEM and global soil datasets are regional screening inputs, not cadastral/topographic survey, borehole logs, laboratory tests, soil bearing capacity, groundwater or liquefaction assessment. Enter only verified local FAR, coverage and height limits. A licensed architect/engineer must independently perform site survey, geotechnical investigation, structural/fire/MEP/accessibility review and authority submissions before any construction decision.
 
-- PWA shell cache: `terravex-apex-shell-v44`.
+- PWA shell cache: `terravex-apex-shell-v45`.
 - Main page: `?page=engineering`.
 - The download contains exactly 99 root files.
 
@@ -325,4 +325,18 @@ The optional **Use current 3D Earth view centre** action takes the current share
 
 The studio shows a 2D typical-floor zoning preview and exports an AutoCAD-compatible AC1015 DXF in metres with ASSUMED_SITE, FOOTPRINT, zone, core, circulation, dimensions, text and notes layers. DXF entities include the required R2000 subclass markers and have been parsed with ezdxf. A separate 3D massing DXF, SVG, CSV, JSON and printable HTML safety/design report are available. The 2D layout is schematic zoning, not room-by-room, permit or construction documentation. Only non-structural finish surface allowances are estimated. No wind/seismic member design, reinforcement, beam/column/foundation/pile design, MEP or construction BOQ is generated.
 
-PWA shell cache: `terravex-apex-shell-v44`. Direct route: `?page=engineering`. For site imagery, open Live 3D Earth, pan to the project region, return to Engineering Studio and explicitly select the Earth-view centre.
+PWA shell cache: `terravex-apex-shell-v45`. Direct route: `?page=engineering`. For site imagery, open Live 3D Earth, pan to the project region, return to Engineering Studio and explicitly select the Earth-view centre.
+
+
+## Engineering Studio v45 geometry and civilian typology upgrade
+
+The Engineering Studio supports square, rectangular, circular, regular triangular, regular pentagonal and regular octagonal assumed parcel geometry; residential, duplex, triplex, commercial, multinational civilian corporate campus, education, healthcare, civic, hotel, mixed-use, eco-friendly, non-hazardous industrial and civil-protection/emergency-logistics campus typologies. The civil-protection campus is a non-military public-safety alternative. Military base, weapons, force-protection and combat-operational design is excluded.
+
+2D floor-plan and 3D conceptual massing downloads use R2000 / AC1015 DXF in metres, designed to open in AutoCAD 2007 and later. DXF is concept geometry, not a permit or construction drawing.
+
+
+## v45 geometry and expanded civilian typologies
+
+The plot-geometry selector supports square, rectangle, circular, regular triangular, regular pentagonal and regular octagonal shapes. Building typologies include residential, duplex (minimum two storeys), triplex (minimum three storeys), commercial, multinational civilian corporate campus, education, healthcare, civic/community, hotel, mixed-use, eco-friendly, non-hazardous industrial and civil-protection/emergency-logistics campus. Military-base and weapons/force-protection design is not provided.
+
+The 2D DXF export uses R2000 / AC1015 and metre units, intended to open in AutoCAD 2007 and later. Drawings remain schematic, non-structural concept plans.

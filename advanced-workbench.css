@@ -29,7 +29,7 @@
 @media(max-width:1120px){.eng-layout{grid-template-columns:1fr}.eng-visual-column{grid-row:1}.eng-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:680px){.eng-head-actions{justify-content:flex-start}.eng-form-grid{grid-template-columns:1fr 1fr}.eng-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.eng-export-grid{grid-template-columns:1fr}.eng-status-strip{gap:8px}.eng-check-list>div{grid-template-columns:1fr}.eng-check-list span{grid-column:auto}}
 
-/* TERRAVEX Engineering Studio v44 — report monitor, validated downloads and safety review */
+/* TERRAVEX Engineering Studio v45 — report monitor, validated downloads and safety review */
 .eng-report-monitor{margin:0 0 16px;padding:17px;border:1px solid rgba(91,204,218,.3);border-radius:16px;background:radial-gradient(ellipse at 86% 0,rgba(49,119,151,.20),transparent 42%),linear-gradient(145deg,#0b2031,#071522 72%);box-shadow:0 18px 48px rgba(0,0,0,.22)}
 .eng-report-header{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid rgba(127,185,207,.16)}.eng-report-header h3{margin:4px 0 5px;color:#e7f7fc;font-size:clamp(19px,2vw,25px)}.eng-report-header p{margin:0;max-width:760px;color:#91b1c3;font-size:11px;line-height:1.5}.eng-report-status{display:grid;justify-items:end;gap:6px}.eng-report-status small{color:#7ea1b5;font:10px ui-monospace,monospace}
 .eng-report-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;padding:14px 0}.eng-report-kpi{min-width:0;padding:12px 11px;border:1px solid rgba(107,184,207,.17);border-radius:11px;background:linear-gradient(145deg,rgba(17,47,66,.9),rgba(7,22,36,.95))}.eng-report-kpi small{display:block;color:#8db2c5;font:9px ui-monospace,monospace;letter-spacing:.08em}.eng-report-kpi b{display:block;margin-top:7px;color:#dff8ff;font-size:clamp(13px,1.3vw,18px);overflow-wrap:anywhere}.eng-report-kpi span{display:block;margin-top:5px;color:#7ea2b6;font-size:9px;line-height:1.4}
@@ -39,7 +39,7 @@
 @media(max-width:620px){.eng-report-monitor{padding:12px}.eng-report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.eng-report-status{justify-items:start}.eng-report-safety-row{grid-template-columns:1fr}.eng-report-safety-row em{text-align:left}.eng-report-downloads{align-items:flex-start}.eng-report-download-buttons{width:100%}.eng-report-download-buttons .btn{flex:1 1 44%}}
 
 
-/* TERRAVEX Engineering Studio v44 — two-input auto-planning and site-context presentation */
+/* TERRAVEX Engineering Studio v45 — two-input auto-planning and site-context presentation */
 .eng-quick-input-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:13px;border:1px solid rgba(102,206,218,.22);border-radius:12px;background:linear-gradient(120deg,rgba(11,42,58,.86),rgba(8,23,37,.9))}
 .eng-quick-input-grid .field{margin:0;min-width:0}.eng-quick-input-grid label{color:#b8dce8;font-size:11px}.eng-quick-input-grid input,.eng-quick-input-grid select{min-height:45px;font-size:15px;font-weight:650}
 .eng-auto-assumptions{margin-top:12px;padding:13px 14px;border:1px solid rgba(83,207,183,.24);border-radius:11px;background:linear-gradient(110deg,rgba(19,72,70,.30),rgba(9,26,42,.84));color:#abc6d3;font-size:10px;line-height:1.55}
@@ -53,3 +53,9 @@
 .eng-report-program{display:grid;gap:8px;margin-top:12px;padding:12px;border:1px solid rgba(102,186,207,.18);border-radius:10px;background:rgba(9,27,42,.58)}.eng-report-program>b{color:#a9dce9;font:9px ui-monospace,monospace;letter-spacing:.1em}.eng-program-row{display:grid;grid-template-columns:minmax(130px,.34fr) minmax(0,1fr);gap:10px;padding:8px;border-bottom:1px solid rgba(121,171,191,.12)}.eng-program-row strong{font-size:10px;color:#cce7f1}.eng-program-row span{font-size:10px;line-height:1.5;color:#91adbf}.eng-program-zones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.eng-program-zones>span{display:grid;gap:5px;padding:9px;border-radius:8px;background:rgba(18,50,69,.62);border:1px solid rgba(115,180,199,.15)}.eng-program-zones small{font:8px ui-monospace,monospace;color:#8ab2c4}.eng-program-zones b{font-size:10px;color:#d8f3f3}.eng-program-note{font-size:9px;color:#82cfc4;overflow-wrap:anywhere}
 @media(max-width:800px){.eng-auto-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.eng-program-zones{grid-template-columns:1fr}.eng-program-row{grid-template-columns:1fr}.eng-satellite-context button{width:100%}}
 @media(max-width:520px){.eng-quick-input-grid{grid-template-columns:1fr}.eng-auto-grid{grid-template-columns:1fr 1fr}.eng-auto-grid>span{padding:7px}.eng-auto-grid b{font-size:10px}}
+
+/* TERRAVEX Engineering Studio v45: geometry and typology choices. */
+.eng-quick-input-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.eng-safe-typology-note{margin-top:10px;padding:11px 13px;border:1px solid rgba(219,166,91,.25);border-radius:10px;background:rgba(87,57,22,.18);display:grid;gap:4px}.eng-safe-typology-note b{color:#f0c88f;font:9px ui-monospace,monospace;letter-spacing:.1em}.eng-safe-typology-note span{color:#b6c9d3;font-size:10px;line-height:1.5}.eng-safe-typology-note strong{color:#e7f4f8}
+@media(max-width:900px){.eng-quick-input-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.eng-quick-input-grid{grid-template-columns:1fr}}
