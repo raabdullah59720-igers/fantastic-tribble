@@ -97,7 +97,7 @@
         <label class="tve-check"><input id="tveLayerOrbits" type="checkbox" checked> Orbit objects</label>
         <label class="tve-check"><input id="tveLayerAircraft" type="checkbox" checked> Existing aircraft snapshot</label>
         <label class="tve-check"><input id="tveLayerLocation" type="checkbox" checked> My location</label>
-        <label class="tve-check"><input id="tveShareLocation" type="checkbox"> Share location to existing panels</label>
+        <label class="tve-check"><input id="tveShareLocation" type="checkbox"> Share location to existing panels</label><div class="tve-control-group tve-quality-control"><label for="tveGraphicsQuality">Graphics quality</label><select id="tveGraphicsQuality"><option value="balanced">Balanced</option><option value="high" selected>High</option><option value="ultra">Ultra</option></select></div>
       </div>
       <section class="tve-activity-console" id="tveActivityConsole" aria-label="Aggregated civil mobility layers">
         <div class="tve-activity-head"><div><b>LIVE CIVIL MOBILITY / ACTIVITY LAYERS</b><small>One Earth · shared camera · aggregated regional cells only</small></div><span class="badge warn" id="tveActivityOverallState">WAITING FOR SOURCES</span></div>
@@ -165,6 +165,7 @@
       <article class="card tvx-civil-card" id="tvxFloodPanel" tabindex="-1">
         <div class="card-head"><h3>🌊 FLOOD & RIVER INTELLIGENCE</h3><span class="badge sim" id="tvxFloodStatus">NOT REQUESTED</span></div>
         <p class="tvx-civil-desc">Bangladesh river-discharge model cells from GloFAS v4. These are daily model outputs, not water-level gauges or official flood warnings.</p>
+        <div class="tvx-civil-visual" data-visual-kind="model" aria-label="Seven-day river discharge chart from retrieved model data"><div class="tvx-civil-visual-head"><b>RIVER FLOW SIGNATURE</b><span id="tvxFloodVisualState">AWAITING MODEL</span></div><canvas id="tvxFloodVisual" width="720" height="210" role="img" aria-label="GloFAS river discharge series for available Bangladesh reference regions"></canvas><div class="tvx-civil-visual-foot"><span>DAILY MODEL DISCHARGE · m³/s</span><span>NOT A GAUGE READING</span></div></div>
         <div class="tvx-civil-metrics"><div><small>RIVER CELLS</small><b id="tvxFloodCount">—</b></div><div><small>MODEL DATE</small><b id="tvxFloodDate">—</b></div><div><small>SOURCE MODEL</small><b>GloFAS v4</b></div></div>
         <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxFloodRefresh" type="button">↻ Refresh river model</button><label class="checkrow"><input id="tvxFloodPlot" type="checkbox" checked> Show coarse cells on 3D Earth</label></div>
         <div class="tvx-civil-message" id="tvxFloodMessage" role="status" aria-live="polite">Model data has not been requested. No synthetic river values are shown.</div>
@@ -175,7 +176,8 @@
 
       <article class="card tvx-civil-card" id="tvxHumanitarianPanel" tabindex="-1">
         <div class="card-head"><h3>🧭 HUMANITARIAN RESPONSE NETWORK</h3><span class="badge warn" id="tvxHumanStatus">NOT REQUESTED</span></div>
-        <p class="tvx-civil-desc">Publicly mapped hospitals, clinics and shelter-tagged resources aggregated into broad geographic cells. Official shelter status must be checked with DDM. individual site locations are not shown in the 3D layer.</p>
+        <p class="tvx-civil-desc">Publicly mapped hospitals, clinics and shelter-tagged resources aggregated into broad geographic cells. Official shelter status must be checked with DDM. Individual site locations are not shown in the 3D layer.</p>
+        <div class="tvx-civil-visual" data-visual-kind="aggregate" aria-label="Coarse aggregated public-resource map"><div class="tvx-civil-visual-head"><b>NATIONAL RESOURCE DISTRIBUTION</b><span id="tvxHumanVisualState">AWAITING MAP DATA</span></div><canvas id="tvxHumanVisual" width="720" height="210" role="img" aria-label="Approximate 20 kilometre aggregated public-resource grid for Bangladesh"></canvas><div class="tvx-civil-visual-foot"><span>≈20 KM AGGREGATION CELLS</span><span>NO FACILITY-LEVEL MARKERS</span></div></div>
         <div class="tvx-civil-metrics"><div><small>MAPPED RECORDS</small><b id="tvxHumanCount">—</b></div><div><small>COARSE CELLS</small><b id="tvxHumanCells">—</b></div><div><small>GRID SIZE</small><b>≈20 km</b></div></div>
         <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxHumanRefresh" type="button">↻ Load public resource summary</button><label class="checkrow"><input id="tvxHumanPlot" type="checkbox" checked> Show aggregate cells on 3D Earth</label></div>
         <div class="tvx-civil-message" id="tvxHumanMessage" role="status" aria-live="polite">No public-resource query has been made. Individual facility locations and personal contacts are not plotted.</div>
@@ -187,6 +189,7 @@
       <article class="card tvx-civil-card" id="tvxForestPanel" tabindex="-1">
         <div class="card-head"><h3>🌳 FOREST & BIODIVERSITY MONITOR</h3><span class="badge sim" id="tvxForestStatus">NOT REQUESTED</span></div>
         <p class="tvx-civil-desc">Published GBIF biodiversity occurrence records for broad Bangladesh ecosystem regions, with optional dated satellite surface imagery.</p>
+        <div class="tvx-civil-visual" data-visual-kind="catalogue" aria-label="Biodiversity occurrence catalogue comparison"><div class="tvx-civil-visual-head"><b>ECOSYSTEM RECORD COMPARISON</b><span id="tvxForestVisualState">AWAITING CATALOGUE</span></div><canvas id="tvxForestVisual" width="720" height="210" role="img" aria-label="GBIF published occurrence record counts for four broad ecosystem regions"></canvas><div class="tvx-civil-visual-foot"><span>PUBLISHED OCCURRENCE RECORDS</span><span>NOT ANIMAL POPULATION COUNTS</span></div></div>
         <div class="tvx-civil-metrics"><div><small>REGIONS RETURNED</small><b id="tvxForestRegions">—</b></div><div><small>OCCURRENCE RECORDS</small><b id="tvxForestCount">—</b></div><div><small>QUERY PERIOD</small><b>2000–2026</b></div></div>
         <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxForestRefresh" type="button">↻ Refresh GBIF records</button><label class="checkrow"><input id="tvxForestPlot" type="checkbox" checked> Show broad regions on 3D Earth</label></div>
         <div class="tvx-civil-message" id="tvxForestMessage" role="status" aria-live="polite">No GBIF query has been made. Occurrence records are not animal counts or live sightings.</div>
@@ -198,6 +201,7 @@
       <article class="card tvx-civil-card" id="tvxOceanPanel" tabindex="-1">
         <div class="card-head"><h3>🌐 OCEAN & COASTAL INTELLIGENCE</h3><span class="badge sim" id="tvxOceanStatus">WAITING FOR MODEL</span></div>
         <p class="tvx-civil-desc">Reuses the existing Bay of Bengal marine model layer on the same 3D Earth; no separate globe or camera is created.</p>
+        <div class="tvx-civil-visual" data-visual-kind="forecast" aria-label="Bay of Bengal wave model comparison"><div class="tvx-civil-visual-head"><b>BAY OF BENGAL WAVE FIELD</b><span id="tvxOceanVisualState">WAITING FOR MODEL</span></div><canvas id="tvxOceanVisual" width="720" height="210" role="img" aria-label="Wave-height model values across broad marine grid cells"></canvas><div class="tvx-civil-visual-foot"><span>MODEL WAVE HEIGHT · METRES</span><span>NOT SHIP TRAFFIC</span></div></div>
         <div class="tvx-civil-metrics tvx-civil-metrics-four"><div><small>MODEL CELLS</small><b id="tvxOceanCells">—</b></div><div><small>MEAN WAVE</small><b id="tvxOceanWave">—</b></div><div><small>MEAN CURRENT</small><b id="tvxOceanCurrent">—</b></div><div><small>SEA TEMP.</small><b id="tvxOceanSst">—</b></div></div>
         <div class="tvx-civil-metrics tvx-civil-metrics-one"><div><small>MODELED SEA LEVEL · RELATIVE TO GLOBAL MEAN</small><b id="tvxOceanSeaLevel">—</b></div></div>
         <div class="tvx-civil-actions"><button class="btn primary small-button" id="tvxOceanRefresh" type="button">↻ Refresh coastal model</button><label class="checkrow"><input id="tvxOceanPlot" type="checkbox" checked> Show on 3D Earth</label></div>
@@ -208,6 +212,7 @@
       <article class="card tvx-civil-card tvx-civil-archive" id="tvxArchivePanel" tabindex="-1">
         <div class="card-head"><h3>🛰 EARTH OBSERVATION ARCHIVE</h3><span class="badge" id="tvxArchiveStatus">CATALOG NOT SEARCHED</span></div>
         <p class="tvx-civil-desc">Search public Sentinel-2 or Landsat scene metadata for Bangladesh, then optionally place a dated NASA VIIRS true-colour image over the existing globe.</p>
+        <div class="tvx-civil-visual tvx-civil-archive-visual" data-visual-kind="archive" aria-label="Satellite scene preview gallery"><div class="tvx-civil-visual-head"><b>EARTH OBSERVATION SCENE GALLERY</b><span id="tvxArchiveVisualState">NO SCENES LOADED</span></div><div id="tvxArchivePreview" class="tvx-archive-preview-grid"><div class="tvx-archive-empty">Search the public catalogue to load real scene previews. No stock image is substituted.</div></div><div class="tvx-civil-visual-foot"><span>ACQUISITION-TIME METADATA</span><span>ARCHIVE · NOT LIVE VIDEO</span></div></div>
         <div class="tvx-archive-controls">
           <div class="field"><label for="tvxArchiveCollection">Satellite collection</label><select id="tvxArchiveCollection"><option value="sentinel-2-l2a">Sentinel-2 L2A</option><option value="landsat-c2-l2">Landsat Collection 2 L2</option></select></div>
           <div class="field"><label for="tvxArchiveStart">From</label><input id="tvxArchiveStart" type="date"></div>

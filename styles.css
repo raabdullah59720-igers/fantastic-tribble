@@ -115,3 +115,47 @@
 .tvx-civil-highlight{outline:2px solid #42d4e4!important;outline-offset:3px;box-shadow:0 0 0 5px #42d4e422,0 12px 36px #0005!important;transition:outline-color .2s,box-shadow .2s}
 @media(max-width:1000px){.tvx-civil-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:640px){.tvx-civil-entrybar-head{align-items:flex-start;flex-direction:column}.tvx-civil-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}.tvx-civil-shortcuts button{justify-content:flex-start}.tvx-civil-top-launch span{display:none}}
+
+
+/* v41 visual studio: premium, responsive data visualisation for the five civil panels. */
+.tvx-civil-systems{position:relative;isolation:isolate}
+.tvx-civil-heading{padding:14px 16px;border:1px solid rgba(80,183,214,.25);border-radius:16px;background:radial-gradient(ellipse at 12% 0%,rgba(28,143,166,.18),transparent 48%),linear-gradient(120deg,rgba(8,30,46,.96),rgba(7,19,33,.98));box-shadow:0 16px 38px rgba(0,0,0,.22),inset 0 1px rgba(215,248,255,.04)}
+.tvx-civil-heading h3{font-size:clamp(18px,2vw,24px);letter-spacing:.015em}
+.tvx-civil-grid{gap:16px}
+.tvx-civil-card{position:relative;overflow:hidden;gap:13px;padding:16px;border-color:rgba(83,168,202,.30);background:radial-gradient(ellipse at 100% 0%,rgba(25,123,157,.16),transparent 42%),linear-gradient(148deg,rgba(13,34,52,.985),rgba(5,17,30,.99));box-shadow:0 14px 34px rgba(0,0,0,.23),inset 0 1px rgba(218,247,255,.045);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.tvx-civil-card:hover{transform:translateY(-2px);border-color:rgba(79,203,223,.52);box-shadow:0 18px 42px rgba(0,0,0,.30),0 0 0 1px rgba(60,199,222,.08),inset 0 1px rgba(218,247,255,.06)}
+.tvx-civil-card .card-head{position:relative;z-index:1;align-items:center}
+.tvx-civil-card h3{font-size:13px;letter-spacing:.065em;color:#e9f8ff}
+.tvx-civil-desc{font-size:12px;line-height:1.65;color:#abc1d0;max-width:80ch}
+.tvx-civil-visual{position:relative;overflow:hidden;min-height:160px;border:1px solid rgba(66,173,206,.27);border-radius:13px;background:radial-gradient(ellipse at 50% 110%,rgba(14,115,145,.21),transparent 58%),linear-gradient(180deg,rgba(4,18,31,.97),rgba(7,27,42,.96));box-shadow:inset 0 0 34px rgba(23,114,149,.10),0 7px 18px rgba(0,0,0,.16)}
+.tvx-civil-visual::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(84,170,204,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(84,170,204,.075) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.65),transparent 95%)}
+.tvx-civil-visual::after{content:"";position:absolute;left:-35%;right:-35%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(104,226,241,.55),transparent);opacity:.5;animation:tvxCivilScan 8s linear infinite;pointer-events:none}
+@keyframes tvxCivilScan{0%{transform:translateY(12px)}100%{transform:translateY(170px)}}
+.tvx-civil-visual-head,.tvx-civil-visual-foot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px 0}
+.tvx-civil-visual-head b{font-size:9px;letter-spacing:.12em;color:#c7eaf6}
+.tvx-civil-visual-head span,.tvx-civil-visual-foot span{font-size:8px;letter-spacing:.08em;color:#82aabd;text-align:right}
+.tvx-civil-visual canvas{position:relative;z-index:1;display:block;width:100%;height:auto;min-height:118px;max-height:190px;aspect-ratio:24/7}
+.tvx-civil-visual-foot{padding:0 12px 10px;opacity:.86}
+.tvx-civil-visual-foot span{font-size:7px}
+.tvx-archive-preview-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px 12px 12px;min-height:128px}
+.tvx-archive-preview-card{min-width:0;overflow:hidden;border:1px solid rgba(95,173,205,.22);border-radius:9px;background:rgba(5,18,31,.68)}
+.tvx-archive-preview-card img{display:block;width:100%;height:78px;object-fit:cover;background:#071b2b}
+.tvx-archive-preview-card b{display:block;padding:6px 7px 2px;color:#d9f1fb;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tvx-archive-preview-card small{display:block;padding:0 7px 7px;color:#8eafc1;font-size:8px;line-height:1.35}
+.tvx-archive-preview-card a{color:#7ed8f0;text-decoration:none}
+.tvx-archive-empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;min-height:105px;padding:18px;text-align:center;border:1px dashed rgba(90,165,196,.25);border-radius:9px;color:#8aaabc;font-size:11px;line-height:1.6}
+.tvx-civil-metrics>div{background:linear-gradient(145deg,rgba(22,63,87,.66),rgba(9,30,47,.72));border-color:rgba(85,165,198,.22);box-shadow:inset 0 1px rgba(220,248,255,.035)}
+.tvx-civil-metrics b{font-variant-numeric:tabular-nums;font-size:17px}
+.tvx-civil-message{background:linear-gradient(100deg,rgba(25,78,105,.24),rgba(8,34,51,.28));font-size:11px;min-height:38px}
+.tvx-civil-card .note{font-size:10px;color:#91aabc;line-height:1.6}
+.tvx-civil-card .tvx-civil-actions .btn{min-height:34px}
+.tvx-civil-archive{grid-column:1/-1}
+.tvx-archive-results{grid-template-columns:repeat(2,minmax(0,1fr));max-height:310px}
+.tvx-archive-item{min-height:66px}
+.tve-quality-control{display:flex;align-items:center;gap:7px;padding:0 4px}
+.tve-quality-control label{font-size:10px;color:#91aabd;white-space:nowrap}
+.tve-quality-control select{min-width:90px;background:#0b2335;border:1px solid #2d617b;border-radius:7px;color:#dff5ff;padding:6px 8px;font-size:10px}
+.tvx-civil-card .tvx-civil-visual{margin-top:1px}
+@media(max-width:900px){.tvx-civil-grid{grid-template-columns:1fr}.tvx-archive-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tvx-archive-results{grid-template-columns:1fr}}
+@media(max-width:640px){.tvx-civil-card{padding:12px}.tvx-civil-visual{min-height:150px}.tvx-civil-visual canvas{height:auto;min-height:118px;max-height:140px}.tvx-archive-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tvx-civil-visual-head span,.tvx-civil-visual-foot span{font-size:7px}.tve-quality-control{width:100%;justify-content:flex-start}}
+@media(prefers-reduced-motion:reduce){.tvx-civil-visual::after{animation:none}.tvx-civil-card{transition:none}}

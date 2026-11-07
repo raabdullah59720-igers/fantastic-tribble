@@ -63,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v40': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v41': errors.append('Unexpected service-worker cache version '+cache)
 if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
@@ -77,15 +77,15 @@ if html.find('id="tvxCivilSystems"') < html.find('id="page-earthcommand"') or ht
 # v40: the panels must be directly reachable, not only buried far below the command page.
 for panel_key, element_id in [('all','tvxCivilSystems'),('flood','tvxFloodPanel'),('humanitarian','tvxHumanitarianPanel'),('forest','tvxForestPanel'),('ocean','tvxOceanPanel'),('archive','tvxArchivePanel')]:
     if f"{panel_key}:'{element_id}'" not in (root/'app.js').read_text(encoding='utf-8'):
-        errors.append('v40 missing direct civil panel route mapping: '+panel_key)
+        errors.append('v41 missing direct civil panel route mapping: '+panel_key)
     if f'data-civil-target="{element_id}"' not in html:
-        errors.append('v40 missing visible launch shortcut for '+element_id)
+        errors.append('v41 missing visible launch shortcut for '+element_id)
 if not re.search(r'id="openCivilPanelsTop"[^>]*data-civil-target="tvxCivilSystems"',html):
-    errors.append('v40 persistent top-bar Civil 3D shortcut missing')
+    errors.append('v41 persistent top-bar Civil 3D shortcut missing')
 if not re.search(r'id="openCivilPanelsOverview"[^>]*data-civil-target="tvxCivilSystems"',html):
-    errors.append('v40 Overview Civil 3D launch card missing')
+    errors.append('v41 Overview Civil 3D launch card missing')
 if 'function navigate(name,civilTarget=' not in (root/'app.js').read_text(encoding='utf-8'):
-    errors.append('v40 route controller does not support civil-panel navigation')
+    errors.append('v41 route controller does not support civil-panel navigation')
 
 # Bangladesh Satellite 3D panel must be registered, reachable and backed by the cached module.
 bd_nav = bool(re.search(r'data-page="bangladeshsats"', html))
@@ -117,6 +117,22 @@ if './bangladesh-satellite-intel.js' not in paths:
     errors.append('Shared Bangladesh/Russian satellite module missing from required PWA shell')
 report.append('Russian Satellite Bangladesh panel: separate nav/page/route + 3D/orbit/imagery provenance checks')
 
+# v41: premium visual canvases must be data-driven, distinct, and attached to the existing civil panels.
+for panel_id,canvas_id,state_id in [('tvxFloodPanel','tvxFloodVisual','tvxFloodVisualState'),('tvxHumanitarianPanel','tvxHumanVisual','tvxHumanVisualState'),('tvxForestPanel','tvxForestVisual','tvxForestVisualState'),('tvxOceanPanel','tvxOceanVisual','tvxOceanVisualState'),('tvxArchivePanel','tvxArchivePreview','tvxArchiveVisualState')]:
+    if f'id="{panel_id}"' not in html or f'id="{canvas_id}"' not in html or f'id="{state_id}"' not in html:
+        errors.append('v41 missing high-graphics visual stage for '+panel_id)
+app_source=(root/'app.js').read_text(encoding='utf-8')
+for token in ('function drawCivilSeries','function drawCivilGrid','function drawCivilBars','function updateCivilArchiveVisual','function applyGraphicsQuality','loadHumanitarianSummary();'):
+    if token not in app_source: errors.append('v41 missing live visual / render quality behaviour: '+token)
+if 'series:times.map' not in app_source: errors.append('v41 flood chart does not retain source-provided daily series')
+if 'samples:rows.map' not in app_source: errors.append('v41 ocean chart does not use returned model cells')
+if 'NO SYNTHETIC OBSERVATIONS' not in app_source: errors.append('v41 chart empty-state must reject fabricated data')
+if 'assets.thumbnail' not in app_source: errors.append('v41 archive preview does not use source-provided preview assets')
+if 'id="tveGraphicsQuality"' not in html: errors.append('v41 render quality selector missing')
+if "if($('page-earthcommand')?.classList.contains('active'))enter();" not in app_source: errors.append('v41 direct startup route does not enter the shared civil 3D command module')
+report.append('v41 visual studio: five source-driven charts/gallery, high/ultra render profiles, auto humanitarian load and honest empty states')
+
+
 report.append(f'Service worker: {cache}; required local assets={len(paths)}; missing={len(missing_sw)}')
 # Runtime diagnostics must inspect the same service-worker version.
 adv=(root/'advanced-workbench.js').read_text(encoding='utf-8')
@@ -145,16 +161,16 @@ for token in ('function renderAirDensity(','function validateAggregateGeoJSON(',
     if token not in app_js: errors.append('Missing aggregate-only mobility validation: '+token)
 if '1-degree' not in (root/'DATA_SOURCES.md').read_text(encoding='utf-8'): errors.append('Air activity aggregation methodology missing')
 if 'Bay of Bengal marine safety' not in (root/'index.html').read_text(encoding='utf-8'): errors.append('Marine safety layer label missing')
-if 'terravex-apex-shell-v40' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v40')
+if 'terravex-apex-shell-v41' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v41')
 report.append('v38 same-globe civil activity layers: air density, aggregate providers and Bay of Bengal marine model remain registered')
 # v39 five environmental/civil panels sharing one Cesium viewer.
 for token in ('tvxCivilSystems','tvxFloodPanel','tvxHumanitarianPanel','tvxForestPanel','tvxOceanPanel','tvxArchivePanel','tvxFloodRefresh','tvxHumanRefresh','tvxForestRefresh','tvxOceanRefresh','tvxArchiveSearch','tvxArchiveShowImage'):
     if f'id="{token}"' not in html: errors.append('Missing v39 civil panel UI element: '+token)
 for token in ('function loadFloodRiverModel(','flood-api.open-meteo.com/v1/flood','function loadHumanitarianSummary(','overpass-api.de/api/interpreter','spatialResolution','function loadBiodiversitySummary(','api.gbif.org/v1/occurrence/search','function searchEarthObservationArchive(','earth-search.aws.element84.com/v1/search','function showNasaArchiveImagery(','gibs.earthdata.nasa.gov/wmts/epsg3857/best/','function updateCivilOceanPanel(','getViewer:()=>S.viewer','getCesium:()=>window.Cesium'):
     if token not in app_js: errors.append('Missing v39 civil panel behaviour: '+token)
-for token in ('individual site locations are not shown','not animal counts or live sightings','not river-stage height','not live video'):
+for token in ('Individual site locations are not shown','not animal counts or live sightings','not river-stage height','not live video'):
     if token not in html and token not in app_js: errors.append('Missing v39 data-limitation disclosure: '+token)
-if 'terravex-apex-shell-v40' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v40')
+if 'terravex-apex-shell-v41' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v41')
 report.append('v39 civil panels: GloFAS flood model, DDM/OSM humanitarian aggregates, GBIF regional records, existing marine model and NASA GIBS/STAC archive use the shared Cesium engine; source-limitation disclosures checked')
 
 # Manifest app shortcuts must target existing navigation pages.
@@ -203,7 +219,7 @@ if not et_test.exists():
  errors.append('Missing Earth Traffic monitor test script')
  report.append('Earth Traffic 3D tests: missing')
 else:
- et_run=subprocess.run(['node',str(et_test)],text=True,capture_output=True)
+ et_run=subprocess.run(['node',str(et_test)],text=True,capture_output=True,cwd=root)
  if et_run.returncode: errors.append('Earth Traffic 3D tests failed: '+(et_run.stderr.strip() or et_run.stdout.strip()))
  report.append('Earth Traffic 3D tests: '+(et_run.stdout.strip().splitlines()[-1] if et_run.returncode==0 and et_run.stdout.strip() else 'FAIL'))
 print('\n'.join(report))
