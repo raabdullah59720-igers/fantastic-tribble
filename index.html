@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="lightning-nowcast-lab.css">
 <link rel="stylesheet" href="earth-systems-upgrade.css">
 <link rel="stylesheet" href="advanced-workbench.css">
+<link rel="stylesheet" href="engineering-depth-system.css?v=47">
+<link rel="stylesheet" href="architecture-form-studio.css?v=48">
 <link rel="stylesheet" href="hazard-intelligence.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -1015,7 +1017,7 @@
       </div>
       <div class="card scr-auto-relay-panel">
         <div class="scr-section-title"><h3>ONE-ROOM VOICE LINK</h3><span class="scr-chip">AUTOMATIC SIGNALLING</span></div>
-        <p class="muted">This smoother mode uses a small WebSocket signaling service to exchange WebRTC negotiation automatically. Deploy the included <code>relay-server</code> first; the service forwards call setup metadata only, not audio. Direct media may still need an authorised TURN relay on restrictive networks.</p>
+        <p class="muted">This smoother mode uses a small WebSocket signaling service to exchange WebRTC negotiation automatically. Deploy the included root-level <code>server.js</code> service using <code>render.yaml</code> first; the service forwards call setup metadata only, not audio. Direct media may still need an authorised TURN relay on restrictive networks.</p>
         <div class="scr-field"><label for="scrRelayEndpoint">Signaling server WSS/WS URL</label><input id="scrRelayEndpoint" type="url" placeholder="wss://your-relay-service.example.com" autocomplete="off" spellcheck="false"><small class="scr-hint">On the bundled local launcher, ws://127.0.0.1:8787 is prefilled. Hosted HTTPS apps need a public wss:// endpoint.</small></div>
         <div class="scr-field"><label for="scrRoomCode">Room code</label><input id="scrRoomCode" maxlength="12" placeholder="HOST CREATES CODE · GUEST ENTERS IT" autocomplete="off" spellcheck="false"></div>
         <div class="scr-field"><label for="scrTurnServers">Optional ICE/TURN server JSON (advanced; credentials are memory-only)</label><textarea id="scrTurnServers" rows="3" spellcheck="false" placeholder='[{"urls":"turns:your-turn-host:5349","username":"short-lived-user","credential":"short-lived-secret"}]'></textarea><small class="scr-hint">Leave blank to try STUN-only direct connectivity. Some NAT/firewalls require a TURN service you control. Never put permanent secrets in a public repository.</small></div>
@@ -1203,7 +1205,155 @@
     <div class="eng-export-grid"><div><b>2D AUTO-CAD FLOOR PLAN · DXF</b><span>AutoCAD 2007-compatible legacy ASCII R12 / AC1009 DXF · drawing units are metres · layers: ASSUMED_SITE, FOOTPRINT, ZONE_A, ZONE_B, CORE, CIRCULATION, DIMENSIONS, TEXT and NOTES. Includes an automatically generated functional zoning plan.</span><button class="btn primary" id="engExportPlanDxf">↓ Download 2D floor plan DXF</button></div><div><b>3D CONCEPT MASSING · DXF</b><span>Separate conceptual 3D envelope and level outlines. Both drawings are schematic and not construction documents.</span><button class="btn" id="engExportDxf">↓ Download 3D massing DXF</button></div><div><b>COMPLETE ENGINEERING CONCEPT REPORT</b><span>Assumptions, area conversions, design-program description, safety flags, site-context status and preliminary finish allowances.</span><button class="btn" id="engExportReport">↓ Download full report</button></div></div>
     <div class="eng-disclaimer-bottom">The DXF contains only schematic architectural massing geometry. It contains no structural members, reinforcement, foundation sizing, connection details, military/naval facility layouts or construction-ready details. A high-rise concept must be independently assessed for wind, seismic, soil, groundwater, settlement, fire/life safety, egress, lifts, vibration, progressive collapse, services, accessibility, code and approvals before any design decision.</div>
   </div>
-  <div class="eng-reference-strip"><b>REFERENCE LIBRARY</b><a href="https://www.dpp.gov.bd/bgpress/index.php/document/get_extraordinary/39201" target="_blank" rel="noopener">BNBC 2020 official gazette</a><a href="https://rajuk.gov.bd/" target="_blank" rel="noopener">RAJUK / local planning</a><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM" target="_blank" rel="noopener">Copernicus DEM</a><a href="https://isric.org/explore/soilgrids" target="_blank" rel="noopener">SoilGrids</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap attribution</a></div>
+  <section class="tvx-eng-depth" id="tvxEngDepth" aria-labelledby="tvxEngDepthTitle">
+  <div class="tvx-eng-depth-head"><div><div class="tvx-eng-kicker">TERRAVEX APEX / ENGINEERING SECTOR / V47</div><h3 id="tvxEngDepthTitle">Integrated Civil Engineering Analysis & Quantity System</h3><p>Separate companion to the existing v46 architectural model. Synchronise the selected building geometry, add measured or engineer-supplied parameters, inspect source provenance, calculate preliminary gravity-load and material take-offs, then export schedules and an A3 CAD summary sheet.</p></div><span class="badge sim">ENGINEERING COMPANION · PRELIMINARY</span></div>
+  <div class="tvx-eng-warning"><b>Engineering boundary:</b> this module is a transparent preliminary screening and quantity take-off tool, not an autonomous structural designer. It does not determine safe beam/column sizes, reinforcement spacing, anchorage, seismic/wind design, pile capacity or a construction-ready foundation. Do not build or procure from its outputs. A Bangladesh-registered/appropriately qualified project team must verify survey, geotechnical data, governing code, all structural calculations, detailing and authority approvals.</div>
+
+  <div class="tvx-eng-grid">
+
+    <article class="tvx-eng-card tvx-eng-wide tvx-arch-studio" id="tvxArchFormStudio" aria-labelledby="tvxArchTitle">
+      <div class="tvx-eng-subhead"><h4 id="tvxArchTitle">00 / ADAPTIVE ARCHITECTURE FORM & DRAWING TYPOGRAPHY</h4><span>ANALYSIS-DRIVEN CONCEPT OPTIONS</span></div>
+      <p class="tvx-arch-intro">Compare the available architectural footprint families using the current building concept. Candidate forms preserve the same assumed site area and coverage while reporting perimeter, compactness, indicative facade envelope, and approximate structural-grid module fit. Choose a priority, review the ranking, then apply a shape to the existing Design Studio.</p>
+      <div class="tvx-eng-fields tvx-arch-controls">
+        <div class="tvx-eng-field"><label for="tvxArchPriority">Form optimization objective</label><select id="tvxArchPriority"><option value="balanced">Balanced planning efficiency</option><option value="compact">Minimize envelope perimeter</option><option value="grid">Regular structural-grid fit</option><option value="facade">Reduce facade envelope allowance</option></select></div>
+        <div class="tvx-eng-field"><label for="tvxArchGridModule">Preferred planning / structural grid module (m)</label><input id="tvxArchGridModule" type="number" min="0" max="30" step="0.1" value="6"><small>Concept bay module only. Actual spans, column locations and member sizes require structural modelling.</small></div>
+        <div class="tvx-eng-field"><label for="tvxArchFontStyle">Drawing alphabet / lettering style</label><select id="tvxArchFontStyle"><option value="technical">Technical single-stroke</option><option value="architectural">Architectural Roman</option><option value="standard">Standard clear lettering</option><option value="monospaced">Monospaced engineering schedules</option></select></div>
+        <div class="tvx-eng-field"><label>Current Design Studio geometry</label><div class="tvx-arch-current" id="tvxArchCurrent">Waiting for the existing concept model…</div></div>
+      </div>
+      <div class="tvx-arch-toolbar"><button class="btn primary" id="tvxArchAnalyze" type="button">↻ Analyze architectural forms</button><button class="btn" id="tvxArchApplyRecommended" type="button" disabled>Apply highest-ranked concept form</button><span id="tvxArchStatus" class="tvx-eng-status warn" role="status">AWAITING CURRENT DESIGN MODEL</span></div>
+      <div class="tvx-arch-summary" id="tvxArchSummary"><div class="tvx-arch-placeholder">Run the existing Design Studio calculation first. Candidate comparisons use its latest area, coverage, storeys and typology.</div></div>
+      <div class="tvx-arch-candidates" id="tvxArchCandidates" aria-live="polite"></div>
+      <div class="tvx-arch-equations">
+        <b>ENGINEERING / MATHEMATICAL BASIS</b>
+        <div><code>P/A ratio = P / A</code> · <code>Compactness C = 4πA / P²</code> · <code>Facade area ≈ Pfootprint × building height</code></div>
+        <div><code>Grid fit = 100 × (1 − normalized bay residual)</code> · <code>Form index = weighted compactness + grid fit + simplicity + symmetry</code></div>
+        <small>These are comparative architectural-form indicators, not wind coefficients, seismic response, load-path analysis, finite-element results, member capacities, code checks or proof of structural safety. The ranking is only as reliable as the supplied concept inputs.</small>
+      </div>
+      <div class="tvx-arch-type-sample" id="tvxArchTypeSample"><span>LETTERING PREVIEW</span><strong>Aa Bb Cc · 0123456789</strong><small>Selected style is applied to the 2D plan preview, SVG, engineering report and AutoCAD R12 text-style references. CAD uses standard SHX font filenames; the selected font must exist on the target computer.</small></div>
+      <div class="tvx-eng-warning"><b>Structural safety gate:</b> no candidate is labelled “safe” or “approved”. Before a real building is selected for construction, the project team must verify site boundary/setbacks, architectural function and egress, wind and seismic actions, diaphragm/load path, torsion, drift, stability, progressive-collapse robustness, foundations/settlement, fire and accessibility requirements, MEP coordination, constructability and the governing authority's code provisions.</div>
+    </article>
+
+    <article class="tvx-eng-card tvx-eng-wide">
+      <div class="tvx-eng-subhead"><h4>01 / LOCATION & REMOTE-SENSING INTELLIGENCE</h4><span>USER-CONTROLLED COORDINATES · NO SILENT GPS</span></div>
+      <div class="tvx-eng-fields">
+        <div class="tvx-eng-field"><label for="tvxSiteLat">Site latitude · decimal degrees</label><input id="tvxSiteLat" type="number" min="-90" max="90" step="0.000001" placeholder="e.g. 23.8103"></div>
+        <div class="tvx-eng-field"><label for="tvxSiteLon">Site longitude · decimal degrees</label><input id="tvxSiteLon" type="number" min="-180" max="180" step="0.000001" placeholder="e.g. 90.4125"></div>
+      </div>
+      <div class="tvx-eng-actions"><button class="btn" id="tvxEngUseGps" type="button">⌖ Request device GPS</button><button class="btn primary" id="tvxEngSiteFetch" type="button">🛰 Run public site-source checks</button><button class="btn" id="tvxEngSyncCoordinates" type="button">Copy coordinates to existing concept</button></div>
+      <div id="tvxSiteStatus" class="tvx-eng-status warn">NO SITE SELECTED · Enter coordinates or explicitly grant browser GPS permission.</div>
+      <p class="tvx-eng-muted">Selected coordinates: <b id="tvxSiteSourceLat">NOT PROVIDED</b>. Satellite catalogue metadata, regional DEM and gridded soil predictions are context only. They do not define a legal plot, surveyed levels, groundwater, soil strata or allowable bearing pressure.</p>
+      <div class="tvx-eng-source-grid">
+        <div class="tvx-eng-source" id="tvxSiteSentinel"><small>SENTINEL-2 L2A CATALOGUE</small><b>Not queried</b><span>Copernicus Data Space STAC metadata, acquisition date and cloud-cover attribute where returned.</span></div>
+        <div class="tvx-eng-source" id="tvxSiteElevation"><small>REGIONAL ELEVATION MODEL</small><b>Not queried</b><span>Open-Meteo Elevation API based on Copernicus GLO-90, around 90 m resolution.</span></div>
+        <div class="tvx-eng-source" id="tvxSiteSoil"><small>REGIONAL SOIL-GRID CONTEXT</small><b>REST API paused</b><span>ISRIC SoilGrids maps are available through the official visual map/WMS/WCS services; the beta point REST API is currently paused. No bearing value is inferred. <a href="https://soilgrids.org/" target="_blank" rel="noopener">Open SoilGrids explorer</a></span></div>
+      </div>
+    </article>
+
+    <article class="tvx-eng-card">
+      <div class="tvx-eng-subhead"><h4>02 / DESIGN BASIS & GRAVITY LOAD SCREEN</h4><span>INPUTS ARE USER-EDITABLE</span></div>
+      <div class="tvx-eng-fields">
+        <div class="tvx-eng-field"><label for="tvxCodeBasis">Reference code for engineer review</label><select id="tvxCodeBasis"><option>Bangladesh BNBC 2020</option><option>ACI CODE-318-25 (if adopted)</option><option>ASCE/SEI 7-22 (if adopted)</option><option>Eurocodes / National Annex (project-dependent)</option></select><small>Reference selector only. No automatic code-compliance claim. Confirm the applicable jurisdiction, including RAJUK regulations for sites within its control area.</small></div>
+        <div class="tvx-eng-field"><label for="tvxLoadFloors">Storeys</label><input id="tvxLoadFloors" type="number" min="1" max="100" step="1" value="8"></div>
+        <div class="tvx-eng-field"><label for="tvxLoadArea">Typical floor plate area (m²)</label><input id="tvxLoadArea" type="number" min="0.01" step="0.01" value="720"></div>
+        <div class="tvx-eng-field"><label for="tvxDeadLoad">Dead load Gk (kN/m²)</label><input id="tvxDeadLoad" type="number" min="0" step="0.1" value="5"><small>Sample scenario input only. Replace with a verified load schedule.</small></div>
+        <div class="tvx-eng-field"><label for="tvxLiveLoad">Imposed/live load Qk (kN/m²)</label><input id="tvxLiveLoad" type="number" min="0" step="0.1" value="2"><small>Occupancy-specific code value must be independently selected.</small></div>
+        <div class="tvx-eng-field"><label for="tvxDeadFactor">Dead-load factor γG</label><input id="tvxDeadFactor" type="number" min="0" max="5" step="0.05" value="1.2"></div>
+        <div class="tvx-eng-field"><label for="tvxLiveFactor">Live-load factor γQ</label><input id="tvxLiveFactor" type="number" min="0" max="5" step="0.05" value="1.6"><small>Illustrative combination only, not a BNBC-certified load case.</small></div>
+        <div class="tvx-eng-field"><label for="tvxGridX">Interior column tributary grid X (m)</label><input id="tvxGridX" type="number" min="0.1" step="0.1" value="6"></div>
+        <div class="tvx-eng-field"><label for="tvxGridY">Interior column tributary grid Y (m)</label><input id="tvxGridY" type="number" min="0.1" step="0.1" value="6"></div>
+      </div>
+      <div class="tvx-eng-actions"><button class="btn" id="tvxEngSyncConcept" type="button">↻ Sync selected v46 building model</button><button class="btn primary" id="tvxEngCalculate" type="button">Calculate analysis & quantities</button></div>
+      <p id="tvxEngSyncNote" class="tvx-eng-muted">The base design will be imported when available. No structure or geometry is silently changed.</p>
+    </article>
+
+    <article class="tvx-eng-card">
+      <div class="tvx-eng-subhead"><h4>03 / STRUCTURAL CONCRETE GEOMETRY TAKE-OFF</h4><span>ENTER ACTUAL SCHEDULE DIMENSIONS</span></div>
+      <div class="tvx-eng-fields">
+        <div class="tvx-eng-field"><label for="tvxSlabArea">Total slab area all levels (m²)</label><input id="tvxSlabArea" type="number" min="0" step="0.01" value="0"></div>
+        <div class="tvx-eng-field"><label for="tvxSlabThickness">Slab thickness (m)</label><input id="tvxSlabThickness" type="number" min="0" max="2" step="0.01" value="0.15"></div>
+        <div class="tvx-eng-field"><label for="tvxBeamLength">Total beam length all floors (m)</label><input id="tvxBeamLength" type="number" min="0" step="0.1" value="0"></div>
+        <div class="tvx-eng-field"><label for="tvxBeamWidth">Beam width (m)</label><input id="tvxBeamWidth" type="number" min="0" max="5" step="0.01" value="0.25"></div>
+        <div class="tvx-eng-field"><label for="tvxBeamDepth">Beam overall depth (m)</label><input id="tvxBeamDepth" type="number" min="0" max="8" step="0.01" value="0.45"></div>
+        <div class="tvx-eng-field"><label for="tvxColumnCount">Total column count</label><input id="tvxColumnCount" type="number" min="0" step="1" value="0"></div>
+        <div class="tvx-eng-field"><label for="tvxColumnWidth">Column width (m)</label><input id="tvxColumnWidth" type="number" min="0" max="5" step="0.01" value="0.4"></div>
+        <div class="tvx-eng-field"><label for="tvxColumnDepth">Column depth (m)</label><input id="tvxColumnDepth" type="number" min="0" max="5" step="0.01" value="0.4"></div>
+        <div class="tvx-eng-field"><label for="tvxColumnStoreys">Column storeys</label><input id="tvxColumnStoreys" type="number" min="0" max="100" step="1" value="8"></div>
+        <div class="tvx-eng-field"><label for="tvxColumnStoreyHeight">Column height per storey (m)</label><input id="tvxColumnStoreyHeight" type="number" min="0" max="10" step="0.01" value="3.0"></div>
+        <div class="tvx-eng-field"><label for="tvxFootingCount">Footing count</label><input id="tvxFootingCount" type="number" min="0" step="1" value="0"></div>
+        <div class="tvx-eng-field"><label for="tvxFootingL">Footing length (m)</label><input id="tvxFootingL" type="number" min="0" step="0.01" value="1.8"></div>
+        <div class="tvx-eng-field"><label for="tvxFootingW">Footing width (m)</label><input id="tvxFootingW" type="number" min="0" step="0.01" value="1.8"></div>
+        <div class="tvx-eng-field"><label for="tvxFootingT">Footing thickness (m)</label><input id="tvxFootingT" type="number" min="0" step="0.01" value="0.45"></div>
+        <div class="tvx-eng-field"><label for="tvxPileCount">Total pile count</label><input id="tvxPileCount" type="number" min="0" step="1" value="0"></div>
+        <div class="tvx-eng-field"><label for="tvxPileDia">Pile diameter (m)</label><input id="tvxPileDia" type="number" min="0" step="0.01" value="0.6"></div>
+        <div class="tvx-eng-field"><label for="tvxPileLen">Pile length (m)</label><input id="tvxPileLen" type="number" min="0" step="0.1" value="18"></div>
+      </div>
+      <p class="tvx-eng-muted">Slab/beam/column/footing/pile volumes are calculated from the entered geometry only. Beam-column junction overlap, openings, haunches, caps, pile reinforcement cages, displacement and construction wastage need project-specific schedules.</p>
+    </article>
+
+    <article class="tvx-eng-card">
+      <div class="tvx-eng-subhead"><h4>04 / GEOTECHNICAL INPUTS & FOUNDATION SCREEN</h4><span>FIELD / LAB REPORT ONLY</span></div>
+      <div class="tvx-eng-fields">
+        <div class="tvx-eng-field"><label for="tvxQa">Allowable soil bearing pressure from report (kPa)</label><input id="tvxQa" type="number" min="1" max="5000" step="1" placeholder="Required from geotechnical engineer"></div>
+        <div class="tvx-eng-field"><label for="tvxPileCapacity">Allowable axial pile capacity from report (kN/pile)</label><input id="tvxPileCapacity" type="number" min="1" step="1" placeholder="Required from pile test / geotechnical report"></div>
+      </div>
+      <div class="tvx-eng-warning"><b>Not a satellite-derived result:</b> SPT N-values, corrected N60, CPT profiles, undrained shear strength, friction angle, groundwater, settlement, liquefaction, negative skin friction and axial/lateral pile resistance must come from appropriate site investigation and engineering interpretation. Soil-grid texture is not a substitute.</div>
+    </article>
+
+    <article class="tvx-eng-card">
+      <div class="tvx-eng-subhead"><h4>05 / CONCRETE MIX & WATER-CEMENT SCENARIO</h4><span>USER-DEFINED MIX PROPORTIONS</span></div>
+      <div class="tvx-eng-fields">
+        <div class="tvx-eng-field"><label for="tvxCementRatio">Cement parts</label><input id="tvxCementRatio" type="number" min="0" step="0.1" value="1"></div>
+        <div class="tvx-eng-field"><label for="tvxSandRatio">Sand parts</label><input id="tvxSandRatio" type="number" min="0" step="0.1" value="1.5"></div>
+        <div class="tvx-eng-field"><label for="tvxAggRatio">Coarse aggregate / stone parts</label><input id="tvxAggRatio" type="number" min="0" step="0.1" value="3"></div>
+        <div class="tvx-eng-field"><label for="tvxWcRatio">Water-cement ratio (mass)</label><input id="tvxWcRatio" type="number" min="0.2" max="1.2" step="0.01" value="0.5"></div>
+        <div class="tvx-eng-field"><label for="tvxDryFactor">Dry-volume factor</label><input id="tvxDryFactor" type="number" min="1" max="2.5" step="0.01" value="1.54"></div>
+        <div class="tvx-eng-field"><label for="tvxCementDensity">Cement bulk density (kg/m³)</label><input id="tvxCementDensity" type="number" min="100" max="2500" step="10" value="1440"></div>
+        <div class="tvx-eng-field"><label for="tvxBagMass">Cement bag mass (kg)</label><input id="tvxBagMass" type="number" min="1" max="100" step="1" value="50"></div>
+      </div>
+      <p class="tvx-eng-muted">The ratio is a volumetric material-estimation scenario, not a mix design or specified concrete grade. Final mix must be designed and approved using specified strength, exposure class, workability, aggregate grading/moisture, admixtures and trial batches.</p>
+    </article>
+
+    <article class="tvx-eng-card">
+      <div class="tvx-eng-subhead"><h4>06 / MASONRY & BRICK TAKE-OFF</h4><span>NET WALL VOLUME METHOD</span></div>
+      <div class="tvx-eng-fields">
+        <div class="tvx-eng-field"><label for="tvxWallLength">Total wall length (m)</label><input id="tvxWallLength" type="number" min="0" step="0.1" value="0"></div>
+        <div class="tvx-eng-field"><label for="tvxWallHeight">Wall height (m)</label><input id="tvxWallHeight" type="number" min="0" step="0.1" value="3"></div>
+        <div class="tvx-eng-field"><label for="tvxWallThickness">Wall thickness (m)</label><input id="tvxWallThickness" type="number" min="0" step="0.005" value="0.115"></div>
+        <div class="tvx-eng-field"><label for="tvxOpenings">Doors/windows area deduction (m²)</label><input id="tvxOpenings" type="number" min="0" step="0.1" value="0"></div>
+        <div class="tvx-eng-field"><label for="tvxBrickL">Brick length (m)</label><input id="tvxBrickL" type="number" min="0.05" step="0.001" value="0.24"></div>
+        <div class="tvx-eng-field"><label for="tvxBrickH">Brick height (m)</label><input id="tvxBrickH" type="number" min="0.03" step="0.001" value="0.07"></div>
+        <div class="tvx-eng-field"><label for="tvxBrickW">Brick width (m)</label><input id="tvxBrickW" type="number" min="0.05" step="0.001" value="0.115"></div>
+        <div class="tvx-eng-field"><label for="tvxJoint">Mortar joint allowance (m)</label><input id="tvxJoint" type="number" min="0" max="0.04" step="0.001" value="0.01"></div>
+      </div>
+      <p class="tvx-eng-muted">Brick count uses a volumetric modular-unit approximation. Verify locally supplied brick dimensions, bond, wall thickness/orientation, openings, breakage and mortar specification.</p>
+    </article>
+
+    <article class="tvx-eng-card tvx-eng-wide">
+      <div class="tvx-eng-subhead"><h4>07 / REINFORCEMENT BAR SCHEDULE INPUT (BBS)</h4><span>BAR LENGTHS / QUANTITIES ARE NOT DESIGNED BY SOFTWARE</span></div>
+      <div class="tvx-eng-table-wrap"><table class="tvx-eng-table tvx-eng-bbs"><thead><tr><th>Bar mark / member</th><th>Diameter (mm)</th><th>Number of bars</th><th>Cut length each (m)</th><th>Shape note</th></tr></thead><tbody>
+        <tr><td>Slab main</td><td><input id="tvxBarDia0" type="number" min="0" max="60" value="12"></td><td><input id="tvxBarCount0" type="number" min="0" value="0"></td><td><input id="tvxBarLen0" type="number" min="0" step="0.01" value="0"></td><td>Straight / user-defined</td></tr>
+        <tr><td>Beam longitudinal</td><td><input id="tvxBarDia1" type="number" min="0" max="60" value="16"></td><td><input id="tvxBarCount1" type="number" min="0" value="0"></td><td><input id="tvxBarLen1" type="number" min="0" step="0.01" value="0"></td><td>Straight / user-defined</td></tr>
+        <tr><td>Beam stirrups / links</td><td><input id="tvxBarDia2" type="number" min="0" max="60" value="10"></td><td><input id="tvxBarCount2" type="number" min="0" value="0"></td><td><input id="tvxBarLen2" type="number" min="0" step="0.01" value="0"></td><td>Closed link / user-defined cut length</td></tr>
+        <tr><td>Column longitudinal</td><td><input id="tvxBarDia3" type="number" min="0" max="60" value="20"></td><td><input id="tvxBarCount3" type="number" min="0" value="0"></td><td><input id="tvxBarLen3" type="number" min="0" step="0.01" value="0"></td><td>Straight / user-defined</td></tr>
+        <tr><td>Column ties</td><td><input id="tvxBarDia4" type="number" min="0" max="60" value="10"></td><td><input id="tvxBarCount4" type="number" min="0" value="0"></td><td><input id="tvxBarLen4" type="number" min="0" step="0.01" value="0"></td><td>Closed tie / user-defined cut length</td></tr>
+        <tr><td>Foundation / pile bars</td><td><input id="tvxBarDia5" type="number" min="0" max="60" value="12"></td><td><input id="tvxBarCount5" type="number" min="0" value="0"></td><td><input id="tvxBarLen5" type="number" min="0" step="0.01" value="0"></td><td>Longitudinal / user-defined</td></tr>
+      </tbody></table></div>
+      <p class="tvx-eng-muted">Theoretical mass formula: unit mass ≈ d²/162 kg/m (d in mm). The software totals your entered bar schedule only. Bar bending shapes, hooks, bend deductions, lap/development lengths, cover, spacing, confinement zones and code-compliant anchorage must be designed and checked by the structural engineer.</p>
+    </article>
+
+    <article class="tvx-eng-card tvx-eng-wide">
+      <div class="tvx-eng-subhead"><h4>08 / ANALYSIS OUTPUT & MATERIAL REPORT</h4><span id="tvxEngCalcStatus" class="tvx-eng-status warn">AWAITING INPUT</span></div>
+      <div class="tvx-eng-output-grid" id="tvxEngKpis"><div class="tvx-eng-kpi"><small>RESULTS</small><b>—</b><span>Calculate scenario</span></div></div>
+      <h4>Material quantity schedule</h4><div class="tvx-eng-table-wrap"><table class="tvx-eng-table"><thead><tr><th>Material / item</th><th>Quantity</th><th>Unit</th><th>Calculation basis</th></tr></thead><tbody id="tvxEngMaterialRows"><tr><td colspan="4">Enter geometry and calculate.</td></tr></tbody></table></div>
+      <h4 style="margin-top:14px">Engineering checks & missing evidence</h4><div class="tvx-eng-checks" id="tvxEngChecks"><div class="tvx-eng-check warn">Structural and geotechnical checks are not yet run.</div></div>
+      <div class="tvx-eng-actions tvx-eng-export"><button class="btn primary" id="tvxEngExportSheet" type="button">↓ A3 AutoCAD 2007 R12 drawing sheet</button><button class="btn" id="tvxEngExportReport" type="button">↓ Full HTML report / print PDF</button><button class="btn" id="tvxEngExportCsv" type="button">↓ Material BOQ-style CSV</button><button class="btn" id="tvxEngExportBbs" type="button">↓ Bar schedule CSV</button><button class="btn" id="tvxEngExportJson" type="button">↓ Complete scenario JSON</button></div>
+      <p class="tvx-eng-foot">CAD sheet: A3 landscape border, 10 mm outer margin and title block in millimetres. The floor-plan viewport is fit-to-sheet for review and is explicitly not a construction scale. The original v46 metre-based plan DXF and 3D massing DXF remain available above and are not replaced.</p>
+    </article>
+  </div>
+  <div class="tvx-eng-foot">Data provenance: Copernicus Data Space STAC catalogue · Copernicus DEM GLO-90 via Open-Meteo Elevation API · ISRIC SoilGrids. Site remote sensing is a supporting evidence layer only, never a substitute for cadastral survey, boreholes, SPT/CPT, groundwater monitoring, laboratory testing or structural design verification.</div>
+</section>
+
+<div class="eng-reference-strip"><b>REFERENCE LIBRARY</b><a href="https://www.dpp.gov.bd/bgpress/index.php/document/get_extraordinary/39201" target="_blank" rel="noopener">BNBC 2020 official gazette</a><a href="https://rajuk.gov.bd/" target="_blank" rel="noopener">RAJUK / local planning</a><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM" target="_blank" rel="noopener">Copernicus DEM</a><a href="https://isric.org/explore/soilgrids" target="_blank" rel="noopener">SoilGrids</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap attribution</a></div>
 </section>
 
 <div class="footer"><span>© TERRAVEX APEX · Apache-2.0 intended project license</span><span>Earth Intelligence • Disaster Operations • IGERS Energy Systems</span><span id="footerStatus">Ready for local interaction</span></div>
@@ -1217,6 +1367,8 @@
 <script src="geolocation-live.js" defer></script>
 <script src="lightning-nowcast-lab.js" defer></script>
 <script src="advanced-workbench.js" defer></script>
+<script src="engineering-depth-system.js?v=48" defer></script>
+<script src="architecture-form-studio.js?v=48" defer></script>
 <script src="hazard-intelligence.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/satellite.js@6.0.2/dist/satellite.min.js" defer></script>
 <script src="space-environment.js" defer></script>

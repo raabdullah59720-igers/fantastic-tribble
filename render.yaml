@@ -2,7 +2,6 @@ services:
   - type: web
     name: terravex-voice-signaling-relay
     runtime: node
-    rootDir: relay-server
     buildCommand: node --check server.js
     startCommand: node server.js
     healthCheckPath: /healthz

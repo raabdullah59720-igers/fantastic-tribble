@@ -63,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v46': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v48': errors.append('Unexpected service-worker cache version '+cache)
 if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
@@ -161,7 +161,7 @@ for token in ('function renderAirDensity(','function validateAggregateGeoJSON(',
     if token not in app_js: errors.append('Missing aggregate-only mobility validation: '+token)
 if '1-degree' not in (root/'DATA_SOURCES.md').read_text(encoding='utf-8'): errors.append('Air activity aggregation methodology missing')
 if 'Bay of Bengal marine safety' not in (root/'index.html').read_text(encoding='utf-8'): errors.append('Marine safety layer label missing')
-if 'terravex-apex-shell-v46' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
+if 'terravex-apex-shell-v48' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
 report.append('v38 same-globe civil activity layers: air density, aggregate providers and Bay of Bengal marine model remain registered')
 # v39 five environmental/civil panels sharing one Cesium viewer.
 for token in ('tvxCivilSystems','tvxFloodPanel','tvxHumanitarianPanel','tvxForestPanel','tvxOceanPanel','tvxArchivePanel','tvxFloodRefresh','tvxHumanRefresh','tvxForestRefresh','tvxOceanRefresh','tvxArchiveSearch','tvxArchiveShowImage'):
@@ -170,7 +170,7 @@ for token in ('function loadFloodRiverModel(','flood-api.open-meteo.com/v1/flood
     if token not in app_js: errors.append('Missing v39 civil panel behaviour: '+token)
 for token in ('Individual site locations are not shown','not animal counts or live sightings','not river-stage height','not live video'):
     if token not in html and token not in app_js: errors.append('Missing v39 data-limitation disclosure: '+token)
-if 'terravex-apex-shell-v46' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
+if 'terravex-apex-shell-v48' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
 report.append('v39 civil panels: GloFAS flood model, DDM/OSM humanitarian aggregates, GBIF regional records, existing marine model and NASA GIBS/STAC archive use the shared Cesium engine; source-limitation disclosures checked')
 
 # Manifest app shortcuts must target existing navigation pages.
@@ -233,9 +233,9 @@ for token in ("engineering:'TERRAVEX Engineering", "if(name==='engineering')wind
     if token not in eng_app: errors.append('Engineering Studio navigation missing: '+token)
 for token in ('function calculateScenario','function buildDxf','function buildSvg','function buildHtmlReport','function reportData','function renderReport','function exportHtml','function exportSvg','function exportCsv','function drawMassing','function updateShapeInputs','function plotMassingOnEarth','function clearEarthMassing','TERRAVEX_EARTH_COMMAND','engFinishRows','TERRAVEX_ENGINEERING_STUDIO={enter,leave,calculate,calculateScenario,buildDxf,buildPlanDxf,buildSvg,buildHtmlReport,reportData,safetyReview,designProgram,makeAutoAssumptions,getPlanLayout,drawFloorPlan,drawMassing,plotMassingOnEarth,clearEarthMassing'):
     if token not in eng_module: errors.append('Engineering Studio runtime missing: '+token)
-if 'terravex-apex-shell-v46' not in (root/'sw.js').read_text(encoding='utf-8'):
+if 'terravex-apex-shell-v48' not in (root/'sw.js').read_text(encoding='utf-8'):
     errors.append('PWA cache not bumped to v46')
-if 'terravex-apex-shell-v46' not in eng_module:
+if 'terravex-apex-shell-v48' not in eng_module:
     errors.append('PWA diagnostics do not expect v46 cache')
 if not any(x.get('url')=='./?page=engineering' for x in manifest.get('shortcuts', [])):
     errors.append('PWA Engineering Studio shortcut missing')
@@ -266,6 +266,57 @@ for token in ("input('engLayoutStyle')", "layoutStyle:['auto','central-core','li
 if 'AC1015' in eng_module[eng_module.find('function dxfR12Header'):eng_module.find('function buildSvg')]:
     errors.append('v46 DXF exporter still emits a newer format instead of R12')
 report.append('v46 Engineering Studio: six geometry families, three plan arrangements, geometry-clipped functional zoning, canvas redraw-on-enter and legacy R12/AC1009 2D+3D DXF export')
+
+
+# v47 Integrated Civil Engineering companion: verify separate module, safe inputs, exports and regression test.
+eng47_js=(root/'engineering-depth-system.js').read_text(encoding='utf-8')
+eng47_css=(root/'engineering-depth-system.css').read_text(encoding='utf-8')
+for token in ('id="tvxEngDepth"','id="tvxSiteLat"','id="tvxSiteLon"','id="tvxEngSiteFetch"','id="tvxEngCalculate"','id="tvxEngExportSheet"','id="tvxEngExportReport"','id="tvxEngExportCsv"','id="tvxEngExportBbs"','id="tvxEngExportJson"','id="tvxColumnStoreyHeight"'):
+    if token not in html: errors.append('v47 Engineering UI missing: '+token)
+for token in ('TERRAVEX_CIVIL_ENGINEERING','https://stac.dataspace.copernicus.eu/v1/search','https://api.open-meteo.com/v1/elevation','ISRIC SoilGrids' ,'waterL=cementKg*wc','kgPerM','AC1009','A3 LANDSCAPE','NOT FOR CONSTRUCTION','No geotechnical capacity'):
+    if token not in eng47_js and token not in html: errors.append('v47 engineering module missing required capability/disclosure: '+token)
+for token in ('engineering-depth-system.css?v=47','engineering-depth-system.js?v=48'):
+    if token not in html: errors.append('v47 companion module not loaded: '+token)
+for token in ('./engineering-depth-system.css','./engineering-depth-system.js'):
+    if token not in paths: errors.append('v47 required PWA shell missing: '+token)
+if 'terravex-apex-shell-v48' not in adv: errors.append('PWA diagnostics do not expect v47 cache')
+eng47_test=root/'test-engineering-depth-system.cjs'
+if not eng47_test.exists(): errors.append('v47 engineering calculation test missing')
+else:
+    r47=subprocess.run(['node',str(eng47_test)],text=True,capture_output=True,cwd=root)
+    if r47.returncode: errors.append('v47 engineering calculation tests failed: '+(r47.stderr.strip() or r47.stdout.strip()))
+    report.append('v47 Engineering Companion tests: '+(r47.stdout.strip().splitlines()[-1] if r47.returncode==0 and r47.stdout.strip() else 'FAIL'))
+report.append('v47 Engineering companion: standalone location/satellite context, load and quantity screening, manual BBS, A3 R12 DXF and explicit professional-review boundaries')
+
+
+# v48 adaptive architecture and lettering selector.
+arch_js=(root/'architecture-form-studio.js').read_text(encoding='utf-8')
+arch_css=(root/'architecture-form-studio.css').read_text(encoding='utf-8')
+for token in ('id="tvxArchFormStudio"','id="tvxArchPriority"','id="tvxArchGridModule"','id="tvxArchFontStyle"','id="tvxArchCandidates"','id="tvxArchApplyRecommended"'):
+    if token not in html: errors.append('v48 architecture form UI missing: '+token)
+for token in ('function analyse(','function shapeGeometry(','function gridFit(','4*Math.PI*A','facadeArea','structuralSafety:\'NOT ASSESSED\'','TERRAVEX_ARCHITECTURE_FORM','Apply concept form'):
+    if token not in arch_js: errors.append('v48 architecture analysis behaviour missing: '+token)
+for token in ('TECH_SIMPLEX','ARCH_ROMAN','STANDARD_TXT','MONO_TECH','simplex.shx','romans.shx','txt.shx'):
+    if token not in arch_js+eng_module: errors.append('v48 drawing typography option missing: '+token)
+for token in ('architecture-form-studio.css?v=48','architecture-form-studio.js?v=48'):
+    if token not in html: errors.append('v48 architecture asset not loaded: '+token)
+for token in ('./architecture-form-studio.css','./architecture-form-studio.js'):
+    if token not in paths: errors.append('v48 architecture asset missing from offline shell: '+token)
+for token in ('tvxArchFormStudio','ARCHITECTURE FORM COMPARISON','drawingTypography','STYLE'):
+    if token.lower() not in (html+eng47_js+arch_js).lower(): errors.append('v48 integration marker missing: '+token)
+arch_test=root/'test-architecture-form-studio.cjs'
+if not arch_test.exists(): errors.append('v48 architecture form test missing')
+else:
+    ra=subprocess.run(['node',str(arch_test)],text=True,capture_output=True,cwd=root)
+    if ra.returncode: errors.append('v48 architecture tests failed: '+(ra.stderr.strip() or ra.stdout.strip()))
+    report.append('v48 Architecture & typography tests: '+(ra.stdout.strip().splitlines()[-1] if ra.returncode==0 and ra.stdout.strip() else 'FAIL'))
+cad_test=root/'test-styled-dxf-export.cjs'
+if not cad_test.exists(): errors.append('v48 styled DXF export test missing')
+else:
+    rcad=subprocess.run(['node',str(cad_test)],text=True,capture_output=True,cwd=root)
+    if rcad.returncode: errors.append('v48 styled DXF export tests failed: '+(rcad.stderr.strip() or rcad.stdout.strip()))
+    report.append('v48 R12 CAD typography tests: '+(rcad.stdout.strip().splitlines()[-1] if rcad.returncode==0 and rcad.stdout.strip() else 'FAIL'))
+report.append('v48 adaptive architecture: six geometry families compared at equal area; weighted compactness/grid/form-simplicity/symmetry index; linked load and remote-source context shown without treating it as a safety solver; selectable concept application; typography styles mapped to R12 SHX style table; structural-safety non-claim preserved')
 
 print('\n'.join(report))
 print('TOTAL ERRORS:',len(errors))

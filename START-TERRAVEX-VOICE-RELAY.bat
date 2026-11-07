@@ -1,6 +1,6 @@
 @echo off
 setlocal
-cd /d "%~dp0relay-server"
+cd /d "%~dp0"
 title TERRAVEX One-Room Voice Signalling + Encrypted Mail Relay
 where node.exe >nul 2>nul
 if %errorlevel% neq 0 (

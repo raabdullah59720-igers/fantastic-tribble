@@ -195,3 +195,36 @@ The calculator uses explicit conceptual arithmetic: plot area from selected idea
 
 
 Engineering Studio v45: satellite imagery/DEM is optional regional context only. It does not infer legal parcel geometry, topographic survey, soil stratigraphy, groundwater or foundation capacity. Auto-assumed plots and building archetypes are planning heuristics.
+
+
+## TERRAVEX v47 — Civil engineering companion remote-source provenance
+
+### Copernicus Data Space STAC / Sentinel-2 L2A
+
+- Endpoint: `https://stac.dataspace.copernicus.eu/v1/search`
+- Collection: `sentinel-2-l2a`
+- Method: bounded POST request using user-selected coordinates, catalogue time window, and `eo:cloud_cover` query where supported.
+- Use in TERRAVEX: discover available scene metadata (acquisition date, returned cloud-cover value and record count). The v47 companion does not convert catalogue metadata into a classified site map, legal plot boundary, roof/road measurement, soil stratigraphy or structural value.
+- Official documentation: `https://documentation.dataspace.copernicus.eu/APIs/STAC.html`
+
+### Open-Meteo Elevation / Copernicus DEM GLO-90
+
+- Endpoint: `https://api.open-meteo.com/v1/elevation`
+- Spatial context: Copernicus DEM 2021 GLO-90, approximately 90 m resolution, global coverage.
+- Use in TERRAVEX: one regional DEM elevation context value. It is not a topographic survey, vertical datum benchmark, site contour, flood design level or foundation founding level.
+- Official documentation: `https://open-meteo.com/en/docs/elevation-api`
+
+### ISRIC SoilGrids
+
+- Product resolution: 250 m global gridded soil-property maps; six standard depth intervals; modelled texture and other soil properties with uncertainty.
+- Current service note: the official ISRIC documentation says the beta point-query REST API is temporarily paused. v47 does not call the paused endpoint. It reports the service state and links to `https://soilgrids.org/` for contextual map viewing. WMS/WCS services are the documented alternative access routes for visualization/data subset use.
+- Prohibition in this application: SoilGrids values are not converted to allowable bearing pressure, corrected SPT N60, CPT resistance, undrained shear strength, friction angle, groundwater level or pile resistance.
+- Official documentation: `https://docs.isric.org/globaldata/soilgrids/` and `https://docs.isric.org/globaldata/soilgrids/wcs.html`
+
+### Site coordinate controls
+
+Browser GPS requires an explicit user click and browser permission. Manual decimal-degree coordinates are accepted. Coordinates are reference locations only and do not certify land title, cadastral boundary, survey datum or set-out points.
+
+### Governing-code notes
+
+BNBC 2020 is the Bangladesh national building-code reference, but the applicable authority and current local regulations must be checked for each project. RAJUK lists Dhaka Metropolitan Building Construction Regulations 2025 among its current building/development rules for relevant jurisdiction. ACI/ASCE/Eurocode selectors are reference labels only; selecting one does not apply code load combinations or certify compliance. Do not mix standards without a documented governing design basis.

@@ -30,16 +30,18 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v38`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v48`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
 
 ## GitHub Pages
 
-Upload all package contents and `assets/` to the repository root. In **Settings → Pages**, select **Deploy from a branch**, branch `main`, folder `/(root)`. Open the HTTPS Pages URL. Do not upload the ZIP inside the repo expecting it to run.
+**Current v48 deployment:** back up your repository, extract this ZIP, then upload/overwrite all 99 files directly into the existing repository root. Keep `index.html`, `sw.js`, the CSS/JS modules, images and launchers at their current root-level paths. Do not upload the ZIP as a single file and do not create another nested project folder. After committing, open the HTTPS Pages URL, hard-refresh (`Ctrl+Shift+R`), and for an installed PWA use **Source Health & Offline → Refresh cached app shell**. Current cache: `terravex-apex-shell-v48`.
 
-See `PWA-INSTALL-NOW.md`, `DESKTOP-INSTALL-AND-VPN-GUIDE.md`, `SECURITY-DEPLOYMENT.md`, `LINK-BUDGET-LAB.md`, and `QA_REPORT.md`.
+Upload all 99 files from the extracted package directly to the existing repository root, overwriting the matching files; this archive has no additional project subfolder. In **Settings → Pages**, select **Deploy from a branch**, branch `main`, folder `/(root)`. Open the HTTPS Pages URL. Do not upload the ZIP inside the repo expecting it to run.
+
+See the [consolidated companion manual](TERRAVEX-COMPANION-DOCUMENTATION.md) for PWA, desktop/VPN, security, link-budget, RF, satellite and communications guides; see `QA_REPORT.md` for verification history.
 
 
 ## RF Spectrum & Interference Intelligence
@@ -49,7 +51,7 @@ The new RF panel is receive-only and non-transmitting. It provides a virtual int
 The scenario controls are simulation-only. For suspected harmful interference, preserve receiver logs and contact the radio/service operator or regulator. ITU Radio Regulations prohibit harmful interference and protect safety-of-life services. See https://www.itu.int/en/mediacentre/backgrounders/Pages/radio-interference.aspx and https://btrc.gov.bd/.
 
 
-See [RF Spectrum & Interference Intelligence](RF-INTERFERENCE-INTELLIGENCE.md) for formula definitions, CSV format, limitations, and the receive-only safety boundary. A dependency-free focused test can be run using `node tests/test-rf-interference-intelligence.cjs`.
+See [RF Spectrum & Interference Intelligence](TERRAVEX-COMPANION-DOCUMENTATION.md#rf-interference-intelligence) for formula definitions, CSV format, limitations, and the receive-only safety boundary. A dependency-free focused test can be run using `node test-rf-interference-intelligence.cjs`.
 
 
 ## Chrome address-bar installation
@@ -64,7 +66,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v38`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v48`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -93,19 +95,19 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See `EARTH-TRAFFIC-3D-MONITOR.md` for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v38`, and the Earth Traffic CSS/JS files are required cached resources.
+See the [Earth Traffic 3D Monitor notes](TERRAVEX-COMPANION-DOCUMENTATION.md#earth-traffic-3d-monitor) for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v48`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
 - `space-comms-relay.js` / `.css` includes read-only public SatNOGS observation data, official RSCC/ARISS contact-route links, local voice recording/playback/export, WebRTC peer calls and asynchronous internet voice mail.
 - **Internet voice mailbox:** generate a private `mailbox-address.encryption-secret` key in the panel. The recipient must save the complete key safely and share it privately with an intended sender. Audio and message metadata are AES-GCM encrypted in the sender's browser before upload and decrypted only in a browser with the matching secret. The service receives the random mailbox address and ciphertext, not the encryption key or plaintext.
 - The bundled Node.js 18+ relay is dependency-free: no `npm install` is needed locally. It provides WebSocket signaling and an HTTP API for encrypted voice-mail storage in process memory for up to 24 hours, maximum 8 MiB audio, 8 messages per inbox, and 64 MiB aggregate ciphertext storage. Service restart/deployment can erase messages; delivery is not persistent or guaranteed. Do not use it for emergency-critical messaging.
-- Local one-run mode binds to `127.0.0.1:8787` and `127.0.0.1:8000`, so it is for the same computer. To reach another person over the internet, deploy `relay-server/` with the included `render.yaml`, set `ALLOWED_ORIGINS` to your exact public app origin, and configure the deployed `wss://` service URL in the panel. A TURN service may still be needed for some live WebRTC calls.
+- Local one-run mode binds to `127.0.0.1:8787` and `127.0.0.1:8000`, so it is for the same computer. To reach another person over the internet, deploy the root-level `server.js` service with the included `render.yaml` Blueprint, set `ALLOWED_ORIGINS` to your exact public app origin, and configure the deployed `wss://` service URL in the panel. A TURN service may still be needed for some live WebRTC calls.
 - Public peer voice call and asynchronous mailbox are real browser-to-browser internet features after the relay is running/deployed. **They are not spacecraft uplink or a Russian-satellite/astronaut inbox.** Direct satellite voice service requires an authorised satellite operator, compatible terminal/subscription, and applicable radio authorisation; ARISS astronaut contacts are arranged through its official contact pathway.
 
 Official routes: [RSCC services](https://eng.rscc.ru/services/), [ARISS contacts](https://www.ariss.org/about-ariss-contacts.html), [BTRC](https://btrc.gov.bd/), and [WebRTC TURN guidance](https://webrtc.org/getting-started/turn-server).
 
-For exact steps, see `SPACE-COMMS-REAL-VOICE-MAIL.md`, `relay-server/README.md`, `PWA-INSTALL-NOW.md`, and `QA_REPORT.md`.
+For exact steps, see the [Space Communications guide](TERRAVEX-COMPANION-DOCUMENTATION.md#space-comms-voice-mail), the [PWA guide](TERRAVEX-COMPANION-DOCUMENTATION.md#pwa-install), and `QA_REPORT.md`; the Node.js service is `server.js` at repository root.
 
 
 ## BTCL Satellite Signal Hub (read-only integration adapter)
@@ -131,7 +133,7 @@ The separate **Earth Orbit Sentinel** page merges public CelesTrak GP/OMM feeds 
 
 Local UTC/Dhaka clocks update every second. Positions are recalculated locally every 15 seconds while the Monitor switch is ON. CelesTrak GP data is requested no more than every two hours; SATCAT attempts are rate-limited to a 12-hour window. New catalogue entries, unknown-type rows, and provider-listed possible decays create **review alerts**, not threat findings. Desktop notifications require permission and monitoring ON.
 
-The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See `EARTH-ORBIT-SENTINEL-UPGRADE-NOTES.md`. The PWA shell cache is `terravex-apex-shell-v34`.
+The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See the [Earth Orbit Sentinel notes](TERRAVEX-COMPANION-DOCUMENTATION.md#earth-orbit-sentinel). The current PWA shell cache is `terravex-apex-shell-v48`.
 
 
 ## Atmospheric Entry & Exit Watch (introduced in cache v26)
@@ -145,7 +147,7 @@ Stratospheric total-column ozone is linked to NASA Ozone Watch. No made-up Dobso
 
 ## Thunderstorm Energy Device Digital Twin (2026-11-04, cache v27)
 
-The `stormenergy` page is a standalone iframe-based engineering panel with a Three.js 3D assembly (drag to rotate), local canvas fallback, low-voltage mathematical pulse/conversion/storage model, interlocked local controls, event log, and optional browser notifications for model threshold crossings. The JMA Himawari-9 South Asia public real-time viewer is embedded with direct viewer/index links as fallback. Open-Meteo provides current model context plus hourly precipitation probability and CAPE; these are model values, not lightning detection. Direct lightning-strike sensor, physical device I/O, high-voltage control and spacecraft command interfaces are not connected. See `DATA_SOURCES.md` and `THUNDERSTORM-UPGRADE-INSTALL.txt`.
+The `stormenergy` page is a standalone iframe-based engineering panel with a Three.js 3D assembly (drag to rotate), local canvas fallback, low-voltage mathematical pulse/conversion/storage model, interlocked local controls, event log, and optional browser notifications for model threshold crossings. The JMA Himawari-9 South Asia public real-time viewer is embedded with direct viewer/index links as fallback. Open-Meteo provides current model context plus hourly precipitation probability and CAPE; these are model values, not lightning detection. Direct lightning-strike sensor, physical device I/O, high-voltage control and spacecraft command interfaces are not connected. See `DATA_SOURCES.md` and the [Thunderstorm installation guide](TERRAVEX-COMPANION-DOCUMENTATION.md#thunderstorm-install).
 
 
 ## Live 3D Earth & Integrated Command (2026-11-05, cache v29)
@@ -264,7 +266,7 @@ The package retains exactly 99 root files. PWA service-worker cache: `terravex-a
 The five v39 civil/environmental panels were present in the Live 3D Earth page but located below the long command workspace, without visible jump controls. v40 adds a persistent top-bar Civil 3D shortcut, an Overview launch banner, a five-button quick-jump bar below the Live 3D Earth heading, focus/scroll highlighting, and direct `?page=earthcommand&panel=` routes (`all`, `flood`, `humanitarian`, `forest`, `ocean`, `archive`). Navigation scrolls to the existing panel IDs and retains the same Cesium viewer/camera. No duplicate 3D globe is created. Service-worker cache: `terravex-apex-shell-v40`.
 
 ### v40 direct access to civil panels
-The `Civil 3D` top-bar shortcut and Overview launch card open the existing Live 3D Earth page and jump to the five civil panels. The five-button strip is immediately below the Live 3D Earth heading. Direct URLs: `?page=earthcommand&panel=all`, `?page=earthcommand&panel=flood`, `?page=earthcommand&panel=humanitarian`, `?page=earthcommand&panel=forest`, `?page=earthcommand&panel=ocean`, and `?page=earthcommand&panel=archive`. These are scroll targets within the same page; they do not create another Cesium viewer. See `PWA-INSTALL-NOW.md` and `DEPLOYMENT_BN.md`. The historical v40 cache was `terravex-apex-shell-v40`; at the v41 release stage the cache was `terravex-apex-shell-v41`.
+The `Civil 3D` top-bar shortcut and Overview launch card open the existing Live 3D Earth page and jump to the five civil panels. The five-button strip is immediately below the Live 3D Earth heading. Direct URLs: `?page=earthcommand&panel=all`, `?page=earthcommand&panel=flood`, `?page=earthcommand&panel=humanitarian`, `?page=earthcommand&panel=forest`, `?page=earthcommand&panel=ocean`, and `?page=earthcommand&panel=archive`. These are scroll targets within the same page; they do not create another Cesium viewer. See the [PWA installation guide](TERRAVEX-COMPANION-DOCUMENTATION.md#pwa-install) and `DEPLOYMENT_BN.md`. The historical v40 cache was `terravex-apex-shell-v40`; at the v41 release stage the cache was `terravex-apex-shell-v41`.
 
 
 ## v41 — Civil 3D visual studio and source-driven graphics
@@ -351,3 +353,19 @@ The user can select **Auto by infrastructure type**, **Central service core**, o
 2D and 3D CAD exports now use legacy ASCII DXF **R12 / AC1009**, a backward-compatible format supported by AutoCAD 2007. The files use legacy POLYLINE/VERTEX, LINE, TEXT and 3DFACE entities plus explicit layer tables and model/paper-space blocks. Coordinates are drawn in metres and the drawing includes a visible metre-unit note; R12 itself does not carry the later `$INSUNITS` metadata. DXF files were parsed and audited with ezdxf 1.4.4; AutoCAD 2007 itself was not available for direct application-level testing.
 
 PWA shell cache: `terravex-apex-shell-v46`.
+
+
+## Engineering Studio v47 — integrated civil analysis companion
+
+v47 adds a separate companion panel to the existing v46 Engineering page. It provides explicit GPS/manual coordinate input, Sentinel-2 catalogue metadata checks, Copernicus GLO-90 elevation context, a gravity-load screening worksheet, entered-geometry concrete and masonry take-offs, nominal mix quantities, a user-entered reinforcement mass/BBS schedule, report/CSV/JSON exports and a separate A3 R12/AC1009 review sheet. It does not remove or rename the older conceptual designer, 2D geometry-aware preview or original metre-based plan/3D DXF outputs.
+
+SoilGrids' point-query REST API is currently paused according to ISRIC's public notice. The new panel reports this and links to its map explorer rather than showing fabricated soil values. No satellite or gridded data is converted into soil bearing capacity or pile capacity. See the [v47 engineering release notes](TERRAVEX-COMPANION-DOCUMENTATION.md#v47-engineering-release) for equations, data provenance, assumptions, test results and exclusions.
+
+The v47 A3 DXF uses an A3-size model-space frame in millimetres and R12/AC1009 entities. The existing v46 concept DXFs remain metre-based. The A3 sheet parsed with ezdxf 1.4.4; AutoCAD 2007 desktop opening/plotting remains unverified in this environment. All v47 outputs are preliminary and are not construction or permit documents.
+
+Current PWA shell cache: `terravex-apex-shell-v48`. After deploying the full project to the existing GitHub Pages repository root, hard-refresh the HTTPS site. For an installed PWA, use Source Health & Offline → Refresh cached app shell, then reload.
+
+
+## Architecture Form Studio v48 — adaptive shape comparison & drawing lettering
+
+v48 adds a separate Architecture Form Studio alongside the prior v46/v47 design tools. It compares rectangle, square, circular, regular triangular, pentagonal and octagonal footprints at equal assumed area using compactness (`4πA/P²`), perimeter/facade envelope, preferred grid-module fit, and disclosed heuristic simplicity/symmetry scores. It can apply a chosen candidate to the legacy geometry selector so the existing plan and massing redraws. A separate alphabet/lettering selector maps four type choices to the 2D canvas, SVG/report presentation and R12 DXF STYLE entries. The latest entered gravity/quantity and site-source context are attached to the comparison/report for traceability only; they do not become a structural safety score. All form ranking is conceptual and requires independent architectural, structural, geotechnical, fire/egress, services and authority review. See the [v48 architecture release notes](TERRAVEX-COMPANION-DOCUMENTATION.md#v48-architecture-release) and [user guide](TERRAVEX-COMPANION-DOCUMENTATION.md#v48-architecture-user-guide).

@@ -18,7 +18,7 @@ assert.match(html, /earth-traffic-monitor\.js/);
 assert.match(html, /three@0\.160\.0/);
 assert.match(app, /earthtraffic:'Earth Traffic 3D Monitor'/);
 assert.ok(manifest.shortcuts.some(x => x.url === './?page=earthtraffic'));
-assert.match(sw, /terravex-apex-shell-v46/);
+assert.match(sw, /terravex-apex-shell-v48/);
 assert.match(sw, /\.\/earth-traffic-monitor\.js/);
 assert.match(sw, /\.\/earth-traffic-monitor\.css/);
 assert.match(js, /Satellite\.js did not load/);

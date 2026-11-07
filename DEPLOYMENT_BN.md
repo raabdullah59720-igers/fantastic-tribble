@@ -1,12 +1,17 @@
-# GitHub-এ আপলোড নির্দেশনা (বাংলা)
+# GitHub-এ TERRAVEX APEX v48 আপলোড নির্দেশনা
 
-এই প্যাকেজটি আগের IGERS root `index.html` overwrite করে না। এটি নতুন `earth-command-center/` path হিসেবে যুক্ত হবে।
+এই release-এ **ঠিক ৯৯টি root-level file** আছে। পুরোনো feature, Engineering Studio, v47 Civil Engineering module এবং v48 Architecture Form Studio একই root deployment-এ থাকবে। ১৭টি আলাদা guide/release-note-এর লেখা `TERRAVEX-COMPANION-DOCUMENTATION.md`-এ একত্র করা হয়েছে; app source, image, launcher, script বা test file বাদ দেওয়া হয়নি।
 
-1. ZIP extract করো।
-2. Extract করা `earth-command-center` folder-টি তোমার GitHub repository-র root-এ upload করো; folder-এর নাম পরিবর্তন কোরো না।
-3. Commit changes করে Pages build/deploy শেষ হলে এই path খুলবে: `https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/earth-command-center/`
-4. Pages যদি `/docs` directory থেকে deploy হয়, তাহলে folder-টি `/docs/earth-command-center/`-এ রাখবে।
-5. পুরোনো homepage থেকে app-এ যেতে চাইলে navigation-এ `<a href="./earth-command-center/">Open EarthCommand</a>` link যোগ করা যায়।
+1. আগে GitHub repository-র backup/branch তৈরি করুন।
+2. ZIP download করে Windows-এ Extract করুন।
+3. Extract করা package-এর **সব ৯৯টি file** আপনার existing GitHub repository-র root-এ upload করুন এবং একই নামের পুরোনো file overwrite করুন। `index.html` অবশ্যই repository root-এ থাকবে।
+4. ZIP-টিকে একক file হিসেবে upload করবেন না; `fantastic-tribble-main/`, `earth-command-center/` বা অন্য কোনো extra nested folder তৈরি করবেন না।
+5. **Settings → Pages → Deploy from a branch → main → /(root)** নির্বাচন করুন (আপনার repository-তে অন্য branch/Docs configuration থাকলে সেটিই বজায় রাখুন)।
+6. Commit/push হওয়ার পর GitHub Pages deploy সম্পন্ন হলে HTTPS site-এ `Ctrl+Shift+R` দিন। Installed PWA পুরোনো দেখালে **Source Health & Offline → Refresh cached app shell** চালিয়ে app reload করুন।
+
+**Current service-worker cache:** `terravex-apex-shell-v48`।
+
+**Upload file layout:** flat root overlay; no nested project directory. Existing user data/local browser storage is not uploaded or deleted by this ZIP. Keep local credentials and `vpn-bridge-config.json` out of GitHub.
 
 ## কী কী কাজ করবে
 - Interactive 3D Earth globe; Earth texture ও event markers;
@@ -136,3 +141,21 @@ v46-এ geometry selection বদলালে 3D massing এবং 2D floor-plan
 2D ও 3D DXF export-কে legacy ASCII R12 / AC1009-এ নামানো হয়েছে, যা AutoCAD 2007-এ backward-compatible। এতে legacy POLYLINE/VERTEX, LINE, TEXT, 3DFACE, layer table এবং model/paper-space block section আছে। Drawing coordinates metre-এ এবং notes-এ metre unit উল্লেখ আছে। ezdxf 1.4.4 দিয়ে 36টি 2D/3D DXF combination parse ও audit করা হয়েছে; AutoCAD 2007 সফটওয়্যারে সরাসরি খোলার পরীক্ষা করা সম্ভব হয়নি।
 
 GitHub Pages-এ সব ৯৯টি ফাইল root-এ overwrite করে deploy করুন। PWA cache: `terravex-apex-shell-v46`। Deployment-এর পর hard refresh করুন; installed PWA হলে Source Health & Offline থেকে cached app shell refresh করে reload দিন।
+
+
+### v47 Integrated Civil Engineering Companion
+
+v47-এ পুরোনো Engineering Studio-এর পাশে আলাদা `Integrated Civil Engineering Analysis & Quantity System` যুক্ত হয়েছে। Location/GPS permission বা manual coordinate, Sentinel-2 L2A catalogue metadata, GLO-90 regional elevation context, gravity-load screening, slab/beam/column/footing/pile geometric quantity take-off, nominal concrete mix/material estimate, brick/mortar estimate, user-entered reinforcement/BBS mass schedule এবং HTML/JSON/CSV/A3 DXF export পাওয়া যাবে। পুরোনো v46 2D geometry preview, 3D massing এবং original metre-based R12 DXF মুছে বা বদলে দেওয়া হয়নি।
+
+**SoilGrids REST status:** ISRIC-এর official notice অনুযায়ী point-query beta REST API সাময়িকভাবে paused; তাই v47 ওই endpoint-এ request পাঠায় না। Official map/WMS/WCS থেকে কেবল regional context দেখা যায়। কোনো remote data দিয়ে SPT, soil bearing, groundwater বা pile capacity অনুমান করা হয় না।
+
+নতুন A3 DXF হলো 420×297 mm model-space review sheet, 10 mm border এবং title block-সহ; এটি construction-scale plan নয়। AC1009/R12 হিসেবে ezdxf 1.4.4 parser test পাস করেছে, কিন্তু AutoCAD 2007 desktop-এ সরাসরি খোলা/plot করা এই environment-এ সম্ভব হয়নি।
+
+Deploy: সব project file GitHub Pages repository root-এ upload/overwrite করুন; ZIP-কে single file হিসেবে upload করবেন না এবং আলাদা nested project folder-এ রাখবেন না। এরপর HTTPS site hard-refresh করুন। Installed PWA হলে Source Health & Offline → Refresh cached app shell ব্যবহার করে reload দিন। Current cache: `terravex-apex-shell-v48`.
+
+
+### v48 Adaptive Architecture Form & Drawing Typography
+
+v48-এ Civil Engineering section-এর মধ্যে `Adaptive Architecture Form & Drawing Typography` card যুক্ত হয়েছে। আগের Design Studio-এর ৬টি geometry সমান assumed area-তে compactness, perimeter/facade estimate, user-selected grid module fit এবং প্রকাশিত heuristic simplicity/symmetry index দিয়ে তুলনা করে। নির্বাচিত candidate পুরোনো geometry selector-এ apply করলে existing plan/massing redraw হয়। চারটি lettering style 2D preview, SVG/report ও R12 DXF STYLE reference-এ প্রয়োগ হয়। v47-এর gravity-load/material ও satellite-context ফল report-এ linked context হিসেবে দেখা যায়; এগুলো shape-এর structural pass/fail score নয়। কোনো structural safety certification, FEM solver বা construction approval তৈরি হয় না।
+
+Deploy: v48 ZIP extract করে সব contents repository root-এ upload/overwrite করুন; extra nested folder করবেন না। পুরোনো project backup রাখুন। GitHub Pages deploy হওয়ার পর hard refresh দিন; installed PWA-তে `Source Health & Offline → Refresh cached app shell` ব্যবহার করুন। Cache: `terravex-apex-shell-v48`.

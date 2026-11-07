@@ -8,7 +8,7 @@ Verification date: **25 October 2026**
 
 - Project files: **92** after excluding Python bytecode/cache artifacts; below the 98-file project limit.
 - `index.html` is at ZIP root; all prior panels remain in the complete project.
-- New files: `earth-traffic-monitor.js`, `earth-traffic-monitor.css`, `tests/test-earth-traffic-monitor.cjs`, and `EARTH-TRAFFIC-3D-MONITOR.md`.
+- New files: `earth-traffic-monitor.js`, `earth-traffic-monitor.css`, `test-earth-traffic-monitor.cjs`, and `EARTH-TRAFFIC-3D-MONITOR.md`.
 
 ## Earth Traffic 3D Monitor
 
@@ -56,15 +56,15 @@ Verification date: **25 October 2026**
 ## Reproducible checks
 
 ```bash
-node tests/test-earth-traffic-monitor.cjs
+node test-earth-traffic-monitor.cjs
 python run-static-qa.py
-node tests/test-pwa-omnibox.cjs
-node tests/test-rf-interference-intelligence.cjs
-node tests/test-space-environment.cjs
+node test-pwa-omnibox.cjs
+node test-rf-interference-intelligence.cjs
+node test-space-environment.cjs
 node test_connectivity_lab.js
-node tests/test-space-comms-relay.cjs
-node tests/test-voice-mail-service-v16.cjs
-node tests/test-relay-server.cjs
+node test-space-comms-relay.cjs
+node test-voice-mail-service-v16.cjs
+node test-relay-server.cjs
 python test_vpn_bridge.py
 python run-space-env-tests.py
 ```
@@ -447,3 +447,33 @@ Additional deterministic v45 geometry validation: all six plot types produced co
 - Validation: 173 geometry/layout/typology/render assertions passed; live UI simulation passed 8 assertions for geometry, typology and layout changes; 36 generated 2D/3D DXF files were parsed and audited by ezdxf 1.4.4 with zero audit errors. Existing app regression suites passed, static QA errors=0, JavaScript syntax errors=0, CSS parse errors=0, duplicate HTML IDs=0, missing local references=0.
 - Limitation: AutoCAD 2007 itself was not available in the environment, so actual application-level open/render verification remains unperformed. R12/AC1009 is a backward-compatible DXF format; users should open the file in AutoCAD 2007 and use `ZOOM` → `E` (Extents) if needed.
 - Package target remains exactly 99 files. PWA cache bumped to `terravex-apex-shell-v46`.
+
+
+## v47 Integrated Civil Engineering Companion release QA — 7 November 2026
+
+- Additive `engineering-depth-system.js` / `.css` panel integrated into the existing Engineering page; original v46 designer and DXF functions remain in place.
+- Current service-worker cache: `terravex-apex-shell-v48`; 54 required shell assets present, 0 missing.
+- HTML parsed: 1,335 IDs, 0 duplicates; local references: 0 missing.
+- JavaScript syntax: 26 files, 0 errors. CSS parsing: 21 stylesheets, 0 errors. Python syntax: 4 files.
+- Static QA aggregate: **0 errors**.
+- v47 deterministic engineering tests: **32 assertions PASS**. Includes gravity-load totals, interior tributary load, slab/beam/column/footing/pile volume arithmetic, nominal mix water conversion (water litres = cement mass × w/c ratio), theoretical bar mass, foundation-screen boundary conditions, invalid input guards and mocked remote-source status handling.
+- Remote-source mocks cover Open-Meteo elevation and Copernicus STAC catalogue metadata; SoilGrids is labelled paused and no point REST call is made.
+- Generated A3 landscape model-space drawing parsed by ezdxf 1.4.4 as **AC1009/R12**, 33 entities, expected layers: FOOTPRINT, NOTES, SCHEDULE, SHEET_BORDER, SITE, TEXT, TITLE_BLOCK and ZONES.
+- Regression tests: Earth Traffic 25 assertions; PWA omnibox 9/9 plus inherited integration assertions; relay mailbox 14 groups; RF simulator 5/5; Space Comms 21 assertions; Space Environment 11 assertions; voice-mail/mailbox static tests; VPN bridge 11 Python tests; space-environment QA suite.
+
+### Limits / not claimed
+
+Live public API reachability and browser CORS were not certified; API calls are mocked in deterministic tests. SoilGrids REST is currently paused per ISRIC's public notice. No full browser end-to-end visual run or AutoCAD 2007 desktop open/plot test was available. This companion does not produce a finite-element structural analysis, code-compliant member design, automatic rebar detailing, geotechnically determined pile capacity, construction-ready drawings or statutory permit certificate. All results are preliminary screening / quantity estimates requiring qualified professional review.
+
+
+## v48 99-file GitHub overlay consolidation — 7 November 2026
+
+- Repacked the v48 application as a flat-root **99-file** ZIP for direct GitHub repository-root overwrite.
+- Preserved all runtime source, styling, imagery, icons, Windows launchers, configuration, calculation modules and test scripts from the v48 source archive. The only count reduction is consolidation of 17 standalone guides/release-note files into the indexed `TERRAVEX-COMPANION-DOCUMENTATION.md`; their text is retained there.
+- Corrected a root-path deployment defect: `render.yaml` previously referenced nonexistent `relay-server/`, while `server.js` and `package.json` are in the repository root. The Blueprint now builds/starts from the root. `START-TERRAVEX-VOICE-RELAY.bat` now changes to the root before starting `server.js`, and the UI deployment hint matches that layout.
+- Updated README and Bengali deployment instructions for a 99-file flat-root overlay and current `terravex-apex-shell-v48` cache. No application feature or asset was removed to meet the file-count limit.
+- Archive integrity: PASS; root entries: 99; path traversal: none; nested project directories: none.
+- Static QA: 1,347 HTML IDs, duplicates=0; missing local references=0; 27 JavaScript files syntax checked, errors=0; 22 CSS files parsed, errors=0; Python syntax checks passed; required service-worker shell assets=56/56; total static errors=0.
+- Regression: architecture/typography 38 assertions; R12 typography/DXF 20 assertions; civil engineering 32 assertions; Earth Traffic 25 assertions; PWA/navigation inherited integration suite passed; relay/mailbox 14 groups; RF 5/5; Space Communications 21; Space Environment 11; connectivity 6; VPN bridge 11/11.
+- The VPN bridge test was rerun after stopping the earlier local HTTP preview server occupying fixed test port 8765; all 11 tests then passed.
+- Not verified here: deployment on the user's GitHub Pages account, live third-party API/CORS reachability, Windows BAT execution, real Chrome/Edge PWA installation, and opening/plotting a DXF inside AutoCAD 2007.
