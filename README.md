@@ -30,14 +30,14 @@ The startup password is a device-level UI lock: a salted PBKDF2-SHA-256 verifier
 ## PWA architecture
 
 - `manifest.webmanifest`: app identity, standalone mode, valid 192/512 icons, shortcuts.
-- `sw.js`: cache `terravex-apex-shell-v48`; caches local shell assets only and never substitutes cached external feeds as live.
+- `sw.js`: cache `terravex-apex-shell-v50`; caches local shell assets only and never substitutes cached external feeds as live.
 - `pwa-install.js`: uses `beforeinstallprompt` when Chromium provides it and shows browser-menu guidance otherwise.
 - `vpn-bridge.py`: loopback-only bridge, one-use 10-minute pairing token, 4-hour session token, origin allow-list, bounded JSON and fixed VPN actions.
 - `connectivity-lab.js` / `connectivity-lab.css`: visual RF link budget calculator and connection-readiness model.
 
 ## GitHub Pages
 
-**Current v48 deployment:** back up your repository, extract this ZIP, then upload/overwrite all 99 files directly into the existing repository root. Keep `index.html`, `sw.js`, the CSS/JS modules, images and launchers at their current root-level paths. Do not upload the ZIP as a single file and do not create another nested project folder. After committing, open the HTTPS Pages URL, hard-refresh (`Ctrl+Shift+R`), and for an installed PWA use **Source Health & Offline → Refresh cached app shell**. Current cache: `terravex-apex-shell-v48`.
+**Current v50 deployment:** back up your repository, extract this ZIP, then upload/overwrite all 99 files directly into the existing repository root. Keep `index.html`, `sw.js`, the CSS/JS modules, images and launchers at their current root-level paths. Do not upload the ZIP as a single file and do not create another nested project folder. After committing, open the HTTPS Pages URL, hard-refresh (`Ctrl+Shift+R`), and for an installed PWA use **Source Health & Offline → Refresh cached app shell**. Current cache: `terravex-apex-shell-v50`.
 
 Upload all 99 files from the extracted package directly to the existing repository root, overwriting the matching files; this archive has no additional project subfolder. In **Settings → Pages**, select **Deploy from a branch**, branch `main`, folder `/(root)`. Open the HTTPS Pages URL. Do not upload the ZIP inside the repo expecting it to run.
 
@@ -66,7 +66,7 @@ Three new panels are included:
 - **Solar Activity & Magnetosphere Monitor**: fetches recent solar-flare (FLR), coronal-mass-ejection (CME), and geomagnetic-storm (GST) records from NASA CCMC DONKI. Failed feeds are shown as unavailable; no synthetic events are substituted. DONKI itself describes the system as research/prototyping quality.
 - **Near-Earth Object Watch**: requests one UTC day's NASA/JPL NeoWs close-approach feed and displays the catalog's close-approach date, miss distance, relative velocity, estimated diameter and NASA hazardous-object flag. Diagram positions are illustrative, not ephemerides. `DEMO_KEY` is rate limited; add your own NASA API key only in a private local build if needed, and do not commit it publicly.
 
-The service-worker app-shell cache is `terravex-apex-shell-v48`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
+The service-worker app-shell cache is `terravex-apex-shell-v50`. The new CSS/JS files are required shell assets. Public network data are fetched on opening the relevant panel or pressing its Refresh button; data are not shown as live if source requests fail.
 
 ### Scientific references
 
@@ -95,7 +95,7 @@ The new **Earth Traffic 3D Monitor** page overlays public satellite catalogues a
 
 Accuracy depends on orbital-element age and provider state-vector freshness. The panel is a real-data monitor with model-propagated satellite positions, not a direct telemetry receiver, radar, aircraft separation system, or navigation-certified display. Live external feeds still need internet and may be limited by CORS or source quotas.
 
-See the [Earth Traffic 3D Monitor notes](TERRAVEX-COMPANION-DOCUMENTATION.md#earth-traffic-3d-monitor) for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v48`, and the Earth Traffic CSS/JS files are required cached resources.
+See the [Earth Traffic 3D Monitor notes](TERRAVEX-COMPANION-DOCUMENTATION.md#earth-traffic-3d-monitor) for algorithms, caveats, data sources and the test procedure. The current PWA shell cache is `terravex-apex-shell-v50`, and the Earth Traffic CSS/JS files are required cached resources.
 
 ## Space Communications & Encrypted Voice Mail (retained module)
 
@@ -133,7 +133,7 @@ The separate **Earth Orbit Sentinel** page merges public CelesTrak GP/OMM feeds 
 
 Local UTC/Dhaka clocks update every second. Positions are recalculated locally every 15 seconds while the Monitor switch is ON. CelesTrak GP data is requested no more than every two hours; SATCAT attempts are rate-limited to a 12-hour window. New catalogue entries, unknown-type rows, and provider-listed possible decays create **review alerts**, not threat findings. Desktop notifications require permission and monitoring ON.
 
-The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See the [Earth Orbit Sentinel notes](TERRAVEX-COMPANION-DOCUMENTATION.md#earth-orbit-sentinel). The current PWA shell cache is `terravex-apex-shell-v48`.
+The feed cannot detect an object missing from all public catalogues, read private satellite telemetry, or establish hostile intent. The scene is a procedural orbital visualization, not a live camera feed. Public feed reachability depends on browser/network/CORS conditions. See the [Earth Orbit Sentinel notes](TERRAVEX-COMPANION-DOCUMENTATION.md#earth-orbit-sentinel). The current PWA shell cache is `terravex-apex-shell-v50`.
 
 
 ## Atmospheric Entry & Exit Watch (introduced in cache v26)
@@ -363,9 +363,22 @@ SoilGrids' point-query REST API is currently paused according to ISRIC's public 
 
 The v47 A3 DXF uses an A3-size model-space frame in millimetres and R12/AC1009 entities. The existing v46 concept DXFs remain metre-based. The A3 sheet parsed with ezdxf 1.4.4; AutoCAD 2007 desktop opening/plotting remains unverified in this environment. All v47 outputs are preliminary and are not construction or permit documents.
 
-Current PWA shell cache: `terravex-apex-shell-v48`. After deploying the full project to the existing GitHub Pages repository root, hard-refresh the HTTPS site. For an installed PWA, use Source Health & Offline → Refresh cached app shell, then reload.
+Current PWA shell cache: `terravex-apex-shell-v50`. After deploying the full project to the existing GitHub Pages repository root, hard-refresh the HTTPS site. For an installed PWA, use Source Health & Offline → Refresh cached app shell, then reload.
 
 
 ## Architecture Form Studio v48 — adaptive shape comparison & drawing lettering
 
 v48 adds a separate Architecture Form Studio alongside the prior v46/v47 design tools. It compares rectangle, square, circular, regular triangular, pentagonal and octagonal footprints at equal assumed area using compactness (`4πA/P²`), perimeter/facade envelope, preferred grid-module fit, and disclosed heuristic simplicity/symmetry scores. It can apply a chosen candidate to the legacy geometry selector so the existing plan and massing redraws. A separate alphabet/lettering selector maps four type choices to the 2D canvas, SVG/report presentation and R12 DXF STYLE entries. The latest entered gravity/quantity and site-source context are attached to the comparison/report for traceability only; they do not become a structural safety score. All form ranking is conceptual and requires independent architectural, structural, geotechnical, fire/egress, services and authority review. See the [v48 architecture release notes](TERRAVEX-COMPANION-DOCUMENTATION.md#v48-architecture-release) and [user guide](TERRAVEX-COMPANION-DOCUMENTATION.md#v48-architecture-user-guide).
+
+
+## Universal Building & Mansion Studio v50
+
+v50 adds a unified design-development workbench to the existing Engineering / Civil Engineering section. It includes per-floor planning for 1–60 levels; building-use profiles (residential mansion, apartment, hospitality, office, education, healthcare, retail, assembly, mixed-use and industrial/warehouse); room-template distributions; floor-by-floor room models; balcony/verandah inputs; stair geometry and user-entered egress comparison; lift car/shaft, rated load, passenger-mass, traffic estimate and vendor GA / reaction-data gates; rooftop tank/PV/green-roof/drainage screens; exterior/facade/glazing/balcony and user-entered wind-pressure context; a unified command console; a coordination completeness list; and A3 landscape AutoCAD R12/AC1009 design-review DXF plus report/CSV exports. Floor plans show schematic room-programme cells, not construction partition set-out; independent plan/elevation sheet scales and missing-dimension warnings are applied.
+
+Commands include `HELP`, `CALCULATE`, `FLOOR n`, `ROOM model`, `STAIR CHECK`, `LIFT CHECK`, `VERTICAL CHECK`, `ROOF CHECK`, `FACADE CHECK`, `FACADE STYLE style`, `FRAME RUN`, `COORDINATION CHECK`, `RUN ALL`, `EXPORT DXF`, `REPORT JSON`, `SAVE LOCAL`, `LOAD LOCAL`, and `SHAPE name`.
+
+**Engineering scope:** up to 60 levels are available for programme/massing planning. The embedded stiffness solver is a linear-elastic 2D representative frame-line analysis for only 1–8 storeys. It is not a full 3D building solver and does not calculate code-compliant member capacities, rebar design, foundation/pile capacity, slab punching, diaphragm/torsion, P-Delta, modal/response-spectrum response or BIM clash detection. Stair, lift, roof and facade screens compare entered values and simplified loads; vendor data and locally adopted rules remain required. Every export says `DESIGN DEVELOPMENT / NOT FOR CONSTRUCTION`; no automated system can promise a mistake-free or construction-approved design.
+
+**International / jurisdiction profile:** BNBC 2020 + relevant Bangladesh authority rules; adopted IBC/ASCE/ACI, Eurocodes with National Annex, UK, Australia/NCC, Canada/NBCC, India/NBC/IS, and custom authority profiles. These are reference selectors, not code engines. Confirm exact adopted editions, amendments, occupancy, fire authority, accessibility, seismic/wind hazard data and elevator regulations for the actual site.
+
+The v50 service-worker cache is `terravex-apex-shell-v50`. This remains a flat-root 99-file overlay.

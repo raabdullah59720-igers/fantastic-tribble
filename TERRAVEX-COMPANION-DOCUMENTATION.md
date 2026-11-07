@@ -1,6 +1,6 @@
 # TERRAVEX APEX — Consolidated Companion Documentation
 
-**Package:** v48 99-file GitHub-ready consolidation
+**Current package:** v50 99-file GitHub-ready Universal Building / Mansion upgrade (v48 and earlier notes are retained as history)
 **Purpose:** Preserve the complete text of 17 previously separate guides, source notes, and release records in one indexed file so the deployable project remains within the 99-file limit.
 
 > **Current deployment authority:** Use the first sections of `README.md` and `DEPLOYMENT_BN.md` for this package. Several archived documents below contain instructions and cache versions from earlier releases. They are retained for technical history, not as the current upload procedure. The current package is a flat root overlay of 99 files; do not create an `earth-command-center/` or `relay-server/` subfolder.
@@ -32,7 +32,7 @@
 
 *Consolidated from `DESKTOP-INSTALL-AND-VPN-GUIDE.md`.*
 
-> **Archived guide:** This text is retained to preserve setup details from its release. For the current v48 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
+> **Archived guide:** This text is retained to preserve setup details from its release. For the current v50 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
 
 # TERRAVEX APEX desktop install + VPN control
 
@@ -200,7 +200,7 @@ Upstream GP requests are limited to once per 2-hour window per CelesTrak usage p
 
 *Consolidated from `INSTALL-IN-GITHUB.txt`.*
 
-> **Archived guide:** This text is retained to preserve setup details from its release. For the current v48 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
+> **Archived guide:** This text is retained to preserve setup details from its release. For the current v50 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
 
 TERRAVEX APEX - FULL APP INSTALL GUIDE
 
@@ -367,7 +367,7 @@ Russian satellite provider tokens, VPN credentials, terminals, airtime and subsc
 
 *Consolidated from `PWA-INSTALL-NOW.md`.*
 
-> **Archived guide:** This text is retained to preserve setup details from its release. For the current v48 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
+> **Archived guide:** This text is retained to preserve setup details from its release. For the current v50 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
 
 # TERRAVEX APEX: install on Windows desktop
 
@@ -512,13 +512,13 @@ The location controls require a deliberate GPS permission or manually entered co
 
 Calculate the preliminary load screen, enter actual concrete geometry, mix assumptions, masonry geometry and an engineer-prepared bar schedule. Export the HTML report, JSON record, material CSV, BBS CSV and the separate A3 R12/AC1009 summary sheet. The A3 sheet is millimetre-based model-space review geometry. The older v46 plan/3D DXF downloads retain their original metre-based concept exports.
 
-**Current shell cache:** `terravex-apex-shell-v48`. After deployment, hard-refresh the HTTPS page. For an installed PWA, go to Source Health & Offline → Refresh cached app shell, then reload. Direct page route: `?page=engineering`.
+**Current shell cache:** `terravex-apex-shell-v50`. After deployment, hard-refresh the HTTPS page. For an installed PWA, go to Source Health & Offline → Refresh cached app shell, then reload. Direct page route: `?page=engineering`.
 
 The new system does not run a finite-element frame solver, generate code-certified reinforcement details, calculate pile capacity from satellite data, certify material mix strength, or create permit/construction documents. AutoCAD 2007 desktop opening/plotting of the v47 sheet has not been independently verified in this environment.
 
 
 ## v48 Architecture Form Studio
-The engineering section now includes six-form comparative architecture ranking, selectable concept geometry, linked-load/site-context report traceability and four typography presets for the plan/SVG/report/R12 DXF. The index is not a structural safety rating. Current cache: `terravex-apex-shell-v48`. AutoCAD 2007 desktop open/plot confirmation must be performed on the target workstation.
+The engineering section now includes six-form comparative architecture ranking, selectable concept geometry, linked-load/site-context report traceability and four typography presets for the plan/SVG/report/R12 DXF. The index is not a structural safety rating. Current cache: `terravex-apex-shell-v50`. AutoCAD 2007 desktop open/plot confirmation must be performed on the target workstation.
 
 ---
 
@@ -969,7 +969,7 @@ The module is explicitly a comparison aid. It does not calculate design wind pre
 
 *Consolidated from `THUNDERSTORM-UPGRADE-INSTALL.txt`.*
 
-> **Archived guide:** This text is retained to preserve setup details from its release. For the current v48 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
+> **Archived guide:** This text is retained to preserve setup details from its release. For the current v50 file count, root layout and cache name, follow `README.md` and `DEPLOYMENT_BN.md`.
 
 TERRAVEX APEX — THUNDERSTORM DEVICE DIGITAL TWIN UPGRADE
 
@@ -1060,3 +1060,34 @@ The object list uses NASA NeoWs Feed API records for one UTC date per request. T
 3. Commit changes করে Pages build/deploy শেষ হলে এই path খুলবে: `https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/earth-command-center/`
 4. Pages যদি `/docs` directory থেকে deploy হয়, তাহলে folder-টি `/docs/earth-command-center/`-এ রাখবে।
 5. পুরোনো homepage থেকে app-এ যেতে চাইলে navigation-এ `<a href="./earth-command-center/">Open EarthCommand</a>` link যোগ করা যায়।
+
+
+<a id="v50-universal-building-studio"></a>
+## v50 Universal Building & Mansion Design Studio
+
+v50 is an additive release built on the consolidated v48 99-file root. It adds a single command-driven design-development monitor for mansion and other civilian building programmes. Supported planning uses include private/multi-generation mansion, apartment, guest/hospitality, office, school, healthcare/clinic, retail, assembly, mixed-use and industrial/warehouse. The room-programme templates can be applied per floor with balcony/verandah options and the floor selector redraws the selected level.
+
+### Stair, lift, roof and exterior
+- **Stairs / accessibility:** straight, dog-leg, L-return, scissor and spiral concept geometry; riser/tread/landing/headroom/width inputs; entered exit count, clear width and travel-distance comparisons; ramp-slope fields. This is not a fire-code egress calculation or certification.
+- **Lift:** passenger, service/goods, hydraulic, traction and specialist firefighter/evacuation profiles; car/shaft inputs; rated load versus assumed passenger mass; idealized traffic/capacity screen; floors served, pit, overhead, door and manufacturer static/dynamic support reactions. Final shaft, pit, overhead, rail/bracket and machine/support loads must come from the selected lift supplier's project GA and certified technical data.
+- **Roof:** occupiable use, tank volume/support footprint, PV area/mass, green-roof saturated load, roof live load, drainage fall and Rational Method runoff estimate. These outputs do not check slab/punching/support capacity or drainage hydraulic design.
+- **Exterior:** style/orientation, glazing ratio, cladding dead load, balcony geometry/loading and user-entered net wind pressure. Global facade wind resultant is not local component-and-cladding pressure or anchor design; facade fire, water, thermal, acoustic, guard and waterproofing design remain separate.
+
+### Unified command and drawings
+Commands: `HELP`, `CALCULATE`, `FLOOR n`, `ROOM model`, `STAIR CHECK`, `LIFT CHECK`, `VERTICAL CHECK`, `ROOF CHECK`, `FACADE CHECK`, `FACADE STYLE style`, `FRAME RUN`, `COORDINATION CHECK`, `RUN ALL`, `EXPORT DXF`, `REPORT JSON`, `SAVE LOCAL`, `LOAD LOCAL`, `SHAPE name`. The monitor reports unresolved inputs; it is a completeness check, not a BIM clash detector. DXF export is an A3 landscape, millimetre-labelled AutoCAD R12/AC1009 design-review set with floor, roof, stair/lift diagram and elevation layers.
+
+### Structural boundary and use range
+Programme/massing planning is available for 1–60 storeys. The embedded linear-elastic Euler–Bernoulli direct-stiffness solver is restricted to one representative 2D frame line and 1–8 storeys. It is not a 3D building analysis; it omits torsion/diaphragm, shear-wall/core interaction, P-Delta, geometric/material nonlinearity, modal/response-spectrum analysis, member strength/design, rebar detailing, slab punching, foundation/pile/soil-structure interaction and full MEP/BIM coordination. The frame test establishes numerical assembly/equilibrium for the specified idealised model only, not real building safety.
+
+All outputs remain `DESIGN DEVELOPMENT / NOT FOR CONSTRUCTION`. Construction-ready documents must be produced and independently checked by the responsible licensed architects/engineers using verified topographic and geotechnical data, adopted code provisions, complete 3D analysis, detailed design, supplier information, inspection/testing specifications, signed drawings and statutory permits. No software can guarantee that an unseen error will not exist.
+
+Current cache: `terravex-apex-shell-v50`. The flat root package contains exactly 99 entries; upload/overwrite the extracted contents at the existing GitHub Pages repository root.
+
+
+### v50 DXF / geometry validation refinements
+- Plan sheets and elevation sheets use independent representative scales; elevations calculate a separate scale to fit the full entered building height and width inside the A3 sheet frame.
+- Square and circular concepts use equal bounding dimensions and are constrained to the shorter setback-clear site dimension.
+- Room blocks in DXF are schematic programme cells; cells whose corners fall outside the idealized footprint are not drawn. They are not construction partitions or set-out coordinates.
+- Stair-section step height uses the calculated actual riser after the target riser is rounded to a whole number of risers.
+- When stair or lift shaft dimensions are missing, the DXF labels them as not entered instead of drawing a fabricated default size.
+- These safeguards improve drawing honesty and scale discipline but do not turn the package into construction drawings or a code-certified BIM model.

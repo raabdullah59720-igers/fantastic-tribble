@@ -228,3 +228,17 @@ Browser GPS requires an explicit user click and browser permission. Manual decim
 ### Governing-code notes
 
 BNBC 2020 is the Bangladesh national building-code reference, but the applicable authority and current local regulations must be checked for each project. RAJUK lists Dhaka Metropolitan Building Construction Regulations 2025 among its current building/development rules for relevant jurisdiction. ACI/ASCE/Eurocode selectors are reference labels only; selecting one does not apply code load combinations or certify compliance. Do not mix standards without a documented governing design basis.
+
+
+## v50 building-code and life-safety reference profiles (checked 8 November 2026)
+
+The UI provides jurisdiction/code profile selectors, but these do not implement all clauses or automatically prove compliance. The project team must identify the legally adopted edition, local amendments and authority having jurisdiction.
+
+- Bangladesh: Bangladesh Building Regulatory Authority Act 2026 identifies BNBC 2020 as the “Code”; the official law text describes BBRA regulatory functions and professional licensing/registration. https://bdlaws.minlaw.gov.bd/act-details-1695.html
+- Dhaka: RAJUK's rules and acts page lists Dhaka Metropolitan Building Construction Regulations 2025. https://rajuk.gov.bd/pages/static-pages/6922e0df933eb65569e28f3e
+- United States reference profiles: 2024 IBC selector, ASCE/SEI 7-22 load standard reference, and ACI 318-25 selector label. ASCE confirms ASCE/SEI 7-22 as its current ASCE 7 edition in its official standards page. https://www.asce.org/publications-and-news/codes-and-standards/asce-sei-7-22
+- Fire/life safety: NFPA's official page lists NFPA 101:2027 as the current edition and publishes 2026 TIAs; local adoption still determines applicability. https://www.nfpa.org/codes-and-standards/all-codes-and-standards/101
+- Lifts: ISO 8100-1:2026 Edition 2, published March 2026 and corrected May 2026; national adoption/supplementary requirements must be checked. https://www.iso.org/standard/80553.html
+- Other selectable reference profiles: Eurocodes with relevant National Annex; current UK Building Regulations and adopted British Standards; Australian NCC and state/territory variations; Canada's adopted NBCC and provincial codes; India's NBC/IS standards. Exact current adopted editions are project/jurisdiction specific and must be confirmed before use.
+
+Lift car/shaft, pit and overhead dimensions cannot be finalized from a generic passenger count. Obtain the selected manufacturer's project-specific general arrangement, rated load/speed, clearances, support reactions, rail brackets, machine/beams and fire-service requirements. The v50 lift module only screens entered geometry/load/capacity data.

@@ -477,3 +477,34 @@ Live public API reachability and browser CORS were not certified; API calls are 
 - Regression: architecture/typography 38 assertions; R12 typography/DXF 20 assertions; civil engineering 32 assertions; Earth Traffic 25 assertions; PWA/navigation inherited integration suite passed; relay/mailbox 14 groups; RF 5/5; Space Communications 21; Space Environment 11; connectivity 6; VPN bridge 11/11.
 - The VPN bridge test was rerun after stopping the earlier local HTTP preview server occupying fixed test port 8765; all 11 tests then passed.
 - Not verified here: deployment on the user's GitHub Pages account, live third-party API/CORS reachability, Windows BAT execution, real Chrome/Edge PWA installation, and opening/plotting a DXF inside AutoCAD 2007.
+
+
+## v50 Universal Building / Mansion Design upgrade QA — 8 November 2026
+
+- Additive v50 design-development section integrated in the existing application; package remains 99 flat-root files and preserves the prior release filenames.
+- Added building-use profiles, 1–60-level floor programme, per-floor room templates, room/interior styles, balcony/verandah schedule inputs, shape-aware massing context, stair/egress input comparison, lift shaft/car/capacity/traffic/vendor-data checks, rooftop tank/PV/green-roof/drainage screens, exterior/facade/glazing/balcony/wind-context screen, command palette and coordination completeness monitor.
+- Commands include HELP, CALCULATE, FLOOR n, ROOM model, STAIR CHECK, LIFT CHECK, ROOF CHECK, FACADE CHECK, FACADE STYLE style, FRAME RUN, COORDINATION CHECK, RUN ALL, EXPORT DXF, REPORT JSON, SAVE LOCAL and LOAD LOCAL.
+- DXF review output is R12 / AC1009, A3 landscape, millimetre-labelled, with level/floor, roof, stair/lift diagram and exterior/elevation layers. Legacy v46 engineering DXF exports remain in the earlier panel.
+- Embedded frame solver: linear elastic Euler–Bernoulli 2D representative frame-line, direct-stiffness assembly, fixed-base support, partial-pivot Gaussian elimination, member-end N/V/M, displacement/drift and residual checks. Deliberately limited to 1–8 storeys. Programme/massing planning is 1–60 levels; >8-level projects show an explicit need for a separate full 3D structural model.
+- v50 architecture/mansion deterministic suite: **76 assertions PASS** (38 legacy architecture/typography + 38 mansion / universal-building assertions). v47 civil suite: **32 PASS**. Earth Traffic: **25 PASS**. PWA suite: **9/9 PASS** with v50 cache expectations. Relay/mailbox: **14 groups PASS**. RF: **5/5 PASS**. Space Communications: **21 PASS**. Space Environment: **11 PASS**. R12 typography test: **20 PASS**. Connectivity: **6 PASS**. VPN Bridge: **11/11 PASS**.
+- Final static QA: **1,502 HTML IDs, 0 duplicates; 0 missing local HTML assets; 28 JavaScript files syntax checked, 0 errors; 22 CSS files parsed, 0 errors; 4 Python files parsed; 56/56 required service-worker shell assets present; total static errors = 0**.
+- PWA cache `terravex-apex-shell-v50`; app diagnostics and test expectations updated.
+
+### Explicitly not verified / not claimed
+
+- No full Chromium/Edge visual, interaction, accessibility or responsive end-to-end test was performed here. GitHub Pages deployment, live external-source reachability, browser download, installed-PWA activation and Windows runtime behavior require user-side verification after upload.
+- AutoCAD 2007 itself was not launched to open/plot the generated v50 mansion DXF in this environment. DXF R12/AC1009 is written for backward compatibility, but target-machine open, scale, SHX font, layer, print and sheet checks remain necessary.
+- No automated construction-ready design is claimed. Stairs are geometry/entered-limit screens; lift analysis needs vendor GA and certified support reactions; roof/facade computations are simplified; the frame model is 2D and does not replace a complete 3D structural model, code member design, reinforcement detailing, foundation/soil design, fire/accessibility, MEP or permit review.
+- No claim is made that a building plan is guaranteed free of errors or automatically accepted by any authority. All exports are marked DESIGN DEVELOPMENT / NOT FOR CONSTRUCTION.
+
+
+## v50 Universal Building / Mansion Studio release QA (8 November 2026)
+
+- Package base: consolidated v48 99-file root overlay; updated in place, no new root filenames.
+- Scope: 1–60 storey programme/massing, per-floor room-template schedules, building typologies, balcony/verandah take-off, stair/egress input comparison, lift car/shaft/traffic/vendor-reaction completeness screen, roof tank/PV/green roof/drainage screens, facade/glazing/balcony/wind context, command monitor, coordination completeness gates, reports and multi-sheet R12/AC1009 design-review DXF.
+- Structural kernel: one regular first-order linear-elastic 2D Euler–Bernoulli plane-frame line, 1–8 storeys only. It is not a 3D building or member-capacity design engine.
+- Latest safeguard checks: square/circle fit within the shorter setback clear dimension; room blocks are emitted only when their rectangular cells fit the idealized footprint; elevations use a separately computed sheet scale; stair section uses entered actual rise; missing stair/lift dimensions are called out instead of silently assumed.
+- Tests executed: architecture/mansion regression suite PASS; civil engineering depth 32 assertions PASS; Earth Traffic 25 assertions PASS; PWA/location/inherited integration suite PASS; relay/mailbox 14 groups PASS; RF 5/5 PASS; space communications 21 assertions PASS; space environment 11 assertions PASS; R12 typography 20 assertions PASS; voice-mail static checks PASS; connectivity 6 assertions PASS; VPN bridge 11/11 PASS; static QA aggregate 0 errors.
+- Static QA: 1,502 HTML IDs, no duplicate IDs; zero missing local references; JavaScript syntax 27 files, zero errors; CSS parser 22 stylesheets, zero parse errors; Python syntax 4 files; service-worker shell 56/56 local resources present.
+- Not verified here: live GitHub Pages deployment, browser end-to-end rendering in the user's device, Windows AutoCAD 2007 open/plot, authority submissions, vendor lift GA validation or construction sign-off.
+- **Status remains DESIGN DEVELOPMENT / NOT FOR CONSTRUCTION.** Complete site survey, geotechnical investigation, adopted-code review, full 3D structural analysis, detailed member/rebar/foundation design, fire/MEP/accessibility coordination, supplier data, independent checks and statutory approval are required.

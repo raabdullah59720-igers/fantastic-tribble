@@ -1,6 +1,6 @@
-# GitHub-এ TERRAVEX APEX v48 আপলোড নির্দেশনা
+# GitHub-এ TERRAVEX APEX v50 আপলোড নির্দেশনা
 
-এই release-এ **ঠিক ৯৯টি root-level file** আছে। পুরোনো feature, Engineering Studio, v47 Civil Engineering module এবং v48 Architecture Form Studio একই root deployment-এ থাকবে। ১৭টি আলাদা guide/release-note-এর লেখা `TERRAVEX-COMPANION-DOCUMENTATION.md`-এ একত্র করা হয়েছে; app source, image, launcher, script বা test file বাদ দেওয়া হয়নি।
+এই release-এ **ঠিক ৯৯টি root-level file** আছে। v50 DXF-এ plan/elevation-এর পৃথক fit scale, schematic room-cell footprint clipping এবং input না থাকলে stair/lift dimension warning আছে। পুরোনো feature, Engineering Studio, v47 Civil Engineering module, v48 Architecture Form Studio এবং v50 Universal Building & Mansion Studio একই root deployment-এ থাকবে। ১৭টি আলাদা guide/release-note-এর লেখা `TERRAVEX-COMPANION-DOCUMENTATION.md`-এ একত্র করা হয়েছে; app source, image, launcher, script বা test file বাদ দেওয়া হয়নি।
 
 1. আগে GitHub repository-র backup/branch তৈরি করুন।
 2. ZIP download করে Windows-এ Extract করুন।
@@ -9,7 +9,7 @@
 5. **Settings → Pages → Deploy from a branch → main → /(root)** নির্বাচন করুন (আপনার repository-তে অন্য branch/Docs configuration থাকলে সেটিই বজায় রাখুন)।
 6. Commit/push হওয়ার পর GitHub Pages deploy সম্পন্ন হলে HTTPS site-এ `Ctrl+Shift+R` দিন। Installed PWA পুরোনো দেখালে **Source Health & Offline → Refresh cached app shell** চালিয়ে app reload করুন।
 
-**Current service-worker cache:** `terravex-apex-shell-v48`।
+**Current service-worker cache:** `terravex-apex-shell-v50`।
 
 **Upload file layout:** flat root overlay; no nested project directory. Existing user data/local browser storage is not uploaded or deleted by this ZIP. Keep local credentials and `vpn-bridge-config.json` out of GitHub.
 
@@ -151,11 +151,26 @@ v47-এ পুরোনো Engineering Studio-এর পাশে আলাদ�
 
 নতুন A3 DXF হলো 420×297 mm model-space review sheet, 10 mm border এবং title block-সহ; এটি construction-scale plan নয়। AC1009/R12 হিসেবে ezdxf 1.4.4 parser test পাস করেছে, কিন্তু AutoCAD 2007 desktop-এ সরাসরি খোলা/plot করা এই environment-এ সম্ভব হয়নি।
 
-Deploy: সব project file GitHub Pages repository root-এ upload/overwrite করুন; ZIP-কে single file হিসেবে upload করবেন না এবং আলাদা nested project folder-এ রাখবেন না। এরপর HTTPS site hard-refresh করুন। Installed PWA হলে Source Health & Offline → Refresh cached app shell ব্যবহার করে reload দিন। Current cache: `terravex-apex-shell-v48`.
+Deploy: সব project file GitHub Pages repository root-এ upload/overwrite করুন; ZIP-কে single file হিসেবে upload করবেন না এবং আলাদা nested project folder-এ রাখবেন না। এরপর HTTPS site hard-refresh করুন। Installed PWA হলে Source Health & Offline → Refresh cached app shell ব্যবহার করে reload দিন। Current cache: `terravex-apex-shell-v50`.
 
 
 ### v48 Adaptive Architecture Form & Drawing Typography
 
 v48-এ Civil Engineering section-এর মধ্যে `Adaptive Architecture Form & Drawing Typography` card যুক্ত হয়েছে। আগের Design Studio-এর ৬টি geometry সমান assumed area-তে compactness, perimeter/facade estimate, user-selected grid module fit এবং প্রকাশিত heuristic simplicity/symmetry index দিয়ে তুলনা করে। নির্বাচিত candidate পুরোনো geometry selector-এ apply করলে existing plan/massing redraw হয়। চারটি lettering style 2D preview, SVG/report ও R12 DXF STYLE reference-এ প্রয়োগ হয়। v47-এর gravity-load/material ও satellite-context ফল report-এ linked context হিসেবে দেখা যায়; এগুলো shape-এর structural pass/fail score নয়। কোনো structural safety certification, FEM solver বা construction approval তৈরি হয় না।
 
-Deploy: v48 ZIP extract করে সব contents repository root-এ upload/overwrite করুন; extra nested folder করবেন না। পুরোনো project backup রাখুন। GitHub Pages deploy হওয়ার পর hard refresh দিন; installed PWA-তে `Source Health & Offline → Refresh cached app shell` ব্যবহার করুন। Cache: `terravex-apex-shell-v48`.
+Deploy: v48 ZIP extract করে সব contents repository root-এ upload/overwrite করুন; extra nested folder করবেন না। পুরোনো project backup রাখুন। GitHub Pages deploy হওয়ার পর hard refresh দিন; installed PWA-তে `Source Health & Offline → Refresh cached app shell` ব্যবহার করুন। Cache: `terravex-apex-shell-v50`.
+
+
+### v50 Universal Building & Mansion Design Studio
+
+v50-এ আগের Design Studio-র পাশে একটি unified workflow যুক্ত হয়েছে। Residential mansion, apartment, hotel/hospitality, office, education, healthcare, retail, assembly, mixed-use এবং industrial/warehouse building-use profile; floor-by-floor room programme; room template; balcony/verandah; stair/egress input comparison; lift car/shaft/traffic/vendor reaction-data gate; rooftop tank/PV/green-roof/drainage; facade/elevation/glazing/balcony/wind context; visual coordination monitor এবং command console এক জায়গায় পাওয়া যাবে।
+
+**Planning range:** ১–৬০ storey programme/massing। **Structural solver:** embedded solver কেবল ১–৮ storey-এর একটি representative 2D frame line বিশ্লেষণ করে। ৯ বা তার বেশি storey, irregular/torsional system, transfer structure, long-span, high-rise, hospital, assembly বা complex structure-এর জন্য full 3D analysis ও discipline-specific design software/engineer review দরকার। Stair 2R+T, lift traffic, wind resultant, roof tank load ও drainage এগুলো screening/entered-data comparison, পূর্ণ code design নয়।
+
+Command console-এ `HELP` লিখে command list দেখুন। প্রাথমিক command: `CALCULATE`, `FLOOR 3`, `ROOM luxury`, `STAIR CHECK`, `LIFT CHECK`, `ROOF CHECK`, `FACADE CHECK`, `FRAME RUN`, `COORDINATION CHECK`, `RUN ALL`, `EXPORT DXF`, `REPORT JSON`, `SAVE LOCAL`, `LOAD LOCAL`। `RUN ALL` সব সংশ্লিষ্ট screen update করবে; কোনো unresolved gate নিজে থেকে approve করবে না।
+
+**International use:** country / jurisdiction, structural-code profile, fire-code profile ও lift-standard profile নির্বাচন করুন। BNBC 2020, local authority, adopted IBC/ASCE/ACI, Eurocodes/National Annex, UK, NCC, NBCC, India এবং custom authority profiles আছে। এগুলো reference basis selector; clause-by-clause code calculation engine নয়। সাইটের আইনগতভাবে গৃহীত edition ও amendments আলাদাভাবে নিশ্চিত করতে হবে।
+
+**Release status:** সব DXF / JSON / CSV / HTML output `DESIGN DEVELOPMENT / NOT FOR CONSTRUCTION`। Construction release-এর আগে survey, geotechnical report, hazard study, full 3D structural model, member/rebar/foundation design, stair/fire/accessibility, lift supplier GA, MEP/fire protection, independent checking, licensed professional signature এবং কর্তৃপক্ষের approval প্রয়োজন। software-এ construction-ready auto-approval নেই।
+
+Deploy: ZIP extract করে ৯৯টি flat-root file existing GitHub Pages repository root-এ upload/overwrite করুন। কোনো nested folder যোগ করবেন না। Cache: `terravex-apex-shell-v50`; deployment-এর পর HTTPS hard refresh এবং installed PWA-তে Source Health & Offline → Refresh cached app shell ব্যবহার করুন।

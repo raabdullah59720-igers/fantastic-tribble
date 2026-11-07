@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="earth-systems-upgrade.css">
 <link rel="stylesheet" href="advanced-workbench.css">
 <link rel="stylesheet" href="engineering-depth-system.css?v=47">
-<link rel="stylesheet" href="architecture-form-studio.css?v=48">
+<link rel="stylesheet" href="architecture-form-studio.css?v=50">
 <link rel="stylesheet" href="hazard-intelligence.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -1353,6 +1353,224 @@
   <div class="tvx-eng-foot">Data provenance: Copernicus Data Space STAC catalogue · Copernicus DEM GLO-90 via Open-Meteo Elevation API · ISRIC SoilGrids. Site remote sensing is a supporting evidence layer only, never a substitute for cadastral survey, boreholes, SPT/CPT, groundwater monitoring, laboratory testing or structural design verification.</div>
 </section>
 
+<section class="tvx-mansion-studio" id="tvxMansionStudio" aria-labelledby="tvxMansionTitleHeading">
+  <div class="tvx-mansion-head">
+    <div><div class="tvx-eng-kicker">TERRAVEX APEX / UNIVERSAL BUILDING DESIGN / V50</div><h3 id="tvxMansionTitleHeading">Universal Building & Mansion Design Coordination Studio</h3><p>Floor-by-floor residential space planning, room-area schedules, building massing, planning envelope checks and a transparent 2D representative-frame stiffness analysis.</p></div>
+    <span class="badge sim">DESIGN DEVELOPMENT · REVIEW WORKFLOW</span>
+  </div>
+  <div class="tvx-mansion-warning"><b>Important engineering boundary:</b> this workbench improves concept and analysis coordination; it cannot honestly issue a construction-ready building by itself. Its frame solver is a linear-elastic 2D plane-frame analysis for one representative frame line, not a complete 3D building analysis or BNBC member design. No reinforcement, foundation or permit approval is inferred. All outputs remain <strong>NOT FOR CONSTRUCTION</strong> until independently designed, checked, signed and approved by the responsible professionals and authority.</div>
+
+  <article class="tvx-mansion-card tvx-mansion-command-card">
+    <div class="tvx-mansion-subhead"><h4>00 / UNIFIED DESIGN COMMAND & VISUAL MONITOR</h4><span>ONE PROJECT MODEL · FLOOR / STAIR / LIFT / ROOF / FACADE</span></div>
+    <div class="tvx-mansion-command-row"><label for="tvxMansionCommand">Engineering command<input id="tvxMansionCommand" type="text" maxlength="120" placeholder="HELP · CALCULATE · FLOOR 3 · STAIR CHECK · LIFT CHECK · ROOF CHECK · FACADE CHECK · REPORT"></label><button class="btn primary" id="tvxMansionCommandRun" type="button">Run command</button><button class="btn" id="tvxMansionRunAll" type="button">Run review sequence</button></div>
+    <div class="tvx-mansion-monitor" id="tvxMansionMonitor" aria-live="polite"><div><small>PROJECT STATE</small><b id="tvxMansionMonitorState">NOT CALCULATED</b></div><div><small>GEOMETRY</small><b id="tvxMansionMonitorGeometry">Awaiting inputs</b></div><div><small>VERTICAL CIRCULATION</small><b id="tvxMansionMonitorVertical">Not checked</b></div><div><small>ROOF / EXTERIOR</small><b id="tvxMansionMonitorRoof">Not checked</b></div></div>
+    <div class="tvx-mansion-command-output" id="tvxMansionCommandOutput">Command help: enter HELP, then run CALCULATE after verified site dimensions have been provided.</div>
+    <div class="tvx-mansion-coordination" id="tvxMansionCoordination">Coordination gates will appear after calculation. This is not full BIM clash detection.</div>
+    <div class="tvx-mansion-quick-actions"><button class="btn" type="button" data-mansion-command="CALCULATE">Calculate</button><button class="btn" type="button" data-mansion-command="STAIR CHECK">Stair review</button><button class="btn" type="button" data-mansion-command="LIFT CHECK">Lift review</button><button class="btn" type="button" data-mansion-command="ROOF CHECK">Roof review</button><button class="btn" type="button" data-mansion-command="FACADE CHECK">Exterior review</button><button class="btn" type="button" data-mansion-command="EXPORT DXF">DXF export</button></div>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>01 / SITE, MANSION TYPE & BUILDING ENVELOPE</h4><span>MEASURED / AUTHORITY-VERIFIED INPUTS REQUIRED</span></div>
+    <div class="tvx-mansion-fields">
+      <label>Project / mansion name<input id="tvxMansionTitle" type="text" maxlength="100" value="TERRAVEX Mansion Concept"></label>
+      <label>Residential typology<select id="tvxMansionType"><option value="private-mansion">Private family mansion</option><option value="multi-generation">Multi-generation mansion</option><option value="guest-estate">Guest / hospitality residence</option><option value="residential-apartment">Residential apartment building</option><option value="mixed-residential">Mixed family / rental residence</option></select></label>
+      <label>Mansion floorplate shape<select id="tvxMansionShape"><option value="rectangle">Rectangle · efficient room planning</option><option value="square">Square · balanced grid planning</option><option value="L">L-shaped · corner courtyard</option><option value="U">U-shaped · open courtyard</option><option value="courtyard">Central courtyard</option><option value="circle">Circular / radial concept</option></select></label>
+      <label>Architectural facade character<select id="tvxMansionFacadeStyle"><option value="tropical-modern">Tropical modern · deep shade</option><option value="contemporary">Contemporary · clean horizontal</option><option value="classical">Classical · symmetrical articulation</option><option value="courtyard">Courtyard · recessed openings</option></select></label>
+      <label>Above-ground storeys (planning 1–60)<input id="tvxMansionLevels" type="number" min="1" max="60" step="1" value="8"></label>
+      <label>Floor-to-floor height (m)<input id="tvxMansionFloorHeight" type="number" min="2.4" max="6.5" step="0.05" value="3.3"></label>
+      <label>Roof parapet allowance (m)<input id="tvxMansionParapet" type="number" min="0" max="3" step="0.05" value="1.1"></label>
+      <label>Plot length along road axis (m)<input id="tvxMansionPlotL" type="number" min="1" max="500" step="0.01" placeholder="Required · surveyed plot length"></label>
+      <label>Plot width (m)<input id="tvxMansionPlotW" type="number" min="1" max="500" step="0.01" placeholder="Required · surveyed plot width"></label>
+      <label>Authority-confirmed footprint coverage (%)<input id="tvxMansionCoverage" type="number" min="1" max="100" step="0.1" placeholder="Required · verify local rule"></label>
+      <label>Front setback (m)<input id="tvxMansionSetFront" type="number" min="0" max="100" step="0.01" placeholder="Enter approved setback"></label>
+      <label>Rear setback (m)<input id="tvxMansionSetRear" type="number" min="0" max="100" step="0.01" placeholder="Enter approved setback"></label>
+      <label>Left setback (m)<input id="tvxMansionSetLeft" type="number" min="0" max="100" step="0.01" placeholder="Enter approved setback"></label>
+      <label>Right setback (m)<input id="tvxMansionSetRight" type="number" min="0" max="100" step="0.01" placeholder="Enter approved setback"></label>
+      <label>Room allocation efficiency (%)<input id="tvxMansionEfficiency" type="number" min="60" max="90" step="1" value="82"></label>
+      <label>Adjacent access-road width (m) · optional<input id="tvxMansionRoadWidth" type="number" min="0" max="100" step="0.1" placeholder="Measured road width"></label>
+      <label>Permitted FAR / FSI (optional)<input id="tvxMansionFar" type="number" min="0.1" max="20" step="0.01" placeholder="Enter only after authority verification"></label>
+      <label>Building occupancy / use<select id="tvxMansionBuildingUse"><option value="residential">Residential mansion</option><option value="apartment">Apartment / multi-family</option><option value="hotel">Hotel / hospitality</option><option value="office">Office / commercial</option><option value="education">Education / school</option><option value="healthcare">Healthcare / clinic</option><option value="retail">Retail / shopping</option><option value="assembly">Assembly / event</option><option value="mixed">Mixed-use</option><option value="industrial">Industrial / warehouse</option></select></label>
+      <label>Jurisdiction / country<select id="tvxMansionJurisdiction"><option value="BD">Bangladesh</option><option value="US">United States</option><option value="EU">European Union / EEA</option><option value="UK">United Kingdom</option><option value="AU">Australia</option><option value="CA">Canada</option><option value="IN">India</option><option value="OTHER">Other / custom authority</option></select></label>
+      <label>Building / structural code profile<select id="tvxMansionCodeProfile"><option value="BNBC2020">Bangladesh · BNBC 2020 + local authority</option><option value="IBC2024">US / adopted IBC 2024 + ASCE 7-22 + ACI 318-25</option><option value="EUROCODE1G">Eurocodes · applicable adopted generation + National Annex</option><option value="UK">UK Building Regulations + current adopted standards</option><option value="AU_NCC">Australia · NCC edition + state / territory variations</option><option value="NBCC">Canada · NBCC adopted edition + provincial rules</option><option value="INDIA">India · NBC 2016 + applicable IS standards</option><option value="CUSTOM">Custom / project authority basis</option></select></label>
+      <label>Fire / life-safety standard<select id="tvxMansionFireCode"><option value="AHJ">Local adopted fire code / AHJ confirmation required</option><option value="NFPA101_2027">NFPA 101:2027 reference profile · confirm local adoption</option><option value="IBC_CH10">IBC Chapter 10 · only with adopted IBC edition</option><option value="EU_LOCAL">National fire strategy / local rules</option><option value="CUSTOM">Custom / project fire strategy</option></select></label>
+      <label>Lift safety standard<select id="tvxMansionLiftCode"><option value="ISO8100_2026">ISO 8100-1:2026 · confirm national adoption and supplementary rules</option><option value="ASME_A17_1_2022">ASME A17.1-2022 / CSA B44:22 · confirm adopted edition</option><option value="EN81_LOCAL">EN 81 / adopted national equivalent · verify current transition</option><option value="CUSTOM">Local / manufacturer / authority requirement</option></select></label>
+      <label>Local authority / approving body<input id="tvxMansionAuthority" type="text" maxlength="120" placeholder="e.g. RAJUK / municipal authority / AHJ"></label>
+      <label>Code edition / amendment confirmation<input id="tvxMansionCodeEdition" type="text" maxlength="120" placeholder="Enter adopted edition and local amendments"></label>
+      <label>Occupancy allowance per bedroom / suite<input id="tvxMansionOccupants" type="number" min="1" max="8" step="1" value="2"></label>
+    </div>
+    <div class="tvx-mansion-actions"><button class="btn" id="tvxMansionSync" type="button">↻ Copy current Design Studio inputs</button><button class="btn primary" id="tvxMansionCalc" type="button">Calculate mansion envelope & floor programme</button><span id="tvxMansionStatus" class="tvx-eng-status warn" role="status">ENTER VERIFIED SITE DIMENSIONS AND AUTHORITY-CHECKED SETBACKS.</span></div>
+    <p class="tvx-mansion-note">Setbacks, FAR/FSI, coverage, building height, road width and land-use permissions are not guessed by TERRAVEX. A concept footprint is fitted inside the user-entered setback envelope; square/circular shapes are constrained by the shorter clear dimension and unused residual plot area remains open. L/U/courtyard ratios are idealized. This is not a surveyed polygon or approved site layout. The six-form adaptive architecture panel remains a separate concept-comparison tool.</p>
+    <div class="tvx-mansion-code-notice" id="tvxMansionCodeNotice"><b>Bangladesh · BNBC 2020 + local authority rules</b><br>Confirm the current BBRA / local authority process, gazetted amendments and project-specific authority requirements.<br><span>Standards are not embedded clause-by-clause. Verify the legally adopted edition and National / State / local amendments.</span></div>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>02 / FLOOR-BY-FLOOR ROOM PROGRAMME</h4><span>UP TO 60 PLANNING LEVELS · FRAME SOLVER SCOPE IS SEPARATE</span></div>
+    <div class="tvx-mansion-floor-roles" id="tvxMansionFloorRoles"></div>
+    <div class="tvx-mansion-fields tvx-mansion-small-fields"><label>Roof programme<select id="tvxMansionRoofRole"><option value="roof">Roof terrace / solar / tank / MEP</option></select></label><label>Preview floor<select id="tvxMansionFloorSelect"><option value="0">Ground floor</option></select></label></div>
+    <div class="tvx-mansion-plan-meta"><b id="tvxMansionPlanTitle">Floor plan preview</b><span id="tvxMansionPlanMetrics">Run the site and floor calculation first.</span></div>
+    <div class="tvx-mansion-plan" id="tvxMansionPlan"><div class="tvx-mansion-empty">A schematic room-area plan with stairs, lift core, room variants and balconies will appear after verified inputs are entered.</div></div>
+    <div class="tvx-mansion-table-wrap" id="tvxMansionSchedule"><div class="tvx-mansion-empty">Floor area schedule awaits calculation.</div></div>
+    <div class="tvx-mansion-elevation" id="tvxMansionElevation"><div class="tvx-mansion-empty">Axonometric multi-storey massing will appear here.</div></div>
+    <div class="tvx-mansion-summary" id="tvxMansionSummary"><div class="tvx-mansion-empty">No design calculation yet.</div></div>
+    <p class="tvx-mansion-note">Room layout is a design-development schematic, not a construction drawing. The v50 DXF export includes floor plans, roof plan, typical stair/lift diagrams and elevations on A3 review sheets with explicit scale, model units and layers. Exact wall build-ups, door swings, window schedules, fire compartments, MEP, structural grids, dimensions and vendor lift GA drawings remain coordinated professional drawing tasks.</p>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>03 / LIFE-SAFETY & VERTICAL-CIRCULATION INPUTS</h4><span>REVIEW AGAINST THE GOVERNING CODE / AHJ</span></div>
+    <div class="tvx-mansion-fields">
+      <label>Provided enclosed exit stairs<input id="tvxMansionStairs" type="number" min="1" max="30" step="1" placeholder="Enter provided number"></label>
+      <label>Required stairs / exits from code review<input id="tvxMansionRequiredStairs" type="number" min="1" max="30" step="1" placeholder="Enter verified requirement"></label>
+      <label>Provided clear stair width (m)<input id="tvxMansionStairWidth" type="number" min="0.6" max="3" step="0.01" placeholder="Measured / drawn width"></label>
+      <label>Required stair width from code review (m)<input id="tvxMansionRequiredStairWidth" type="number" min="0.6" max="3" step="0.01" placeholder="Enter verified requirement"></label>
+      <label>Riser height (mm)<input id="tvxMansionRiser" type="number" min="100" max="220" step="1" value="165"></label>
+      <label>Tread depth (mm)<input id="tvxMansionTread" type="number" min="200" max="400" step="1" value="280"></label>
+      <label>Measured maximum egress travel distance (m)<input id="tvxMansionTravel" type="number" min="0" max="300" step="0.1" placeholder="Enter measured route"></label>
+      <label>Maximum travel distance from code review (m)<input id="tvxMansionTravelLimit" type="number" min="1" max="300" step="0.1" placeholder="Enter verified limit"></label>
+      <label>Passenger lifts provided<input id="tvxMansionLifts" type="number" min="0" max="30" step="1" placeholder="Enter lift count"></label>
+      <label>Designed ramp slope (rise/run)<input id="tvxMansionRampSlope" type="number" min="0.01" max="0.2" step="0.001" placeholder="e.g. 0.05 = 1:20"></label>
+      <label>Maximum permitted ramp slope from code review<input id="tvxMansionRampLimit" type="number" min="0.01" max="0.2" step="0.001" placeholder="Enter verified maximum"></label>
+      <label>Stair configuration<select id="tvxMansionStairType"><option value="dogleg">Dog-leg / U-return</option><option value="straight">Straight flight</option><option value="L">Quarter-turn / L-return</option><option value="scissor">Scissor stair · specialist review</option><option value="spiral">Spiral · restricted-use specialist review</option></select></label>
+      <label>Landing clear depth (m)<input id="tvxMansionLanding" type="number" min="0.8" max="5" step="0.01" value="1.2"></label>
+      <label>Stair headroom available (m)<input id="tvxMansionHeadroom" type="number" min="1.5" max="4" step="0.01" placeholder="Measured vertical clearance"></label>
+      <label>Stair enclosure / shaft wall thickness (m)<input id="tvxMansionStairWall" type="number" min="0.1" max="0.6" step="0.01" value="0.2"></label>
+      <label>Lift type<select id="tvxMansionLiftType"><option value="traction-gearless">Traction · gearless / MRL</option><option value="traction-geared">Traction · geared</option><option value="hydraulic">Hydraulic · low-rise suitability check</option><option value="service">Service / goods lift</option><option value="firefighter">Firefighter / evacuation lift · specialist code design</option></select></label>
+      <label>Lift car width (m)<input id="tvxMansionLiftCarW" type="number" min="0.7" max="4" step="0.01" value="1.4"></label>
+      <label>Lift car depth (m)<input id="tvxMansionLiftCarD" type="number" min="0.8" max="5" step="0.01" value="1.5"></label>
+      <label>Lift shaft width (m)<input id="tvxMansionLiftShaftW" type="number" min="1" max="6" step="0.01" placeholder="Vendor GA drawing / engineer input"></label>
+      <label>Lift shaft depth (m)<input id="tvxMansionLiftShaftD" type="number" min="1" max="6" step="0.01" placeholder="Vendor GA drawing / engineer input"></label>
+      <label>Rated lift load (kg)<input id="tvxMansionLiftLoad" type="number" min="250" max="5000" step="25" value="1000"></label>
+      <label>Rated passenger count<input id="tvxMansionLiftPersons" type="number" min="1" max="60" step="1" value="13"></label>
+      <label>Lift rated speed (m/s)<input id="tvxMansionLiftSpeed" type="number" min="0.15" max="10" step="0.05" value="1"></label>
+      <label>Average door / stop dwell (s)<input id="tvxMansionLiftDwell" type="number" min="1" max="60" step="1" value="8"></label>
+      <label>Peak 5-minute demand (% of occupants)<input id="tvxMansionLiftPeak" type="number" min="1" max="100" step="1" value="12"></label>
+      <label>Average passenger mass assumption (kg)<input id="tvxMansionPassengerMass" type="number" min="45" max="120" step="1" value="75"></label>
+      <label>Design population for lift traffic study<input id="tvxMansionPopulation" type="number" min="1" max="1000000" step="1" placeholder="From occupancy / population schedule"></label>
+      <label>Floors served by each lift<input id="tvxMansionLiftServed" type="number" min="1" max="60" step="1" placeholder="Enter vendor service range"></label>
+      <label>Lift pit depth (m)<input id="tvxMansionLiftPit" type="number" min="0" max="10" step="0.01" placeholder="Vendor general-arrangement input"></label>
+      <label>Lift overhead / headroom (m)<input id="tvxMansionLiftOverhead" type="number" min="0" max="15" step="0.01" placeholder="Vendor general-arrangement input"></label>
+      <label>Lift door clear width (m)<input id="tvxMansionLiftDoorW" type="number" min="0.6" max="3" step="0.01" placeholder="Vendor GA input"></label>
+      <label>Vendor static support reaction (kN) · optional<input id="tvxMansionLiftStaticSupport" type="number" min="0" max="10000" step="0.1" placeholder="Manufacturer data only"></label>
+      <label>Vendor dynamic / impact support reaction (kN) · optional<input id="tvxMansionLiftDynamicSupport" type="number" min="0" max="20000" step="0.1" placeholder="Manufacturer data only"></label>
+      <label>Minimum headroom required by adopted rule (m)<input id="tvxMansionRequiredHeadroom" type="number" min="1.5" max="4" step="0.01" placeholder="Enter code-confirmed value"></label>
+    </div>
+    <div class="tvx-mansion-stair-result" id="tvxMansionLifeSafety"><div class="tvx-mansion-empty">Life-safety and vertical-circulation screening appears after the planning model is calculated. Enter the actual and code-confirmed values.</div></div>
+    <div class="tvx-mansion-plan-meta"><b>Stair section & lift shaft preview</b><span>Geometry / service arrangement · vendor and fire-code review required</span></div>
+    <div class="tvx-mansion-vertical-preview" id="tvxMansionVerticalPreview"><div class="tvx-mansion-empty">Run stair and lift review to render schematic sections.</div></div>
+    <div class="tvx-mansion-summary" id="tvxMansionLiftResults"></div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxMansionVerticalAnalyze" type="button">Analyze stair geometry & lift service</button><span id="tvxMansionVerticalStatus" class="tvx-eng-status warn">STAIR / LIFT REVIEW NOT RUN</span></div>
+    <p class="tvx-mansion-note">The 2R + T stair-comfort check is a dimensional ergonomics indicator only. It does not replace BNBC requirements for stair number, width, enclosure, fire rating, landing, handrail, travel distance, exit remoteness, occupant load, accessibility, refuge or fire-service access.</p>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>04 / ROOFTOP, TERRACE & BUILDING-SERVICES DESIGN</h4><span>ROOF ZONING · POINT LOADS · DRAINAGE SCREEN</span></div>
+    <div class="tvx-mansion-fields">
+      <label>Roof use / concept<select id="tvxRoofUse"><option value="mixed">Mixed terrace + solar + services</option><option value="terrace">Accessible roof terrace</option><option value="green">Green roof / garden</option><option value="solar">Solar PV roof</option><option value="plant">MEP plant / water storage</option><option value="recreation">Recreation / sports deck</option></select></label>
+      <label>Roof occupied area factor (%)<input id="tvxRoofOccupied" type="number" min="0" max="100" step="1" value="35"></label>
+      <label>Roof imposed load (kN/m²) · code verified<input id="tvxRoofLive" type="number" min="0" max="30" step="0.05" placeholder="Enter applicable code load"></label>
+      <label>PV panel area (m²)<input id="tvxRoofPVArea" type="number" min="0" max="10000" step="0.1" value="0"></label>
+      <label>PV / support dead mass (kg/m²)<input id="tvxRoofPVMass" type="number" min="0" max="200" step="0.5" placeholder="Manufacturer / structural input"></label>
+      <label>Water tank volume (m³)<input id="tvxRoofTankVol" type="number" min="0" max="500" step="0.1" value="0"></label>
+      <label>Tank bearing footprint (m²)<input id="tvxRoofTankArea" type="number" min="0" max="100" step="0.1" placeholder="Actual support footprint"></label>
+      <label>Green roof area (m²)<input id="tvxRoofGreenArea" type="number" min="0" max="10000" step="0.1" value="0"></label>
+      <label>Green roof saturated build-up depth (m)<input id="tvxRoofGreenDepth" type="number" min="0" max="2" step="0.01" value="0"></label>
+      <label>Saturated green-roof unit weight (kN/m³)<input id="tvxRoofGreenGamma" type="number" min="0" max="30" step="0.1" placeholder="Tested / specified saturated value"></label>
+      <label>Design rainfall intensity (mm/h)<input id="tvxRoofRain" type="number" min="0" max="500" step="1" placeholder="Local IDF / authority data"></label>
+      <label>Runoff coefficient C (0–1)<input id="tvxRoofRunoff" type="number" min="0" max="1" step="0.01" value="0.9"></label>
+      <label>Roof drainage fall (%)<input id="tvxRoofSlope" type="number" min="0" max="20" step="0.1" placeholder="From drainage design"></label>
+      <label>Roof access / guard height (m)<input id="tvxRoofGuard" type="number" min="0" max="2" step="0.01" placeholder="Enter jurisdiction requirement"></label>
+    </div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxRoofAnalyze" type="button">Analyze roof zones & loads</button><span class="tvx-eng-status warn" id="tvxRoofStatus">ROOF ANALYSIS NOT RUN</span></div>
+    <div class="tvx-mansion-plan-meta"><b>Roof-zone visual monitor</b><span>Indicative zones only · not a structural roof framing plan</span></div>
+    <div class="tvx-mansion-roof-preview" id="tvxRoofPreview"><div class="tvx-mansion-empty">Configure roof zones, then run the analysis.</div></div><div class="tvx-mansion-summary" id="tvxRoofResults"></div>
+    <p class="tvx-mansion-note">Tank water load is shown as a localized load (γw × volume), not smeared over the whole roof. Green roof uses saturated unit weight only when supplied. Roof live load, solar dead load and drainage intensity must come from the adopted code, vendor data and local rainfall/IDF source. Ponding, rainwater accumulation, maintenance, wind uplift, equipment vibration, fire access and waterproofing need separate design.</p>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>05 / EXTERIOR ARCHITECTURE, ELEVATION & BALCONY SYSTEM</h4><span>FACADE QUANTITY · ORIENTATION · WIND CONTEXT</span></div>
+    <div class="tvx-mansion-fields">
+      <label>Facade design language<select id="tvxFacadeStyle"><option value="tropical">Tropical modern · shaded veranda</option><option value="contemporary">Contemporary glass / solid balance</option><option value="classical">Classical / neoclassical</option><option value="minimal">Minimalist / monolithic</option><option value="courtyard">Courtyard / screened facade</option><option value="colonial">Colonial / deep balcony</option><option value="biophilic">Biophilic / green facade</option><option value="brutalist">Sculptural concrete / brutalist</option></select></label>
+      <label>Main facade orientation<select id="tvxFacadeOrientation"><option value="N">North</option><option value="E">East</option><option value="S">South</option><option value="W">West</option></select></label>
+      <label>Facade wall / cladding build-up<select id="tvxFacadeMaterial"><option value="render">Rendered masonry / plaster</option><option value="brick">Facing brick / masonry</option><option value="stone">Stone / precast cladding</option><option value="aluminium">Aluminium / glazing system</option><option value="terracotta">Terracotta screen / rainscreen</option><option value="timber">Engineered timber screen</option></select></label>
+      <label>Window / glazed opening ratio (%)<input id="tvxFacadeGlazing" type="number" min="0" max="100" step="1" value="25"></label>
+      <label>Balcony-enabled floors (count)<input id="tvxFacadeBalconyFloors" type="number" min="0" max="60" step="1" value="6"></label>
+      <label>Balcony projections per floor (count)<input id="tvxFacadeBalconyCount" type="number" min="0" max="20" step="1" value="2"></label>
+      <label>Balcony depth (m)<input id="tvxFacadeBalconyDepth" type="number" min="0" max="5" step="0.05" value="1.5"></label>
+      <label>Balcony clear width each (m)<input id="tvxFacadeBalconyWidth" type="number" min="0" max="30" step="0.1" placeholder="Fit to actual facade bays"></label>
+      <label>External shading projection (m)<input id="tvxFacadeShade" type="number" min="0" max="5" step="0.05" value="0.6"></label>
+      <label>Net design wind pressure (kPa) · engineer input<input id="tvxFacadeWind" type="number" min="0" max="10" step="0.01" placeholder="Enter code-derived net pressure"></label>
+      <label>Exterior finish / cladding dead load (kN/m²)<input id="tvxFacadeDead" type="number" min="0" max="5" step="0.01" placeholder="Manufacturer / tested system input"></label>
+      <label>Balcony imposed load (kN/m²) · code verified<input id="tvxFacadeBalconyLive" type="number" min="0" max="30" step="0.05" placeholder="Enter adopted-code balcony load"></label>
+      <label>Balcony dead load (kN/m²) · engineer input<input id="tvxFacadeBalconyDead" type="number" min="0" max="30" step="0.05" placeholder="Slab / finishes / parapet / services"></label>
+    </div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxFacadeAnalyze" type="button">Analyze exterior & balconies</button><span class="tvx-eng-status warn" id="tvxFacadeStatus">EXTERIOR ANALYSIS NOT RUN</span></div>
+    <div class="tvx-mansion-plan-meta"><b>Exterior elevation visual monitor</b><span>Elevation concept · dimensions must be coordinated with architectural drawings</span></div>
+    <div class="tvx-mansion-facade-preview" id="tvxFacadePreview"><div class="tvx-mansion-empty">Run exterior analysis to render facade concept.</div></div><div class="tvx-mansion-summary" id="tvxFacadeResults"></div>
+    <p class="tvx-mansion-note">Balcony cantilevers, thermal bridging, waterproofing, handrails, guard height, façade anchorage, cladding restraint, fire spread, wind pressure coefficients and glazing safety are not certified by area take-off. Net pressure × projected area is a global force estimate only and must not be treated as local panel / anchor design.</p>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>06 / ROOM MODEL LIBRARY & INTERIOR LAYOUT OPTIONS</h4><span>ROOM-TYPE TEMPLATES · BALCONY / VERANDAH · PROGRAMME VARIANTS</span></div>
+    <div class="tvx-mansion-fields">
+      <label>Room layout model<select id="tvxRoomModel"><option value="luxury">Luxury mansion suite</option><option value="compact">Compact / efficient</option><option value="open">Open-plan living</option><option value="multigen">Multi-generation / accessible circulation</option><option value="guest">Guest suite / hospitality</option><option value="studio">Studio / serviced apartment</option><option value="office">Office / open workspace</option><option value="classroom">Classroom / education</option><option value="clinical">Clinic / examination rooms</option><option value="retail">Retail / showroom</option></select></label>
+      <label>Interior style<select id="tvxRoomStyle"><option value="modern">Modern</option><option value="classic">Classic / neoclassical</option><option value="minimal">Minimalist</option><option value="tropical">Tropical / cross-ventilated</option><option value="industrial">Industrial</option><option value="accessible">Universal-design / accessible</option></select></label>
+      <label>Default balcony / verandah depth (m)<input id="tvxRoomBalconyDepth" type="number" min="0" max="5" step="0.05" value="1.5"></label>
+      <label>Default balcony / verandah count per floor<input id="tvxRoomBalconyCount" type="number" min="0" max="20" step="1" value="2"></label>
+      <label>Room block preview scale<select id="tvxRoomPreviewScale"><option value="fit">Fit to monitor</option><option value="metric">Dimension-led schematic</option></select></label>
+    </div>
+    <div class="tvx-mansion-room-preview" id="tvxRoomPreview"><div class="tvx-mansion-empty">Choose a room model and calculate to preview room mix.</div></div>
+    <p class="tvx-mansion-note">Room templates generate programme-area distributions for early planning. Final room sizes, daylight, ventilation, privacy, wet-area stacks, kitchen extraction, acoustic separation, accessible turning circles, doors, furniture and fire compartments require project-specific architectural coordination.</p>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>07 / TRANSPARENT 2D STRUCTURAL FRAME ANALYSIS</h4><span>DIRECT-STIFFNESS METHOD · ONE FRAME LINE</span></div>
+    <p class="tvx-mansion-note">Builds one regular 2D frame with fixed-base columns and beam-column joints. User enters section geometry, elastic modulus, code-verified area loads, combination factors and per-storey lateral forces from a separate hazard analysis. The solver returns elastic nodal displacement, inter-storey drift and member-end N/V/M actions. It does not design reinforcement or establish building safety.</p>
+    <div class="tvx-mansion-fields">
+      <label>Number of bays<input id="tvxMFrameBays" type="number" min="1" max="6" step="1" value="3"></label>
+      <label>Bay span (m)<input id="tvxMFrameSpan" type="number" min="2" max="15" step="0.1" placeholder="Enter modelled span"></label>
+      <label>Out-of-plane tributary width (m)<input id="tvxMFrameTrib" type="number" min="1" max="20" step="0.1" placeholder="Frame tributary width"></label>
+      <label>Beam width b (m)<input id="tvxMFrameBeamW" type="number" min="0.15" max="1" step="0.01" placeholder="From proposed section"></label>
+      <label>Beam depth h (m)<input id="tvxMFrameBeamD" type="number" min="0.2" max="2" step="0.01" placeholder="From proposed section"></label>
+      <label>Column width b (m)<input id="tvxMFrameColW" type="number" min="0.2" max="2" step="0.01" placeholder="From proposed section"></label>
+      <label>Column depth h (m)<input id="tvxMFrameColD" type="number" min="0.2" max="2" step="0.01" placeholder="From proposed section"></label>
+      <label>Concrete elastic modulus E (MPa)<input id="tvxMFrameE" type="number" min="1000" max="60000" step="100" placeholder="Use verified material/design value"></label>
+      <label>Floor dead load G (kN/m²)<input id="tvxMFrameDead" type="number" min="0" max="30" step="0.05" placeholder="Include slab, walls, finishes, services"></label>
+      <label>Floor live load Q (kN/m²)<input id="tvxMFrameLive" type="number" min="0" max="30" step="0.05" placeholder="Use occupancy / code reviewed value"></label>
+      <label>Dead-load factor γG<input id="tvxMFrameGammaG" type="number" min="0" max="5" step="0.01" placeholder="Enter selected code combination"></label>
+      <label>Live-load factor γQ<input id="tvxMFrameGammaQ" type="number" min="0" max="5" step="0.01" placeholder="Enter selected code combination"></label>
+      <label>Lateral-force factor γH<input id="tvxMFrameGammaH" type="number" min="0" max="5" step="0.01" value="1"></label>
+      <label>Concrete unit weight (kN/m³)<input id="tvxMFrameDensity" type="number" min="15" max="30" step="0.1" value="24"></label>
+    </div>
+    <h5>Engineer-supplied lateral force at each floor</h5>
+    <label class="tvx-mansion-check-input"><input id="tvxMansionGravityOnly" type="checkbox"> Run gravity-only analysis intentionally (no wind/seismic force; this is not a lateral stability check).</label>
+    <div class="tvx-mansion-lateral-inputs" id="tvxMansionLateralInputs"><div class="tvx-mansion-empty">Lateral input rows are generated from the selected storey count.</div></div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxMansionFrameRun" type="button">Run 2D frame stiffness analysis</button><span id="tvxMansionFrameStatus" class="tvx-eng-status warn">FRAME ANALYSIS NOT RUN</span></div>
+    <div id="tvxMansionFrameResults"><div class="tvx-mansion-empty">No frame results yet. Enter verified design inputs first.</div></div>
+    <p class="tvx-mansion-note"><b>Method:</b> 2D Euler–Bernoulli frame element, 6×6 local stiffness matrix, coordinate transformation, global direct-stiffness assembly, fixed-base restraint and Gaussian elimination with partial pivoting. Element actions are derived from k·d − f<sub>fixed-end</sub>. Beam self-weight is included from the entered beam size and concrete unit weight; columns' self-weight is applied as equivalent nodal gravity. Dead load input must include all other floor dead-load components and avoid omission/double-counting.</p>
+  </article>
+
+  <article class="tvx-mansion-card">
+    <div class="tvx-mansion-subhead"><h4>08 / CONSTRUCTION-DOCUMENTATION READINESS GATES</h4><span>RELEASE HOLD · PROFESSIONAL CHECK REQUIRED</span></div>
+    <div class="tvx-mansion-release-hold"><b>CONSTRUCTION RELEASE: HOLD</b><span>This software cannot change this status to “Approved for Construction”. The package is a coordinated design-development / review aid until every discipline is completed and signed under the current legal and authority process.</span></div>
+    <div class="tvx-mansion-checklist" id="tvxMansionChecklist">
+      <div>Land title, cadastral boundary, topographic survey and benchmark <b>REQUIRED</b></div>
+      <div>Authority-confirmed land use, road width, setbacks, coverage, FAR/FSI and height <b>REQUIRED</b></div>
+      <div>Geotechnical report: boreholes, SPT/CPT, lab tests, groundwater and settlement <b>REQUIRED</b></div>
+      <div>BNBC 2020 basis, current BBRA / authority rules and all applicable amendments <b>REQUIRED</b></div>
+      <div>Complete 3D structural model, orthogonal frames, slabs, diaphragm, shear walls and torsion <b>REQUIRED</b></div>
+      <div>Wind / seismic hazard, site class, response spectrum, drift, P-Delta and stability checks <b>REQUIRED</b></div>
+      <div>RC flexure, shear, axial interaction, punching, joints, anchorage, confinement and BBS <b>REQUIRED</b></div>
+      <div>Foundation sizing, pile group, bearing, settlement, liquefaction, uplift and SSI checks <b>REQUIRED</b></div>
+      <div>Fire strategy, stairs, travel distances, exit discharge, accessibility and lift coordination <b>REQUIRED</b></div>
+      <div>MEP, plumbing, electrical, HVAC, drainage, fire protection and utility coordination <b>REQUIRED</b></div>
+      <div>Independent checking, signed calculations/drawings/specifications and authority permit <b>REQUIRED</b></div>
+    </div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxMansionDxf" type="button">↓ All-level R12 DXF concept plans (mm)</button><button class="btn" id="tvxMansionReport" type="button">↓ Design review JSON</button><button class="btn" id="tvxMansionCsv" type="button">↓ Floor programme CSV</button><button class="btn" id="tvxMansionHtmlReport" type="button">↓ Printable HTML review report</button><span id="tvxMansionExportStatus" class="tvx-eng-status warn">EXPORTS ARE DESIGN-REVIEW DOCUMENTS ONLY.</span></div>
+    <div class="tvx-mansion-code-links"><b>Bangladesh reference links</b><a href="https://hbri.gov.bd/site/page/a5c13d7e-212d-4a16-bbf9-3e1ad937ba56/BANGLADESH-NATIONAL-BUILDING-CODE" target="_blank" rel="noopener">HBRI · BNBC 2020 official resource</a><a href="https://bdlaws.minlaw.gov.bd/act-print-1695.html" target="_blank" rel="noopener">Bangladesh Building Regulatory Authority Act, 2026</a><a href="https://rajuk.gov.bd/" target="_blank" rel="noopener">RAJUK · local rules / notices</a></div>
+  </article>
+  <div class="tvx-mansion-footer">TERRAVEX v50 · No remote-source data is silently treated as structural input. Satellite / DEM / gridded soil context never supplies SPT, CPT, groundwater profile, allowable bearing, liquefaction resistance or pile capacity. No certification, seal, permit or construction approval is generated.</div>
+</section>
+
+
 <div class="eng-reference-strip"><b>REFERENCE LIBRARY</b><a href="https://www.dpp.gov.bd/bgpress/index.php/document/get_extraordinary/39201" target="_blank" rel="noopener">BNBC 2020 official gazette</a><a href="https://rajuk.gov.bd/" target="_blank" rel="noopener">RAJUK / local planning</a><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM" target="_blank" rel="noopener">Copernicus DEM</a><a href="https://isric.org/explore/soilgrids" target="_blank" rel="noopener">SoilGrids</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap attribution</a></div>
 </section>
 
@@ -1368,7 +1586,7 @@
 <script src="lightning-nowcast-lab.js" defer></script>
 <script src="advanced-workbench.js" defer></script>
 <script src="engineering-depth-system.js?v=48" defer></script>
-<script src="architecture-form-studio.js?v=48" defer></script>
+<script src="architecture-form-studio.js?v=50" defer></script>
 <script src="hazard-intelligence.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/satellite.js@6.0.2/dist/satellite.min.js" defer></script>
 <script src="space-environment.js" defer></script>

@@ -63,7 +63,7 @@ arr=re.search(r'const REQUIRED_SHELL = \[(.*?)\];',sw,re.S).group(1)
 paths=re.findall(r'"(.*?)"',arr)
 missing_sw=[v for v in paths if not (root/v.removeprefix('./')).exists()]
 if missing_sw: errors.append('Missing service-worker files: '+', '.join(missing_sw))
-if cache!='terravex-apex-shell-v48': errors.append('Unexpected service-worker cache version '+cache)
+if cache!='terravex-apex-shell-v50': errors.append('Unexpected service-worker cache version '+cache)
 if './bangladesh-satellite-intel.js' not in paths: errors.append('Bangladesh Satellite 3D monitor missing from required PWA shell')
 # Live 3D Earth command panel must have a visible entry point from all app layouts.
 nav_ok = bool(re.search(r'data-page="earthcommand"', html))
@@ -161,7 +161,7 @@ for token in ('function renderAirDensity(','function validateAggregateGeoJSON(',
     if token not in app_js: errors.append('Missing aggregate-only mobility validation: '+token)
 if '1-degree' not in (root/'DATA_SOURCES.md').read_text(encoding='utf-8'): errors.append('Air activity aggregation methodology missing')
 if 'Bay of Bengal marine safety' not in (root/'index.html').read_text(encoding='utf-8'): errors.append('Marine safety layer label missing')
-if 'terravex-apex-shell-v48' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
+if 'terravex-apex-shell-v50' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
 report.append('v38 same-globe civil activity layers: air density, aggregate providers and Bay of Bengal marine model remain registered')
 # v39 five environmental/civil panels sharing one Cesium viewer.
 for token in ('tvxCivilSystems','tvxFloodPanel','tvxHumanitarianPanel','tvxForestPanel','tvxOceanPanel','tvxArchivePanel','tvxFloodRefresh','tvxHumanRefresh','tvxForestRefresh','tvxOceanRefresh','tvxArchiveSearch','tvxArchiveShowImage'):
@@ -170,7 +170,7 @@ for token in ('function loadFloodRiverModel(','flood-api.open-meteo.com/v1/flood
     if token not in app_js: errors.append('Missing v39 civil panel behaviour: '+token)
 for token in ('Individual site locations are not shown','not animal counts or live sightings','not river-stage height','not live video'):
     if token not in html and token not in app_js: errors.append('Missing v39 data-limitation disclosure: '+token)
-if 'terravex-apex-shell-v48' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
+if 'terravex-apex-shell-v50' not in (root/'sw.js').read_text(encoding='utf-8'): errors.append('PWA cache not bumped to v45')
 report.append('v39 civil panels: GloFAS flood model, DDM/OSM humanitarian aggregates, GBIF regional records, existing marine model and NASA GIBS/STAC archive use the shared Cesium engine; source-limitation disclosures checked')
 
 # Manifest app shortcuts must target existing navigation pages.
@@ -233,9 +233,9 @@ for token in ("engineering:'TERRAVEX Engineering", "if(name==='engineering')wind
     if token not in eng_app: errors.append('Engineering Studio navigation missing: '+token)
 for token in ('function calculateScenario','function buildDxf','function buildSvg','function buildHtmlReport','function reportData','function renderReport','function exportHtml','function exportSvg','function exportCsv','function drawMassing','function updateShapeInputs','function plotMassingOnEarth','function clearEarthMassing','TERRAVEX_EARTH_COMMAND','engFinishRows','TERRAVEX_ENGINEERING_STUDIO={enter,leave,calculate,calculateScenario,buildDxf,buildPlanDxf,buildSvg,buildHtmlReport,reportData,safetyReview,designProgram,makeAutoAssumptions,getPlanLayout,drawFloorPlan,drawMassing,plotMassingOnEarth,clearEarthMassing'):
     if token not in eng_module: errors.append('Engineering Studio runtime missing: '+token)
-if 'terravex-apex-shell-v48' not in (root/'sw.js').read_text(encoding='utf-8'):
+if 'terravex-apex-shell-v50' not in (root/'sw.js').read_text(encoding='utf-8'):
     errors.append('PWA cache not bumped to v46')
-if 'terravex-apex-shell-v48' not in eng_module:
+if 'terravex-apex-shell-v50' not in eng_module:
     errors.append('PWA diagnostics do not expect v46 cache')
 if not any(x.get('url')=='./?page=engineering' for x in manifest.get('shortcuts', [])):
     errors.append('PWA Engineering Studio shortcut missing')
@@ -279,7 +279,7 @@ for token in ('engineering-depth-system.css?v=47','engineering-depth-system.js?v
     if token not in html: errors.append('v47 companion module not loaded: '+token)
 for token in ('./engineering-depth-system.css','./engineering-depth-system.js'):
     if token not in paths: errors.append('v47 required PWA shell missing: '+token)
-if 'terravex-apex-shell-v48' not in adv: errors.append('PWA diagnostics do not expect v47 cache')
+if 'terravex-apex-shell-v50' not in adv: errors.append('PWA diagnostics do not expect v47 cache')
 eng47_test=root/'test-engineering-depth-system.cjs'
 if not eng47_test.exists(): errors.append('v47 engineering calculation test missing')
 else:
@@ -293,30 +293,50 @@ report.append('v47 Engineering companion: standalone location/satellite context,
 arch_js=(root/'architecture-form-studio.js').read_text(encoding='utf-8')
 arch_css=(root/'architecture-form-studio.css').read_text(encoding='utf-8')
 for token in ('id="tvxArchFormStudio"','id="tvxArchPriority"','id="tvxArchGridModule"','id="tvxArchFontStyle"','id="tvxArchCandidates"','id="tvxArchApplyRecommended"'):
-    if token not in html: errors.append('v48 architecture form UI missing: '+token)
+    if token not in html: errors.append('v50 architecture form UI missing: '+token)
 for token in ('function analyse(','function shapeGeometry(','function gridFit(','4*Math.PI*A','facadeArea','structuralSafety:\'NOT ASSESSED\'','TERRAVEX_ARCHITECTURE_FORM','Apply concept form'):
-    if token not in arch_js: errors.append('v48 architecture analysis behaviour missing: '+token)
+    if token not in arch_js: errors.append('v50 architecture analysis behaviour missing: '+token)
 for token in ('TECH_SIMPLEX','ARCH_ROMAN','STANDARD_TXT','MONO_TECH','simplex.shx','romans.shx','txt.shx'):
-    if token not in arch_js+eng_module: errors.append('v48 drawing typography option missing: '+token)
-for token in ('architecture-form-studio.css?v=48','architecture-form-studio.js?v=48'):
-    if token not in html: errors.append('v48 architecture asset not loaded: '+token)
+    if token not in arch_js+eng_module: errors.append('v50 drawing typography option missing: '+token)
+for token in ('architecture-form-studio.css?v=50','architecture-form-studio.js?v=50'):
+    if token not in html: errors.append('v50 architecture asset not loaded: '+token)
 for token in ('./architecture-form-studio.css','./architecture-form-studio.js'):
-    if token not in paths: errors.append('v48 architecture asset missing from offline shell: '+token)
+    if token not in paths: errors.append('v50 architecture asset missing from offline shell: '+token)
 for token in ('tvxArchFormStudio','ARCHITECTURE FORM COMPARISON','drawingTypography','STYLE'):
-    if token.lower() not in (html+eng47_js+arch_js).lower(): errors.append('v48 integration marker missing: '+token)
+    if token.lower() not in (html+eng47_js+arch_js).lower(): errors.append('v50 integration marker missing: '+token)
 arch_test=root/'test-architecture-form-studio.cjs'
-if not arch_test.exists(): errors.append('v48 architecture form test missing')
+if not arch_test.exists(): errors.append('v50 architecture form test missing')
 else:
     ra=subprocess.run(['node',str(arch_test)],text=True,capture_output=True,cwd=root)
-    if ra.returncode: errors.append('v48 architecture tests failed: '+(ra.stderr.strip() or ra.stdout.strip()))
-    report.append('v48 Architecture & typography tests: '+(ra.stdout.strip().splitlines()[-1] if ra.returncode==0 and ra.stdout.strip() else 'FAIL'))
+    if ra.returncode: errors.append('v50 mansion/architecture tests failed: '+(ra.stderr.strip() or ra.stdout.strip()))
+    report.append('v50 Architecture & Mansion tests: '+(ra.stdout.strip().splitlines()[-1] if ra.returncode==0 and ra.stdout.strip() else 'FAIL'))
 cad_test=root/'test-styled-dxf-export.cjs'
-if not cad_test.exists(): errors.append('v48 styled DXF export test missing')
+if not cad_test.exists(): errors.append('R12 styled DXF export test missing')
 else:
     rcad=subprocess.run(['node',str(cad_test)],text=True,capture_output=True,cwd=root)
-    if rcad.returncode: errors.append('v48 styled DXF export tests failed: '+(rcad.stderr.strip() or rcad.stdout.strip()))
-    report.append('v48 R12 CAD typography tests: '+(rcad.stdout.strip().splitlines()[-1] if rcad.returncode==0 and rcad.stdout.strip() else 'FAIL'))
-report.append('v48 adaptive architecture: six geometry families compared at equal area; weighted compactness/grid/form-simplicity/symmetry index; linked load and remote-source context shown without treating it as a safety solver; selectable concept application; typography styles mapped to R12 SHX style table; structural-safety non-claim preserved')
+    if rcad.returncode: errors.append('R12 styled DXF export tests failed: '+(rcad.stderr.strip() or rcad.stdout.strip()))
+    report.append('R12 CAD typography tests: '+(rcad.stdout.strip().splitlines()[-1] if rcad.returncode==0 and rcad.stdout.strip() else 'FAIL'))
+report.append('v50 adaptive architecture and unified building workflow: six geometry families compared at equal area; weighted compactness/grid/form-simplicity/symmetry index; linked load and remote-source context shown without treating it as a safety solver; selectable concept application; typography styles mapped to R12 SHX style table; structural-safety non-claim preserved')
+
+# v50 universal building / mansion design integration.
+mansion_required_ids = ('tvxMansionStudio','tvxMansionCommand','tvxMansionCoordination','tvxMansionLevels','tvxRoomModel','tvxMansionFloorSelect','tvxMansionVerticalPreview','tvxMansionLiftResults','tvxRoofPreview','tvxFacadePreview','tvxMansionFrameResults','tvxMansionChecklist','tvxMansionDxf','tvxMansionReport','tvxMansionCsv','tvxMansionHtmlReport')
+for token in mansion_required_ids:
+    if f'id="{token}"' not in html: errors.append('v50 mansion UI missing: '+token)
+for token in ('Universal Building & Mansion Design Coordination Studio','ROOM MODEL LIBRARY','ROOFTOP, TERRACE','EXTERIOR ARCHITECTURE','STAIR / LIFT','NOT FOR CONSTRUCTION','1–60','BNBC2020','ISO8100_2026'):
+    if token.lower() not in html.lower(): errors.append('v50 mansion UI disclosure/profile marker missing: '+token)
+for token in ('function analyseStair(','function analyseLift(','function analyseRoof(','function analyseFacade(','function solveFrame(','function coordinationSummary(','function renderElevation(','function makeDXF(','function footprintContains(','function roomCellFits(','const elevReq=','const elevDen=','STAIR SIZE NOT ENTERED','LIFT SHAFT SIZE NOT ENTERED','COORDINATION CHECK','FACADE STYLE '):
+    if token not in arch_js: errors.append('v50 mansion engine component missing: '+token)
+for token in ('tvx-mansion-studio','tvx-mansion-plan','tvx-mansion-vertical-preview','tvx-mansion-coordination','--tvx-mansion-font'):
+    if token not in arch_css: errors.append('v50 mansion stylesheet component missing: '+token)
+if 'terravex-apex-shell-v50' not in sw: errors.append('v50 service worker cache missing')
+if 'terravex-apex-shell-v50' not in adv: errors.append('PWA diagnostics do not expect v50 cache')
+for token in ('architecture-form-studio.css?v=50','architecture-form-studio.js?v=50'):
+    if token not in html: errors.append('v50 mansion app asset not versioned: '+token)
+for token in ('./architecture-form-studio.css','./architecture-form-studio.js'):
+    if token not in paths: errors.append('v50 mansion assets absent from offline shell: '+token)
+report.append('v50 Universal Building Studio: floor programme, room templates, stair/egress screen, lift capacity/vendor data, roof service zones, facade/balcony wind context, 2D representative frame solver, coordination gates, DXF/report exports; structural approval explicitly not inferred')
+report.append('v50 latest geometry/CAD safeguards: square/circle constrained to short site dimension; schematic room cells clipped to footprint; independent elevation scale; actual stair rise used; unentered stair/lift dimensions are labelled rather than fabricated')
+
 
 print('\n'.join(report))
 print('TOTAL ERRORS:',len(errors))
