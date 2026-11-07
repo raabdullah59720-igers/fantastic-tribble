@@ -84,4 +84,19 @@ Use `?page=earthcommand` to open the existing 3D Earth page. The five new cards 
 
 ## v40: পাঁচটি Civil 3D Panel খোলার নতুন shortcut
 Live 3D Earth পেজের শিরোনামের ঠিক নিচে পাঁচটি quick-jump button আছে। Top bar-এর `Civil 3D` এবং Overview-এর `Open Civil 3D Panels` button দিয়েও খোলা যাবে। Direct URL: `?page=earthcommand&panel=all` অথবা `panel=flood`, `humanitarian`, `forest`, `ocean`, `archive`। এগুলো একই Live 3D Earth পেজের ভিতরে সংশ্লিষ্ট panel-এ scroll করবে; আলাদা globe তৈরি করে না। GitHub upload-এর পরে HTTPS root-এ `Ctrl+Shift+R`, তারপর installed PWA থাকলে Source Health & Offline থেকে cached shell refresh করতে হবে।
-\n\n## v41: High-graphics Civil 3D visual upgrade\nএই সংস্করণে আগের 3D globe/camera অক্ষত রেখে পাঁচটি Civil panel-এ live-source-driven chart/scene-preview stage যোগ হয়েছে। Flood chart GloFAS-এর source-provided daily series থেকে, Humanitarian visual OSM-এর ২০ কিমি-প্রায় aggregate cell থেকে, Forest chart GBIF-এর occurrence-record count থেকে, Ocean chart Open-Meteo-এর wave model cells থেকে, এবং Archive gallery STAC item-এর source-provided preview asset থাকলে তা দেখায়। কোনো source unavailable থাকলে empty/offline state দেখাবে। 3D quality selector: Balanced / High / Ultra; device capability অনুযায়ী resolution scale cap করা হয়। Humanitarian data Earth Command-এ প্রবেশের সময় auto-request হয়। PWA cache v41।\n
+
+
+## v41: High-graphics Civil 3D visual upgrade
+এই সংস্করণে আগের 3D globe/camera অক্ষত রেখে পাঁচটি Civil panel-এ live-source-driven chart/scene-preview stage যোগ হয়েছে। Flood chart GloFAS-এর source-provided daily series থেকে, Humanitarian visual OSM-এর ২০ কিমি-প্রায় aggregate cell থেকে, Forest chart GBIF-এর occurrence-record count থেকে, Ocean chart Open-Meteo-এর wave model cells থেকে, এবং Archive gallery STAC item-এর source-provided preview asset থাকলে তা দেখায়। কোনো source unavailable থাকলে empty/offline state দেখাবে। 3D quality selector: Balanced / High / Ultra; device capability অনুযায়ী resolution scale cap করা হয়। Humanitarian data Earth Command-এ প্রবেশের সময় auto-request হয়। PWA cache v41।
+
+
+## v42 Engineering Studio deployment
+1. Extract the v42 ZIP. Upload/overwrite all 99 extracted files at the same repository root used by the existing TERRAVEX app; do not upload the ZIP as a single repository file or nest the files in a new folder.
+2. Confirm `index.html` and `manifest.webmanifest` are at that root, then commit and publish GitHub Pages.
+3. Hard-refresh the HTTPS Pages URL (`Ctrl+Shift+R`). If running the installed PWA, open Source Health & Offline and refresh the cached app shell (v42).
+4. Open `?page=engineering`. You should see `TERRAVEX Engineering Studio` in the sidebar, an `Engineering` topbar shortcut and an Overview launch card.
+5. Export DXF/CSV/JSON only as conceptual planning artifacts. DXF has plot boundary, schematic footprint, building massing shell and level outlines in metres; it is not a construction drawing.
+
+
+### v42: shared 3D Earth concept plot
+Engineering Studio-তে সাইটের latitude/longitude দিন, scenario calculate করুন, তারপর `Plot concept on shared 3D Earth` চাপুন। এটি existing Cesium Earth viewer-এ schematic parcel outline, extruded building massing ও floor-level outline যোগ করে। `Clear Earth concept` শুধু Engineering Studio-এর entity সরায়; অন্য map/layer অক্ষত থাকে। Direct URL: `?page=engineering`। Coordinates survey-verified না হলে plot-কে কেবল concept হিসেবে ধরতে হবে।

@@ -47,6 +47,18 @@
   ],
   "shortcuts": [
     {
+      "name": "Engineering Studio",
+      "short_name": "Engineering",
+      "description": "Civilian site planning and conceptual CAD massing",
+      "url": "./?page=engineering",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "Live 3D Earth & Command",
       "short_name": "3D Earth",
       "description": "Global and Bangladesh 3D globe with orbit, location and command controls",

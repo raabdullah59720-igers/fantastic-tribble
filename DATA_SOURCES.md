@@ -161,4 +161,26 @@ These five panels are separate cards within the existing `page-earthcommand` and
 - **Earth Observation Archive:** public Earth Search STAC endpoint (`https://earth-search.aws.element84.com/v1/search`) lists Sentinel-2 L2A and Landsat Collection 2 Level-2 scene metadata inside Bangladesh bounding box and user-selected date interval. A scene is not considered live. Scene acquisition time/cloud cover are metadata. NASA GIBS VIIRS SNPP corrected-reflectance imagery is a dated tile layer on the same globe; processing and tile availability vary by date.
 
 External sources are requested from the user's browser and remain subject to CORS, provider availability, rate limits and network. Failure states are surfaced; no mock live data is generated. Public model/catalogue timestamps and local retrieval time must not be conflated.
-\n\n## v41 visual stage provenance\nThe visual charts are generated only from the source-returned values already stored by the civil modules: Open-Meteo Flood API daily `river_discharge`; OpenStreetMap Overpass results after approximate 20 km aggregation; GBIF occurrence `/occurrence/search` count results; Open-Meteo Marine API returned wave-height cells; and preview links supplied by Earth Search STAC items. If a STAC item has no supported HTTPS thumbnail/preview asset, the gallery shows “Preview asset not supplied.” No bundled stock image is substituted.\n
+
+
+## v41 visual stage provenance
+The visual charts are generated only from the source-returned values already stored by the civil modules: Open-Meteo Flood API daily `river_discharge`; OpenStreetMap Overpass results after approximate 20 km aggregation; GBIF occurrence `/occurrence/search` count results; Open-Meteo Marine API returned wave-height cells; and preview links supplied by Earth Search STAC items. If a STAC item has no supported HTTPS thumbnail/preview asset, the gallery shows “Preview asset not supplied.” No bundled stock image is substituted.
+
+
+## v42 Engineering Studio reference and data boundaries
+- **BNBC 2020:** official Bangladesh Gazette link is included in the panel. The app does not compute or certify code compliance; use the applicable code edition and current local authority rules with a qualified design team.
+- **RAJUK GIS / planning:** linked as a geographic/planning reference for areas under its jurisdiction. User-entered FAR, coverage and height limits are scenario inputs, not an automated approval result.
+- **Copernicus DEM:** broad regional elevation/surface context; not a cadastral, topographic or construction survey and not a reliable basis for setting foundation levels.
+- **SoilGrids:** global soil-property predictions at approximately 250 m scale with uncertainty; not site boreholes, laboratory tests, bearing capacity, settlement, pile capacity or liquefaction analysis.
+- **OpenStreetMap:** optional public context only; incomplete volunteer-mapped content requires attribution and field verification.
+
+The calculator uses explicit conceptual arithmetic: plot area from selected idealised geometry; footprint = plot area × target coverage; GFA = footprint × concept storeys; FAR = GFA ÷ plot area; concept height = storeys × floor-to-floor height. Finish quantities are gross surface allowances only. No structural/load/reinforcement calculation is present.
+
+
+## Engineering Studio — reference links (checked 7 November 2026)
+- Bangladesh National Building Code 2020 official gazette: Government Press, S.R.O. No. 55-Law/2020.
+- RAJUK current rules portal lists the Dhaka Metropolitan Building Construction Regulations 2025; check local applicability and latest adopted notices.
+- RAJUK Electronic Construction Permitting System FAQ: construction permit and project submission requirements, including additional review documentation for buildings above 10 floors within its jurisdiction.
+- Copernicus DEM: regional elevation/surface context only; not a boundary or engineering survey.
+- ISRIC SoilGrids: regional gridded soil predictions only; not borehole/laboratory results or design soil parameters.
+- ThinkHazard: regional screening only; obtain site-specific hazard studies.

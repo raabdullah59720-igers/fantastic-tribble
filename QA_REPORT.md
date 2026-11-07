@@ -335,4 +335,55 @@ v38 corrective change: maritime activity was not visible because v37 only contai
 - New visibility/deep-link assertions: 9 PASS. Civil panel semantic/source assertions: 27 PASS.
 - Regression suites: Earth Traffic 25 PASS; PWA/omnibox 9/9; Russian satellite integration 9+5; Radiological Safety 12; Location privacy 19; inherited 3D/imagery 15+25; aggregate payload 4; marine model request 6; RF 5/5; Space Environment 11; Space Communications 21; voice-mail static checks PASS; relay/mailbox 14 groups; Connectivity 6; VPN bridge 11 tests.
 - Archive is kept at exactly 99 root files. External provider/browser rendering was not exercised by these local code tests.
-\n\n## v41 civil visual studio verification\n- Five panels gained actual-data visual stages: GloFAS time-series, OSM coarse aggregate grid, GBIF regional bars, Open-Meteo marine wave grid bars, and STAC preview gallery (only if source assets exist).\n- Added Balanced/High/Ultra Cesium render profiles with device cap; existing viewer/camera retained.\n- Civil entry now auto-requests Humanitarian OSM summary with freshness gating.\n- Empty states explicitly state no synthetic observations.\n- PWA cache and diagnostics bumped to `terravex-apex-shell-v41`.\n- Runtime/public API and remote browser rendering still require verification on the deployed GitHub Pages site; static QA does not certify external service availability.\n\n\n### v41 final QA execution record\n- Static QA: 1,167 HTML IDs; duplicate IDs=0; missing local references=0; service-worker shell assets=52/52; JS syntax=25/25; CSS parse=20/20; Python syntax=4/4; aggregate static errors=0.\n- Earth Traffic: 25 assertions PASS.\n- PWA/navigation checks: 9/9 PASS; Russian satellite entry/integration 9 assertions PASS; module bootstrap 5 assertions PASS.\n- Radiological Safety Centre: 12 assertions PASS.\n- Device location privacy/precision: 19 assertions PASS.\n- v37 inherited visual/launch checks: 15 + 25 assertions PASS.\n- v38 marine and aggregate validation: integration PASS; payload identity/track rejection 4/4; marine deterministic assertions 6/6.\n- v39 civil panels: 27 assertions PASS. v40 civil visibility/deep links: 9 assertions PASS.\n- Relay/mailbox: 14 integration groups PASS; RF: 5/5; Space Communications: 21 assertions; Space Environment: 11 assertions; VPN bridge: 11 tests as part of previous integrated suite.\n- v41 added source-driven graphics, High/Ultra render profiles, source-supplied STAC preview handling, and direct-route auto-entry into the shared 3D viewer. External API and remote GitHub Pages rendering still need live browser verification after deployment.\n
+
+
+## v41 civil visual studio verification
+- Five panels gained actual-data visual stages: GloFAS time-series, OSM coarse aggregate grid, GBIF regional bars, Open-Meteo marine wave grid bars, and STAC preview gallery (only if source assets exist).
+- Added Balanced/High/Ultra Cesium render profiles with device cap; existing viewer/camera retained.
+- Civil entry now auto-requests Humanitarian OSM summary with freshness gating.
+- Empty states explicitly state no synthetic observations.
+- PWA cache and diagnostics bumped to `terravex-apex-shell-v41`.
+- Runtime/public API and remote browser rendering still require verification on the deployed GitHub Pages site; static QA does not certify external service availability.
+
+
+### v41 final QA execution record
+- Static QA: 1,167 HTML IDs; duplicate IDs=0; missing local references=0; service-worker shell assets=52/52; JS syntax=25/25; CSS parse=20/20; Python syntax=4/4; aggregate static errors=0.
+- Earth Traffic: 25 assertions PASS.
+- PWA/navigation checks: 9/9 PASS; Russian satellite entry/integration 9 assertions PASS; module bootstrap 5 assertions PASS.
+- Radiological Safety Centre: 12 assertions PASS.
+- Device location privacy/precision: 19 assertions PASS.
+- v37 inherited visual/launch checks: 15 + 25 assertions PASS.
+- v38 marine and aggregate validation: integration PASS; payload identity/track rejection 4/4; marine deterministic assertions 6/6.
+- v39 civil panels: 27 assertions PASS. v40 civil visibility/deep links: 9 assertions PASS.
+- Relay/mailbox: 14 integration groups PASS; RF: 5/5; Space Communications: 21 assertions; Space Environment: 11 assertions; VPN bridge: 11 tests as part of previous integrated suite.
+- v41 added source-driven graphics, High/Ultra render profiles, source-supplied STAC preview handling, and direct-route auto-entry into the shared 3D viewer. External API and remote GitHub Pages rendering still need live browser verification after deployment.
+
+
+## v42 Engineering Studio QA record
+- Static QA: 1,219 HTML IDs; duplicate IDs=0; missing local references=0; service-worker shell assets 52/52; JavaScript syntax 25/25; CSS parsing 20/20; Python syntax 4/4; manifest shortcuts 17/17 valid; aggregate static errors=0.
+- Engineering runtime calculation/DXF harness: 25 assertions PASS (rectangle, right triangle, circle, area and length conversions, eight-storey and 100-storey calculations, FAR/GFA/height, invalid-input guards, DXF units/layers and exclusion of structural/reinforcement detail).
+- PWA omnibox: 9/9; Russian satellite navigation/integration: 9 assertions; module bootstrap: 5 assertions; Radiological Safety: 12; location precision/privacy: 19; civil launch and imagery regression: 15 + 25; v38 aggregate validation: 4; marine model deterministic checks: 6; v39 civil panels: 27; v40 visibility/navigation: 9; Earth Traffic: 25.
+- Relay/mailbox: 14 check groups; RF: 5/5; Space Communications: 21; Space Environment: 11; Connectivity: 6; VPN bridge: 11 tests.
+- v42 Engineering Studio: live input recalculation, unit conversion, concept-only 1–100 storey massing, non-structural finish surface allowances, DXF/CSV/JSON download, professional-review boundaries and PWA shortcut.
+- ZIP package: exactly 99 root files; archive integrity and SHA-256 verified. External GIS/API availability and the user's deployed GitHub Pages/browser rendering are not certified by local static/regression tests.
+
+
+## v42 Engineering Studio final verification (7 November 2026)
+- Engineering route available through sidebar, topbar, Overview and command palette; direct route `?page=engineering`.
+- Site geometry: rectangle, right triangle and circle; length units m/ft/cm/mm/km; area units m²/ft²/acre/hectare/decimal/km².
+- Scenario calculator: plot area, perimeter, coverage, footprint, gross floor area, concept height and user-entered FAR/coverage/height limit comparisons. Floors 1–100 are visual scenario inputs, not feasibility approval.
+- Local animated massing canvas plus real Cesium extruded concept volume on the existing Earth viewer. User must explicitly supply coordinates and trigger the overlay; clear action removes only engineering entities.
+- Download tests: DXF AC1015 metre units and layers SITE/FOOTPRINT/MASSING/LEVELS/NOTES parsed successfully with ezdxf; CSV finish allowances and JSON scenario report remain separate exports.
+- Runtime harness: 22 assertions passed across shapes, dimensions, units, GFA/FAR/height, floor bounds, invalid inputs, DXF content and Cesium overlay add/clear lifecycle.
+- Limits: conceptual architecture only; no reinforcement, load paths, member sizing, foundations, structural materials, construction BOQ, permit approval or military/naval/weapon-related design.
+- Full static QA: 1,218 IDs, duplicates=0, missing local references=0, JS=25/25, CSS=20/20, static errors=0; PWA cache parity v42. Full existing regression suites passed including 11 VPN bridge tests on isolated rerun.
+- Deployed browser, remote API availability and the user's own Cesium/GPU rendering still require on-site verification.
+
+
+## v42 final package record
+- Exactly 99 root-level project files retained; no new loose application files added.
+- Static QA: 1,219 HTML IDs; duplicates=0; missing local resources=0; JavaScript=25/25 syntax clean; CSS=20/20 parsed; Python=4/4 syntax clean; PWA cache/diagnostics parity v42; 52/52 required shell assets present; aggregate static errors=0.
+- Regression suites: PWA/navigation + Russian Satellite integration/bootstrap + Radiological Safety + location privacy + civil-panel/deep-link + marine/aggregate + Earth Traffic 25 + RF 5 + Space Communications 21 + Space Environment 11 + relay/mailbox 14 groups + voice-mail + connectivity 6 all passed. VPN bridge 11/11 passed on isolated run.
+- Engineering runtime harness: 23 assertions passed, including rectangle/right-triangle/circle geometry, unit conversion, 1–100 floors, GFA/footprint/FAR/height, invalid-input guards, DXF export content, shared Cesium massing overlay creation/removal and 20 km local-projection guard.
+- Export verification: generated ASCII DXF parsed with ezdxf 1.4.4 as AC1015; 109 modelspace entities; SITE, FOOTPRINT, MASSING, LEVELS and NOTES layers present.
+- External services, RAJUK/authority responses, user-provided survey coordinates, deployed GitHub Pages rendering and browser/GPU Cesium performance were not live-certified by this local QA run.

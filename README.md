@@ -264,5 +264,45 @@ The package retains exactly 99 root files. PWA service-worker cache: `terravex-a
 The five v39 civil/environmental panels were present in the Live 3D Earth page but located below the long command workspace, without visible jump controls. v40 adds a persistent top-bar Civil 3D shortcut, an Overview launch banner, a five-button quick-jump bar below the Live 3D Earth heading, focus/scroll highlighting, and direct `?page=earthcommand&panel=` routes (`all`, `flood`, `humanitarian`, `forest`, `ocean`, `archive`). Navigation scrolls to the existing panel IDs and retains the same Cesium viewer/camera. No duplicate 3D globe is created. Service-worker cache: `terravex-apex-shell-v40`.
 
 ### v40 direct access to civil panels
-The `Civil 3D` top-bar shortcut and Overview launch card open the existing Live 3D Earth page and jump to the five civil panels. The five-button strip is immediately below the Live 3D Earth heading. Direct URLs: `?page=earthcommand&panel=all`, `?page=earthcommand&panel=flood`, `?page=earthcommand&panel=humanitarian`, `?page=earthcommand&panel=forest`, `?page=earthcommand&panel=ocean`, and `?page=earthcommand&panel=archive`. These are scroll targets within the same page; they do not create another Cesium viewer. See `PWA-INSTALL-NOW.md` and `DEPLOYMENT_BN.md`. The historical v40 cache was `terravex-apex-shell-v40`; the current v41 cache is `terravex-apex-shell-v41`.
-\n\n## v41 — Civil 3D visual studio and source-driven graphics\nThe five civil/environmental panels now include high-contrast visual stages rendered from actual returned provider data: GloFAS daily river-discharge lines; coarse OpenStreetMap public-resource grid; GBIF regional occurrence bars; Open-Meteo wave-height cells; and public STAC scene-preview thumbnails when the catalogue supplies preview assets. Empty or unavailable sources remain visibly empty; no synthetic observations or stock imagery are substituted. The shared Cesium globe/camera is retained. A Balanced/High/Ultra render-quality selector adjusts Cesium resolution scale and globe screen-space error with a device cap. The Humanitarian summary now auto-loads with the other civil panels on entering Live 3D Earth.\n\n### v41 source and interpretation rules\n- GloFAS is a daily simulated river-discharge model, not a river-gauge reading or official warning.\n- OpenStreetMap resource summaries are incomplete volunteer-mapped records, aggregated before plotting; not verified shelter capacity or live availability.\n- GBIF occurrence records reflect published sampling, not species abundance or live animal sightings.\n- Marine charts display Open-Meteo forecast/model grid cells, not vessel movements or navigation-grade hydrography.\n- Earth archive thumbnails are source-provided scene previews with acquisition timestamps; imagery is archived/dated, not continuous live video.\n- 3D imagery/terrain quality is provider-dependent. Ultra render profile does not create missing terrain or image data.\n- Service-worker cache: `terravex-apex-shell-v41`.\n
+The `Civil 3D` top-bar shortcut and Overview launch card open the existing Live 3D Earth page and jump to the five civil panels. The five-button strip is immediately below the Live 3D Earth heading. Direct URLs: `?page=earthcommand&panel=all`, `?page=earthcommand&panel=flood`, `?page=earthcommand&panel=humanitarian`, `?page=earthcommand&panel=forest`, `?page=earthcommand&panel=ocean`, and `?page=earthcommand&panel=archive`. These are scroll targets within the same page; they do not create another Cesium viewer. See `PWA-INSTALL-NOW.md` and `DEPLOYMENT_BN.md`. The historical v40 cache was `terravex-apex-shell-v40`; at the v41 release stage the cache was `terravex-apex-shell-v41`.
+
+
+## v41 — Civil 3D visual studio and source-driven graphics
+The five civil/environmental panels now include high-contrast visual stages rendered from actual returned provider data: GloFAS daily river-discharge lines; coarse OpenStreetMap public-resource grid; GBIF regional occurrence bars; Open-Meteo wave-height cells; and public STAC scene-preview thumbnails when the catalogue supplies preview assets. Empty or unavailable sources remain visibly empty; no synthetic observations or stock imagery are substituted. The shared Cesium globe/camera is retained. A Balanced/High/Ultra render-quality selector adjusts Cesium resolution scale and globe screen-space error with a device cap. The Humanitarian summary now auto-loads with the other civil panels on entering Live 3D Earth.
+
+### v41 source and interpretation rules
+- GloFAS is a daily simulated river-discharge model, not a river-gauge reading or official warning.
+- OpenStreetMap resource summaries are incomplete volunteer-mapped records, aggregated before plotting; not verified shelter capacity or live availability.
+- GBIF occurrence records reflect published sampling, not species abundance or live animal sightings.
+- Marine charts display Open-Meteo forecast/model grid cells, not vessel movements or navigation-grade hydrography.
+- Earth archive thumbnails are source-provided scene previews with acquisition timestamps; imagery is archived/dated, not continuous live video.
+- 3D imagery/terrain quality is provider-dependent. Ultra render profile does not create missing terrain or image data.
+- Service-worker cache: `terravex-apex-shell-v41`.
+
+
+## v42 — Engineering Sector / Architecture Feasibility Studio
+A separate **Engineering Sector** sidebar entry, persistent top-bar `Engineering` shortcut, Overview launch card and PWA install shortcut open `?page=engineering`. This is a civilian concept-planning tool. The existing Earth/command panels and prior app features remain in place.
+
+### Concept calculations and downloads
+- Plot shapes: rectangle, right triangle and circle. Dimension units: m, ft, cm, mm and km. Area display: m², ft², acre, hectare, Bangladesh decimal and km².
+- Input changes automatically recalculate the scenario and animated canvas massing; a manual Calculate & Render button remains available.
+- Concept storeys: 1–100; user-entered floor-to-floor height, site coverage, FAR limit, authority coverage limit, height limit, glazing allowance and finish allowance.
+- Reported outputs: plot area, conceptual footprint, gross floor area, concept height, FAR scenario, plot perimeter and five non-structural surface allowances.
+- Downloads: AutoCAD-compatible ASCII DXF in metres (site boundary, conceptual footprint, simplified massing shell and floor-level outlines), CSV finish allowance schedule and JSON scenario report.
+
+### Strict design scope
+These outputs are **conceptual planning estimates, not construction drawings, tender BOQ, structural design or a permit**. No beams, columns, slabs, foundations, load paths, structural concrete, structural steel, reinforcement schedules, connection details, military/naval installations or weapon-related facilities are designed. DXF includes only schematic architectural massing. The finish schedule is limited to floor/ceiling finishes, roof membrane, facade finish and glazing surface allowances.
+
+Site-context links include the Bangladesh BNBC 2020 Gazette and RAJUK GIS/planning resources, Copernicus DEM, SoilGrids and OpenStreetMap attribution. DEM and global soil datasets are regional screening inputs, not cadastral/topographic survey, borehole logs, laboratory tests, soil bearing capacity, groundwater or liquefaction assessment. Enter only verified local FAR, coverage and height limits. A licensed architect/engineer must independently perform site survey, geotechnical investigation, structural/fire/MEP/accessibility review and authority submissions before any construction decision.
+
+- PWA shell cache: `terravex-apex-shell-v42`.
+- Main page: `?page=engineering`.
+- The download contains exactly 99 root files.
+
+
+### v42 shared 3D Earth overlay and final engineering runtime checks
+The Engineering Studio retains its local animated isometric canvas preview and can also plot a true Cesium extruded conceptual building volume, parcel outline and floor-level outlines onto the existing shared `TERRAVEX_EARTH_COMMAND` viewer. The user must enter site latitude/longitude and explicitly choose **Plot concept on shared 3D Earth**. A dedicated **Clear Earth concept** action removes only the entities created by this studio; it does not remove imagery or other viewer layers. Local coordinate projection is schematic/equirectangular and is only appropriate for small parcels; user-supplied coordinates are not survey-verified.
+
+Final runtime validation exercised rectangle, right-triangle and circle area/perimeter, unit conversion, GFA/footprint/FAR/height, 1–100 storey bounds, invalid input rejection, DXF layers/units, and shared Cesium overlay add/clear lifecycle (22 assertions). The generated ASCII DXF was parsed successfully by ezdxf as AC1015 with SITE, FOOTPRINT, MASSING, LEVELS and NOTES layers.
+
+RAJUK's current rules list includes Dhaka Metropolitan Building Construction Regulations 2025. Its ECPS construction-permit FAQ describes the permit process and additional submissions/clearances for projects above 10 floors within its jurisdiction. Confirm the currently applicable local authority rules for every actual parcel; do not copy limits from another site.
