@@ -295,7 +295,7 @@ These outputs are **conceptual planning estimates, not construction drawings, te
 
 Site-context links include the Bangladesh BNBC 2020 Gazette and RAJUK GIS/planning resources, Copernicus DEM, SoilGrids and OpenStreetMap attribution. DEM and global soil datasets are regional screening inputs, not cadastral/topographic survey, borehole logs, laboratory tests, soil bearing capacity, groundwater or liquefaction assessment. Enter only verified local FAR, coverage and height limits. A licensed architect/engineer must independently perform site survey, geotechnical investigation, structural/fire/MEP/accessibility review and authority submissions before any construction decision.
 
-- PWA shell cache: `terravex-apex-shell-v42`.
+- PWA shell cache: `terravex-apex-shell-v44`.
 - Main page: `?page=engineering`.
 - The download contains exactly 99 root files.
 
@@ -306,3 +306,23 @@ The Engineering Studio retains its local animated isometric canvas preview and c
 Final runtime validation exercised rectangle, right-triangle and circle area/perimeter, unit conversion, GFA/footprint/FAR/height, 1–100 storey bounds, invalid input rejection, DXF layers/units, and shared Cesium overlay add/clear lifecycle (22 assertions). The generated ASCII DXF was parsed successfully by ezdxf as AC1015 with SITE, FOOTPRINT, MASSING, LEVELS and NOTES layers.
 
 RAJUK's current rules list includes Dhaka Metropolitan Building Construction Regulations 2025. Its ECPS construction-permit FAQ describes the permit process and additional submissions/clearances for projects above 10 floors within its jurisdiction. Confirm the currently applicable local authority rules for every actual parcel; do not copy limits from another site.
+
+
+## v43 Engineering report monitor and export repair
+The Engineering Studio now places a calculation/report monitor above the workspace. It refreshes the design KPIs, entered planning-limit checks, professional safety review, preliminary non-structural finish allowances, unit conversions and assumptions after every valid calculation. Invalid input clears stale results so old reports cannot be mistaken for current calculations. Export actions include conceptual DXF, SVG site plan, finish CSV, complete JSON report and printable HTML report (use the report's Print / Save as PDF action). These are civilian concept-stage planning exports only; no structural/reinforcement/foundation detail, construction BOQ, permit approval, or military/naval/weapons design is generated. PWA shell cache is v43.
+
+
+## v43 — Engineering report monitor and export repair
+The Engineering Studio now displays an Engineering Design & Safety Report directly below the page status strip. It refreshes automatically after valid input changes and includes project title, site coordinates (when entered, labelled unverified), plot-area conversions, footprint, GFA, concept height, FAR, preliminary finish allowances, entered-limit comparisons, assumptions and an explicit professional-review checklist. A missing timer declaration in the prior live-input handler was fixed; the animation loop now always renders the latest scenario instead of a stale frame. Invalid inputs clear the previous calculation so old outputs cannot be exported as current.
+
+Download actions are available above the workspace: conceptual DXF massing, SVG site plan, non-structural finish CSV, complete scenario JSON and a full HTML design/safety report. The HTML report includes a Print / Save as PDF action in the browser. DXF/SVG/CSV are concept outputs only. No reinforcement schedule, structural member or foundation design, construction-ready BOQ, permit approval, or military/naval/weapons/nuclear facility design is produced. PWA cache version: v43.
+
+
+## v44 Engineering Studio — two-input auto-design and satellite-context workflow (7 November 2026)
+The Engineering Studio now exposes only two primary inputs: storey count (1–100) and civilian building type. Terravex applies documented typology heuristics to estimate a rectangular parcel, typical floor plate, site coverage, floor-to-floor height, concept height, gross floor area and indicative functional-zone areas. The assumption summary is visible and is repeated in JSON/HTML reports. No assumed dimensions are described as satellite-derived, surveyed, cadastral or approved.
+
+The optional **Use current 3D Earth view centre** action takes the current shared Cesium camera centre as an approximate location reference and queries the public Earth Search STAC catalogue for Sentinel-2 L2A scene metadata. This is an explicit location selection; imagery/catalogue failure is surfaced, not replaced with synthetic data. Satellite scene metadata may support broad context only. Copernicus DEM is regional surface/elevation context, not a survey or geotechnical source; Sentinel-2 bands have 10 m / 20 m / 60 m resolutions depending on band.
+
+The studio shows a 2D typical-floor zoning preview and exports an AutoCAD-compatible AC1015 DXF in metres with ASSUMED_SITE, FOOTPRINT, zone, core, circulation, dimensions, text and notes layers. DXF entities include the required R2000 subclass markers and have been parsed with ezdxf. A separate 3D massing DXF, SVG, CSV, JSON and printable HTML safety/design report are available. The 2D layout is schematic zoning, not room-by-room, permit or construction documentation. Only non-structural finish surface allowances are estimated. No wind/seismic member design, reinforcement, beam/column/foundation/pile design, MEP or construction BOQ is generated.
+
+PWA shell cache: `terravex-apex-shell-v44`. Direct route: `?page=engineering`. For site imagery, open Live 3D Earth, pan to the project region, return to Engineering Studio and explicitly select the Earth-view centre.

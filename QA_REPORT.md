@@ -359,16 +359,16 @@ v38 corrective change: maritime activity was not visible because v37 only contai
 - v41 added source-driven graphics, High/Ultra render profiles, source-supplied STAC preview handling, and direct-route auto-entry into the shared 3D viewer. External API and remote GitHub Pages rendering still need live browser verification after deployment.
 
 
-## v42 Engineering Studio QA record
+## v43 Engineering Studio QA record
 - Static QA: 1,219 HTML IDs; duplicate IDs=0; missing local references=0; service-worker shell assets 52/52; JavaScript syntax 25/25; CSS parsing 20/20; Python syntax 4/4; manifest shortcuts 17/17 valid; aggregate static errors=0.
 - Engineering runtime calculation/DXF harness: 25 assertions PASS (rectangle, right triangle, circle, area and length conversions, eight-storey and 100-storey calculations, FAR/GFA/height, invalid-input guards, DXF units/layers and exclusion of structural/reinforcement detail).
 - PWA omnibox: 9/9; Russian satellite navigation/integration: 9 assertions; module bootstrap: 5 assertions; Radiological Safety: 12; location precision/privacy: 19; civil launch and imagery regression: 15 + 25; v38 aggregate validation: 4; marine model deterministic checks: 6; v39 civil panels: 27; v40 visibility/navigation: 9; Earth Traffic: 25.
 - Relay/mailbox: 14 check groups; RF: 5/5; Space Communications: 21; Space Environment: 11; Connectivity: 6; VPN bridge: 11 tests.
-- v42 Engineering Studio: live input recalculation, unit conversion, concept-only 1–100 storey massing, non-structural finish surface allowances, DXF/CSV/JSON download, professional-review boundaries and PWA shortcut.
+- v43 Engineering Studio: live input recalculation, unit conversion, concept-only 1–100 storey massing, non-structural finish surface allowances, DXF/CSV/JSON download, professional-review boundaries and PWA shortcut.
 - ZIP package: exactly 99 root files; archive integrity and SHA-256 verified. External GIS/API availability and the user's deployed GitHub Pages/browser rendering are not certified by local static/regression tests.
 
 
-## v42 Engineering Studio final verification (7 November 2026)
+## v43 Engineering Studio final verification (7 November 2026)
 - Engineering route available through sidebar, topbar, Overview and command palette; direct route `?page=engineering`.
 - Site geometry: rectangle, right triangle and circle; length units m/ft/cm/mm/km; area units m²/ft²/acre/hectare/decimal/km².
 - Scenario calculator: plot area, perimeter, coverage, footprint, gross floor area, concept height and user-entered FAR/coverage/height limit comparisons. Floors 1–100 are visual scenario inputs, not feasibility approval.
@@ -387,3 +387,36 @@ v38 corrective change: maritime activity was not visible because v37 only contai
 - Engineering runtime harness: 23 assertions passed, including rectangle/right-triangle/circle geometry, unit conversion, 1–100 floors, GFA/footprint/FAR/height, invalid-input guards, DXF export content, shared Cesium massing overlay creation/removal and 20 km local-projection guard.
 - Export verification: generated ASCII DXF parsed with ezdxf 1.4.4 as AC1015; 109 modelspace entities; SITE, FOOTPRINT, MASSING, LEVELS and NOTES layers present.
 - External services, RAJUK/authority responses, user-provided survey coordinates, deployed GitHub Pages rendering and browser/GPU Cesium performance were not live-certified by this local QA run.
+
+
+## v43 Engineering Studio report / download bug-fix record
+- Root cause found: the prior live-input debounce referenced `calcTimer` without declaring it under strict mode. Changing a dimension/floor count could throw a ReferenceError, preventing the report and massing from updating. Added an explicit timer state and verified recalculation after input changes.
+- Fixed the 3D preview animation loop so queued frames always redraw the latest validated scenario; an older animation no longer overwrites the current model.
+- Added a visible Engineering Design & Safety Report monitor above the workspace. It updates project summary, site coordinate provenance, area conversions, GFA/FAR/height/coverage, preliminary finish allowances, entered-limit comparisons, and explicit missing/unchecked professional reviews.
+- Invalid inputs now clear all prior outputs and prevent stale reports or exports from being downloaded. A partial or out-of-range latitude/longitude pair is rejected; coordinates are labelled user-entered and unverified.
+- Added prominent download controls: conceptual DXF, SVG site plan, non-structural finish CSV, complete JSON scenario and printable HTML safety/design report. HTML report supports browser Print / Save as PDF. Download errors are surfaced in the UI.
+- Safety boundary remains explicit: civilian concept planning and non-structural finish areas only; no reinforcement, beams, columns, foundations, structural steel, structural BOQ, permit certification or military/naval/weapons/nuclear facility design.
+- Verification: static QA 0 errors, duplicate IDs 0, missing local references 0, 25 JS files syntax-checked, 20 CSS stylesheets parsed. PWA cache/diagnostics parity v43. PWA/earth traffic integration, RF 5/5, Space Communications 21, Space Environment 11, relay/mailbox 14 groups, Connectivity 6, VPN bridge 11/11, Engineering calculations/DXF 25 assertions, Engineering UI/report/export runtime test passed.
+- Browser caveat: Playwright-driven Chromium navigation was blocked by the runtime administrator policy for both localhost and file URLs. The report renderer, live input debounce, invalid-input clearing and download dispatch were instead verified with deterministic DOM/API mocks; deployed GitHub Pages rendering still requires browser verification after upload.
+
+- Final v43 static pass after report-field integration: 1,235 HTML IDs, duplicate IDs=0, missing local references=0, JavaScript 25/25, CSS 20/20, Python 4/4, required app-shell assets 52/52, static QA errors=0. Invalid-input path now also cancels the previous animation frame before displaying the error report.
+
+
+## v44 Engineering Studio two-input design workflow and CAD parser verification (7 November 2026)
+- Primary inputs reduced to storey count (1–100) and a supported civilian building typology. Site geometry, floor plate, coverage, height, FAR scenario and floor zoning are auto-assumed and visibly disclosed as heuristics.
+- Added optional satellite-context selector using the existing shared Cesium camera centre and public Sentinel-2 L2A STAC scene metadata. No site coordinates are silently inferred; no cadastral, subsurface, soil bearing or foundation attributes are claimed from imagery.
+- Added 2D floor-plan canvas, functional zoning, core/support blocks, dimensions, assumed plot outline and dedicated DXF download. Fixed the AutoCAD DXF entity structure by adding the required R2000 subclasses for LWPOLYLINE, LINE and TEXT.
+- Generated 2D DXF parsed with ezdxf 1.4.4 as AC1015 with metre units; 23 model-space entities and required layers. 3D massing DXF also parsed as AC1015. SVG XML and HTML report parsing passed. Forty deterministic storey/type combinations across eight civilian profiles passed calculations, with output bounds checked.
+- Live report now includes engineering descriptions, functional-zone program, satellite catalogue provenance when selected, and professional safety review. Invalid input clears stale reports; every export recalculates from the current two inputs before downloading.
+- PWA cache and runtime diagnostics moved to v44; existing app shell retains 99 files.
+- Remaining verification limit: external STAC imagery and deployed GitHub Pages/Cesium rendering require online browser verification after deployment. All concept outputs are preliminary and not construction/permit drawings.
+
+## v44 final verification after DXF entity repair (7 November 2026)
+- Auto-assumption UI initialization test: report KPI cards, program/engineering descriptions, safety review, assumed parcel summary, finish schedule and 2D canvas all populated on first entry; 12 live-update, invalid-input and download-current-input assertions passed.
+- Forty deterministic combinations passed: eight supported civilian building typologies × storey counts 1, 8, 30, 60 and 100. All produced finite positive GFA and a valid plan object.
+- The first independent DXF parser check exposed missing R2000 subclass markers in 2D LWPOLYLINE entities. The 2D DXF writer was corrected to write AcDbEntity/AcDbPolyline, AcDbLine and AcDbText subclass markers. This was then reopened with ezdxf 1.4.4 as AC1015, metre units, 23 modelspace entities and all ten required layers. The separate 3D massing DXF also parsed as AC1015 (21 modelspace entities).
+- Generated SVG parsed as valid XML; generated HTML report parsed successfully. Report includes site context status, area-unit conversions, typology/zoning description, safety review, assumptions, professional review and reference list.
+- Current service-worker cache and runtime diagnostics: `terravex-apex-shell-v44`; app shell required resources 52/52. Package limit: exactly 99 files.
+- Final static QA: 1,247 HTML IDs; duplicate IDs 0; missing local resource references 0; JS syntax 25/25; CSS parser 20/20; Python syntax 4/4; zero static errors.
+- Regression suites: PWA 9/9; Earth Traffic 25; RF 5/5; Space Communications 21; Space Environment 11; relay/mailbox 14 integration groups; VPN bridge 11/11; Russian imagery, radiological safety, GPS privacy, same-globe civil panels and five civil environmental panels all passed.
+- External Sentinel-2 STAC requests, actual browser download behavior, GitHub Pages deployment and Cesium/WebGL rendering still require online browser confirmation after upload. Satellite context is optional and user-selected; assumed parcel dimensions are typology heuristics, not satellite-derived measurements.

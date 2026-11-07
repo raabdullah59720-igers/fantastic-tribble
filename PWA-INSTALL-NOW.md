@@ -102,9 +102,19 @@ The five civil panels remain inside the original `page-earthcommand` and share t
 The existing five civil panels now show source-driven graphics: river model time-series, coarse humanitarian resource grid, GBIF regional record bars, marine model wave-height bars, and satellite scene preview cards when preview assets are supplied by STAC. Humanitarian public-resource summary is automatically requested when entering Live 3D Earth. The shared Cesium viewer has Balanced / High / Ultra render profiles, capped for device performance. Cache: `terravex-apex-shell-v41`. A source with no data stays in an explicit waiting/offline state; no mock observations are drawn.
 
 
-## v42 Engineering Studio shortcut and cache
-The Engineering Sector is available from the sidebar, persistent top-bar `Engineering` button, Overview launch card and the first PWA install shortcut. Open `?page=engineering`. The calculator updates locally when inputs change and can export a concept-only AutoCAD-compatible DXF, CSV surface allowance schedule and JSON scenario report. Service-worker cache: `terravex-apex-shell-v42`. After GitHub Pages deployment, hard-refresh the HTTPS origin; for an installed PWA use Source Health & Offline → Refresh cached app shell.
+## v43 Engineering Studio shortcut and cache
+The Engineering Sector is available from the sidebar, persistent top-bar `Engineering` button, Overview launch card and the first PWA install shortcut. Open `?page=engineering`. The calculator updates locally when inputs change and can export a concept-only AutoCAD-compatible DXF, CSV surface allowance schedule and JSON scenario report. Service-worker cache: `terravex-apex-shell-v44`. After GitHub Pages deployment, hard-refresh the HTTPS origin; for an installed PWA use Source Health & Offline → Refresh cached app shell.
 
 
 ### v42: plot the concept on the shared 3D Earth
 In Engineering Studio, enter user-authorized/survey-derived latitude and longitude, calculate the concept, then use **Plot concept on shared 3D Earth**. This creates a schematic parcel boundary, one extruded building massing volume and floor-level outlines in the existing Cesium viewer. **Clear Earth concept** removes only those Engineering Studio entities. Direct route: `?page=engineering`. This is not a topographic survey, true BIM model or structural design.
+
+
+### v43 Engineering Studio report and export controls
+The Engineering & Architecture page (`?page=engineering`) now shows its report monitor near the top. If the installed app continues to display an older page, refresh the cached app shell from Source Health & Offline; the current shell is `terravex-apex-shell-v44`. The Engineering Studio requires `advanced-workbench.js` and `advanced-workbench.css` in the local shell. The report download toolbar exports conceptual DXF, SVG, CSV, JSON and printable HTML.
+
+
+## v44 Engineering Studio auto-design and CAD
+Current shell cache: `terravex-apex-shell-v44`. Open `?page=engineering`. Choose only the number of storeys and one of the supported civilian building types; Terravex will calculate an assumed concept parcel, footprint, height, GFA, FAR scenario, functional zoning and non-structural finish allowances. Review the visible auto-assumption summary before exporting. Optional satellite context requires panning the shared 3D Earth to the intended region and explicitly selecting **Use current 3D Earth view centre**.
+
+Download actions: **2D AutoCAD floor plan DXF**, 3D massing DXF, plan SVG, complete JSON report, preliminary finish CSV and HTML safety/design report (Print / Save as PDF). 2D DXF is a schematic typical-floor functional-zone plan, not construction/permit drawing.

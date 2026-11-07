@@ -90,7 +90,7 @@ Live 3D Earth পেজের শিরোনামের ঠিক নিচে
 এই সংস্করণে আগের 3D globe/camera অক্ষত রেখে পাঁচটি Civil panel-এ live-source-driven chart/scene-preview stage যোগ হয়েছে। Flood chart GloFAS-এর source-provided daily series থেকে, Humanitarian visual OSM-এর ২০ কিমি-প্রায় aggregate cell থেকে, Forest chart GBIF-এর occurrence-record count থেকে, Ocean chart Open-Meteo-এর wave model cells থেকে, এবং Archive gallery STAC item-এর source-provided preview asset থাকলে তা দেখায়। কোনো source unavailable থাকলে empty/offline state দেখাবে। 3D quality selector: Balanced / High / Ultra; device capability অনুযায়ী resolution scale cap করা হয়। Humanitarian data Earth Command-এ প্রবেশের সময় auto-request হয়। PWA cache v41।
 
 
-## v42 Engineering Studio deployment
+## v43 Engineering Studio deployment
 1. Extract the v42 ZIP. Upload/overwrite all 99 extracted files at the same repository root used by the existing TERRAVEX app; do not upload the ZIP as a single repository file or nest the files in a new folder.
 2. Confirm `index.html` and `manifest.webmanifest` are at that root, then commit and publish GitHub Pages.
 3. Hard-refresh the HTTPS Pages URL (`Ctrl+Shift+R`). If running the installed PWA, open Source Health & Offline and refresh the cached app shell (v42).
@@ -100,3 +100,23 @@ Live 3D Earth পেজের শিরোনামের ঠিক নিচে
 
 ### v42: shared 3D Earth concept plot
 Engineering Studio-তে সাইটের latitude/longitude দিন, scenario calculate করুন, তারপর `Plot concept on shared 3D Earth` চাপুন। এটি existing Cesium Earth viewer-এ schematic parcel outline, extruded building massing ও floor-level outline যোগ করে। `Clear Earth concept` শুধু Engineering Studio-এর entity সরায়; অন্য map/layer অক্ষত থাকে। Direct URL: `?page=engineering`। Coordinates survey-verified না হলে plot-কে কেবল concept হিসেবে ধরতে হবে।
+
+
+### v43 Engineering Studio report/export fix
+After deploying v43, open `?page=engineering`. The Engineering Design & Safety Report monitor is located directly below the page status strip. Use Calculate & Render to refresh; DXF, SVG, HTML report, CSV and JSON downloads are available in the report toolbar. The HTML report can be printed or saved as PDF via the browser. Refresh the installed PWA shell from Source Health & Offline after deployment. Outputs are preliminary civilian concept geometry and non-structural finish allowances only, not construction documents.
+
+
+### v43 Engineering Studio report and download fix
+Deploy all 99 files at the repository root, then open `?page=engineering`. The Engineering Design & Safety Report appears directly below the page status strip. It includes live-updated concept metrics, safety/approval statuses, finish allowances, assumptions and unit conversions. Use the download toolbar for DXF, SVG, HTML report, CSV and JSON. The HTML report can be printed or saved as PDF from the browser. If using an installed PWA, open Source Health & Offline, refresh the app shell (v43), then reload.
+
+The report is a civilian concept-stage feasibility document only. Planning-limit comparisons are based on values entered by the user; missing limits are marked NOT ASSESSED. Survey, geology, structural wind/seismic, fire/life safety, MEP and authority review are not certified by the app. Finish allowances are not a full BOQ.
+
+
+## v44: দুই-input auto-design ও 2D CAD export
+Engineering Studio-তে ব্যবহারকারী শুধু storey count এবং civilian building type নির্বাচন করবেন। Terravex typology heuristic দিয়ে assumed rectangular parcel, floor plate, coverage, height, GFA ও functional zoning তৈরি করবে। সব assumption report-এ লেখা থাকবে; এটি surveyed plot বা authority-approved design নয়।
+
+Satellite context চাইলে Live 3D Earth-এ project region-এ pan/zoom করে Engineering Studio-তে ফিরে **Use current 3D Earth view centre** চাপুন। এটি ওই camera-centre-কে আনুমানিক location হিসেবে নিয়ে public Sentinel-2 L2A catalogue metadata query করে। Catalogue unavailable হলে UI-তে তা স্পষ্ট দেখাবে। Satellite image দিয়ে cadastral boundary, soil bearing capacity, groundwater বা foundation condition নির্ধারণ করা হবে না।
+
+2D preview canvas এবং **Download 2D floor plan DXF** ব্যবহার করুন। DXF AC1015/R2000, metre units ও পৃথক layer-সহ তৈরি; parser verification সম্পন্ন। এটি schematic typical-floor functional zoning, room-by-room construction plan নয়। 3D massing DXF, SVG, CSV finish allowance, JSON এবং printable HTML report-ও রয়েছে।
+
+GitHub Pages-এ সব ৯৯টি ফাইল repository root-এ overwrite করে deploy করুন। Direct route: `?page=engineering`। Installed PWA-তে Source Health & Offline থেকে v44 app-shell refresh করে reload করুন।

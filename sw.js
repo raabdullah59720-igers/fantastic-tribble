@@ -1,5 +1,5 @@
 /* TERRAVEX APEX service worker. Core UI and Thunderstorm digital-twin artwork are required for a complete offline panel. */
-const CACHE_NAME = 'terravex-apex-shell-v42';
+const CACHE_NAME = 'terravex-apex-shell-v44';
 const SCOPE_URL = self.registration.scope;
 const REQUIRED_SHELL = [
   "./index.html",

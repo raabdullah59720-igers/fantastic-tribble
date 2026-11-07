@@ -1105,31 +1105,52 @@
     <div class="eng-head-actions"><span class="badge sim">CONCEPT ONLY · NOT FOR CONSTRUCTION</span><button class="btn primary" id="engCalculate">↻ Calculate & Render</button></div>
   </div>
   <div class="eng-safety-banner"><b>PROFESSIONAL SCOPE & SAFETY BOUNDARY</b><span>This tool produces planning scenarios and non-load-bearing architectural massing only. It does not determine structural safety or code approval. It will not generate reinforcement schedules, beam/column/foundation designs, load paths, structural concrete/steel quantities, weapon-related works, military installations or naval combat facilities. Final engineering requires site-specific investigations, current local approvals and independently checked, licensed-professional design.</span></div>
-  <div class="eng-status-strip"><span><i class="eng-status-dot"></i> LOCAL LIVE CALCULATION ENGINE</span><span>INPUTS AUTO-RECALCULATE</span><span id="engLiveState">AWAITING INPUT</span><span id="engTimestamp">Not calculated</span><span>NO LIVE SENSOR DATA REQUIRED</span></div>
+  <div class="eng-status-strip"><span><i class="eng-status-dot"></i> LOCAL CALCULATION ENGINE</span><span id="engLiveState">AWAITING INPUT</span><span id="engTimestamp">Not calculated</span><span>NO LIVE SENSOR DATA REQUIRED</span></div>
+  <section class="eng-report-monitor" id="engReportMonitor" aria-live="polite" aria-labelledby="engReportTitle">
+    <div class="eng-report-header"><div><div class="eyebrow">ENGINEERING SECTOR / LIVE CALCULATION OUTPUT</div><h3 id="engReportTitle">Engineering Design & Safety Report</h3><p>Automatically refreshed from the current project inputs. A scenario report is not a construction approval or structural certificate.</p></div><div class="eng-report-status"><span id="engReportBadge" class="badge sim">GENERATING REPORT</span><small id="engReportTime">Waiting for calculation</small><button class="btn small-button" id="engGenerateReport" type="button">↻ Refresh report</button></div></div>
+    <div class="eng-report-kpis" id="engReportKpis"><div class="eng-report-placeholder">Calculating the example scenario…</div></div>
+    <div class="eng-report-two-col">
+      <div class="eng-report-section"><div class="eng-report-section-title"><b>01 / SAFETY & APPROVAL REVIEW</b><span id="engSafetySummary">NOT YET ASSESSED</span></div><div id="engReportSafety" class="eng-report-safety"><div class="eng-report-placeholder">Safety review will appear after calculation.</div></div></div>
+      <div class="eng-report-section"><div class="eng-report-section-title"><b>02 / PRELIMINARY MATERIAL ALLOWANCES</b><span>NON-STRUCTURAL ONLY</span></div><div class="eng-report-table-wrap"><table class="eng-report-table"><thead><tr><th>ITEM</th><th>QUANTITY</th><th>BASIS</th></tr></thead><tbody id="engReportMaterials"><tr><td colspan="3">Waiting for calculation.</td></tr></tbody></table></div><p class="eng-report-note">Finish-area allowances only. No concrete, rebar, structural steel, foundation, beam, column, MEP or fire-system quantities are produced.</p></div>
+    </div>
+    <div class="eng-report-assumptions" id="engReportAssumptions"><b>CALCULATION BASIS</b><span>Project assumptions, unit conversions, geometry formulae and limitations will appear here.</span></div>
+    <div class="eng-report-program" id="engReportProgram"><b>AUTO-GENERATED CONCEPT PROGRAM</b><span>Functional zoning and engineering review notes will appear after calculation.</span></div>
+    <div class="eng-report-downloads"><div><b>DOWNLOAD CURRENT DESIGN & REPORT</b><span>Exports are generated from the latest successful calculation. DXF and SVG are conceptual geometry; HTML report can be printed or saved as PDF from the browser.</span></div><div class="eng-report-download-buttons"><button class="btn primary" id="engQuickExportPlanDxf" type="button">↓ 2D AutoCAD floor plan</button><button class="btn" id="engQuickExportDxf" type="button">↓ 3D massing DXF</button><button class="btn" id="engQuickExportSvg" type="button">↓ Plan SVG</button><button class="btn" id="engQuickExportHtml" type="button">↓ Full HTML report</button><button class="btn" id="engQuickExportCsv" type="button">↓ Finish CSV</button><button class="btn" id="engQuickExportJson" type="button">↓ Scenario JSON</button></div></div>
+  </section>
   <div class="eng-layout">
     <div class="eng-input-column">
       <div class="card eng-card">
-        <div class="card-head"><div><h3>01 / PROJECT & SITE GEOMETRY</h3><p class="tiny">Civilian building concepts only. Use surveyed parcel dimensions where available.</p></div><span class="badge">INPUTS</span></div>
-        <div class="eng-form-grid">
-          <div class="field"><label for="engUse">Building use</label><select id="engUse"><option value="residential">Residential</option><option value="commercial">Commercial / Office</option><option value="education">Education</option><option value="healthcare">Healthcare</option><option value="civic">Civic / Community</option><option value="industrial">Non-hazardous industrial</option></select></div>
-          <div class="field"><label for="engShape">Plot geometry</label><select id="engShape"><option value="rectangle">Rectangle</option><option value="triangle">Right triangle</option><option value="circle">Circle</option></select></div>
-          <div class="field"><label for="engLengthUnit">Dimension unit</label><select id="engLengthUnit"><option value="m">Metre (m)</option><option value="ft">Foot (ft)</option><option value="cm">Centimetre (cm)</option><option value="mm">Millimetre (mm)</option><option value="km">Kilometre (km)</option></select></div>
-          <div class="field"><label for="engAreaUnit">Area display unit</label><select id="engAreaUnit"><option value="m2">Square metre (m²)</option><option value="ft2">Square foot (ft²)</option><option value="acre">Acre</option><option value="ha">Hectare</option><option value="decimal">Decimal (Bangladesh land unit)</option><option value="km2">Square kilometre (km²)</option></select></div>
-          <div class="field"><label id="engDimALabel" for="engDimA">Plot length</label><input id="engDimA" type="number" min="0.001" step="any" value="30"></div>
-          <div class="field"><label id="engDimBLabel" for="engDimB">Plot width</label><input id="engDimB" type="number" min="0.001" step="any" value="20"></div>
-          <div class="field"><label for="engFloors">Concept storeys (1–100)</label><input id="engFloors" type="number" min="1" max="100" step="1" value="8"></div>
-          <div class="field"><label for="engFloorHeight">Floor-to-floor height (m)</label><input id="engFloorHeight" type="number" min="2" max="8" step="0.05" value="3.3"></div>
-          <div class="field"><label for="engCoverage">Target site coverage (%)</label><input id="engCoverage" type="number" min="1" max="100" step="1" value="45"></div>
-          <div class="field"><label for="engFarLimit">Planning FAR limit (optional)</label><input id="engFarLimit" type="number" min="0.1" max="100" step="0.1" placeholder="Enter verified local limit"></div>
-          <div class="field"><label for="engCoverageLimit">Authority coverage limit (%) (optional)</label><input id="engCoverageLimit" type="number" min="1" max="100" step="1" placeholder="Not supplied"></div>
-          <div class="field"><label for="engHeightLimit">Authority height limit (m) (optional)</label><input id="engHeightLimit" type="number" min="1" max="1000" step="0.5" placeholder="Not supplied"></div>
-          <div class="field"><label for="engGlazingRatio">Facade glazing allowance (%)</label><input id="engGlazingRatio" type="number" min="0" max="90" step="1" value="35"></div>
-          <div class="field"><label for="engWaste">Finish-material allowance (%)</label><input id="engWaste" type="number" min="0" max="30" step="0.5" value="5"></div>
-          <div class="field"><label for="engLatitude">Site latitude (optional)</label><input id="engLatitude" type="number" min="-90" max="90" step="0.000001" placeholder="e.g. 23.8103"></div>
-          <div class="field"><label for="engLongitude">Site longitude (optional)</label><input id="engLongitude" type="number" min="-180" max="180" step="0.000001" placeholder="e.g. 90.4125"></div>
+        <div class="card-head"><div><h3>01 / PROJECT TYPE & STOREY INPUT</h3><p class="tiny">Choose only the number of storeys and civilian building type. Site dimensions and planning geometry are automatically assumed and shown transparently below.</p></div><span class="badge">INPUTS</span></div>
+        <div class="eng-quick-input-grid">
+          <div class="field eng-primary-input"><label for="engFloors">01 · Number of storeys (1–100)</label><input id="engFloors" type="number" min="1" max="100" step="1" value="8" inputmode="numeric" aria-describedby="engInputHint"></div>
+          <div class="field eng-primary-input"><label for="engUse">02 · Civilian infrastructure type</label><select id="engUse"><option value="residential">Residential building</option><option value="commercial">Commercial / office building</option><option value="education">Education building</option><option value="healthcare">Healthcare building</option><option value="civic">Civic / community building</option><option value="hotel">Hotel / hospitality building</option><option value="mixeduse">Mixed-use building</option><option value="industrial">Non-hazardous industrial building</option></select></div>
+        </div>
+        <div class="eng-auto-assumptions" id="engAutoSummary" role="status" aria-live="polite"><b>AUTO-DESIGN ASSUMPTIONS</b><span>Choose storeys and a civilian building type. Terravex will estimate a conceptual plot, footprint, floor plate, height and planning area.</span></div>
+        <div class="eng-satellite-context" id="engSatelliteContext">
+          <div><b>OPTIONAL SATELLITE SITE CONTEXT</b><span>Only the current 3D Earth camera centre is used after you explicitly select it. Satellite imagery can indicate broad land cover and terrain context; it cannot identify legal plot boundaries or subsurface conditions.</span><small id="engSatelliteStatus">SITE NOT SELECTED · NO SITE-SPECIFIC SATELLITE DATA REQUESTED</small><div id="engSatellitePreview" class="eng-satellite-preview" hidden></div></div>
+          <button class="btn" id="engUseEarthContext" type="button">Use current 3D Earth view centre</button>
+        </div>
+        <div class="eng-auto-fields" hidden aria-hidden="true">
+          <input type="hidden" id="engProjectTitle" value="Automatic civilian concept">
+          <input type="hidden" id="engShape" value="rectangle">
+          <input type="hidden" id="engLengthUnit" value="m">
+          <input type="hidden" id="engAreaUnit" value="m2">
+          <input type="hidden" id="engDimA" value="40">
+          <input type="hidden" id="engDimB" value="32">
+          <span id="engDimALabel">Plot length</span><span id="engDimBLabel">Plot width</span>
+          <input type="hidden" id="engFloorHeight" value="3.3">
+          <input type="hidden" id="engCoverage" value="40">
+          <input type="hidden" id="engFarLimit" value="">
+          <input type="hidden" id="engCoverageLimit" value="">
+          <input type="hidden" id="engHeightLimit" value="">
+          <input type="hidden" id="engGlazingRatio" value="35">
+          <input type="hidden" id="engWaste" value="7">
+          <input type="hidden" id="engLatitude" value="">
+          <input type="hidden" id="engLongitude" value="">
+          <input type="hidden" id="engDimBProxy" value="">
         </div>
         <div class="eng-action-row"><button class="btn primary" id="engRunScenario">Calculate concept</button><button class="btn" id="engReset">Reset example</button><button class="btn" id="engOpenEarth">Plot concept on shared 3D Earth ↗</button><button class="btn" id="engClearEarth">Clear Earth concept</button></div>
-        <div id="engInputMessage" class="eng-message" role="status" aria-live="polite">Example values are illustrative. Enter a surveyed parcel and authority-supplied planning controls for a meaningful feasibility scenario.</div>
+        <div id="engInputMessage" class="eng-message" role="status" aria-live="polite">Choose storeys and a civilian building type to generate a preliminary concept. Optional satellite context requires you to select the current 3D Earth view centre; verify any real project with a cadastral survey and local authority records.</div>
       </div>
       <div class="card eng-card">
         <div class="card-head"><div><h3>02 / SITE & ENVIRONMENT CHECKLIST</h3><p class="tiny">Remote-sensing context cannot replace survey, boreholes or authority records.</p></div><span class="badge warn">EVIDENCE REQUIRED</span></div>
@@ -1150,6 +1171,11 @@
         <div class="eng-visual-toolbar"><label for="engRenderMode">Visual style</label><select id="engRenderMode"><option value="glass">Glass / premium</option><option value="solid">Architectural solid</option><option value="wire">Wireframe</option></select><label class="eng-toggle"><input id="engAutoRotate" type="checkbox" checked> Auto rotate</label><button class="btn small-button" id="engViewReset">Reset view</button></div>
         <canvas id="engMassCanvas" width="1100" height="660" aria-label="Rotating three-dimensional conceptual building massing with site outline and floor divisions"></canvas>
         <div class="eng-canvas-footer"><span id="engVisualShape">RECTANGULAR MASSING</span><span id="engVisualFloors">8 STOREYS</span><span id="engVisualHeight">26.40 M</span><span>NO STRUCTURAL MEMBERS</span></div>
+      </div>
+      <div class="card eng-visual-card eng-plan-card">
+        <div class="card-head"><div><h3>03B / 2D AUTO-CAD FLOOR PLAN PREVIEW</h3><p class="tiny">Automatically generated typical-floor zoning, footprint, core, circulation and dimensions in metres.</p></div><span class="badge sim">SCHEMATIC PLAN</span></div>
+        <canvas id="engPlanCanvas" width="1100" height="700" aria-label="Two dimensional conceptual floor plan with functional zones and core"></canvas>
+        <div class="eng-canvas-footer"><span id="engPlanUse">BUILDING PROGRAM</span><span id="engPlanDimensions">AUTO-ASSUMED DIMENSIONS</span><span>NOT A PERMIT / CONSTRUCTION DRAWING</span></div>
       </div>
       <div class="eng-kpi-grid">
         <div class="eng-kpi"><small>PLOT AREA</small><b id="engOutPlot">—</b><span id="engOutPlotSI">—</span></div>
@@ -1173,7 +1199,7 @@
   </div>
   <div class="card eng-card eng-export-card">
     <div class="card-head"><div><h3>06 / AUTOCAD-COMPATIBLE CONCEPT EXPORT</h3><p class="tiny">2D plot boundary, conceptual footprint, simplified 3D massing shell and level outlines in model space.</p></div><span class="badge sim">NOT CONSTRUCTION DRAWINGS</span></div>
-    <div class="eng-export-grid"><div><b>DXF · ASCII</b><span>Metre units · layers: SITE, FOOTPRINT, MASSING, LEVELS, NOTES. Open in AutoCAD or a compatible CAD viewer.</span><button class="btn primary" id="engExportDxf">↓ Download conceptual DXF</button></div><div><b>Calculation basis</b><span>Geometry, plot size, coverage, gross floor area, height, FAR scenario and non-structural finish quantities.</span><button class="btn" id="engExportReport">↓ Download calculation report</button></div></div>
+    <div class="eng-export-grid"><div><b>2D AUTO-CAD FLOOR PLAN · DXF</b><span>Metre units · layers: ASSUMED_SITE, FOOTPRINT, ZONE_A, ZONE_B, CORE, CIRCULATION, DIMENSIONS, TEXT and NOTES. Includes an automatically generated functional zoning plan.</span><button class="btn primary" id="engExportPlanDxf">↓ Download 2D floor plan DXF</button></div><div><b>3D CONCEPT MASSING · DXF</b><span>Separate conceptual 3D envelope and level outlines. Both drawings are schematic and not construction documents.</span><button class="btn" id="engExportDxf">↓ Download 3D massing DXF</button></div><div><b>COMPLETE ENGINEERING CONCEPT REPORT</b><span>Assumptions, area conversions, design-program description, safety flags, site-context status and preliminary finish allowances.</span><button class="btn" id="engExportReport">↓ Download full report</button></div></div>
     <div class="eng-disclaimer-bottom">The DXF contains only schematic architectural massing geometry. It contains no structural members, reinforcement, foundation sizing, connection details, military/naval facility layouts or construction-ready details. A high-rise concept must be independently assessed for wind, seismic, soil, groundwater, settlement, fire/life safety, egress, lifts, vibration, progressive collapse, services, accessibility, code and approvals before any design decision.</div>
   </div>
   <div class="eng-reference-strip"><b>REFERENCE LIBRARY</b><a href="https://www.dpp.gov.bd/bgpress/index.php/document/get_extraordinary/39201" target="_blank" rel="noopener">BNBC 2020 official gazette</a><a href="https://rajuk.gov.bd/" target="_blank" rel="noopener">RAJUK / local planning</a><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM" target="_blank" rel="noopener">Copernicus DEM</a><a href="https://isric.org/explore/soilgrids" target="_blank" rel="noopener">SoilGrids</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap attribution</a></div>

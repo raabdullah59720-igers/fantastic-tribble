@@ -184,3 +184,11 @@ The calculator uses explicit conceptual arithmetic: plot area from selected idea
 - Copernicus DEM: regional elevation/surface context only; not a boundary or engineering survey.
 - ISRIC SoilGrids: regional gridded soil predictions only; not borehole/laboratory results or design soil parameters.
 - ThinkHazard: regional screening only; obtain site-specific hazard studies.
+
+
+## Engineering Studio v44 — automatic concept assumptions and remote-sensing context (7 November 2026)
+- **Typology assumptions:** floor plate, site coverage tier, aspect ratio, floor-to-floor height, facade glazing allowance and non-structural finish allowance are generic Terravex heuristics selected from only storey count and civilian building type. They are not calibrated to a specific authority or plot.
+- **Earth Search STAC / Sentinel-2 L2A:** queried only after explicit selection of the shared 3D Earth camera centre. Returned scene metadata and optional thumbnail are archival Earth-observation context, not cadastral survey, proof of site ownership, construction-quality orthophoto or a continuous live feed. Sentinel-2 bands vary by resolution (10 m / 20 m / 60 m).
+- **Copernicus DEM:** global digital surface/elevation products at 30 m / 90 m where available; broad regional context only. Surface models may include vegetation and structures; not ground-level topographic survey, legal boundary, building setting-out or drainage design.
+- **ISRIC SoilGrids:** regional gridded soil property predictions, not site investigation, laboratory tests, groundwater logs or design bearing parameters.
+- **Engineering calculation boundary:** preliminary area/FAR/height/geometry and non-structural finish surface allowances only. No structural analysis, reinforcement, connection, foundation, fire strategy, MEP design or construction BOQ.
