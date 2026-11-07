@@ -295,7 +295,7 @@ These outputs are **conceptual planning estimates, not construction drawings, te
 
 Site-context links include the Bangladesh BNBC 2020 Gazette and RAJUK GIS/planning resources, Copernicus DEM, SoilGrids and OpenStreetMap attribution. DEM and global soil datasets are regional screening inputs, not cadastral/topographic survey, borehole logs, laboratory tests, soil bearing capacity, groundwater or liquefaction assessment. Enter only verified local FAR, coverage and height limits. A licensed architect/engineer must independently perform site survey, geotechnical investigation, structural/fire/MEP/accessibility review and authority submissions before any construction decision.
 
-- PWA shell cache: `terravex-apex-shell-v45`.
+- PWA shell cache: `terravex-apex-shell-v46`.
 - Main page: `?page=engineering`.
 - The download contains exactly 99 root files.
 
@@ -325,7 +325,7 @@ The optional **Use current 3D Earth view centre** action takes the current share
 
 The studio shows a 2D typical-floor zoning preview and exports an AutoCAD-compatible AC1015 DXF in metres with ASSUMED_SITE, FOOTPRINT, zone, core, circulation, dimensions, text and notes layers. DXF entities include the required R2000 subclass markers and have been parsed with ezdxf. A separate 3D massing DXF, SVG, CSV, JSON and printable HTML safety/design report are available. The 2D layout is schematic zoning, not room-by-room, permit or construction documentation. Only non-structural finish surface allowances are estimated. No wind/seismic member design, reinforcement, beam/column/foundation/pile design, MEP or construction BOQ is generated.
 
-PWA shell cache: `terravex-apex-shell-v45`. Direct route: `?page=engineering`. For site imagery, open Live 3D Earth, pan to the project region, return to Engineering Studio and explicitly select the Earth-view centre.
+PWA shell cache: `terravex-apex-shell-v46`. Direct route: `?page=engineering`. For site imagery, open Live 3D Earth, pan to the project region, return to Engineering Studio and explicitly select the Earth-view centre.
 
 
 ## Engineering Studio v45 geometry and civilian typology upgrade
@@ -340,3 +340,14 @@ The Engineering Studio supports square, rectangular, circular, regular triangula
 The plot-geometry selector supports square, rectangle, circular, regular triangular, regular pentagonal and regular octagonal shapes. Building typologies include residential, duplex (minimum two storeys), triplex (minimum three storeys), commercial, multinational civilian corporate campus, education, healthcare, civic/community, hotel, mixed-use, eco-friendly, non-hazardous industrial and civil-protection/emergency-logistics campus. Military-base and weapons/force-protection design is not provided.
 
 The 2D DXF export uses R2000 / AC1015 and metre units, intended to open in AutoCAD 2007 and later. Drawings remain schematic, non-structural concept plans.
+
+
+## Engineering Studio v46 — geometry-aware live 2D plan and AutoCAD 2007 export
+
+The Engineering Studio now redraws both the 3D massing and 2D typical-floor plan after storey, civilian building type, plot geometry or plan-arrangement changes. Entering the Engineering page also triggers a fresh visible-canvas redraw so a plan is not left blank after the page was initially rendered while hidden. The 2D preview uses polygon clipping: its functional zones stay within the selected square, rectangle, circular, triangular, pentagonal or octagonal footprint instead of remaining rectangular blocks outside a polygon.
+
+The user can select **Auto by infrastructure type**, **Central service core**, or **Linear / wing arrangement**. Zone labels and descriptions are driven by the chosen civilian typology (residential, office, healthcare, education, hotel, mixed-use, eco-friendly, multinational civilian campus, and civil-protection campus). The plan remains conceptual zoning, not a room-by-room or egress plan.
+
+2D and 3D CAD exports now use legacy ASCII DXF **R12 / AC1009**, a backward-compatible format supported by AutoCAD 2007. The files use legacy POLYLINE/VERTEX, LINE, TEXT and 3DFACE entities plus explicit layer tables and model/paper-space blocks. Coordinates are drawn in metres and the drawing includes a visible metre-unit note; R12 itself does not carry the later `$INSUNITS` metadata. DXF files were parsed and audited with ezdxf 1.4.4; AutoCAD 2007 itself was not available for direct application-level testing.
+
+PWA shell cache: `terravex-apex-shell-v46`.

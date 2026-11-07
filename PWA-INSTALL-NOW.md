@@ -103,7 +103,7 @@ The existing five civil panels now show source-driven graphics: river model time
 
 
 ## v43 Engineering Studio shortcut and cache
-The Engineering Sector is available from the sidebar, persistent top-bar `Engineering` button, Overview launch card and the first PWA install shortcut. Open `?page=engineering`. The calculator updates locally when inputs change and can export a concept-only AutoCAD-compatible DXF, CSV surface allowance schedule and JSON scenario report. Service-worker cache: `terravex-apex-shell-v45`. After GitHub Pages deployment, hard-refresh the HTTPS origin; for an installed PWA use Source Health & Offline → Refresh cached app shell.
+The Engineering Sector is available from the sidebar, persistent top-bar `Engineering` button, Overview launch card and the first PWA install shortcut. Open `?page=engineering`. The calculator updates locally when inputs change and can export a concept-only AutoCAD-compatible DXF, CSV surface allowance schedule and JSON scenario report. Service-worker cache: `terravex-apex-shell-v46`. After GitHub Pages deployment, hard-refresh the HTTPS origin; for an installed PWA use Source Health & Offline → Refresh cached app shell.
 
 
 ### v42: plot the concept on the shared 3D Earth
@@ -111,14 +111,23 @@ In Engineering Studio, enter user-authorized/survey-derived latitude and longitu
 
 
 ### v43 Engineering Studio report and export controls
-The Engineering & Architecture page (`?page=engineering`) now shows its report monitor near the top. If the installed app continues to display an older page, refresh the cached app shell from Source Health & Offline; the current shell is `terravex-apex-shell-v45`. The Engineering Studio requires `advanced-workbench.js` and `advanced-workbench.css` in the local shell. The report download toolbar exports conceptual DXF, SVG, CSV, JSON and printable HTML.
+The Engineering & Architecture page (`?page=engineering`) now shows its report monitor near the top. If the installed app continues to display an older page, refresh the cached app shell from Source Health & Offline; the current shell is `terravex-apex-shell-v46`. The Engineering Studio requires `advanced-workbench.js` and `advanced-workbench.css` in the local shell. The report download toolbar exports conceptual DXF, SVG, CSV, JSON and printable HTML.
 
 
 ## v45 Engineering Studio auto-design and CAD
-Current shell cache: `terravex-apex-shell-v45`. Open `?page=engineering`. Choose only the number of storeys and one of the supported civilian building types; Terravex will calculate an assumed concept parcel, footprint, height, GFA, FAR scenario, functional zoning and non-structural finish allowances. Review the visible auto-assumption summary before exporting. Optional satellite context requires panning the shared 3D Earth to the intended region and explicitly selecting **Use current 3D Earth view centre**.
+Current shell cache: `terravex-apex-shell-v46`. Open `?page=engineering`. Choose only the number of storeys and one of the supported civilian building types; Terravex will calculate an assumed concept parcel, footprint, height, GFA, FAR scenario, functional zoning and non-structural finish allowances. Review the visible auto-assumption summary before exporting. Optional satellite context requires panning the shared 3D Earth to the intended region and explicitly selecting **Use current 3D Earth view centre**.
 
 Download actions: **2D AutoCAD floor plan DXF**, 3D massing DXF, plan SVG, complete JSON report, preliminary finish CSV and HTML safety/design report (Print / Save as PDF). 2D DXF is a schematic typical-floor functional-zone plan, not construction/permit drawing.
 
 Engineering Studio v45 geometry and typology selector is in the Engineering Sector. Refresh the cached app shell after deploying.
 
-Engineering Studio v45 uses cache `terravex-apex-shell-v45`. After GitHub Pages deploy, refresh the cached app shell before testing the new geometry and typology selector.
+Engineering Studio v45 uses cache `terravex-apex-shell-v46`. After GitHub Pages deploy, refresh the cached app shell before testing the new geometry and typology selector.
+
+
+## v46 Engineering Studio redraw and AutoCAD 2007 compatibility
+
+The Engineering Studio v46 live redraws the 2D plan when geometry, civilian building type, storeys or plan arrangement changes. It also redraws after the Engineering page becomes visible. The plan arrangement choices are Auto by infrastructure type, Central service core and Linear / wing arrangement.
+
+CAD downloads are legacy ASCII DXF R12 / AC1009 to maximise backward compatibility with AutoCAD 2007. After download, open the DXF in AutoCAD 2007 and run `ZOOM` → `E` (Extents) if the drawing is not centred in the initial view. The drawing coordinates are metres; check the visible unit note and use `UNITS` if you need to set a matching display format.
+
+Current PWA shell cache: `terravex-apex-shell-v46`. After uploading all 99 files to the repository root, perform a hard refresh. For an installed PWA, use Source Health & Offline → Refresh cached app shell, then reload.

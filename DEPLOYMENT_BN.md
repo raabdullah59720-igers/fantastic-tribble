@@ -127,3 +127,12 @@ Engineering Studio v45 adds geometry selection (square, rectangle, circle, regul
 
 ### v45 geometry ও typology
 Engineering Studio-তে Square, Rectangle, Circular, Regular Triangle, Pentagon ও Octagon geometry এবং Duplex/Triplex, Multinational Civilian Corporate, Eco-friendly ও Civil Protection Campus typology যোগ হয়েছে। Military base operational design নেই; নিরাপদ বিকল্প হলো civilian emergency logistics campus। DXF export R2000 / AC1015 metre units, AutoCAD 2007+ compatible।
+
+
+### Engineering Studio v46: 2D preview ও AutoCAD 2007 fix
+
+v46-এ geometry selection বদলালে 3D massing এবং 2D floor-plan canvas দুটোই নতুন করে render হবে। Engineering page-এ প্রবেশের পরও canvas redraw হয়। Square, Rectangle, Circle, Triangle, Pentagon ও Octagon footprint অনুযায়ী zone-গুলো polygon clipping দিয়ে footprint-এর ভেতরে রাখা হয়; আর layout preference হিসেবে Auto by infrastructure type, Central service core এবং Linear / wing arrangement নির্বাচন করা যায়। Infrastructure type অনুযায়ী zone label/functional program বদলায়।
+
+2D ও 3D DXF export-কে legacy ASCII R12 / AC1009-এ নামানো হয়েছে, যা AutoCAD 2007-এ backward-compatible। এতে legacy POLYLINE/VERTEX, LINE, TEXT, 3DFACE, layer table এবং model/paper-space block section আছে। Drawing coordinates metre-এ এবং notes-এ metre unit উল্লেখ আছে। ezdxf 1.4.4 দিয়ে 36টি 2D/3D DXF combination parse ও audit করা হয়েছে; AutoCAD 2007 সফটওয়্যারে সরাসরি খোলার পরীক্ষা করা সম্ভব হয়নি।
+
+GitHub Pages-এ সব ৯৯টি ফাইল root-এ overwrite করে deploy করুন। PWA cache: `terravex-apex-shell-v46`। Deployment-এর পর hard refresh করুন; installed PWA হলে Source Health & Offline থেকে cached app shell refresh করে reload দিন।

@@ -18,8 +18,8 @@ assert.match(html, /rel="manifest"/);
 assert.equal(manifest.display, 'standalone');
 assert.ok(manifest.icons.some(x => x.sizes === '192x192'));
 assert.ok(manifest.icons.some(x => x.sizes === '512x512'));
-assert.match(sw, /terravex-apex-shell-v45/);
-assert.match(adv, /terravex-apex-shell-v45/);
+assert.match(sw, /terravex-apex-shell-v46/);
+assert.match(adv, /terravex-apex-shell-v46/);
 console.log('PWA omnibox checks: 9/9 PASS');
 
 assert.match(html, /id=\"openEarthCommandTop\"[^>]*data-goto=\"earthcommand\"/);
@@ -172,7 +172,7 @@ assert.match(hazard, /NASA MODIS TILES RECEIVED/);
 assert.match(hazard, /rscFetchDistricts/);
 assert.match(hazard, /rscStartJma/);
 assert.match(app, /TERRAVEX_LOCATION\?\.enter/);
-assert.match(sw, /terravex-apex-shell-v45/);
+assert.match(sw, /terravex-apex-shell-v46/);
 console.log('v37 inherited 3D launch + Russian public weather imagery integration checks: 15 assertions passed.');
 
 // v35 regression guards: visible launch controls, independent Cesium startup, CDN fallback, and public Russian weather imagery.
@@ -201,7 +201,7 @@ assert.match(html + hazard, /not a direct spacecraft command link/i);
 const safetyPanel = html.slice(html.indexOf('id="page-radiologicalsafety"'), html.indexOf('id="page-radiologicalsafety"') + 30000);
 assert.doesNotMatch(safetyPanel, /gptl\.ru|Roscosmos Geoportal/i, 'civilian safety panel exposes public weather imagery only');
 assert.match(hazard, /rscEnter\(\)\{RSC\.entered=true;rscInit\(\);rscInitMap\(\);rscInitGlobe\(\);/);
-assert.match(sw, /terravex-apex-shell-v45/);
+assert.match(sw, /terravex-apex-shell-v46/);
 console.log('v37 inherited launch + Cesium decoupling + imagery tile verification + Russian public weather checks: 25 assertions passed.');
 
 
@@ -224,8 +224,8 @@ assert.match(app, /aggregationLevel/);
 assert.match(app, /Raw object identifiers are not accepted/);
 assert.match(app, /tve-activity-/);
 assert.match(app, /renderAirDensity\(S\.aircraft,snap\|\|\{\}\)/);
-assert.match(sw, /terravex-apex-shell-v45/);
-assert.match(adv, /terravex-apex-shell-v45/);
+assert.match(sw, /terravex-apex-shell-v46/);
+assert.match(adv, /terravex-apex-shell-v46/);
 assert.match(app, /function loadAllConfiguredActivities\(/);
 assert.match(html, /No vessel identities, positions or routes are plotted/);
 assert.match(app, /marine-api\.open-meteo\.com\/v1\/marine/);
@@ -287,7 +287,7 @@ assert.match(app, /api\.gbif\.org\/v1\/occurrence\/search/);
 assert.match(html, /individual site locations are not shown/i);
 assert.match(html, /not animal counts or live sightings/);
 assert.match(html, /tide-gauge replacement/);
-assert.match(sw, /terravex-apex-shell-v45/);
+assert.match(sw, /terravex-apex-shell-v46/);
 console.log('v39 civil environmental panels: 27 same-globe/source/disclosure assertions PASS');
 // v40: direct launch paths make the civil panels discoverable at the top of the existing command page.
 for (const id of ['openCivilPanelsTop','openCivilPanelsOverview']) assert.match(html,new RegExp(`id="${id}"[^>]*data-civil-target="tvxCivilSystems"`),`missing visible v40 civil launcher ${id}`);

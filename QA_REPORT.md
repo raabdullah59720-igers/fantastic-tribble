@@ -436,3 +436,14 @@ Validation includes area/perimeter/vertex count for square, rectangle, circle, r
 
 
 Additional deterministic v45 geometry validation: all six plot types produced correct area/perimeter and expected vertices; every generated zoning rectangle corner remained inside its conceptual footprint. Duplex (min. 2 floors), triplex (min. 3 floors), multinational civilian corporate, eco-friendly and civil-protection campus profiles passed; military profile rejected. Twelve 2D/3D DXF files were opened by ezdxf 1.4.4 as AC1015 with the expected layers/entities.
+
+
+## v46 Engineering Studio: geometry-aware preview and AutoCAD 2007 DXF repair
+
+- Root cause addressed: the previous 2D plan used rectangular zone blocks regardless of the selected polygon footprint. v46 clips functional zones to the actual selected footprint polygon, so square, rectangle, circle, triangle, pentagon and octagon plans now have shape-aware zoning.
+- Added plan-arrangement selector: Auto by infrastructure type, Central service core, and Linear / wing arrangement. The selected building typology drives the zone labels/program.
+- Fixed visible-canvas lifecycle: entering the Engineering page schedules a fresh render of both 3D massing and 2D plan after the page becomes visible. Invalid input clears both previews rather than leaving stale geometry.
+- AutoCAD repair: replaced the minimal R2000 writer with legacy ASCII DXF R12 / AC1009 entities and complete basic VPORT, LTYPE, LAYER, STYLE and BLOCKS sections. 2D plan uses POLYLINE/VERTEX, LINE and TEXT; 3D concept uses legacy 3D POLYLINE and 3DFACE. Drawing coordinates are metres and the drawing includes a visible unit note.
+- Validation: 173 geometry/layout/typology/render assertions passed; live UI simulation passed 8 assertions for geometry, typology and layout changes; 36 generated 2D/3D DXF files were parsed and audited by ezdxf 1.4.4 with zero audit errors. Existing app regression suites passed, static QA errors=0, JavaScript syntax errors=0, CSS parse errors=0, duplicate HTML IDs=0, missing local references=0.
+- Limitation: AutoCAD 2007 itself was not available in the environment, so actual application-level open/render verification remains unperformed. R12/AC1009 is a backward-compatible DXF format; users should open the file in AutoCAD 2007 and use `ZOOM` → `E` (Extents) if needed.
+- Package target remains exactly 99 files. PWA cache bumped to `terravex-apex-shell-v46`.
