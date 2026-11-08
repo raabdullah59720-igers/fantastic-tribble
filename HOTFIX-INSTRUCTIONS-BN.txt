@@ -1,0 +1,24 @@
+TERRAVEX v53 CHROMIUM HOTFIX — EARTH TRAFFIC FALLBACK
+
+কেন এই hotfix:
+Chromium visual smoke test-এ Earth Traffic 2D fallback renderer-এর মধ্যে একটি JavaScript temporal-dead-zone bug পাওয়া গেছে। drawFallback() land polygon map করার আগে `project()` const function ব্যবহার করছিল, কিন্তু function declaration পরে ছিল। এতে fallback initialization-এ ReferenceError হতে পারত।
+
+যা করতে হবে:
+1. বর্তমান GitHub repository backup রাখুন।
+2. ZIP extract করুন।
+3. ভিতরের `earth-traffic-monitor.js` সরাসরি repository root-এ upload করে একই নামের ফাইল overwrite করুন।
+4. ZIP বা patch folder repository-তে upload করবেন না।
+5. Commit/push করুন এবং GitHub Pages deploy হতে দিন।
+6. Browser-এ Ctrl+Shift+R দিন; PWA হলে app shell refresh করুন।
+
+এই patch শুধু Earth Traffic fallback script পরিবর্তন করে। অন্য section, data বা existing features সরায় না।
+
+Verification:
+- Node syntax check: PASS
+- Earth Traffic regression suite: 25 assertions PASS
+- Chromium inline visual smoke test: fallback canvas rendered; no page errors, console errors or failed requests.
+
+Scope:
+- This corrects only the 2D fallback renderer temporal-dead-zone bug.
+- It does not make unavailable public feeds live or certify provider uptime.
+- Three.js/WebGL renderer was not loaded in the offline inline smoke-test harness.
