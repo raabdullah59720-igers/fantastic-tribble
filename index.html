@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="earth-systems-upgrade.css">
 <link rel="stylesheet" href="advanced-workbench.css">
 <link rel="stylesheet" href="engineering-depth-system.css?v=47">
-<link rel="stylesheet" href="architecture-form-studio.css?v=50">
+<link rel="stylesheet" href="architecture-form-studio.css?v=52">
 <link rel="stylesheet" href="hazard-intelligence.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -1355,7 +1355,7 @@
 
 <section class="tvx-mansion-studio" id="tvxMansionStudio" aria-labelledby="tvxMansionTitleHeading">
   <div class="tvx-mansion-head">
-    <div><div class="tvx-eng-kicker">TERRAVEX APEX / UNIVERSAL BUILDING DESIGN / V50</div><h3 id="tvxMansionTitleHeading">Universal Building & Mansion Design Coordination Studio</h3><p>Floor-by-floor residential space planning, room-area schedules, building massing, planning envelope checks and a transparent 2D representative-frame stiffness analysis.</p></div>
+    <div><div class="tvx-eng-kicker">TERRAVEX APEX / UNIVERSAL BUILDING DESIGN / V51</div><h3 id="tvxMansionTitleHeading">Universal Building & Mansion Design Coordination Studio</h3><p>Floor-by-floor residential space planning, room-area schedules, building massing, planning envelope checks and a transparent 2D representative-frame stiffness analysis.</p></div>
     <span class="badge sim">DESIGN DEVELOPMENT · REVIEW WORKFLOW</span>
   </div>
   <div class="tvx-mansion-warning"><b>Important engineering boundary:</b> this workbench improves concept and analysis coordination; it cannot honestly issue a construction-ready building by itself. Its frame solver is a linear-elastic 2D plane-frame analysis for one representative frame line, not a complete 3D building analysis or BNBC member design. No reinforcement, foundation or permit approval is inferred. All outputs remain <strong>NOT FOR CONSTRUCTION</strong> until independently designed, checked, signed and approved by the responsible professionals and authority.</div>
@@ -1363,10 +1363,18 @@
   <article class="tvx-mansion-card tvx-mansion-command-card">
     <div class="tvx-mansion-subhead"><h4>00 / UNIFIED DESIGN COMMAND & VISUAL MONITOR</h4><span>ONE PROJECT MODEL · FLOOR / STAIR / LIFT / ROOF / FACADE</span></div>
     <div class="tvx-mansion-command-row"><label for="tvxMansionCommand">Engineering command<input id="tvxMansionCommand" type="text" maxlength="120" placeholder="HELP · CALCULATE · FLOOR 3 · STAIR CHECK · LIFT CHECK · ROOF CHECK · FACADE CHECK · REPORT"></label><button class="btn primary" id="tvxMansionCommandRun" type="button">Run command</button><button class="btn" id="tvxMansionRunAll" type="button">Run review sequence</button></div>
-    <div class="tvx-mansion-monitor" id="tvxMansionMonitor" aria-live="polite"><div><small>PROJECT STATE</small><b id="tvxMansionMonitorState">NOT CALCULATED</b></div><div><small>GEOMETRY</small><b id="tvxMansionMonitorGeometry">Awaiting inputs</b></div><div><small>VERTICAL CIRCULATION</small><b id="tvxMansionMonitorVertical">Not checked</b></div><div><small>ROOF / EXTERIOR</small><b id="tvxMansionMonitorRoof">Not checked</b></div></div>
+    <div class="tvx-mansion-fields tvx-mansion-design-controls">
+      <label>Design family · select to regenerate<select id="tvxDesignPreset"><option value="modern_mansion">Modern family mansion</option><option value="classic_estate">Classical estate mansion</option><option value="tropical_villa">Tropical cross-ventilated villa</option><option value="courtyard_house">Mediterranean courtyard residence</option><option value="biophilic_home">Biophilic green residence</option><option value="duplex_villa">Duplex / split-level villa</option><option value="penthouse">Penthouse / sky residence</option><option value="urban_apartment">Urban apartment</option><option value="japanese_flexible">Japanese modular residence</option><option value="resort_residence">Resort / guest residence</option></select></label>
+      <label>Analysis mode<select id="tvxAnalysisMode"><option value="moderate">Moderate · fast concept review</option><option value="deep" selected>Professional / Deep Analysis</option></select></label>
+      <label class="tvx-mansion-check-input"><input id="tvxAutoDesignUpdate" type="checkbox" checked> Automatically refresh linked design panels</label>
+      <div class="tvx-design-state" id="tvxDesignPresetStatus" role="status">Select a design family to update room, shape, facade and linked previews.</div>
+      <div class="tvx-design-state" id="tvxDesignAutoStatus" role="status">DEEP MODE · Awaiting verified plot / code inputs.</div>
+    </div>
+    <div class="tvx-design-selection-monitor" id="tvxDesignSelectionMonitor" aria-live="polite"><div class="tvx-selection-visual"></div><div class="tvx-selection-data"><div><small>ACTIVE DESIGN</small><b>Awaiting selection</b></div></div></div>
+    <div class="tvx-mansion-monitor" id="tvxMansionMonitor" aria-live="polite"><div><small>PROJECT STATE</small><b id="tvxMansionMonitorState">NOT CALCULATED</b></div><div><small>GEOMETRY</small><b id="tvxMansionMonitorGeometry">Awaiting inputs</b></div><div><small>VERTICAL CIRCULATION</small><b id="tvxMansionMonitorVertical">Not checked</b></div><div><small>ROOF / EXTERIOR</small><b id="tvxMansionMonitorRoof">Not checked</b></div><div><small>FOUNDATION / REBAR</small><b id="tvxMansionMonitorFoundation">Not checked</b></div></div>
     <div class="tvx-mansion-command-output" id="tvxMansionCommandOutput">Command help: enter HELP, then run CALCULATE after verified site dimensions have been provided.</div>
     <div class="tvx-mansion-coordination" id="tvxMansionCoordination">Coordination gates will appear after calculation. This is not full BIM clash detection.</div>
-    <div class="tvx-mansion-quick-actions"><button class="btn" type="button" data-mansion-command="CALCULATE">Calculate</button><button class="btn" type="button" data-mansion-command="STAIR CHECK">Stair review</button><button class="btn" type="button" data-mansion-command="LIFT CHECK">Lift review</button><button class="btn" type="button" data-mansion-command="ROOF CHECK">Roof review</button><button class="btn" type="button" data-mansion-command="FACADE CHECK">Exterior review</button><button class="btn" type="button" data-mansion-command="EXPORT DXF">DXF export</button></div>
+    <div class="tvx-mansion-quick-actions"><button class="btn" type="button" data-mansion-command="CALCULATE">Calculate</button><button class="btn" type="button" data-mansion-command="STAIR CHECK">Stair review</button><button class="btn" type="button" data-mansion-command="LIFT CHECK">Lift review</button><button class="btn" type="button" data-mansion-command="ROOF CHECK">Roof review</button><button class="btn" type="button" data-mansion-command="FACADE CHECK">Exterior review</button><button class="btn" type="button" data-mansion-command="FOUNDATION CHECK">Foundation review</button><button class="btn" type="button" data-mansion-command="AUTO PLOT">Auto plot</button></div>
   </article>
 
   <article class="tvx-mansion-card">
@@ -1374,7 +1382,7 @@
     <div class="tvx-mansion-fields">
       <label>Project / mansion name<input id="tvxMansionTitle" type="text" maxlength="100" value="TERRAVEX Mansion Concept"></label>
       <label>Residential typology<select id="tvxMansionType"><option value="private-mansion">Private family mansion</option><option value="multi-generation">Multi-generation mansion</option><option value="guest-estate">Guest / hospitality residence</option><option value="residential-apartment">Residential apartment building</option><option value="mixed-residential">Mixed family / rental residence</option></select></label>
-      <label>Mansion floorplate shape<select id="tvxMansionShape"><option value="rectangle">Rectangle · efficient room planning</option><option value="square">Square · balanced grid planning</option><option value="L">L-shaped · corner courtyard</option><option value="U">U-shaped · open courtyard</option><option value="courtyard">Central courtyard</option><option value="circle">Circular / radial concept</option></select></label>
+      <label>Mansion floorplate shape<select id="tvxMansionShape"><option value="rectangle">Rectangle</option><option value="square">Square</option><option value="L">L-shaped</option><option value="U">U-shaped</option><option value="courtyard">Central courtyard</option><option value="circle">Circular / radial</option><option value="ellipse">Ellipse / oval</option><option value="triangle">Triangular</option><option value="pentagon">Pentagonal</option><option value="hexagon">Hexagonal</option><option value="heptagon">Heptagonal</option><option value="octagon">Octagonal</option><option value="decagon">Decagonal</option><option value="T">T-shaped</option><option value="H">H-shaped</option><option value="cross">Cross-shaped</option><option value="wing">Wing / resort pavilion</option></select></label>
       <label>Architectural facade character<select id="tvxMansionFacadeStyle"><option value="tropical-modern">Tropical modern · deep shade</option><option value="contemporary">Contemporary · clean horizontal</option><option value="classical">Classical · symmetrical articulation</option><option value="courtyard">Courtyard · recessed openings</option></select></label>
       <label>Above-ground storeys (planning 1–60)<input id="tvxMansionLevels" type="number" min="1" max="60" step="1" value="8"></label>
       <label>Floor-to-floor height (m)<input id="tvxMansionFloorHeight" type="number" min="2.4" max="6.5" step="0.05" value="3.3"></label>
@@ -1404,7 +1412,7 @@
   </article>
 
   <article class="tvx-mansion-card">
-    <div class="tvx-mansion-subhead"><h4>02 / FLOOR-BY-FLOOR ROOM PROGRAMME</h4><span>UP TO 60 PLANNING LEVELS · FRAME SOLVER SCOPE IS SEPARATE</span></div>
+    <div class="tvx-mansion-subhead"><h4>02 / FLOOR-BY-FLOOR ROOM PROGRAMME</h4><span>UP TO 60 PLANNING LEVELS · AUTO-REGENERATED BY SELECTED DESIGN</span></div>
     <div class="tvx-mansion-floor-roles" id="tvxMansionFloorRoles"></div>
     <div class="tvx-mansion-fields tvx-mansion-small-fields"><label>Roof programme<select id="tvxMansionRoofRole"><option value="roof">Roof terrace / solar / tank / MEP</option></select></label><label>Preview floor<select id="tvxMansionFloorSelect"><option value="0">Ground floor</option></select></label></div>
     <div class="tvx-mansion-plan-meta"><b id="tvxMansionPlanTitle">Floor plan preview</b><span id="tvxMansionPlanMetrics">Run the site and floor calculation first.</span></div>
@@ -1412,15 +1420,15 @@
     <div class="tvx-mansion-table-wrap" id="tvxMansionSchedule"><div class="tvx-mansion-empty">Floor area schedule awaits calculation.</div></div>
     <div class="tvx-mansion-elevation" id="tvxMansionElevation"><div class="tvx-mansion-empty">Axonometric multi-storey massing will appear here.</div></div>
     <div class="tvx-mansion-summary" id="tvxMansionSummary"><div class="tvx-mansion-empty">No design calculation yet.</div></div>
-    <p class="tvx-mansion-note">Room layout is a design-development schematic, not a construction drawing. The v50 DXF export includes floor plans, roof plan, typical stair/lift diagrams and elevations on A3 review sheets with explicit scale, model units and layers. Exact wall build-ups, door swings, window schedules, fire compartments, MEP, structural grids, dimensions and vendor lift GA drawings remain coordinated professional drawing tasks.</p>
+    <p class="tvx-mansion-note">Room layout is a design-development schematic, not a construction drawing. The v52 DXF export includes floor plans, roof plan, typical stair/lift diagrams and elevations on A3 review sheets with explicit scale, model units and layers. Exact wall build-ups, door swings, window schedules, fire compartments, MEP, structural grids, dimensions and vendor lift GA drawings remain coordinated professional drawing tasks.</p>
   </article>
 
   <article class="tvx-mansion-card">
     <div class="tvx-mansion-subhead"><h4>03 / LIFE-SAFETY & VERTICAL-CIRCULATION INPUTS</h4><span>REVIEW AGAINST THE GOVERNING CODE / AHJ</span></div>
     <div class="tvx-mansion-fields">
-      <label>Provided enclosed exit stairs<input id="tvxMansionStairs" type="number" min="1" max="30" step="1" placeholder="Enter provided number"></label>
+      <label>Proposed stair cores · concept scenario count<input id="tvxMansionStairs" type="number" min="1" max="30" step="1" placeholder="Enter provided number"></label>
       <label>Required stairs / exits from code review<input id="tvxMansionRequiredStairs" type="number" min="1" max="30" step="1" placeholder="Enter verified requirement"></label>
-      <label>Provided clear stair width (m)<input id="tvxMansionStairWidth" type="number" min="0.6" max="3" step="0.01" placeholder="Measured / drawn width"></label>
+      <label>Concept clear stair width / scenario (m) · verify code<input id="tvxMansionStairWidth" type="number" min="0.6" max="3" step="0.01" placeholder="Measured / drawn width"></label>
       <label>Required stair width from code review (m)<input id="tvxMansionRequiredStairWidth" type="number" min="0.6" max="3" step="0.01" placeholder="Enter verified requirement"></label>
       <label>Riser height (mm)<input id="tvxMansionRiser" type="number" min="100" max="220" step="1" value="165"></label>
       <label>Tread depth (mm)<input id="tvxMansionTread" type="number" min="200" max="400" step="1" value="280"></label>
@@ -1444,8 +1452,8 @@
       <label>Average door / stop dwell (s)<input id="tvxMansionLiftDwell" type="number" min="1" max="60" step="1" value="8"></label>
       <label>Peak 5-minute demand (% of occupants)<input id="tvxMansionLiftPeak" type="number" min="1" max="100" step="1" value="12"></label>
       <label>Average passenger mass assumption (kg)<input id="tvxMansionPassengerMass" type="number" min="45" max="120" step="1" value="75"></label>
-      <label>Design population for lift traffic study<input id="tvxMansionPopulation" type="number" min="1" max="1000000" step="1" placeholder="From occupancy / population schedule"></label>
-      <label>Floors served by each lift<input id="tvxMansionLiftServed" type="number" min="1" max="60" step="1" placeholder="Enter vendor service range"></label>
+      <label>Lift traffic population scenario · auto from room programme / verify<input id="tvxMansionPopulation" type="number" min="1" max="1000000" step="1" placeholder="From occupancy / population schedule"></label>
+      <label>Floors served · concept assumption / verify vendor<input id="tvxMansionLiftServed" type="number" min="1" max="60" step="1" placeholder="Enter vendor service range"></label>
       <label>Lift pit depth (m)<input id="tvxMansionLiftPit" type="number" min="0" max="10" step="0.01" placeholder="Vendor general-arrangement input"></label>
       <label>Lift overhead / headroom (m)<input id="tvxMansionLiftOverhead" type="number" min="0" max="15" step="0.01" placeholder="Vendor general-arrangement input"></label>
       <label>Lift door clear width (m)<input id="tvxMansionLiftDoorW" type="number" min="0.6" max="3" step="0.01" placeholder="Vendor GA input"></label>
@@ -1492,6 +1500,11 @@
       <label>Main facade orientation<select id="tvxFacadeOrientation"><option value="N">North</option><option value="E">East</option><option value="S">South</option><option value="W">West</option></select></label>
       <label>Facade wall / cladding build-up<select id="tvxFacadeMaterial"><option value="render">Rendered masonry / plaster</option><option value="brick">Facing brick / masonry</option><option value="stone">Stone / precast cladding</option><option value="aluminium">Aluminium / glazing system</option><option value="terracotta">Terracotta screen / rainscreen</option><option value="timber">Engineered timber screen</option></select></label>
       <label>Window / glazed opening ratio (%)<input id="tvxFacadeGlazing" type="number" min="0" max="100" step="1" value="25"></label>
+      <label>Window operation / family<select id="tvxWindowType"><option value="casement">Casement</option><option value="sliding">Sliding</option><option value="awning">Awning</option><option value="fixed">Fixed / picture</option><option value="louver">Louver / ventilating</option><option value="punched">Punched opening</option><option value="curtainwall">Curtain wall module</option></select></label>
+      <label>Typical window module width (m)<input id="tvxWindowWidth" type="number" min="0.3" max="8" step="0.05" value="1.2"></label>
+      <label>Typical window module height (m)<input id="tvxWindowHeight" type="number" min="0.3" max="8" step="0.05" value="1.5"></label>
+      <label>Window sill level above FFL (m)<input id="tvxWindowSill" type="number" min="0" max="3" step="0.05" value="0.9"></label>
+      <label>Window head level below ceiling (m)<input id="tvxWindowHeadOffset" type="number" min="0" max="2" step="0.05" value="0.3"></label>
       <label>Balcony-enabled floors (count)<input id="tvxFacadeBalconyFloors" type="number" min="0" max="60" step="1" value="6"></label>
       <label>Balcony projections per floor (count)<input id="tvxFacadeBalconyCount" type="number" min="0" max="20" step="1" value="2"></label>
       <label>Balcony depth (m)<input id="tvxFacadeBalconyDepth" type="number" min="0" max="5" step="0.05" value="1.5"></label>
@@ -1511,7 +1524,7 @@
   <article class="tvx-mansion-card">
     <div class="tvx-mansion-subhead"><h4>06 / ROOM MODEL LIBRARY & INTERIOR LAYOUT OPTIONS</h4><span>ROOM-TYPE TEMPLATES · BALCONY / VERANDAH · PROGRAMME VARIANTS</span></div>
     <div class="tvx-mansion-fields">
-      <label>Room layout model<select id="tvxRoomModel"><option value="luxury">Luxury mansion suite</option><option value="compact">Compact / efficient</option><option value="open">Open-plan living</option><option value="multigen">Multi-generation / accessible circulation</option><option value="guest">Guest suite / hospitality</option><option value="studio">Studio / serviced apartment</option><option value="office">Office / open workspace</option><option value="classroom">Classroom / education</option><option value="clinical">Clinic / examination rooms</option><option value="retail">Retail / showroom</option></select></label>
+      <label>Room layout model<select id="tvxRoomModel"><option value="luxury">Luxury mansion suite</option><option value="compact">Compact / efficient</option><option value="open">Open-plan living</option><option value="multigen">Multi-generation / accessible</option><option value="guest">Guest suite / hospitality</option><option value="studio">Studio / serviced apartment</option><option value="onebed">1-bedroom apartment</option><option value="twobed">2-bedroom apartment</option><option value="threebed">3-bedroom family apartment</option><option value="fourbed">4-bedroom executive residence</option><option value="duplex">Duplex / split-level</option><option value="penthouse">Penthouse / sky residence</option><option value="scandinavian">Scandinavian daylight plan</option><option value="mediterranean">Mediterranean / loggia</option><option value="japanese">Japanese modular / flexible</option><option value="coliving">Co-living / shared amenity</option><option value="dormitory">Dormitory / student housing</option><option value="prayer">Prayer / meditation floor</option><option value="office">Office / workspace</option><option value="classroom">Classroom / education</option><option value="clinical">Clinic / examination rooms</option><option value="retail">Retail / showroom</option><option value="industrial">Industrial / warehouse</option><option value="assembly">Assembly / event hall</option><option value="mixed">Mixed-use / flexible</option></select></label>
       <label>Interior style<select id="tvxRoomStyle"><option value="modern">Modern</option><option value="classic">Classic / neoclassical</option><option value="minimal">Minimalist</option><option value="tropical">Tropical / cross-ventilated</option><option value="industrial">Industrial</option><option value="accessible">Universal-design / accessible</option></select></label>
       <label>Default balcony / verandah depth (m)<input id="tvxRoomBalconyDepth" type="number" min="0" max="5" step="0.05" value="1.5"></label>
       <label>Default balcony / verandah count per floor<input id="tvxRoomBalconyCount" type="number" min="0" max="20" step="1" value="2"></label>
@@ -1521,8 +1534,65 @@
     <p class="tvx-mansion-note">Room templates generate programme-area distributions for early planning. Final room sizes, daylight, ventilation, privacy, wet-area stacks, kitchen extraction, acoustic separation, accessible turning circles, doors, furniture and fire compartments require project-specific architectural coordination.</p>
   </article>
 
+  <article class="tvx-mansion-card" id="tvxFoundationPanel">
+    <div class="tvx-mansion-subhead"><h4>07 / FOUNDATION CONCEPT, SOIL-BEARING SCREEN & FOOTING BBS</h4><span>DEEP MODE · VERIFIED GEOTECHNICAL INPUT REQUIRED</span></div>
+    <div class="tvx-mansion-warning"><b>Foundation boundary:</b> this is a preliminary load / bearing / quantity screen. It does not design flexure, one-way shear, punching, settlement, pile resistance, pile caps or soil-structure interaction. Do not use the generated typical detail as a construction reinforcement drawing.</div>
+    <div class="tvx-mansion-fields">
+      <label>Foundation system<select id="tvxFoundationType"><option value="isolated">Isolated pad footing</option><option value="combined">Combined footing · area screen</option><option value="raft">Raft / mat · area screen</option><option value="piles">Pile foundation · count screen</option></select></label>
+      <label>Governing service column load (kN)<input id="tvxFoundationLoad" type="number" min="0.1" max="100000" step="1" placeholder="From complete 3D model / load schedule"></label>
+      <label>Allowable bearing pressure (kPa)<input id="tvxFoundationQallow" type="number" min="1" max="5000" step="1" placeholder="Signed geotechnical report only"></label>
+      <label>Column width (m)<input id="tvxFoundationColumnB" type="number" min="0.15" max="3" step="0.01" value="0.45"></label>
+      <label>Column depth (m)<input id="tvxFoundationColumnD" type="number" min="0.15" max="3" step="0.01" value="0.45"></label>
+      <label>Footing thickness (m) · concept input<input id="tvxFoundationThickness" type="number" min="0.15" max="4" step="0.01" value="0.5"></label>
+      <label>Clear cover (m) · verify exposure/code<input id="tvxFoundationCover" type="number" min="0.025" max="0.15" step="0.005" value="0.075"></label>
+      <label>User-selected footing bar diameter (mm)<input id="tvxFoundationBarDia" type="number" min="8" max="40" step="1" value="16"></label>
+      <label>User-selected bar spacing (mm)<input id="tvxFoundationBarSpacing" type="number" min="75" max="500" step="5" value="150"></label>
+      <label>Self-weight allowance ratio<input id="tvxFoundationWeightRatio" type="number" min="0" max="0.5" step="0.01" value="0.10"></label>
+      <label>Service moment Mx (kN·m) · optional<input id="tvxFoundationMx" type="number" step="0.1" placeholder="Enter signed service moment"></label>
+      <label>Service moment My (kN·m) · optional<input id="tvxFoundationMy" type="number" step="0.1" placeholder="Enter signed service moment"></label>
+      <label>Allowable single-pile axial capacity (kN)<input id="tvxFoundationPileCapacity" type="number" min="1" max="100000" step="1" placeholder="Geotechnical report / load test"></label>
+      <label>Pile-group efficiency (0–1)<input id="tvxFoundationPileEfficiency" type="number" min="0.1" max="1" step="0.01" placeholder="Project-specific geotechnical design"></label>
+    </div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxFoundationAnalyze" type="button">Run foundation screen</button><span id="tvxFoundationStatus" class="tvx-eng-status warn">FOUNDATION INPUTS REQUIRED</span></div>
+    <div class="tvx-mansion-summary" id="tvxFoundationResults"><div class="tvx-mansion-empty">Foundation estimate is blocked until governing load and geotechnical resistance are entered.</div></div>
+    <div class="tvx-mansion-plan-meta"><b>Auto-plot foundation monitor</b><span>Representative grid only · not whole-building setout</span></div>
+    <div class="tvx-mansion-plan" id="tvxFoundationPreview"><div class="tvx-mansion-empty">No foundation geometry will be invented without required inputs.</div></div>
+    <p class="tvx-mansion-note">The default column and footing parameters are clearly provisional concept values. The DXF labels them as assumptions. Full foundation design must use every governing column/wall reaction, biaxial moments, groundwater, settlement, liquefaction, negative skin friction, group effects, punching, flexure, shear, anchorage, pile cap action and structural/geotechnical interaction.</p>
+  </article>
+  <article class="tvx-mansion-card" id="tvxRebarPanel">
+    <div class="tvx-mansion-subhead"><h4>08 / ENGINEER-ENTERED MEMBER REINFORCEMENT & BBS TAKE-OFF</h4><span>SELECTED DETAIL → QUANTITY / BAR SCHEDULE → DXF REVIEW</span></div>
+    <div class="tvx-mansion-warning"><b>Rebar design boundary:</b> this module quantities an engineer-entered reinforcement arrangement; it does not choose bars from moment/shear design or certify flexural, shear, axial, punching, confinement, anchorage, lap, crack-width or seismic ductility capacity.</div>
+    <div class="tvx-mansion-fields">
+      <label>Beam quantity<input id="tvxBbsBeamQty" type="number" min="0" max="50000" step="1" value="0"></label>
+      <label>Beam length (m)<input id="tvxBbsBeamLength" type="number" min="0.1" max="60" step="0.05" placeholder="Approved beam schedule"></label>
+      <label>Beam width (m)<input id="tvxBbsBeamWidth" type="number" min="0.1" max="2" step="0.01" placeholder="Approved section"></label>
+      <label>Beam depth (m)<input id="tvxBbsBeamDepth" type="number" min="0.15" max="3" step="0.01" placeholder="Approved section"></label>
+      <label>Top main bars / beam<input id="tvxBbsBeamTop" type="number" min="0" max="20" step="1" value="0"></label>
+      <label>Bottom main bars / beam<input id="tvxBbsBeamBottom" type="number" min="0" max="20" step="1" value="0"></label>
+      <label>Beam main bar dia (mm)<input id="tvxBbsBeamDia" type="number" min="8" max="40" step="1" placeholder="Approved detail"></label>
+      <label>Stirrup dia (mm)<input id="tvxBbsStirrupDia" type="number" min="6" max="20" step="1" placeholder="Approved detail"></label>
+      <label>Stirrup spacing (mm)<input id="tvxBbsStirrupSpacing" type="number" min="50" max="500" step="5" placeholder="Approved detail"></label>
+      <label>Beam clear cover (mm)<input id="tvxBbsBeamCover" type="number" min="15" max="100" step="1" value="40"></label>
+      <label>Stirrup hook allowance per tie (m)<input id="tvxBbsHookAllowance" type="number" min="0" max="2" step="0.01" placeholder="From approved hook detail"></label>
+      <label>Column quantity<input id="tvxBbsColumnQty" type="number" min="0" max="5000" step="1" value="0"></label>
+      <label>Column vertical bar count / column<input id="tvxBbsColumnBars" type="number" min="0" max="40" step="1" value="0"></label>
+      <label>Column longitudinal bar dia (mm)<input id="tvxBbsColumnDia" type="number" min="8" max="50" step="1" placeholder="Approved detail"></label>
+      <label>Column bar cut length incl. splice allowance (m)<input id="tvxBbsColumnLength" type="number" min="0.1" max="100" step="0.05" placeholder="Engineer-defined bar shape / lap"></label>
+      <label>Slab panel length (m)<input id="tvxBbsSlabLength" type="number" min="0.1" max="100" step="0.05" placeholder="Panel schedule"></label>
+      <label>Slab panel width (m)<input id="tvxBbsSlabWidth" type="number" min="0.1" max="100" step="0.05" placeholder="Panel schedule"></label>
+      <label>Slab levels / panels count<input id="tvxBbsSlabFloors" type="number" min="0" max="60" step="1" value="0"></label>
+      <label>Slab main bar dia (mm)<input id="tvxBbsSlabMainDia" type="number" min="6" max="32" step="1" placeholder="Approved detail"></label>
+      <label>Slab main spacing (mm)<input id="tvxBbsSlabMainSpacing" type="number" min="50" max="500" step="5" placeholder="Approved detail"></label>
+      <label>Slab distribution bar dia (mm)<input id="tvxBbsSlabDistDia" type="number" min="6" max="32" step="1" placeholder="Approved detail"></label>
+      <label>Slab distribution spacing (mm)<input id="tvxBbsSlabDistSpacing" type="number" min="50" max="500" step="5" placeholder="Approved detail"></label>
+      <label>Slab clear cover (mm)<input id="tvxBbsSlabCover" type="number" min="10" max="75" step="1" value="20"></label>
+    </div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxBbsAnalyze" type="button">Calculate BBS take-off</button><button class="btn" id="tvxBbsCsv" type="button">Export BBS CSV</button><span id="tvxBbsStatus" class="tvx-eng-status warn">ENGINEER-APPROVED REBAR INPUTS REQUIRED</span></div>
+    <div class="tvx-mansion-table-wrap" id="tvxBbsResults"><div class="tvx-mansion-empty">No BBS generated. Enter the approved structural bar arrangement first.</div></div>
+    <p class="tvx-mansion-note">Bar weights use nominal unit mass d²/162 kg/m. Cut lengths are the user-specified centreline/effective lengths and the stated hook allowance; bend radii, bend deductions, couplers, development, splice zones, anchorage and wastage are separate project details. BBS is a take-off, not a structural reinforcement design.</p>
+  </article>
   <article class="tvx-mansion-card">
-    <div class="tvx-mansion-subhead"><h4>07 / TRANSPARENT 2D STRUCTURAL FRAME ANALYSIS</h4><span>DIRECT-STIFFNESS METHOD · ONE FRAME LINE</span></div>
+    <div class="tvx-mansion-subhead"><h4>09 / TRANSPARENT 2D STRUCTURAL FRAME ANALYSIS</h4><span>DIRECT-STIFFNESS METHOD · ONE FRAME LINE</span></div>
     <p class="tvx-mansion-note">Builds one regular 2D frame with fixed-base columns and beam-column joints. User enters section geometry, elastic modulus, code-verified area loads, combination factors and per-storey lateral forces from a separate hazard analysis. The solver returns elastic nodal displacement, inter-storey drift and member-end N/V/M actions. It does not design reinforcement or establish building safety.</p>
     <div class="tvx-mansion-fields">
       <label>Number of bays<input id="tvxMFrameBays" type="number" min="1" max="6" step="1" value="3"></label>
@@ -1549,7 +1619,7 @@
   </article>
 
   <article class="tvx-mansion-card">
-    <div class="tvx-mansion-subhead"><h4>08 / CONSTRUCTION-DOCUMENTATION READINESS GATES</h4><span>RELEASE HOLD · PROFESSIONAL CHECK REQUIRED</span></div>
+    <div class="tvx-mansion-subhead"><h4>10 / CONSTRUCTION-DOCUMENTATION READINESS GATES</h4><span>RELEASE HOLD · PROFESSIONAL CHECK REQUIRED</span></div>
     <div class="tvx-mansion-release-hold"><b>CONSTRUCTION RELEASE: HOLD</b><span>This software cannot change this status to “Approved for Construction”. The package is a coordinated design-development / review aid until every discipline is completed and signed under the current legal and authority process.</span></div>
     <div class="tvx-mansion-checklist" id="tvxMansionChecklist">
       <div>Land title, cadastral boundary, topographic survey and benchmark <b>REQUIRED</b></div>
@@ -1564,10 +1634,10 @@
       <div>MEP, plumbing, electrical, HVAC, drainage, fire protection and utility coordination <b>REQUIRED</b></div>
       <div>Independent checking, signed calculations/drawings/specifications and authority permit <b>REQUIRED</b></div>
     </div>
-    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxMansionDxf" type="button">↓ All-level R12 DXF concept plans (mm)</button><button class="btn" id="tvxMansionReport" type="button">↓ Design review JSON</button><button class="btn" id="tvxMansionCsv" type="button">↓ Floor programme CSV</button><button class="btn" id="tvxMansionHtmlReport" type="button">↓ Printable HTML review report</button><span id="tvxMansionExportStatus" class="tvx-eng-status warn">EXPORTS ARE DESIGN-REVIEW DOCUMENTS ONLY.</span></div>
+    <div class="tvx-mansion-actions"><button class="btn primary" id="tvxMansionDxf" type="button">↓ All-level R12 DXF concept plans (mm)</button><button class="btn" id="tvxMansionReport" type="button">↓ Design review JSON</button><button class="btn" id="tvxMansionCsv" type="button">↓ Floor programme CSV</button><button class="btn" id="tvxMansionHtmlReport" type="button">↓ Printable HTML review report</button><button class="btn" id="tvxBbsCsvFooter" type="button">↓ Reinforcement BBS CSV</button><span id="tvxMansionExportStatus" class="tvx-eng-status warn">EXPORTS ARE DESIGN-REVIEW DOCUMENTS ONLY.</span></div>
     <div class="tvx-mansion-code-links"><b>Bangladesh reference links</b><a href="https://hbri.gov.bd/site/page/a5c13d7e-212d-4a16-bbf9-3e1ad937ba56/BANGLADESH-NATIONAL-BUILDING-CODE" target="_blank" rel="noopener">HBRI · BNBC 2020 official resource</a><a href="https://bdlaws.minlaw.gov.bd/act-print-1695.html" target="_blank" rel="noopener">Bangladesh Building Regulatory Authority Act, 2026</a><a href="https://rajuk.gov.bd/" target="_blank" rel="noopener">RAJUK · local rules / notices</a></div>
   </article>
-  <div class="tvx-mansion-footer">TERRAVEX v50 · No remote-source data is silently treated as structural input. Satellite / DEM / gridded soil context never supplies SPT, CPT, groundwater profile, allowable bearing, liquefaction resistance or pile capacity. No certification, seal, permit or construction approval is generated.</div>
+  <div class="tvx-mansion-footer">TERRAVEX v52 · No remote-source data is silently treated as structural input. Satellite / DEM / gridded soil context never supplies SPT, CPT, groundwater profile, allowable bearing, liquefaction resistance or pile capacity. No certification, seal, permit or construction approval is generated.</div>
 </section>
 
 
@@ -1586,7 +1656,7 @@
 <script src="lightning-nowcast-lab.js" defer></script>
 <script src="advanced-workbench.js" defer></script>
 <script src="engineering-depth-system.js?v=48" defer></script>
-<script src="architecture-form-studio.js?v=50" defer></script>
+<script src="architecture-form-studio.js?v=52" defer></script>
 <script src="hazard-intelligence.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/satellite.js@6.0.2/dist/satellite.min.js" defer></script>
 <script src="space-environment.js" defer></script>

@@ -1,0 +1,24 @@
+TERRAVEX v52 DESIGN SECTION ONLY - GITHUB OVERLAY
+
+This is NOT the full application ZIP. It contains only the 7 runtime files needed to add/update the Design Selection + Deep Engineering Analysis workbench and its required calculation/PWA integration.
+
+FILES TO UPLOAD AT THE EXISTING REPOSITORY ROOT (same folder as the current index.html):
+1. index.html
+2. architecture-form-studio.js
+3. architecture-form-studio.css
+4. engineering-depth-system.js
+5. engineering-depth-system.css
+6. advanced-workbench.js
+7. sw.js
+
+Upload all 7 files to the repository root and overwrite files with the same names. Do not upload the ZIP itself. Do not create a nested folder.
+
+IMPORTANT:
+- index.html is the updated full HTML entry page because GitHub Pages needs the Design section markup and script/style references integrated into the page.
+- The engineering-depth-system files are required companion calculation modules. Do not omit them.
+- The previous app assets (styles.css, app.js, manifest.webmanifest, icons, and the rest of the app's assets) must remain in the repository root.
+- This patch is designed to overlay the TERRAVEX source project used for the v50/v51 work. If the repository has unrelated edits to index.html or these module files, make a backup first and reconcile before overwriting.
+- After commit, open the HTTPS GitHub Pages site, hard-refresh (Ctrl+Shift+R), then use Source Health & Offline > Refresh cached app shell if the old PWA is still shown.
+- New cache name: terravex-apex-shell-v52.
+
+The section is for design development and engineering review. It does not issue construction approval, certification, or a professional seal. Actual site survey, geotechnical and material tests, local adopted codes, complete 3D structural analysis and competent engineer review are still required before construction.
