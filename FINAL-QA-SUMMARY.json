@@ -1,0 +1,54 @@
+{
+  "base_repository_file_count": 99,
+  "application_files_to_overwrite": 13,
+  "additional_missing_doc_references_supplied": 2,
+  "changed_js_files_node_checked": 10,
+  "node_syntax_errors": [],
+  "css_files_checked": 1,
+  "css_syntax_brace_errors": [],
+  "main_html_ids": 1565,
+  "duplicate_ids": [],
+  "local_html_references_checked": 59,
+  "missing_local_html_references": [],
+  "service_worker_and_version_checks": {
+    "service_worker_cache_v54": true,
+    "loader_js_in_service_worker": true,
+    "loader_css_in_service_worker": true,
+    "loader_registered_in_index": true,
+    "leaflet_1_9_4": true,
+    "cesium_1_147_0": true,
+    "satellitejs_7_1_0": true,
+    "threejs_0_187_0": true
+  },
+  "chromium_primary_and_retry_scenarios": {
+    "cases": 3,
+    "all_cases_pass": true
+  },
+  "legacy_umd_compatibility_fallback": true,
+  "full_app_chromium_runtime_errors": 0,
+  "full_app_external_libraries": {
+    "leaflet": {
+      "status": "READY",
+      "configured": "1.9.4",
+      "actual": "1.9.4"
+    },
+    "cesium": {
+      "status": "READY",
+      "configured": "1.147.0",
+      "actual": "1.147.0"
+    },
+    "satellite": {
+      "status": "READY",
+      "configured": "7.1.0",
+      "actual": "7.1.0"
+    },
+    "three": {
+      "status": "READY",
+      "configured": "0.187.0",
+      "actual": "0.187.0"
+    }
+  },
+  "non_library_public_data_requests_blocked_by_test_harness": 9,
+  "direct_public_cdn_connectivity_verified_from_workspace": false,
+  "interpretation": "Chromium tests used deterministic intercepted CDN fixtures. They verify loader, API contract, lazy loading, fallback, deduplication and retry. Actual public CDN DNS/connectivity must be verified from the deployed user browser."
+}

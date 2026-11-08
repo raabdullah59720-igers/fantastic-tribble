@@ -1,0 +1,142 @@
+{
+  "browser": "Chromium",
+  "cases": [
+    {
+      "case": "primary-cdn-valid-fixtures",
+      "states": {
+        "leaflet": {
+          "version": "1.9.4",
+          "actualVersion": "1.9.4",
+          "status": "READY",
+          "source": "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+          "error": "",
+          "warning": "",
+          "loadedAt": "2026-11-08T09:35:13.257Z"
+        },
+        "cesium": {
+          "version": "1.147.0",
+          "actualVersion": "1.147.0",
+          "status": "READY",
+          "source": "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Cesium.js",
+          "error": "",
+          "warning": "",
+          "loadedAt": "2026-11-08T09:35:13.258Z"
+        },
+        "satellite": {
+          "version": "7.1.0",
+          "actualVersion": "7.1.0",
+          "status": "READY",
+          "source": "https://cdn.jsdelivr.net/npm/satellite.js@7.1.0/+esm",
+          "error": "",
+          "warning": "",
+          "loadedAt": "2026-11-08T09:35:13.251Z"
+        },
+        "three": {
+          "version": "0.187.0",
+          "actualVersion": "0.187.0",
+          "status": "READY",
+          "source": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+          "error": "",
+          "warning": "",
+          "loadedAt": "2026-11-08T09:35:13.254Z"
+        }
+      },
+      "all_ready": true,
+      "versions_match": {
+        "leaflet": true,
+        "cesium": true,
+        "satellite": true,
+        "three": true
+      },
+      "request_count": 6,
+      "duplicate_requests_after_ready": true,
+      "page_errors": [],
+      "requests": [
+        "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Widgets/widgets.css",
+        "https://cdn.jsdelivr.net/npm/satellite.js@7.1.0/+esm",
+        "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+        "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Cesium.js"
+      ]
+    },
+    {
+      "case": "secondary-cdn-esm-fallback",
+      "states": {
+        "leaflet": {
+          "version": "1.9.4",
+          "actualVersion": "1.9.4",
+          "status": "READY",
+          "source": "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+          "error": "",
+          "warning": "",
+          "loadedAt": "2026-11-08T09:35:13.407Z"
+        },
+        "cesium": {
+          "version": "1.147.0",
+          "actualVersion": "1.146.0",
+          "status": "READY",
+          "source": "https://unpkg.com/cesium@1.146.0/Build/Cesium/Cesium.js",
+          "error": "",
+          "warning": " \u00b7 compatibility fallback 1.146.0",
+          "loadedAt": "2026-11-08T09:35:13.413Z"
+        },
+        "satellite": {
+          "version": "7.1.0",
+          "actualVersion": "7.1.0",
+          "status": "READY",
+          "source": "https://esm.sh/satellite.js@7.1.0",
+          "error": "",
+          "warning": "",
+          "loadedAt": "2026-11-08T09:35:13.398Z"
+        },
+        "three": {
+          "version": "0.187.0",
+          "actualVersion": "0.187.0",
+          "status": "READY",
+          "source": "https://esm.sh/three@0.187.0",
+          "error": "",
+          "warning": "",
+          "loadedAt": "2026-11-08T09:35:13.401Z"
+        }
+      },
+      "all_ready": true,
+      "expected_fallbacks": {
+        "leaflet_unpkg": true,
+        "cesium_unpkg": true,
+        "satellite_esm": true,
+        "three_esm": true
+      },
+      "request_count": 14,
+      "page_errors": [],
+      "requests": [
+        "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Widgets/widgets.css",
+        "https://cdn.jsdelivr.net/npm/satellite.js@7.1.0/+esm",
+        "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Cesium.js",
+        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+        "https://esm.sh/satellite.js@7.1.0",
+        "https://esm.sh/three@0.187.0",
+        "https://cdn.jsdelivr.net/npm/cesium@1.146.0/Build/Cesium/Widgets/widgets.css",
+        "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+        "https://cdn.jsdelivr.net/npm/cesium@1.146.0/Build/Cesium/Cesium.js",
+        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+        "https://unpkg.com/cesium@1.146.0/Build/Cesium/Widgets/widgets.css",
+        "https://unpkg.com/cesium@1.146.0/Build/Cesium/Cesium.js"
+      ]
+    },
+    {
+      "case": "offline-no-false-ready-and-retry",
+      "first_status": "UNAVAILABLE",
+      "retry_status": "READY",
+      "retry_success": true,
+      "page_errors": [],
+      "request_count": 6
+    }
+  ],
+  "summary": {
+    "cases": 3,
+    "all_cases_pass": true
+  }
+}

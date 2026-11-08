@@ -1,0 +1,57 @@
+{
+  "case": "legacy-umd-compatibility",
+  "states": {
+    "leaflet": {
+      "version": "1.9.4",
+      "actualVersion": "1.9.4",
+      "status": "READY",
+      "source": "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+      "error": "",
+      "warning": "",
+      "loadedAt": "2026-11-08T09:34:18.705Z"
+    },
+    "cesium": {
+      "version": "1.147.0",
+      "actualVersion": "1.147.0",
+      "status": "READY",
+      "source": "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Cesium.js",
+      "error": "",
+      "warning": "",
+      "loadedAt": "2026-11-08T09:34:18.712Z"
+    },
+    "satellite": {
+      "version": "7.1.0",
+      "actualVersion": "7.1.0",
+      "status": "READY",
+      "source": "https://cdn.jsdelivr.net/npm/satellite.js@6.0.2/dist/satellite.min.js",
+      "error": "",
+      "warning": "Using satellite.js 6.0.2 compatibility build after 7.1.0 ESM failed",
+      "loadedAt": "2026-11-08T09:34:18.714Z"
+    },
+    "three": {
+      "version": "0.187.0",
+      "actualVersion": "0.187.0",
+      "status": "READY",
+      "source": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js",
+      "error": "",
+      "warning": "Using Three.js r160 global compatibility build after r187 ESM failed",
+      "loadedAt": "2026-11-08T09:34:18.716Z"
+    }
+  },
+  "satellite_warning": true,
+  "three_warning": true,
+  "requests": [
+    "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Widgets/widgets.css",
+    "https://cdn.jsdelivr.net/npm/satellite.js@7.1.0/+esm",
+    "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+    "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/cesium/1.147.0/Cesium.js",
+    "https://esm.sh/satellite.js@7.1.0",
+    "https://esm.sh/three@0.187.0",
+    "https://cdn.jsdelivr.net/npm/satellite.js@6.0.2/dist/satellite.min.js",
+    "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"
+  ],
+  "page_errors": [],
+  "pass": true
+}

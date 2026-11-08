@@ -1,0 +1,47 @@
+TERRAVEX APEX v54 · EXTERNAL ENGINE LIBRARIES UPGRADE
+GitHub root-level overlay | Based on the v53 application tree
+
+WHAT THIS PATCH UPDATES
+This patch centralizes and lazily loads Leaflet, CesiumJS, satellite.js and Three.js. It also updates the app's map, globe, orbital and 3D panel adapters plus the service-worker shell cache. App features are not replaced with a separate application.
+
+FILES TO OVERWRITE (13)
+- index.html
+- external-library-loader.js
+- external-library-loader.css
+- app.js
+- bangladesh-observatory.js
+- bangladesh-satellite-intel.js
+- earth-traffic-monitor.js
+- geolocation-live.js
+- hazard-intelligence.js
+- satellite-pass-tracker.js
+- sw.js
+- thunderstorm-energy-lab.html
+- thunderstorm-energy-lab.js
+
+
+INSTALL
+1. Back up the current GitHub repository first.
+2. Extract this ZIP. All application files are at the ZIP root; do not create a new directory in the repository.
+3. Upload the 13 listed application files to the existing repository root and overwrite same-name files.
+4. Keep existing unrelated files. Do not delete other app modules or assets.
+5. Commit/push and wait for GitHub Pages to deploy.
+6. Open the HTTPS site and hard refresh. In the app, open Source Health & PWA → “Check external engine libraries”.
+7. After deployment, the service-worker cache should identify as terravex-apex-shell-v54. Use “Refresh cached app shell” if the old shell persists.
+
+IMPORTANT
+- The libraries are on-demand: they are not all downloaded during startup. Opening the matching map/globe/satellite/3D panel loads the relevant engine.
+- The diagnostics button intentionally probes all four and therefore downloads them together when clicked.
+- Leaflet is pinned to 1.9.4 to preserve the existing L.* plugin/global API. Leaflet 2.0 remains beta at the time of this build.
+- CesiumJS 1.147.0 is fetched from the CDNJS package root. If that endpoint is unavailable, the loader falls back to CesiumJS 1.146.0 and reports the actual version.
+- satellite.js and Three.js use ESM first, alternate ESM CDN second, then older UMD compatibility builds. The compatibility build version is shown in diagnostics.
+- A READY engine means its required browser API loaded. It does not mean imagery tiles, public data feeds, WebGL, credentials, or satellite telemetry are available. The status card separately reports WebGL capability and each provider/data feed must still be checked.
+- No external CDN requests could be directly reached from this build environment because DNS/network access to cdn.jsdelivr.net, cdnjs.cloudflare.com, unpkg.com and esm.sh was unavailable. Chromium testing therefore used deterministic intercepted CDN fixtures. Real public-network reachability must be checked from the user's deployed browser/network.
+- Do not use the satellite pass output as direct satellite telemetry. satellite.js computes SGP4/SDP4 position predictions from orbital elements; the freshness of the element epoch remains important.
+
+DEPLOYMENT FILE SELECTION
+- Overwrite only the 13 application files listed above.
+- Add these 2 linked help documents at repository root if they are not already present:
+  * DESKTOP-INSTALL-AND-VPN-GUIDE.md
+  * LINK-BUDGET-LAB.md
+- The remaining files in this ZIP (QA markdown, JSON results, manifest and screenshot) are verification evidence. They are not required for the live application and may be kept outside the GitHub production root.

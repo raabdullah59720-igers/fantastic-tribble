@@ -1,0 +1,31 @@
+{
+  "release": "TERRAVEX APEX v54 External Engine Integration",
+  "base": "TERRAVEX v53 application source",
+  "type": "GitHub root-level overlay",
+  "application_files": [
+    "index.html",
+    "external-library-loader.js",
+    "external-library-loader.css",
+    "app.js",
+    "bangladesh-observatory.js",
+    "bangladesh-satellite-intel.js",
+    "earth-traffic-monitor.js",
+    "geolocation-live.js",
+    "hazard-intelligence.js",
+    "satellite-pass-tracker.js",
+    "sw.js",
+    "thunderstorm-energy-lab.html",
+    "thunderstorm-energy-lab.js"
+  ],
+  "file_count": 13,
+  "external_libraries": {
+    "leaflet": "1.9.4",
+    "cesium_primary": "1.147.0",
+    "cesium_fallback": "1.146.0",
+    "satellite_js": "7.1.0",
+    "satellite_fallback": "6.0.2",
+    "three_js": "0.187.0",
+    "three_fallback": "0.160.0"
+  },
+  "service_worker_cache": "terravex-apex-shell-v54"
+}
